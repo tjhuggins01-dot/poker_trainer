@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FeedbackPanel } from '../components/FeedbackPanel';
 import { buildWeightedHandMap, computeCorrectAction, nextPrompt } from '../lib/logic';
 import { makeFacingOpenKey, makeRfiKey } from '../lib/storage';
@@ -28,6 +28,26 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   const [shownNotice, setShownNotice] = useState(false);
   const [questionStartTs, setQuestionStartTs] = useState(() => Date.now());
 
+  const pickNextPrompt = (currentPrompt = prompt) => {
+    let next = nextPrompt(data, weightedMap);
+    if (
+      next.handClass === currentPrompt.handClass &&
+      next.situation.heroPos === currentPrompt.situation.heroPos &&
+      next.situation.villainPos === currentPrompt.situation.villainPos &&
+      next.situation.facingAction === currentPrompt.situation.facingAction
+    ) {
+      next = nextPrompt(data, weightedMap);
+    }
+    return next;
+  };
+
+  useEffect(() => {
+    const freshPrompt = nextPrompt(data, weightedMap);
+    setPrompt(freshPrompt);
+    setStatus('idle');
+    setQuestionStartTs(Date.now());
+  }, [data.settings.drillType, data.settings.positionFocus, weightedMap]);
+
   const isFacingOpen = prompt.situation.facingAction === 'open';
   const key = isFacingOpen
     ? makeFacingOpenKey(prompt.situation.heroPos as FacingOpenHeroPosition, prompt.situation.villainPos!)
@@ -47,15 +67,15 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
     if (isFacingOpen) {
       const call = policy?.call?.length ?? 0;
       const three = policy?.threeBet?.length ?? 0;
-      return `Call ${(call / 169 * 100).toFixed(1)}% • 3bet ${(three / 169 * 100).toFixed(1)}% • Fold ${((169 - call - three) / 169 * 100).toFixed(1)}%`;
+      return `Call ${((call / 169) * 100).toFixed(1)}% • 3bet ${((three / 169) * 100).toFixed(1)}% • Fold ${(((169 - call - three) / 169) * 100).toFixed(1)}%`;
     }
     const raise = policy?.raise?.length ?? 0;
     const limp = prompt.situation.heroPos === 'SB' ? policy?.limp?.length ?? 0 : 0;
-    return `Raise ${(raise / 169 * 100).toFixed(1)}%${prompt.situation.heroPos === 'SB' ? ` • Limp ${(limp / 169 * 100).toFixed(1)}%` : ''} • Fold ${((169 - raise - limp) / 169 * 100).toFixed(1)}%`;
+    return `Raise ${((raise / 169) * 100).toFixed(1)}%${prompt.situation.heroPos === 'SB' ? ` • Limp ${((limp / 169) * 100).toFixed(1)}%` : ''} • Fold ${(((169 - raise - limp) / 169) * 100).toFixed(1)}%`;
   }, [isFacingOpen, policy, prompt.situation.heroPos]);
 
   const stepNext = () => {
-    setPrompt(nextPrompt(data, weightedMap));
+    setPrompt(pickNextPrompt());
     setQuestionStartTs(Date.now());
     setStatus('idle');
   };
@@ -108,9 +128,10 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
           next.stats.byRfiPosition[prompt.situation.heroPos as RfiPosition].correct += 1;
         }
       } else {
-        const mKey = prompt.situation.facingAction === 'open'
-          ? `${prompt.situation.heroPos}vs${prompt.situation.villainPos}|${prompt.handClass}|${expected}`
-          : `${prompt.situation.heroPos}|${prompt.handClass}|${expected}`;
+        const mKey =
+          prompt.situation.facingAction === 'open'
+            ? `${prompt.situation.heroPos}vs${prompt.situation.villainPos}|${prompt.handClass}|${expected}`
+            : `${prompt.situation.heroPos}|${prompt.handClass}|${expected}`;
         next.stats.mistakes[mKey] ??= { count: 0, lastTs: 0 };
         next.stats.mistakes[mKey].count += 1;
         next.stats.mistakes[mKey].lastTs = Date.now();
@@ -130,19 +151,25 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   const avgResponse = session.attempts === 0 ? 0 : session.totalResponseMs / session.attempts;
 
   const focusOptions = data.settings.drillType === 'rfi' ? RFI_POSITIONS : FACING_OPEN_HERO_POSITIONS;
-  const selectedFocus = data.settings.drillType === 'rfi' ? data.settings.positionFocus.rfi : data.settings.positionFocus.facing_open;
+  const selectedFocus =
+    data.settings.drillType === 'rfi' ? data.settings.positionFocus.rfi : data.settings.positionFocus.facing_open;
 
   return (
     <section>
       <h2>Drill</h2>
       {data.migrationNotice && !shownNotice && (
-        <div className="card"><p>{data.migrationNotice}</p><button onClick={() => setShownNotice(true)}>Dismiss</button></div>
+        <div className="card">
+          <p>{data.migrationNotice}</p>
+          <button onClick={() => setShownNotice(true)}>Dismiss</button>
+        </div>
       )}
       <label htmlFor="drill-type">Drill Type</label>
       <select
         id="drill-type"
         value={data.settings.drillType}
-        onChange={(e: any) => onDataChange((prev) => ({ ...prev, settings: { ...prev.settings, drillType: e.target.value } as any }))}
+        onChange={(e: any) =>
+          onDataChange((prev) => ({ ...prev, settings: { ...prev.settings, drillType: e.target.value } as any }))
+        }
       >
         <option value="rfi">Open First In (RFI)</option>
         <option value="facing_open">Facing an Open</option>
@@ -166,36 +193,60 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
                   return next;
                 })
               }
-            /> {position}
+            />{' '}
+            {position}
           </label>
         ))}
       </div>
 
       <div className="card">
         <p>Hero: {prompt.situation.heroPos}</p>
-        {prompt.situation.villainPos && <p>Facing open from: {prompt.situation.villainPos}</p>}
+        {isFacingOpen && <p>Facing open from: {prompt.situation.villainPos}</p>}
         <p className="big-hand">{prompt.handClass}</p>
       </div>
       <div className="actions">
         {isFacingOpen ? (
           <>
-            <button className="fold" onClick={() => answer('FOLD')}>FOLD</button>
-            <button className="open" onClick={() => answer('CALL')}>CALL</button>
-            <button className="primary" onClick={() => answer('3BET')}>3BET</button>
+            <button className="fold" onClick={() => answer('FOLD')}>
+              FOLD
+            </button>
+            <button className="open" onClick={() => answer('CALL')}>
+              CALL
+            </button>
+            <button className="primary" onClick={() => answer('3BET')}>
+              3BET
+            </button>
           </>
         ) : (
           <>
-            <button className="open" onClick={() => answer('RAISE')}>RAISE</button>
-            {prompt.situation.heroPos === 'SB' && <button className="primary" onClick={() => answer('LIMP')}>LIMP</button>}
-            <button className="fold" onClick={() => answer('FOLD')}>FOLD</button>
+            <button className="open" onClick={() => answer('RAISE')}>
+              RAISE
+            </button>
+            {prompt.situation.heroPos === 'SB' && (
+              <button className="primary" onClick={() => answer('LIMP')}>
+                LIMP
+              </button>
+            )}
+            <button className="fold" onClick={() => answer('FOLD')}>
+              FOLD
+            </button>
           </>
         )}
       </div>
-      <p className="session">Session: {session.correct}/{session.attempts} ({sessionAccuracy.toFixed(1)}%) • Avg response {avgResponse.toFixed(0)}ms {status === 'correct' ? '✅' : ''}</p>
+      <p className="session">
+        Session: {session.correct}/{session.attempts} ({sessionAccuracy.toFixed(1)}%) • Avg response{' '}
+        {avgResponse.toFixed(0)}ms {status === 'correct' ? '✅' : ''}
+      </p>
       <button onClick={onResetSession}>Reset session</button>
 
       {status === 'incorrect' && (
-        <FeedbackPanel correctAction={correctAction} actionMap={actionMap} testedHand={prompt.handClass} percentages={percentageText} onNext={stepNext} />
+        <FeedbackPanel
+          correctAction={correctAction}
+          actionMap={actionMap}
+          testedHand={prompt.handClass}
+          percentages={percentageText}
+          onNext={stepNext}
+        />
       )}
     </section>
   );

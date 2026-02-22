@@ -1,6 +1,6 @@
 import { parseRangeShorthand } from '../lib/parser';
 import { PRESET_IDS, PRESETS, type PresetId } from '../lib/presets';
-import { makeFacingOpenKey, makeRfiKey } from '../lib/storage';
+import { hasNoOverlap, makeFacingOpenKey, makeRfiKey } from '../lib/storage';
 import { APP_VERSION, RFI_POSITIONS, STORAGE_VERSION, type AppData, type DifficultyMode } from '../lib/types';
 
 type Props = {
@@ -43,10 +43,19 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
         Object.entries(preset.facingOpen).forEach(([k, v]) => {
           const [hero, villain] = k.replace('FO_', '').split('_VS_');
           const key = makeFacingOpenKey(hero as any, villain as any);
-          if (!next.situations[key]) return;
           const c = parseRangeShorthand(v.call); const t = parseRangeShorthand(v.threeBet);
-          if (c.ok) (next.situations[key].policy as any).call = c.hands;
-          if (t.ok) (next.situations[key].policy as any).threeBet = t.hands;
+          if (!c.ok || !t.ok || !hasNoOverlap(c.hands, t.hands)) return;
+          if (!next.situations[key]) {
+            next.situations[key] = {
+              situation: { game: 'NLH', table: '9max', effectiveStackBb: 100, heroPos: hero as any, facingAction: 'open', villainPos: villain as any },
+              drillType: 'facing_open',
+              actionSet: ['FOLD', 'CALL', '3BET'],
+              policy: { call: c.hands as any, threeBet: t.hands as any },
+            };
+            return;
+          }
+          (next.situations[key].policy as any).call = c.hands;
+          (next.situations[key].policy as any).threeBet = t.hands;
         });
         return next;
       })}>Apply preset to all ranges</button>

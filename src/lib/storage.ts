@@ -2,6 +2,7 @@ import { PRESETS, facingOpenKey, type PresetId } from './presets';
 import { parseRangeShorthand } from './parser';
 import {
   FACING_OPEN_HERO_POSITIONS,
+  FACING_OPEN_VILLAIN_BY_HERO,
   RFI_POSITIONS,
   SESSION_STORAGE_KEY,
   STORAGE_KEY,
@@ -34,6 +35,13 @@ const createEmptyFacingStats = () =>
     FACING_OPEN_HERO_POSITIONS.map((p) => [p, { attempts: 0, correct: 0 }]),
   ) as Record<FacingOpenHeroPosition, { attempts: number; correct: number }>;
 
+const defaultFacingOpenSelection = {
+  heroPos: 'UTG1' as FacingOpenHeroPosition,
+  villainPos: FACING_OPEN_VILLAIN_BY_HERO.UTG1[0],
+};
+
+const hasNoOverlap = (a: string[], b: string[]) => !a.some((hand) => b.includes(hand));
+
 const makeRfiSituationRecord = (
   heroPos: RfiPosition,
   raiseHands: string[],
@@ -64,6 +72,24 @@ const makeFacingOpenSituationRecord = (
   policy: { call: callHands as any, threeBet: threeBetHands as any },
 });
 
+const applyFacingOpenPreset = (situations: AppData['situations'], presetId: PresetId) => {
+  Object.entries(PRESETS[presetId].facingOpen).forEach(([matchupKey, range]) => {
+    const match = matchupKey.match(/^FO_(.+)_VS_(.+)$/);
+    if (!match) return;
+    const hero = match[1] as FacingOpenHeroPosition;
+    const villain = match[2] as Position;
+    const call = parseRangeShorthand(range.call);
+    const threeBet = parseRangeShorthand(range.threeBet);
+    if (!call.ok || !threeBet.ok || !hasNoOverlap(call.hands, threeBet.hands)) return;
+    situations[makeFacingOpenKey(hero, villain)] = makeFacingOpenSituationRecord(
+      hero,
+      villain,
+      call.hands,
+      threeBet.hands,
+    );
+  });
+};
+
 export const createDefaultData = (): AppData => {
   const situations: AppData['situations'] = {};
   RFI_POSITIONS.forEach((position) => {
@@ -76,22 +102,7 @@ export const createDefaultData = (): AppData => {
       limpParsed.ok ? limpParsed.hands : [],
     );
   });
-
-  Object.entries(PRESETS[defaultPresetId].facingOpen).forEach(([matchupKey, range]) => {
-    const match = matchupKey.match(/^FO_(.+)_VS_(.+)$/);
-    if (!match) return;
-    const hero = match[1] as FacingOpenHeroPosition;
-    const villain = match[2] as Position;
-    const call = parseRangeShorthand(range.call);
-    const threeBet = parseRangeShorthand(range.threeBet);
-    if (!call.ok || !threeBet.ok) return;
-    situations[makeFacingOpenKey(hero, villain)] = makeFacingOpenSituationRecord(
-      hero,
-      villain,
-      call.hands,
-      threeBet.hands,
-    );
-  });
+  applyFacingOpenPreset(situations, defaultPresetId);
 
   return {
     version: STORAGE_VERSION,
@@ -114,6 +125,7 @@ export const createDefaultData = (): AppData => {
       defaultPresetId,
       drillType: 'rfi',
       positionFocus: { rfi: [...RFI_POSITIONS], facing_open: [...FACING_OPEN_HERO_POSITIONS] },
+      facingOpenSelection: defaultFacingOpenSelection,
     },
   };
 };
@@ -143,10 +155,20 @@ const migrateLegacy = (rawData: any): AppData => {
   return next;
 };
 
+const migrateV5ToCurrent = (record: any): AppData => {
+  const next = structuredClone(record) as AppData;
+  next.version = STORAGE_VERSION;
+  next.settings.facingOpenSelection = next.settings.facingOpenSelection ?? defaultFacingOpenSelection;
+  applyFacingOpenPreset(next.situations, next.settings.defaultPresetId ?? defaultPresetId);
+  return next;
+};
+
 const migrateToCurrent = (rawData: unknown): AppData => {
   if (!rawData || typeof rawData !== 'object') return createDefaultData();
   const record = rawData as any;
   if (record.version === STORAGE_VERSION) return record as AppData;
+  if (record.version === 5) return migrateV5ToCurrent(record);
+  if (record.version === 4) return migrateLegacy(record);
   return migrateLegacy(record);
 };
 
@@ -229,4 +251,4 @@ export const resetStatsOnly = (data: AppData): AppData => ({
 
 export const resetAll = (): AppData => createDefaultData();
 
-export { makeFacingOpenKey, makeRfiKey, facingOpenKey };
+export { makeFacingOpenKey, makeRfiKey, facingOpenKey, hasNoOverlap };
