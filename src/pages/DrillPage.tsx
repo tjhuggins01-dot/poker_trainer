@@ -21,10 +21,20 @@ type Props = {
 };
 
 export function DrillPage({ data, session, onDataChange, onSessionChange, onResetSession }: Props) {
-  const weightedMap = useMemo(
-    () => buildWeightedHandMap(data),
-    [data.situations, data.settings.difficulty],
+  const situationsPolicyKey = useMemo(
+    () =>
+      Object.entries(data.situations)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([key, situation]) => `${key}:${situation.drillType}:${JSON.stringify(situation.policy)}`)
+        .join('|'),
+    [data.situations],
   );
+  const weightedMap = useMemo(() => buildWeightedHandMap(data), [situationsPolicyKey, data.settings.difficulty]);
+  const selectedFocusKey = useMemo(() => {
+    const focus = data.settings.positionFocus[data.settings.drillType] as string[];
+    return [...focus].sort().join('|');
+  }, [data.settings.drillType, data.settings.positionFocus]);
+  const drillResetKey = `${data.settings.drillType}:${selectedFocusKey}:${data.settings.difficulty}:${situationsPolicyKey}`;
   const [prompt, setPrompt] = useState(() => nextPrompt(data, weightedMap));
   const [status, setStatus] = useState<'idle' | 'correct' | 'incorrect'>('idle');
   const [correctAction, setCorrectAction] = useState<DrillAction>('FOLD');
@@ -73,7 +83,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
     cancelAndResetDrillState();
     const freshPrompt = nextPrompt(data, weightedMap);
     setPrompt(freshPrompt);
-  }, [data.settings.drillType, data.settings.positionFocus, data.situations, weightedMap]);
+  }, [drillResetKey]);
 
   const isFacingOpen = prompt.situation.facingAction === 'open';
   const key = isFacingOpen
