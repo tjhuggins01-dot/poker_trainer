@@ -46,6 +46,11 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
     return next;
   };
 
+
+  useEffect(() => () => {
+    if (nextPromptTimeoutId !== null) window.clearTimeout(nextPromptTimeoutId);
+  }, [nextPromptTimeoutId]);
+
   useEffect(() => {
     return () => {
       if (nextPromptTimeoutRef.current !== null) window.clearTimeout(nextPromptTimeoutRef.current);
