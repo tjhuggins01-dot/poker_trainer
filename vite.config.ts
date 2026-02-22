@@ -7,6 +7,10 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      injectRegister: 'auto',
+      devOptions: {
+        enabled: true,
+      },
       includeAssets: ['pwa-icon-192.svg', 'pwa-icon-512.svg'],
       manifest: {
         name: 'Preflop Range Drill',
