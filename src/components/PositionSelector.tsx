@@ -1,11 +1,9 @@
-import { POSITIONS, type Position } from '../lib/types';
+type Props<T extends string> = { value: T; options: readonly T[]; onChange: (p: T) => void };
 
-type Props = { value: Position; onChange: (p: Position) => void };
-
-export function PositionSelector({ value, onChange }: Props) {
+export function PositionSelector<T extends string>({ value, options, onChange }: Props<T>) {
   return (
     <div className="position-selector">
-      {POSITIONS.map((p) => (
+      {options.map((p) => (
         <button key={p} className={value === p ? 'active' : ''} onClick={() => onChange(p)}>
           {p}
         </button>

@@ -1,11 +1,16 @@
 import { generateAllHandClasses169, handClassToGridCoord } from './hands';
+import { makeFacingOpenKey, makeRfiKey } from './storage';
 import {
-  POSITIONS,
-  type Action,
+  FACING_OPEN_HERO_POSITIONS,
+  RFI_POSITIONS,
   type AppData,
   type DifficultyMode,
+  type DrillAction,
+  type DrillType,
+  type FacingOpenHeroPosition,
   type HandClass,
   type Position,
+  type RfiPosition,
   type Situation,
 } from './types';
 
@@ -17,10 +22,20 @@ export const computeCorrectAction = (
   appData: AppData,
   situation: Situation,
   handClass: HandClass,
-): Action => {
-  const key = `OPEN_9MAX_100BB_${situation.position}`;
-  const openSet = new Set(appData.situations[key]?.policy.openHands ?? []);
-  return openSet.has(handClass) ? 'OPEN' : 'FOLD';
+): DrillAction => {
+  if (situation.facingAction === 'open' && situation.villainPos) {
+    const key = makeFacingOpenKey(situation.heroPos as FacingOpenHeroPosition, situation.villainPos);
+    const policy = appData.situations[key]?.policy as any;
+    if (policy?.threeBet?.includes(handClass)) return '3BET';
+    if (policy?.call?.includes(handClass)) return 'CALL';
+    return 'FOLD';
+  }
+
+  const key = makeRfiKey(situation.heroPos as RfiPosition);
+  const policy = appData.situations[key]?.policy as any;
+  if (policy?.raise?.includes(handClass)) return 'RAISE';
+  if (situation.heroPos === 'SB' && policy?.limp?.includes(handClass)) return 'LIMP';
+  return 'FOLD';
 };
 
 type WeightedHand = { hand: HandClass; weight: number };
@@ -31,21 +46,20 @@ const distanceBetweenHands = (a: HandClass, b: HandClass): number => {
   return Math.abs(aCoord.row - bCoord.row) + Math.abs(aCoord.col - bCoord.col);
 };
 
-const computeBoundaryDistances = (openHands: HandClass[]): Record<HandClass, number> => {
-  const openSet = new Set(openHands);
-  const closedHands = allHands.filter((hand) => !openSet.has(hand));
+const computeBoundaryDistances = (actionHands: HandClass[]): Record<HandClass, number> => {
+  const actionSet = new Set(actionHands);
+  const opposite = allHands.filter((hand) => !actionSet.has(hand));
   const distances: Record<HandClass, number> = {} as Record<HandClass, number>;
 
   allHands.forEach((hand) => {
-    const opponentSet = openSet.has(hand) ? closedHands : openHands;
-    if (opponentSet.length === 0) {
+    const target = actionSet.has(hand) ? opposite : actionHands;
+    if (target.length === 0) {
       distances[hand] = allHands.length;
       return;
     }
-
     let minDistance = Number.POSITIVE_INFINITY;
-    opponentSet.forEach((otherHand) => {
-      const distance = distanceBetweenHands(hand, otherHand);
+    target.forEach((other) => {
+      const distance = distanceBetweenHands(hand, other);
       if (distance < minDistance) minDistance = distance;
     });
     distances[hand] = minDistance;
@@ -60,20 +74,20 @@ const difficultyWeight = (distance: number, mode: DifficultyMode): number => {
   return 1 / (distance + 1);
 };
 
-export const buildWeightedHandMap = (data: AppData): Record<Position, WeightedHand[]> => {
-  const byPosition = {} as Record<Position, WeightedHand[]>;
+export const buildWeightedHandMap = (data: AppData): Record<string, WeightedHand[]> => {
+  const bySituation: Record<string, WeightedHand[]> = {};
 
-  POSITIONS.forEach((position) => {
-    const key = `OPEN_9MAX_100BB_${position}`;
-    const openHands = data.situations[key]?.policy.openHands ?? [];
-    const boundaryDistances = computeBoundaryDistances(openHands);
-    byPosition[position] = allHands.map((hand) => ({
+  Object.entries(data.situations).forEach(([key, record]) => {
+    const policy = record.policy as any;
+    const priorityHands: HandClass[] = record.drillType === 'facing_open' ? policy.call ?? [] : policy.raise ?? [];
+    const boundaryDistances = computeBoundaryDistances(priorityHands);
+    bySituation[key] = allHands.map((hand) => ({
       hand,
       weight: Math.max(difficultyWeight(boundaryDistances[hand], data.settings.difficulty), 0.0001),
     }));
   });
 
-  return byPosition;
+  return bySituation;
 };
 
 const weightedPick = (weights: WeightedHand[]): HandClass => {
@@ -87,13 +101,46 @@ const weightedPick = (weights: WeightedHand[]): HandClass => {
   return weights[weights.length - 1].hand;
 };
 
+export const getFacingOpenPairs = (data: AppData): Array<{ heroPos: FacingOpenHeroPosition; villainPos: Position }> =>
+  Object.values(data.situations)
+    .filter((s) => s.drillType === 'facing_open' && s.situation.villainPos)
+    .map((s) => ({
+      heroPos: s.situation.heroPos as FacingOpenHeroPosition,
+      villainPos: s.situation.villainPos as Position,
+    }));
+
 export const nextPrompt = (
-  weightedMap?: Record<Position, WeightedHand[]>,
-): { position: Position; handClass: HandClass } => {
-  const position = randomPick([...POSITIONS]);
-  const weightedHands = weightedMap?.[position];
+  data: AppData,
+  weightedMap: Record<string, WeightedHand[]>,
+): { situation: Situation; handClass: HandClass } => {
+  const drillType: DrillType = data.settings.drillType;
+  if (drillType === 'rfi') {
+    const focus = data.settings.positionFocus.rfi.length ? data.settings.positionFocus.rfi : [...RFI_POSITIONS];
+    const heroPos = randomPick([...focus]);
+    const key = makeRfiKey(heroPos);
+    const weightedHands = weightedMap[key];
+    return {
+      situation: { game: 'NLH', table: '9max', effectiveStackBb: 100, heroPos, facingAction: 'none' },
+      handClass: weightedHands ? weightedPick(weightedHands) : randomPick(allHands),
+    };
+  }
+
+  const focusHeroes = data.settings.positionFocus.facing_open.length
+    ? data.settings.positionFocus.facing_open
+    : [...FACING_OPEN_HERO_POSITIONS];
+  const pairs = getFacingOpenPairs(data).filter((pair) => focusHeroes.includes(pair.heroPos));
+  const picked = randomPick(pairs.length ? pairs : getFacingOpenPairs(data));
+  const key = makeFacingOpenKey(picked.heroPos, picked.villainPos);
+  const weightedHands = weightedMap[key];
   return {
-    position,
+    situation: {
+      game: 'NLH',
+      table: '9max',
+      effectiveStackBb: 100,
+      heroPos: picked.heroPos,
+      facingAction: 'open',
+      villainPos: picked.villainPos,
+    },
     handClass: weightedHands ? weightedPick(weightedHands) : randomPick(allHands),
   };
 };
