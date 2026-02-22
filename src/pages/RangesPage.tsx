@@ -13,6 +13,8 @@ export function RangesPage({ data, onDataChange }: Props) {
   const key = `OPEN_9MAX_100BB_${position}`;
 
   const openHands = useMemo(() => data.situations[key]?.policy.openHands ?? [], [data, key]);
+  const openCount = openHands.length;
+  const raisePct = (openCount / 169) * 100;
 
   const apply = () => {
     const parsed = parseRangeShorthand(text);
@@ -32,6 +34,14 @@ export function RangesPage({ data, onDataChange }: Props) {
     <section>
       <h2>Ranges</h2>
       <PositionSelector value={position} onChange={setPosition} />
+      <div className="card">
+        <h3>Range review</h3>
+        <p>Raise: {raisePct.toFixed(1)}%</p>
+        <p>Fold: {(100 - raisePct).toFixed(1)}%</p>
+        <p>
+          Open hands: {openCount}/169
+        </p>
+      </div>
       <HandGrid openHands={openHands} />
       <label htmlFor="range-input">Import range (shorthand)</label>
       <textarea
@@ -39,7 +49,7 @@ export function RangesPage({ data, onDataChange }: Props) {
         rows={4}
         placeholder="e.g. 77+,A2s+,KTs+,AQo+"
         value={text}
-        onChange={(e) => setText(e.target.value)}
+        onChange={(e: any) => setText(e.target.value)}
       />
       <div className="row">
         <button className="primary" onClick={apply}>

@@ -8,8 +8,8 @@ export function HandGrid({ openHands, testedHand }: Props) {
   return (
     <div className="grid-wrap">
       <div className="hand-grid">
-        {RANKS.map((r, i) =>
-          RANKS.map((c, j) => {
+        {RANKS.map((_r, i) =>
+          RANKS.map((_c, j) => {
             const hand = gridCoordToHandClass(i, j);
             const open = openSet.has(hand);
             const tested = testedHand === hand;
