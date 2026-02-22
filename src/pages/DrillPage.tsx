@@ -27,6 +27,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   const [correctAction, setCorrectAction] = useState<DrillAction>('FOLD');
   const [shownNotice, setShownNotice] = useState(false);
   const [questionStartTs, setQuestionStartTs] = useState(() => Date.now());
+  const [nextPromptTimeoutId, setNextPromptTimeoutId] = useState<number | null>(null);
 
   const pickNextPrompt = (currentPrompt = prompt) => {
     let next = nextPrompt(data, weightedMap);
@@ -40,6 +41,11 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
     }
     return next;
   };
+
+
+  useEffect(() => () => {
+    if (nextPromptTimeoutId !== null) window.clearTimeout(nextPromptTimeoutId);
+  }, [nextPromptTimeoutId]);
 
   useEffect(() => {
     const freshPrompt = nextPrompt(data, weightedMap);
@@ -81,6 +87,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   };
 
   const answer = (action: DrillAction) => {
+    if (status !== 'idle') return;
     const expected = computeCorrectAction(data, prompt.situation, prompt.handClass);
     const ok = action === expected;
     setCorrectAction(expected);
@@ -141,7 +148,12 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
 
     if (ok) {
       setStatus('correct');
-      setTimeout(stepNext, 300);
+      if (nextPromptTimeoutId !== null) window.clearTimeout(nextPromptTimeoutId);
+      const timeoutId = window.setTimeout(() => {
+        setNextPromptTimeoutId(null);
+        stepNext();
+      }, 300);
+      setNextPromptTimeoutId(timeoutId);
     } else {
       setStatus('incorrect');
     }
