@@ -22,149 +22,158 @@ export const facingOpenKey = (heroPos: FacingOpenHeroPosition, villainPos: Posit
 
 // Editable baseline defaults for 9-max 100bb facing single RFI opens.
 const VS_OPEN_DEFAULTS_V2: Record<string, { call: string; threeBet: string }> = {
-  "UTG1_vs_UTG": {
-    threeBet: "QQ,KK,AA,AKs,AKo",
-    call:     "JJ,TT,99,AQs,AJs,KQs,QJs,JTs,T9s"
+  UTG1_vs_UTG: {
+    threeBet: 'QQ,KK,AA,AKs,AKo',
+    call: 'TT,JJ,AQs,AJs,KQs,QJs,JTs,T9s',
   },
-  "UTG2_vs_UTG": {
-    threeBet: "QQ,KK,AA,AKs,AKo,AQs",
-    call:     "JJ,TT,99,88,AJs,ATs,KQs,QJs,JTs,T9s,98s"
+  UTG2_vs_UTG: {
+    threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
+    call: '99,TT,JJ,AJs,ATs,KQs,QJs,JTs,T9s,98s',
   },
-  "UTG2_vs_UTG1": {
-    threeBet: "QQ,KK,AA,AKs,AKo,AQs",
-    call:     "JJ,TT,99,88,AJs,ATs,KQs,QJs,JTs,T9s,98s"
+  UTG2_vs_UTG1: {
+    threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
+    call: '99,TT,JJ,AJs,ATs,KQs,QJs,JTs,T9s,98s',
   },
-  "LJ_vs_UTG": {
-    threeBet: "QQ,KK,AA,AKs,AKo,AQs",
-    call:     "22,33,44,55,66,77,88,99,TT,JJ,AJs,ATs,KQs,QJs,JTs,T9s,98s"
+
+  LJ_vs_UTG: {
+    threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
+    call: '66,77,88,99,TT,JJ,AQs,AJs,KQs,QJs,JTs,T9s',
   },
-  "LJ_vs_UTG1": {
-    threeBet: "QQ,KK,AA,AKs,AKo,AQs",
-    call:     "22,33,44,55,66,77,88,99,TT,JJ,AJs,ATs,KQs,QJs,JTs,T9s,98s"
+  LJ_vs_UTG1: {
+    threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
+    call: '55,66,77,88,99,TT,JJ,AQs,AJs,ATs,KQs,QJs,JTs,T9s,98s',
   },
-  "LJ_vs_UTG2": {
-    threeBet: "JJ,QQ,KK,AA,AKs,AKo,AQs",
-    call:     "22,33,44,55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s"
+  LJ_vs_UTG2: {
+    threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs,AQo',
+    call: '44,55,66,77,88,99,TT,AQs,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s',
   },
-  "HJ_vs_UTG": {
-    threeBet: "QQ,KK,AA,AKs,AKo,AQs",
-    call:     "22,33,44,55,66,77,88,99,TT,JJ,AJs,ATs,KQs,QJs,JTs,T9s,98s"
+
+  HJ_vs_UTG: {
+    threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
+    call: '66,77,88,99,TT,JJ,AQs,AJs,KQs,QJs,JTs,T9s',
   },
-  "HJ_vs_UTG1": {
-    threeBet: "JJ,QQ,KK,AA,AKs,AKo,AQs",
-    call:     "22,33,44,55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s"
+  HJ_vs_UTG1: {
+    threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs',
+    call: '55,66,77,88,99,TT,AQs,AJs,ATs,KQs,QJs,JTs,T9s,98s',
   },
-  "HJ_vs_UTG2": {
-    threeBet: "JJ,QQ,KK,AA,AKs,AKo,AQs,AQo",
-    call:     "22,33,44,55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s,76s"
+  HJ_vs_UTG2: {
+    threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs,AQo',
+    call: '44,55,66,77,88,99,TT,AQs,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s',
   },
-  "HJ_vs_LJ": {
-    threeBet: "JJ,QQ,KK,AA,AKs,AKo,AQs,AQo",
-    call:     "22,33,44,55,66,77,88,99,TT,AJs,ATs,KQs,KJs,QJs,JTs,T9s,98s,87s,76s"
+  HJ_vs_LJ: {
+    threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs,AQo',
+    call: '33,44,55,66,77,88,99,TT,AQs,AJs,ATs,KQs,KJs,QJs,JTs,T9s,98s,87s',
   },
-  "CO_vs_UTG": {
-    threeBet: "QQ,KK,AA,AKs,AKo",
-    call:     "22,33,44,55,66,77,88,99,TT,JJ,AJs,AQs,KQs,QJs,JTs,T9s,98s"
+
+  CO_vs_UTG: {
+    threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
+    call: '66,77,88,99,TT,JJ,AJs,KQs,QJs,JTs,T9s',
   },
-  "CO_vs_UTG1": {
-    threeBet: "QQ,KK,AA,AKs,AKo,AQs",
-    call:     "22,33,44,55,66,77,88,99,TT,JJ,AJs,KQs,QJs,JTs,T9s,98s"
+  CO_vs_UTG1: {
+    threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
+    call: '55,66,77,88,99,TT,JJ,AJs,ATs,KQs,QJs,JTs,T9s,98s',
   },
-  "CO_vs_UTG2": {
-    threeBet: "JJ,QQ,KK,AA,AKs,AKo,AQs",
-    call:     "22,33,44,55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s"
+  CO_vs_UTG2: {
+    threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs,AQo',
+    call: '44,55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s',
   },
-  "CO_vs_LJ": {
-    threeBet: "JJ,QQ,KK,AA,AKs,AKo,AQs,AQo",
-    call:     "22,33,44,55,66,77,88,99,TT,ATs,AJs,KQs,QJs,JTs,T9s,98s,87s"
+  CO_vs_LJ: {
+    threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs,AQo',
+    call: '33,44,55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s',
   },
-  "CO_vs_HJ": {
-    threeBet: "TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s",
-    call:     "22,33,44,55,66,77,88,99,ATs,AJs,KQs,KJs,QJs,JTs,T9s,98s,87s,76s"
+  CO_vs_HJ: {
+    threeBet: 'TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s',
+    call: '22,33,44,55,66,77,88,99,AJs,ATs,KQs,KJs,QJs,JTs,T9s,98s,87s,76s',
   },
-  "BTN_vs_UTG": {
-    threeBet: "QQ,KK,AA,AKs,AKo,AQs",
-    call:     "22,33,44,55,66,77,88,99,TT,JJ,AJs,KQs,QJs,JTs,T9s,98s,87s"
+
+  BTN_vs_UTG: {
+    threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
+    call: '55,66,77,88,99,TT,JJ,AJs,KQs,QJs,JTs,T9s,98s,87s',
   },
-  "BTN_vs_UTG1": {
-    threeBet: "JJ,QQ,KK,AA,AKs,AKo,AQs,AQo",
-    call:     "22,33,44,55,66,77,88,99,TT,AJs,ATs,KQs,KJs,QJs,JTs,T9s,98s,87s,76s"
+  BTN_vs_UTG1: {
+    threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs,AQo',
+    call: '44,55,66,77,88,99,TT,AJs,ATs,KQs,KJs,QJs,JTs,T9s,98s,87s,76s',
   },
-  "BTN_vs_UTG2": {
-    threeBet: "TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s",
-    call:     "22,33,44,55,66,77,88,99,ATs,AJs,AJo,KQs,KJs,QJs,JTs,T9s,98s,87s,76s,65s"
+  BTN_vs_UTG2: {
+    threeBet: 'TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s',
+    call: '33,44,55,66,77,88,99,AJs,ATs,AJo,KQs,KJs,QJs,JTs,T9s,98s,87s,76s,65s',
   },
-  "BTN_vs_LJ": {
-    threeBet: "TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,KQs",
-    call:     "22,33,44,55,66,77,88,99,A9s,ATs,AJs,AJo,KJs,QJs,JTs,T9s,98s,87s,76s,65s"
+  BTN_vs_LJ: {
+    threeBet: 'TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,KQs',
+    call: '22,33,44,55,66,77,88,99,A9s,ATs,AJs,AJo,KJs,QJs,JTs,T9s,98s,87s,76s,65s',
   },
-  "BTN_vs_HJ": {
-    threeBet: "99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,KQs,KJs",
-    call:     "22,33,44,55,66,77,88,A8s,A9s,ATs,AJs,AJo,KTs,QTs,QJs,JTs,T9s,98s,87s,76s,65s,54s"
+  BTN_vs_HJ: {
+    // AQs MUST continue (call or 3bet) — never fold.
+    threeBet: '99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,KQs,KJs',
+    call: '22,33,44,55,66,77,88,A9s,ATs,AJs,AJo,KTs,QTs,QJs,JTs,T9s,98s,87s,76s,65s,54s',
   },
-  "BTN_vs_CO": {
-    threeBet: "99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,KQs,KJs,QJs,JTs",
-    call:     "22,33,44,55,66,77,88,A2s,A3s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,KTs,KQo,QTs,QJo,T9s,98s,87s,76s,65s,54s,T9o"
+  BTN_vs_CO: {
+    // AQs MUST continue (call or 3bet) — never fold.
+    threeBet: '99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,KQs,KJs,QJs,JTs',
+    call: '22,33,44,55,66,77,88,A2s,A3s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,KTs,KQo,QTs,QJo,T9s,98s,87s,76s,65s,54s,T9o',
   },
-  "SB_vs_UTG": {
-    threeBet: "QQ,KK,AA,AKs,AKo,AQs",
-    call:     "22,33,44,55,66,77,88,99,TT,JJ,AJs,KQs,QJs,JTs,T9s,98s"
+
+  SB_vs_UTG: {
+    threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
+    call: '66,77,88,99,TT,JJ,AJs,KQs,QJs,JTs,T9s,98s',
   },
-  "SB_vs_UTG1": {
-    threeBet: "JJ,QQ,KK,AA,AKs,AKo,AQs,AQo",
-    call:     "22,33,44,55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s"
+  SB_vs_UTG1: {
+    threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs,AQo',
+    call: '55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s',
   },
-  "SB_vs_UTG2": {
-    threeBet: "TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s",
-    call:     "22,33,44,55,66,77,88,99,ATs,AJs,AJo,KQs,QJs,JTs,T9s,98s,87s,76s"
+  SB_vs_UTG2: {
+    threeBet: 'TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s',
+    call: '44,55,66,77,88,99,AJs,ATs,AJo,KQs,QJs,JTs,T9s,98s,87s,76s',
   },
-  "SB_vs_LJ": {
-    threeBet: "TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,KQs",
-    call:     "22,33,44,55,66,77,88,99,A9s,ATs,AJs,AJo,KJs,QJs,JTs,T9s,98s,87s,76s,65s"
+  SB_vs_LJ: {
+    threeBet: 'TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,KQs',
+    call: '33,44,55,66,77,88,99,A9s,ATs,AJs,AJo,KJs,QJs,JTs,T9s,98s,87s,76s,65s',
   },
-  "SB_vs_HJ": {
-    threeBet: "99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,KQs,KJs,QJs",
-    call:     "22,33,44,55,66,77,88,A8s,A9s,ATs,AJs,AJo,KTs,QTs,JTs,T9s,98s,87s,76s,65s,54s"
+  SB_vs_HJ: {
+    threeBet: '99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,KQs,KJs,QJs',
+    call: '22,33,44,55,66,77,88,A9s,ATs,AJs,AJo,KTs,QTs,JTs,T9s,98s,87s,76s,65s,54s',
   },
-  "SB_vs_CO": {
-    threeBet: "99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,KQs,KJs,QJs,JTs,T9s",
-    call:     "22,33,44,55,66,77,88,A2s,A3s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,KTs,KQo,QTs,QJo,JTo,98s,87s,76s,65s,54s,T9o"
+  SB_vs_CO: {
+    threeBet: '99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,KQs,KJs,QJs,JTs,T9s',
+    call: '22,33,44,55,66,77,88,A2s,A3s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,KTs,KQo,QTs,QJo,JTo,98s,87s,76s,65s,54s,T9o',
   },
-  "SB_vs_BTN": {
-    threeBet: "88,99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,KQs,KJs,QJs,JTs,T9s,98s",
-    call:     "22,33,44,55,66,77,A2s,A3s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,K9s,KTs,QTs,QJo,JTo,T8s,87s,76s,65s,54s,T9o,98o"
+  SB_vs_BTN: {
+    threeBet: '88,99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,KQs,KJs,QJs,JTs,T9s,98s',
+    call: '22,33,44,55,66,77,A2s,A3s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,K9s,KTs,QTs,QJo,JTo,T8s,87s,76s,65s,54s,T9o',
   },
-  "BB_vs_UTG": {
-    threeBet: "QQ,KK,AA,AKs,AKo,AQs",
-    call:     "22,33,44,55,66,77,88,99,TT,JJ,AJs,KQs,QJs,JTs,T9s,98s,87s,76s"
+
+  BB_vs_UTG: {
+    threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
+    call: '55,66,77,88,99,TT,JJ,AJs,KQs,QJs,JTs,T9s,98s,87s,76s',
   },
-  "BB_vs_UTG1": {
-    threeBet: "JJ,QQ,KK,AA,AKs,AKo,AQs,AQo",
-    call:     "22,33,44,55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s,76s,65s"
+  BB_vs_UTG1: {
+    threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs,AQo',
+    call: '44,55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s,76s,65s',
   },
-  "BB_vs_UTG2": {
-    threeBet: "TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s",
-    call:     "22,33,44,55,66,77,88,99,ATs,AJs,AJo,KQs,QJs,JTs,T9s,98s,87s,76s,65s,54s"
+  BB_vs_UTG2: {
+    threeBet: 'TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s',
+    call: '33,44,55,66,77,88,99,ATs,AJs,AJo,KQs,QJs,JTs,T9s,98s,87s,76s,65s,54s',
   },
-  "BB_vs_LJ": {
-    threeBet: "TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,KQs",
-    call:     "22,33,44,55,66,77,88,99,A9s,ATs,AJs,AJo,KJs,QJs,JTs,T9s,98s,87s,76s,65s,54s"
+  BB_vs_LJ: {
+    threeBet: 'TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,KQs',
+    call: '22,33,44,55,66,77,88,99,A9s,ATs,AJs,AJo,KJs,QJs,JTs,T9s,98s,87s,76s,65s,54s',
   },
-  "BB_vs_HJ": {
-    threeBet: "99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,KQs,KJs",
-    call:     "22,33,44,55,66,77,88,A8s,A9s,ATs,AJs,AJo,KTs,QTs,QJs,JTs,T9s,98s,87s,76s,65s,54s,T9o"
+  BB_vs_HJ: {
+    threeBet: '99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,KQs,KJs',
+    call: '22,33,44,55,66,77,88,A9s,ATs,AJs,AJo,KTs,QTs,QJs,JTs,T9s,98s,87s,76s,65s,54s,T9o',
   },
-  "BB_vs_CO": {
-    threeBet: "99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,KQs,KJs,QJs,JTs",
-    call:     "22,33,44,55,66,77,88,A2s,A3s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,K9s,KTs,KQo,QTs,QJo,JTo,T8s,98s,87s,76s,65s,54s,T9o,98o"
+  BB_vs_CO: {
+    threeBet: '99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,KQs,KJs,QJs,JTs',
+    call: '22,33,44,55,66,77,88,A2s,A3s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,K9s,KTs,KQo,QTs,QJo,JTo,T8s,98s,87s,76s,65s,54s,T9o',
   },
-  "BB_vs_BTN": {
-    threeBet: "88,99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,A3s,KQs,KJs,QJs,JTs,T9s,98s,87s",
-    call:     "22,33,44,55,66,77,A2s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,ATo,K8s,K9s,KTs,KQo,Q8s,QTs,QJo,J8s,JTo,T8s,T9o,97s,86s,76s,65s,54s,43s,98o,87o"
+  BB_vs_BTN: {
+    // AQo MUST continue (call or 3bet) — never fold.
+    threeBet: '88,99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,A3s,KQs,KJs,QJs,JTs,T9s,98s,87s',
+    call: '22,33,44,55,66,77,A2s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,ATo,K8s,K9s,KTs,KQo,Q8s,QTs,QJo,J8s,JTo,T8s,T9o,97s,86s,76s,65s,54s,43s',
   },
-  "BB_vs_SB": {
-    threeBet: "99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,KQs,KJs,QJs",
-    call:     "22,33,44,55,66,77,88,A2s,A3s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,K9s,KTs,KQo,Q9s,QTs,QJo,J9s,JTo,T8s,T9o,98s,87s,76s,65s,54s,98o"
+  BB_vs_SB: {
+    threeBet: '99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,KQs,KJs,QJs',
+    call: '22,33,44,55,66,77,88,A2s,A3s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,K9s,KTs,KQo,Q9s,QTs,QJo,J9s,JTo,T8s,T9o,98s,87s,76s,65s,54s',
   },
 };
 
