@@ -1,23 +1,21 @@
 import { RANKS, type HandClass } from '../lib/types';
 import { gridCoordToHandClass } from '../lib/hands';
 
-type Props = { openHands: HandClass[]; testedHand?: HandClass };
+export type GridAction = 'raise' | 'limp' | 'call' | 'threebet' | 'fold';
 
-export function HandGrid({ openHands, testedHand }: Props) {
-  const openSet = new Set(openHands);
+type Props = { actionMap: Partial<Record<HandClass, GridAction>>; testedHand?: HandClass };
+
+export function HandGrid({ actionMap, testedHand }: Props) {
   return (
     <div className="grid-wrap">
       <div className="hand-grid">
         {RANKS.map((_r, i) =>
           RANKS.map((_c, j) => {
             const hand = gridCoordToHandClass(i, j);
-            const open = openSet.has(hand);
+            const action = actionMap[hand] ?? 'fold';
             const tested = testedHand === hand;
             return (
-              <div
-                key={`${i}-${j}`}
-                className={`cell ${open ? 'open' : ''} ${tested ? 'tested' : ''}`}
-              >
+              <div key={`${i}-${j}`} className={`cell action-${action} ${tested ? 'tested' : ''}`}>
                 {hand}
               </div>
             );

@@ -50,7 +50,7 @@ function App() {
           />
         )}
         {tab === 'ranges' && <RangesPage data={data} onDataChange={onDataChange} />}
-        {tab === 'stats' && <StatsPage data={data} />}
+        {tab === 'stats' && <StatsPage data={data} session={session} />}
         {tab === 'settings' && (
           <SettingsPage
             data={data}

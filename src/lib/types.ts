@@ -1,8 +1,19 @@
-export const POSITIONS = ['UTG', 'UTG1', 'UTG2', 'LJ', 'HJ', 'CO', 'BTN', 'SB'] as const;
+export const POSITIONS = ['UTG', 'UTG1', 'UTG2', 'LJ', 'HJ', 'CO', 'BTN', 'SB', 'BB'] as const;
 export type Position = (typeof POSITIONS)[number];
 
-export type FacingAction = 'none' | 'open' | '3bet' | '4bet';
-export type Action = 'OPEN' | 'FOLD';
+export const RFI_POSITIONS = ['UTG', 'UTG1', 'UTG2', 'LJ', 'HJ', 'CO', 'BTN', 'SB'] as const;
+export type RfiPosition = (typeof RFI_POSITIONS)[number];
+
+export const FACING_OPEN_HERO_POSITIONS = ['CO', 'BTN', 'SB', 'BB'] as const;
+export type FacingOpenHeroPosition = (typeof FACING_OPEN_HERO_POSITIONS)[number];
+
+export type DrillType = 'rfi' | 'facing_open';
+export type TableFormat = '9max';
+export type FacingAction = 'none' | 'open';
+
+export type RfiAction = 'RAISE' | 'LIMP' | 'FOLD';
+export type FacingOpenAction = 'FOLD' | 'CALL' | '3BET';
+export type DrillAction = RfiAction | FacingOpenAction;
 
 export const RANKS = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2'] as const;
 export type Rank = (typeof RANKS)[number];
@@ -13,55 +24,75 @@ export type OffsuitHandClass = `${Rank}${Rank}o`;
 export type HandClass = PairHandClass | SuitedHandClass | OffsuitHandClass;
 
 export type Situation = {
-  seats: number;
-  effectiveStackBb: number;
-  position: Position;
+  game: 'NLH';
+  table: TableFormat;
+  effectiveStackBb: 100;
+  heroPos: Position;
   facingAction: FacingAction;
+  villainPos?: Position;
 };
 
-export type Policy = {
-  openHands: HandClass[];
+export type RfiPolicy = {
+  raise: HandClass[];
+  limp?: HandClass[];
+};
+
+export type FacingOpenPolicy = {
+  call: HandClass[];
+  threeBet: HandClass[];
 };
 
 export type SituationPolicyRecord = {
   situation: Situation;
-  actionSet: Action[];
-  policy: Policy;
+  drillType: DrillType;
+  actionSet: DrillAction[];
+  policy: RfiPolicy | FacingOpenPolicy;
 };
 
 export type StatsEntry = { attempts: number; correct: number };
 
+export type MistakeEntry = { count: number; lastTs: number };
+
 export type DifficultyMode = 'normal' | 'hard' | 'uniform';
 
 export type AppData = {
-  version: 3;
-  meta: { game: 'NLH'; seats: 9; effectiveStackBb: 100 };
+  version: 4;
+  meta: { game: 'NLH'; table: '9max'; effectiveStackBb: 100 };
   rangesetName: string;
   situations: Record<string, SituationPolicyRecord>;
   stats: {
     total: StatsEntry;
-    byPosition: Record<Position, StatsEntry>;
+    byRfiPosition: Record<RfiPosition, StatsEntry>;
+    byFacingHero: Record<FacingOpenHeroPosition, StatsEntry>;
+    byFacingMatchup: Record<string, StatsEntry>;
     byHand: Record<string, StatsEntry>;
-    mistakes: Record<string, { count: number; lastTs: number }>;
+    mistakes: Record<string, MistakeEntry>;
   };
   settings: {
     revealOnIncorrectOnly: boolean;
     handDisplayMode: 'class';
-    randomPositionMode: 'uniform';
     randomHandMode: 'uniform169';
     difficulty: DifficultyMode;
     defaultPresetId: import('./presets').PresetId;
+    drillType: DrillType;
+    positionFocus: {
+      rfi: RfiPosition[];
+      facing_open: FacingOpenHeroPosition[];
+    };
   };
+  migrationNotice?: string;
 };
 
 export type SessionStats = {
-  version: 1;
+  version: 2;
   attempts: number;
   correct: number;
-  byPosition: Record<Position, StatsEntry>;
+  byRfiPosition: Record<RfiPosition, StatsEntry>;
+  byFacingHero: Record<FacingOpenHeroPosition, StatsEntry>;
+  totalResponseMs: number;
 };
 
-export const APP_VERSION = '1.2.0';
-export const STORAGE_VERSION = 3;
-export const STORAGE_KEY = 'poker_range_drill_v1';
-export const SESSION_STORAGE_KEY = 'poker_range_drill_session_v1';
+export const APP_VERSION = '2.0.0';
+export const STORAGE_VERSION = 4;
+export const STORAGE_KEY = 'poker_range_drill_v2';
+export const SESSION_STORAGE_KEY = 'poker_range_drill_session_v2';
