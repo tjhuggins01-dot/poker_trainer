@@ -40,6 +40,50 @@ const defaultFacingOpenSelection = {
   villainPos: FACING_OPEN_VILLAIN_BY_HERO.UTG1[0],
 };
 
+const withDefaultStatsEntry = (entry: any) => ({
+  attempts: typeof entry?.attempts === 'number' ? entry.attempts : 0,
+  correct: typeof entry?.correct === 'number' ? entry.correct : 0,
+});
+
+const normalizeSession = (raw: any): SessionStats => {
+  const next = createDefaultSession();
+  next.attempts = typeof raw?.attempts === 'number' ? raw.attempts : 0;
+  next.correct = typeof raw?.correct === 'number' ? raw.correct : 0;
+  next.totalResponseMs = typeof raw?.totalResponseMs === 'number' ? raw.totalResponseMs : 0;
+  RFI_POSITIONS.forEach((position) => {
+    next.byRfiPosition[position] = withDefaultStatsEntry(raw?.byRfiPosition?.[position] ?? raw?.byPosition?.[position]);
+  });
+  FACING_OPEN_HERO_POSITIONS.forEach((position) => {
+    next.byFacingHero[position] = withDefaultStatsEntry(raw?.byFacingHero?.[position]);
+  });
+  return next;
+};
+
+const normalizeCurrentData = (raw: any): AppData => {
+  const next = structuredClone(raw) as AppData;
+  const defaults = createDefaultData();
+  next.stats = next.stats ?? defaults.stats;
+  next.stats.total = withDefaultStatsEntry(next.stats.total);
+  next.stats.byRfiPosition = next.stats.byRfiPosition ?? createEmptyRfiStats();
+  RFI_POSITIONS.forEach((position) => {
+    next.stats.byRfiPosition[position] = withDefaultStatsEntry(next.stats.byRfiPosition[position]);
+  });
+  next.stats.byFacingHero = next.stats.byFacingHero ?? createEmptyFacingStats();
+  FACING_OPEN_HERO_POSITIONS.forEach((position) => {
+    next.stats.byFacingHero[position] = withDefaultStatsEntry(next.stats.byFacingHero[position]);
+  });
+  next.stats.byFacingMatchup = next.stats.byFacingMatchup ?? {};
+  next.stats.byHand = next.stats.byHand ?? {};
+  next.stats.mistakes = next.stats.mistakes ?? {};
+  next.settings = { ...defaults.settings, ...next.settings };
+  next.settings.positionFocus = {
+    rfi: next.settings.positionFocus?.rfi ?? defaults.settings.positionFocus.rfi,
+    facing_open: next.settings.positionFocus?.facing_open ?? defaults.settings.positionFocus.facing_open,
+  };
+  next.settings.facingOpenSelection = next.settings.facingOpenSelection ?? defaultFacingOpenSelection;
+  return next;
+};
+
 const hasNoOverlap = (a: string[], b: string[]) => !a.some((hand) => b.includes(hand));
 
 const makeRfiSituationRecord = (
@@ -166,7 +210,7 @@ const migrateV5ToCurrent = (record: any): AppData => {
 const migrateToCurrent = (rawData: unknown): AppData => {
   if (!rawData || typeof rawData !== 'object') return createDefaultData();
   const record = rawData as any;
-  if (record.version === STORAGE_VERSION) return record as AppData;
+  if (record.version === STORAGE_VERSION) return normalizeCurrentData(record);
   if (record.version === 5) return migrateV5ToCurrent(record);
   if (record.version === 4) return migrateLegacy(record);
   return migrateLegacy(record);
@@ -204,14 +248,7 @@ export const createDefaultSession = (): SessionStats => ({
 });
 
 const migrateSession = (raw: any): SessionStats => {
-  if (raw?.version === 2) return raw as SessionStats;
-  const next = createDefaultSession();
-  next.attempts = raw?.attempts ?? 0;
-  next.correct = raw?.correct ?? 0;
-  RFI_POSITIONS.forEach((p) => {
-    next.byRfiPosition[p] = raw?.byPosition?.[p] ?? { attempts: 0, correct: 0 };
-  });
-  return next;
+  return normalizeSession(raw);
 };
 
 export const loadSession = (): SessionStats => {
