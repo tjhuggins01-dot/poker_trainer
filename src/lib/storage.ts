@@ -29,10 +29,15 @@ export const createDefaultData = (): AppData => {
   const situations: AppData['situations'] = {};
   POSITIONS.forEach((position) => {
     const parsed = parseRangeShorthand(defaults[position]);
-    situations[`OPEN_9MAX_100BB_${position}`] = makeSituationRecord(position, parsed.ok ? parsed.hands : []);
+    situations[`OPEN_9MAX_100BB_${position}`] = makeSituationRecord(
+      position,
+      parsed.ok ? parsed.hands : [],
+    );
   });
 
-  const byPosition = Object.fromEntries(POSITIONS.map((p) => [p, { attempts: 0, correct: 0 }])) as AppData['stats']['byPosition'];
+  const byPosition = Object.fromEntries(
+    POSITIONS.map((p) => [p, { attempts: 0, correct: 0 }]),
+  ) as AppData['stats']['byPosition'];
 
   return {
     version: STORAGE_VERSION,

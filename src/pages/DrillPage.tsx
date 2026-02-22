@@ -16,7 +16,10 @@ export function DrillPage({ data, onDataChange }: Props) {
   const [sessionCorrect, setSessionCorrect] = useState(0);
 
   const positionKey = `OPEN_9MAX_100BB_${prompt.position}`;
-  const openHands = useMemo(() => data.situations[positionKey]?.policy.openHands ?? [], [data, positionKey]);
+  const openHands = useMemo(
+    () => data.situations[positionKey]?.policy.openHands ?? [],
+    [data, positionKey],
+  );
 
   const answer = (action: Action) => {
     const expected = computeCorrectAction(

@@ -28,7 +28,10 @@ const expandNonPairPlus = (a: string, b: string, suffix: 's' | 'o'): HandClass[]
 export const parseRangeShorthand = (
   input: string,
 ): { ok: true; hands: HandClass[] } | { ok: false; error: string } => {
-  const tokens = input.split(/[\s,]+/).map((t) => t.trim()).filter(Boolean);
+  const tokens = input
+    .split(/[\s,]+/)
+    .map((t) => t.trim())
+    .filter(Boolean);
   const out = new Set<HandClass>();
 
   for (const token of tokens) {
@@ -61,7 +64,10 @@ export const parseRangeShorthand = (
 
     const hand = canonicalizeHandClass(up);
     if (!hand) {
-      return { ok: false, error: `Invalid token: ${token}. Use AA, AKs, AKo, 77+, A2s+, ATo+, 22-66.` };
+      return {
+        ok: false,
+        error: `Invalid token: ${token}. Use AA, AKs, AKo, 77+, A2s+, ATo+, 22-66.`,
+      };
     }
     out.add(hand);
   }

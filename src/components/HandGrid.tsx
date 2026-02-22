@@ -14,7 +14,10 @@ export function HandGrid({ openHands, testedHand }: Props) {
             const open = openSet.has(hand);
             const tested = testedHand === hand;
             return (
-              <div key={`${i}-${j}`} className={`cell ${open ? 'open' : ''} ${tested ? 'tested' : ''}`}>
+              <div
+                key={`${i}-${j}`}
+                className={`cell ${open ? 'open' : ''} ${tested ? 'tested' : ''}`}
+              >
                 {hand}
               </div>
             );
