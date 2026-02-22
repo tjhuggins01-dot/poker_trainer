@@ -17,7 +17,7 @@ Mobile-first Vite + React + TypeScript single-page trainer for 9-max ~100bb pref
 - Settings tab with localStorage-backed toggles and reset controls.
 - Offline-capable local-only persistence under `poker_range_drill_v1`.
 
-## Run locally
+## Local development
 
 ```bash
 npm install
@@ -34,6 +34,32 @@ npm run lint
 npm run format
 npm run preview
 ```
+
+## GitHub Pages deployment
+
+- Deployment runs automatically via `.github/workflows/deploy.yml` when you push to `main`.
+- You can also trigger deploy manually from the **Actions** tab using `workflow_dispatch`.
+- In GitHub, set **Repo → Settings → Pages → Source** to **GitHub Actions**.
+
+## Set the correct repository name
+
+- Open `vite.config.ts` and update:
+
+```ts
+const REPO_NAME = 'poker_trainer';
+```
+
+- Change this value to your actual GitHub repository name so Vite base path and PWA paths work under `https://<user>.github.io/<repo>/`.
+
+## Offline / Install on phone (GitHub Pages)
+
+1. Deploy and open your GitHub Pages URL over HTTPS on your phone.
+2. Use **Add to Home Screen** / **Install** in the browser.
+3. Launch the app once while online.
+4. Turn on airplane mode.
+5. Launch again from the home screen icon to confirm offline startup.
+
+Ranges, settings, and stats are persisted in localStorage and remain available offline on the same device/browser profile.
 
 ## VS Code
 
@@ -57,21 +83,3 @@ npm run preview
   - **Reset session**
   - **Reset historical stats only** (keeps ranges/settings)
   - **Reset all data (ranges + stats + settings)**
-
-
-## Offline / Install
-
-To test the PWA behavior locally:
-
-```bash
-npm run build
-npm run preview -- --host
-```
-
-Then on phone:
-
-1. Open the preview URL in the browser.
-2. Use **Add to Home Screen** to install.
-3. Open once online, then enable airplane mode and reopen the app to confirm offline launch.
-
-All ranges, settings, and stats are stored in localStorage and remain available offline on the same device/browser profile.
