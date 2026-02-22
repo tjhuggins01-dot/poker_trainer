@@ -1,3 +1,4 @@
+import { PRESETS, type PresetId } from './presets';
 import { parseRangeShorthand } from './parser';
 import {
   POSITIONS,
@@ -10,16 +11,7 @@ import {
   type SituationPolicyRecord,
 } from './types';
 
-const defaults: Record<Position, string> = {
-  UTG: '77+,AJs+,KQs,AQo+',
-  UTG1: '66+,ATs+,KJs+,QJs,AQo+,KQo',
-  UTG2: '55+,A9s+,KTs+,QTs+,JTs,ATo+,KQo',
-  LJ: '44+,A7s+,KTs+,QTs+,JTs,T9s,AJo+,KQo',
-  HJ: '33+,A5s+,K9s+,Q9s+,J9s+,T9s,98s,AJo+,KQo',
-  CO: '22+,A2s+,K8s+,Q8s+,J8s+,T8s+,97s+,87s,A9o+,KTo+,QTo+',
-  BTN: '22+,A2s+,K2s+,Q6s+,J7s+,T7s+,96s+,86s+,76s,65s,A2o+,K8o+,Q9o+,J9o+,T9o',
-  SB: '22+,A2s+,K5s+,Q7s+,J8s+,T8s+,98s,87s,A2o+,K9o+,Q9o+,JTo',
-};
+const defaultPresetId: PresetId = 'v2_standard';
 
 const makeSituationRecord = (position: Position, openHands: string[]): SituationPolicyRecord => ({
   situation: { seats: 9, effectiveStackBb: 100, position, facingAction: 'none' },
@@ -36,7 +28,7 @@ const createEmptyByPosition = (): Record<Position, { attempts: number; correct: 
 export const createDefaultData = (): AppData => {
   const situations: AppData['situations'] = {};
   POSITIONS.forEach((position) => {
-    const parsed = parseRangeShorthand(defaults[position]);
+    const parsed = parseRangeShorthand(PRESETS[defaultPresetId].defaults[position]);
     situations[`OPEN_9MAX_100BB_${position}`] = makeSituationRecord(
       position,
       parsed.ok ? parsed.hands : [],
@@ -60,6 +52,7 @@ export const createDefaultData = (): AppData => {
       randomPositionMode: 'uniform',
       randomHandMode: 'uniform169',
       difficulty: 'normal',
+      defaultPresetId,
     },
   };
 };
@@ -72,10 +65,25 @@ const migrateToCurrent = (rawData: unknown): AppData => {
     return record as AppData;
   }
 
+  if (record.version === 2) {
+    const v2 = record as Omit<AppData, 'version' | 'settings'> & {
+      version: 2;
+      settings: Omit<AppData['settings'], 'defaultPresetId'>;
+    };
+    return {
+      ...v2,
+      version: STORAGE_VERSION,
+      settings: {
+        ...v2.settings,
+        defaultPresetId,
+      },
+    };
+  }
+
   if (record.version === 1) {
     const v1 = record as Omit<AppData, 'version' | 'settings'> & {
       version: 1;
-      settings: Omit<AppData['settings'], 'difficulty'>;
+      settings: Omit<AppData['settings'], 'difficulty' | 'defaultPresetId'>;
     };
     return {
       ...v1,
@@ -83,6 +91,7 @@ const migrateToCurrent = (rawData: unknown): AppData => {
       settings: {
         ...v1.settings,
         difficulty: 'normal',
+        defaultPresetId,
       },
     };
   }

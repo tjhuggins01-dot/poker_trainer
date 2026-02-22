@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { HandGrid } from '../components/HandGrid';
 import { PositionSelector } from '../components/PositionSelector';
 import { parseRangeShorthand } from '../lib/parser';
+import { PRESETS } from '../lib/presets';
 import { type AppData, type Position } from '../lib/types';
 
 type Props = { data: AppData; onDataChange: (updater: (prev: AppData) => AppData) => void };
@@ -30,6 +31,21 @@ export function RangesPage({ data, onDataChange }: Props) {
     setMessage(`Applied ${parsed.hands.length} hands to ${position}.`);
   };
 
+  const resetPositionToPreset = () => {
+    const shorthand = PRESETS[data.settings.defaultPresetId].defaults[position];
+    const parsed = parseRangeShorthand(shorthand);
+    if (!parsed.ok) {
+      setMessage(parsed.error);
+      return;
+    }
+    onDataChange((prev) => {
+      const next = structuredClone(prev);
+      next.situations[key].policy.openHands = parsed.hands;
+      return next;
+    });
+    setMessage(`Reset ${position} to ${PRESETS[data.settings.defaultPresetId].name}.`);
+  };
+
   return (
     <section>
       <h2>Ranges</h2>
@@ -55,6 +71,7 @@ export function RangesPage({ data, onDataChange }: Props) {
         <button className="primary" onClick={apply}>
           Apply
         </button>
+        <button onClick={resetPositionToPreset}>Reset position to preset</button>
         <button
           onClick={() => {
             onDataChange((prev) => {

@@ -57,3 +57,21 @@ npm run preview
   - **Reset session**
   - **Reset historical stats only** (keeps ranges/settings)
   - **Reset all data (ranges + stats + settings)**
+
+
+## Offline / Install
+
+To test the PWA behavior locally:
+
+```bash
+npm run build
+npm run preview -- --host
+```
+
+Then on phone:
+
+1. Open the preview URL in the browser.
+2. Use **Add to Home Screen** to install.
+3. Open once online, then enable airplane mode and reopen the app to confirm offline launch.
+
+All ranges, settings, and stats are stored in localStorage and remain available offline on the same device/browser profile.
