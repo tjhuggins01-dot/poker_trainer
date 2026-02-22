@@ -13,12 +13,17 @@ export function RangesPage({ data, onDataChange }: Props) {
   const [mode, setMode] = useState<'rfi' | 'facing_open'>('rfi');
   const [position, setPosition] = useState<RfiPosition>('UTG');
   const pairs = getFacingOpenPairs(data);
-  const [facingPair, setFacingPair] = useState<{ heroPos: FacingOpenHeroPosition; villainPos: Position }>(pairs[0]);
+  const [facingPair, setFacingPair] = useState<{ heroPos: FacingOpenHeroPosition; villainPos: Position } | null>(pairs[0] ?? null);
   const [raiseText, setRaiseText] = useState('');
   const [secondaryText, setSecondaryText] = useState('');
   const [message, setMessage] = useState('');
 
-  const key = mode === 'rfi' ? makeRfiKey(position) : makeFacingOpenKey(facingPair.heroPos, facingPair.villainPos);
+  const activeFacingPair = useMemo(
+    () => (facingPair && pairs.some((p) => p.heroPos === facingPair.heroPos && p.villainPos === facingPair.villainPos) ? facingPair : pairs[0] ?? null),
+    [facingPair, pairs],
+  );
+
+  const key = mode === 'rfi' || !activeFacingPair ? makeRfiKey(position) : makeFacingOpenKey(activeFacingPair.heroPos, activeFacingPair.villainPos);
   const policy = data.situations[key]?.policy as any;
 
   const actionMap = useMemo(() => {
@@ -31,6 +36,10 @@ export function RangesPage({ data, onDataChange }: Props) {
   }, [policy]);
 
   const apply = () => {
+    if (mode === 'facing_open' && !activeFacingPair) {
+      setMessage('No facing-open matchups found in your saved data. Reset all data in Settings to restore defaults.');
+      return;
+    }
     const primary = parseRangeShorthand(raiseText);
     const secondary = parseRangeShorthand(secondaryText || '');
     if (!primary.ok) return setMessage(primary.error);
@@ -40,7 +49,9 @@ export function RangesPage({ data, onDataChange }: Props) {
 
     onDataChange((prev) => {
       const next = structuredClone(prev);
-      const p = next.situations[key].policy as any;
+      const target = next.situations[key];
+      if (!target) return prev;
+      const p = target.policy as any;
       if (mode === 'rfi') {
         p.raise = primary.hands;
         if (position === 'SB') p.limp = secondary.hands;
@@ -70,19 +81,24 @@ export function RangesPage({ data, onDataChange }: Props) {
       {mode === 'rfi' ? (
         <PositionSelector value={position} options={RFI_POSITIONS} onChange={setPosition} />
       ) : (
-        <select
-          value={facingOpenKey(facingPair.heroPos, facingPair.villainPos)}
-          onChange={(e: any) => {
-            const found = pairs.find((p) => facingOpenKey(p.heroPos, p.villainPos) === e.target.value);
-            if (found) setFacingPair(found);
-          }}
-        >
-          {pairs.map((p) => (
-            <option key={facingOpenKey(p.heroPos, p.villainPos)} value={facingOpenKey(p.heroPos, p.villainPos)}>
-              {p.heroPos} vs {p.villainPos}
-            </option>
-          ))}
-        </select>
+        <>
+          <select
+            value={activeFacingPair ? facingOpenKey(activeFacingPair.heroPos, activeFacingPair.villainPos) : ''}
+            onChange={(e: any) => {
+              const found = pairs.find((p) => facingOpenKey(p.heroPos, p.villainPos) === e.target.value);
+              if (found) setFacingPair(found);
+            }}
+            disabled={!activeFacingPair}
+          >
+            {activeFacingPair ? null : <option value="">No facing-open matchups available</option>}
+            {pairs.map((p) => (
+              <option key={facingOpenKey(p.heroPos, p.villainPos)} value={facingOpenKey(p.heroPos, p.villainPos)}>
+                {p.heroPos} vs {p.villainPos}
+              </option>
+            ))}
+          </select>
+          {!activeFacingPair && <p className="muted">No facing-open matchups found in your saved data.</p>}
+        </>
       )}
 
       <div className="card">
@@ -112,11 +128,12 @@ export function RangesPage({ data, onDataChange }: Props) {
                 if (parsedLimp.ok) (next.situations[key].policy as any).limp = parsedLimp.hands;
               }
             } else {
-              const m = preset.facingOpen[facingOpenKey(facingPair.heroPos, facingPair.villainPos)];
+              if (!activeFacingPair) return prev;
+              const m = preset.facingOpen[facingOpenKey(activeFacingPair.heroPos, activeFacingPair.villainPos)];
               if (m) {
                 const c = parseRangeShorthand(m.call); const t = parseRangeShorthand(m.threeBet);
-                if (c.ok) (next.situations[key].policy as any).call = c.hands;
-                if (t.ok) (next.situations[key].policy as any).threeBet = t.hands;
+                if (c.ok && next.situations[key]) (next.situations[key].policy as any).call = c.hands;
+                if (t.ok && next.situations[key]) (next.situations[key].policy as any).threeBet = t.hands;
               }
             }
             return next;
