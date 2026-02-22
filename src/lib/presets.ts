@@ -35,29 +35,29 @@ export const PRESETS: Record<PresetId, PresetDefinition> = {
         SB: '55+,A8s+,KTs+,QTs+,JTs,T9s,98s,A9o+,KJo+',
       },
       limp: {
-        SB: '22-44,A2s-A7s,K6s-K9s,Q7s-Q9s,J7s-J9s,T7s-T9s,97s-86s,75s-65s,A2o-A8o,K9o-KTo,Q9o-QTo,J9o-JTo',
+        SB: '22-44,A2s,A3s,A4s,A5s,A6s,A7s,K6s,K7s,K8s,K9s,Q7s,Q8s,Q9s,J7s,J8s,J9s,T7s,T8s,T9s,97s,86s,75s,65s,A2o,A3o,A4o,A5o,A6o,A7o,A8o,K9o,KTo,Q9o,QTo,J9o,JTo',
       },
     },
     facingOpen: {
       [facingOpenKey('BTN', 'CO')]: {
-        threeBet: 'QQ+,AKs,AKo,A5s-A4s,KQs',
-        call: '22-JJ,A2s-AQs,KTs-KQs,QTs-QJs,JTs,T9s,98s,87s,AJo-AQo,KQo',
+        threeBet: 'QQ+,AKs,AKo,A5s,A4s,KQs',
+        call: '22-JJ,A2s+,KTs+,QTs+,JTs,T9s,98s,87s,AJo,AQo,KQo',
       },
       [facingOpenKey('BTN', 'HJ')]: {
-        threeBet: 'QQ+,AKs,AKo,A5s-A4s',
-        call: '55-JJ,A7s-AQs,KTs-KQs,QTs-QJs,JTs,T9s,98s,AQo',
+        threeBet: 'QQ+,AKs,AKo,A5s,A4s',
+        call: '55-JJ,A7s+,KTs+,QTs+,JTs,T9s,98s,AQo',
       },
       [facingOpenKey('CO', 'HJ')]: {
         threeBet: 'QQ+,AKs,AKo,A5s',
-        call: '66-JJ,A9s-AQs,KTs-KQs,QTs-QJs,JTs,T9s,98s,AQo',
+        call: '66-JJ,A9s+,KTs+,QTs+,JTs,T9s,98s,AQo',
       },
       [facingOpenKey('SB', 'BTN')]: {
-        threeBet: 'TT+,AQs+,AKo,A5s-A2s,KQs,KJs,QJs',
-        call: '22-99,A2s-AJs,K9s-KTs,Q9s-QTs,J9s-JTs,T8s+,97s+,87s,AJo,KQo,QJo',
+        threeBet: 'TT+,AQs+,AKo,A5s,A4s,A3s,A2s,KQs,KJs,QJs',
+        call: '22-99,A2s,A3s,A4s,A5s,A6s,A7s,A8s,A9s,ATs,AJs,K9s+,Q9s+,J9s+,T8s+,97s+,87s,AJo,KQo,QJo',
       },
       [facingOpenKey('BB', 'BTN')]: {
-        threeBet: 'JJ+,AQs+,AKo,A5s-A2s,KQs,KJs,QJs',
-        call: '22-TT,A2s-AJs,K5s-KTs,Q7s-QTs,J8s-JTs,T8s+,97s+,86s+,75s+,64s+,53s+,A8o-AJo,KTo+,QTo+,JTo,T9o',
+        threeBet: 'JJ+,AQs+,AKo,A5s,A4s,A3s,A2s,KQs,KJs,QJs',
+        call: '22-TT,A2s,A3s,A4s,A5s,A6s,A7s,A8s,A9s,ATs,AJs,K5s+,Q7s+,J8s+,T8s+,97s+,86s+,75s+,64s+,53s+,A8o,A9o,ATo,AJo,KTo+,QTo+,JTo,T9o',
       },
     },
   },
@@ -75,29 +75,29 @@ export const PRESETS: Record<PresetId, PresetDefinition> = {
         SB: '44+,A5s+,K8s+,Q9s+,J9s+,T8s+,98s,87s,A8o+,KTo+,QTo+,JTo',
       },
       limp: {
-        SB: '22-33,A2s-A4s,K4s-K7s,Q6s-Q8s,J7s-J8s,T7s-T9s,97s-86s,75s-54s,A2o-A7o,K8o-K9o,Q8o-Q9o,J8o-J9o,T8o-T9o,98o',
+        SB: '22-33,A2s,A3s,A4s,K4s,K5s,K6s,K7s,Q6s,Q7s,Q8s,J7s,J8s,T7s,T8s,T9s,97s,86s,75s,64s,54s,A2o,A3o,A4o,A5o,A6o,A7o,K8o,K9o,Q8o,Q9o,J8o,J9o,T8o,T9o,98o',
       },
     },
     facingOpen: {
       [facingOpenKey('BTN', 'CO')]: {
-        threeBet: 'JJ+,AKs,AKo,AQo,A5s-A2s,KQs',
-        call: '22-TT,A2s-AJs,K9s-KJs,Q9s-QJs,J9s-JTs,T8s+,97s+,86s+,AJo,KQo,QJo',
+        threeBet: 'JJ+,AKs,AKo,AQo,A5s,A4s,A3s,A2s,KQs',
+        call: '22-TT,A2s,A3s,A4s,A5s,A6s,A7s,A8s,A9s,ATs,AJs,K9s+,Q9s+,J9s+,T8s+,97s+,86s+,AJo,KQo,QJo',
       },
       [facingOpenKey('BTN', 'HJ')]: {
-        threeBet: 'QQ+,AKs,AKo,AQo,A5s-A3s,KQs',
-        call: '44-JJ,A5s-AJs,KTs-KQs,QTs-QJs,JTs,T9s,98s,87s,AJo-AQo,KQo',
+        threeBet: 'QQ+,AKs,AKo,AQo,A5s,A4s,A3s,KQs',
+        call: '44-JJ,A5s,A6s,A7s,A8s,A9s,ATs,AJs,KTs+,QTs+,JTs,T9s,98s,87s,AJo,AQo,KQo',
       },
       [facingOpenKey('CO', 'HJ')]: {
-        threeBet: 'QQ+,AKs,AKo,AQs,A5s-A4s',
-        call: '55-JJ,A7s-AJs,KTs-KQs,QTs-QJs,JTs,T9s,98s,AQo,KQo',
+        threeBet: 'QQ+,AKs,AKo,AQs,A5s,A4s',
+        call: '55-JJ,A7s,A8s,A9s,ATs,AJs,KTs+,QTs+,JTs,T9s,98s,AQo,KQo',
       },
       [facingOpenKey('SB', 'BTN')]: {
-        threeBet: '99+,AQs+,AKo,A5s-A2s,KQs-KTs,QJs-QTs,JTs,T9s',
-        call: '22-88,A2s-AJs,K7s-KJs,Q8s-QJs,J8s-JTs,T7s-T9s,97s+,86s+,A8o-AJo,KTo+,QTo+,JTo',
+        threeBet: '99+,AQs+,AKo,A5s,A4s,A3s,A2s,KTs+,QTs+,JTs,T9s',
+        call: '22-88,A2s,A3s,A4s,A5s,A6s,A7s,A8s,A9s,ATs,AJs,K7s+,Q8s+,J8s+,T7s+,97s+,86s+,A8o,A9o,ATo,AJo,KTo+,QTo+,JTo',
       },
       [facingOpenKey('BB', 'BTN')]: {
-        threeBet: 'TT+,AQs+,AKo,A5s-A2s,KQs-KTs,QJs-QTs,JTs',
-        call: '22-99,A2s-AJs,K2s-KJs,Q5s-QJs,J7s-JTs,T7s-T9s,96s+,85s+,75s+,64s+,54s,A2o-AJo,K8o+,Q9o+,J9o+,T9o,98o',
+        threeBet: 'TT+,AQs+,AKo,A5s,A4s,A3s,A2s,KTs+,QTs+,JTs',
+        call: '22-99,A2s,A3s,A4s,A5s,A6s,A7s,A8s,A9s,ATs,AJs,K2s+,Q5s+,J7s+,T7s+,96s+,85s+,75s+,64s+,54s,A2o,A3o,A4o,A5o,A6o,A7o,A8o,A9o,ATo,AJo,K8o+,Q9o+,J9o+,T9o,98o',
       },
     },
   },
