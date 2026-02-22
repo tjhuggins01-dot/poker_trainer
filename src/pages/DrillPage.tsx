@@ -141,41 +141,86 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
     });
 
     onDataChange((prev) => {
-      const next = structuredClone(prev);
-      next.stats.total.attempts += 1;
-      next.stats.byHand[prompt.handClass] ??= { attempts: 0, correct: 0 };
-      next.stats.byHand[prompt.handClass].attempts += 1;
+      const byHandEntry = prev.stats.byHand[prompt.handClass] ?? { attempts: 0, correct: 0 };
+      const byHand = {
+        ...prev.stats.byHand,
+        [prompt.handClass]: {
+          attempts: byHandEntry.attempts + 1,
+          correct: byHandEntry.correct + (ok ? 1 : 0),
+        },
+      };
+
+      const total = {
+        attempts: prev.stats.total.attempts + 1,
+        correct: prev.stats.total.correct + (ok ? 1 : 0),
+      };
+
+      let byFacingHero = prev.stats.byFacingHero;
+      let byFacingMatchup = prev.stats.byFacingMatchup;
+      let byRfiPosition = prev.stats.byRfiPosition;
+
       if (prompt.situation.facingAction === 'open') {
         const hero = prompt.situation.heroPos as FacingOpenHeroPosition;
-        next.stats.byFacingHero[hero].attempts += 1;
         const matchup = `${prompt.situation.heroPos}vs${prompt.situation.villainPos}`;
-        next.stats.byFacingMatchup[matchup] ??= { attempts: 0, correct: 0 };
-        next.stats.byFacingMatchup[matchup].attempts += 1;
+        const heroEntry = prev.stats.byFacingHero[hero];
+        const matchupEntry = prev.stats.byFacingMatchup[matchup] ?? { attempts: 0, correct: 0 };
+
+        byFacingHero = {
+          ...prev.stats.byFacingHero,
+          [hero]: {
+            attempts: heroEntry.attempts + 1,
+            correct: heroEntry.correct + (ok ? 1 : 0),
+          },
+        };
+
+        byFacingMatchup = {
+          ...prev.stats.byFacingMatchup,
+          [matchup]: {
+            attempts: matchupEntry.attempts + 1,
+            correct: matchupEntry.correct + (ok ? 1 : 0),
+          },
+        };
       } else {
-        next.stats.byRfiPosition[prompt.situation.heroPos as RfiPosition].attempts += 1;
+        const hero = prompt.situation.heroPos as RfiPosition;
+        const heroEntry = prev.stats.byRfiPosition[hero];
+        byRfiPosition = {
+          ...prev.stats.byRfiPosition,
+          [hero]: {
+            attempts: heroEntry.attempts + 1,
+            correct: heroEntry.correct + (ok ? 1 : 0),
+          },
+        };
       }
 
-      if (ok) {
-        next.stats.total.correct += 1;
-        next.stats.byHand[prompt.handClass].correct += 1;
-        if (prompt.situation.facingAction === 'open') {
-          const hero = prompt.situation.heroPos as FacingOpenHeroPosition;
-          next.stats.byFacingHero[hero].correct += 1;
-          const matchup = `${prompt.situation.heroPos}vs${prompt.situation.villainPos}`;
-          next.stats.byFacingMatchup[matchup].correct += 1;
-        } else {
-          next.stats.byRfiPosition[prompt.situation.heroPos as RfiPosition].correct += 1;
-        }
-      } else {
-        const mKey =
-          prompt.situation.facingAction === 'open'
-            ? `${prompt.situation.heroPos}vs${prompt.situation.villainPos}|${prompt.handClass}|${expected}`
-            : `${prompt.situation.heroPos}|${prompt.handClass}|${expected}`;
-        next.stats.mistakes[mKey] ??= { count: 0, lastTs: 0 };
-        next.stats.mistakes[mKey].count += 1;
-        next.stats.mistakes[mKey].lastTs = Date.now();
-      }
-      return next;
+      const mistakes = !ok
+        ? (() => {
+            const mKey =
+              prompt.situation.facingAction === 'open'
+                ? `${prompt.situation.heroPos}vs${prompt.situation.villainPos}|${prompt.handClass}|${expected}`
+                : `${prompt.situation.heroPos}|${prompt.handClass}|${expected}`;
+            const prevEntry = prev.stats.mistakes[mKey] ?? { count: 0, lastTs: 0 };
+            return {
+              ...prev.stats.mistakes,
+              [mKey]: {
+                count: prevEntry.count + 1,
+                lastTs: Date.now(),
+              },
+            };
+          })()
+        : prev.stats.mistakes;
+
+      return {
+        ...prev,
+        stats: {
+          ...prev.stats,
+          total,
+          byHand,
+          byFacingHero,
+          byFacingMatchup,
+          byRfiPosition,
+          mistakes,
+        },
+      };
     });
 
     if (ok) {
