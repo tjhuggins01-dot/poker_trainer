@@ -1,19 +1,21 @@
 import { useMemo, useState } from 'react';
 import { FeedbackPanel } from '../components/FeedbackPanel';
-import { computeCorrectAction, nextPrompt } from '../lib/logic';
-import type { Action, AppData } from '../lib/types';
+import { buildWeightedHandMap, computeCorrectAction, nextPrompt } from '../lib/logic';
+import type { Action, AppData, SessionStats } from '../lib/types';
 
 type Props = {
   data: AppData;
+  session: SessionStats;
   onDataChange: (updater: (prev: AppData) => AppData) => void;
+  onSessionChange: (updater: (prev: SessionStats) => SessionStats) => void;
+  onResetSession: () => void;
 };
 
-export function DrillPage({ data, onDataChange }: Props) {
-  const [prompt, setPrompt] = useState(nextPrompt());
+export function DrillPage({ data, session, onDataChange, onSessionChange, onResetSession }: Props) {
+  const weightedMap = useMemo(() => buildWeightedHandMap(data), [data]);
+  const [prompt, setPrompt] = useState(() => nextPrompt(weightedMap));
   const [status, setStatus] = useState<'idle' | 'correct' | 'incorrect'>('idle');
   const [correctAction, setCorrectAction] = useState<Action>('FOLD');
-  const [sessionAttempts, setSessionAttempts] = useState(0);
-  const [sessionCorrect, setSessionCorrect] = useState(0);
 
   const positionKey = `OPEN_9MAX_100BB_${prompt.position}`;
   const openHands = useMemo(
@@ -29,8 +31,17 @@ export function DrillPage({ data, onDataChange }: Props) {
     );
     const ok = action === expected;
     setCorrectAction(expected);
-    setSessionAttempts((n) => n + 1);
-    if (ok) setSessionCorrect((n) => n + 1);
+
+    onSessionChange((prev) => {
+      const next = structuredClone(prev);
+      next.attempts += 1;
+      next.byPosition[prompt.position].attempts += 1;
+      if (ok) {
+        next.correct += 1;
+        next.byPosition[prompt.position].correct += 1;
+      }
+      return next;
+    });
 
     onDataChange((prev) => {
       const next = structuredClone(prev);
@@ -54,13 +65,15 @@ export function DrillPage({ data, onDataChange }: Props) {
     if (ok) {
       setStatus('correct');
       setTimeout(() => {
-        setPrompt(nextPrompt());
+        setPrompt(nextPrompt(weightedMap));
         setStatus('idle');
       }, 350);
     } else {
       setStatus('incorrect');
     }
   };
+
+  const sessionAccuracy = session.attempts === 0 ? 0 : (session.correct / session.attempts) * 100;
 
   return (
     <section>
@@ -79,9 +92,10 @@ export function DrillPage({ data, onDataChange }: Props) {
         </button>
       </div>
       <p className="session">
-        Session: {sessionCorrect}/{sessionAttempts}
+        Session: {session.correct}/{session.attempts} ({sessionAccuracy.toFixed(1)}%)
         {status === 'correct' ? ' ✅' : ''}
       </p>
+      <button onClick={onResetSession}>Reset session</button>
 
       {status === 'incorrect' && (
         <FeedbackPanel
@@ -89,7 +103,7 @@ export function DrillPage({ data, onDataChange }: Props) {
           openHands={openHands}
           testedHand={prompt.handClass}
           onNext={() => {
-            setPrompt(nextPrompt());
+            setPrompt(nextPrompt(weightedMap));
             setStatus('idle');
           }}
         />

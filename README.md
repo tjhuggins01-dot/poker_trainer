@@ -4,10 +4,16 @@ Mobile-first Vite + React + TypeScript single-page trainer for 9-max ~100bb pref
 
 ## Features
 
-- Drill tab with random position + random 169-class hand prompts.
+- Drill tab with random position + 169-class hand prompts.
+- Difficulty setting for hand sampling:
+  - **Normal** (default) boundary-biased sampling.
+  - **Hard** strongly boundary-biased sampling.
+  - **Uniform** equal weighting of all 169 hands.
 - OPEN/FOLD checking against stored situation policy.
+- Session scoreboard persisted in localStorage (`poker_range_drill_session_v1`) with **Reset session**.
 - Incorrect-only feedback panel with 13x13 range grid and tested hand highlight.
-- Ranges tab to view ranges and import shorthand (`77+`, `A2s+`, `ATo+`, `22-66`, etc.).
+- Ranges tab to view ranges, import shorthand (`77+`, `A2s+`, `ATo+`, `22-66`, etc.), and review Raise/Fold percentages.
+- Stats tab for historical totals, by-position performance, and top mistakes.
 - Settings tab with localStorage-backed toggles and reset controls.
 - Offline-capable local-only persistence under `poker_range_drill_v1`.
 
@@ -46,6 +52,8 @@ npm run preview
 ## Persistence and reset
 
 - App state is stored in localStorage key: `poker_range_drill_v1`.
+- Session state is stored separately in localStorage key: `poker_range_drill_session_v1`.
 - Settings includes:
-  - **Reset stats only** (keeps ranges/settings)
+  - **Reset session**
+  - **Reset historical stats only** (keeps ranges/settings)
   - **Reset all data (ranges + stats + settings)**

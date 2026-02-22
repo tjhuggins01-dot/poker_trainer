@@ -2,14 +2,16 @@ import { useState } from 'react';
 import { DrillPage } from './pages/DrillPage';
 import { RangesPage } from './pages/RangesPage';
 import { SettingsPage } from './pages/SettingsPage';
-import { loadData, resetAll, resetStatsOnly, saveData } from './lib/storage';
-import type { AppData } from './lib/types';
+import { StatsPage } from './pages/StatsPage';
+import { loadData, loadSession, resetAll, resetSession, resetStatsOnly, saveData, saveSession } from './lib/storage';
+import type { AppData, SessionStats } from './lib/types';
 
-type Tab = 'drill' | 'ranges' | 'settings';
+type Tab = 'drill' | 'ranges' | 'stats' | 'settings';
 
 function App() {
   const [tab, setTab] = useState<Tab>('drill');
   const [data, setData] = useState<AppData>(() => loadData());
+  const [session, setSession] = useState<SessionStats>(() => loadSession());
 
   const onDataChange = (updater: (prev: AppData) => AppData) => {
     setData((prev) => {
@@ -19,23 +21,47 @@ function App() {
     });
   };
 
+  const onSessionChange = (updater: (prev: SessionStats) => SessionStats) => {
+    setSession((prev) => {
+      const next = updater(prev);
+      saveSession(next);
+      return next;
+    });
+  };
+
+  const onResetSession = () => {
+    const freshSession = resetSession();
+    setSession(freshSession);
+  };
+
   return (
     <main className="app">
       <header>
         <h1>Preflop Range Drill</h1>
       </header>
       <div className="content">
-        {tab === 'drill' && <DrillPage data={data} onDataChange={onDataChange} />}
+        {tab === 'drill' && (
+          <DrillPage
+            data={data}
+            session={session}
+            onDataChange={onDataChange}
+            onSessionChange={onSessionChange}
+            onResetSession={onResetSession}
+          />
+        )}
         {tab === 'ranges' && <RangesPage data={data} onDataChange={onDataChange} />}
+        {tab === 'stats' && <StatsPage data={data} />}
         {tab === 'settings' && (
           <SettingsPage
             data={data}
             onDataChange={onDataChange}
+            onResetSession={onResetSession}
             onResetStats={() => onDataChange((prev) => resetStatsOnly(prev))}
             onResetAll={() => {
               const fresh = resetAll();
               saveData(fresh);
               setData(fresh);
+              onResetSession();
             }}
           />
         )}
@@ -46,6 +72,9 @@ function App() {
         </button>
         <button className={tab === 'ranges' ? 'active' : ''} onClick={() => setTab('ranges')}>
           Ranges
+        </button>
+        <button className={tab === 'stats' ? 'active' : ''} onClick={() => setTab('stats')}>
+          Stats
         </button>
         <button className={tab === 'settings' ? 'active' : ''} onClick={() => setTab('settings')}>
           Settings
