@@ -52,11 +52,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
     return next;
   };
 
-  useEffect(() => {
-    return () => {
-      clearNextPromptTimeout();
-    };
-  }, []);
+  useEffect(() => () => clearNextPromptTimeout(), []);
 
   useEffect(() => {
     clearNextPromptTimeout();
