@@ -1,3 +1,5 @@
+import { parseRangeShorthand } from '../lib/parser';
+import { PRESET_IDS, PRESETS, type PresetId } from '../lib/presets';
 import { APP_VERSION, STORAGE_VERSION, type AppData, type DifficultyMode } from '../lib/types';
 
 type Props = {
@@ -8,10 +10,10 @@ type Props = {
   onResetAll: () => void;
 };
 
-const difficultyOptions: Array<{ value: DifficultyMode; label: string }> = [
-  { value: 'normal', label: 'Normal (boundary-biased)' },
-  { value: 'hard', label: 'Hard (strong boundary bias)' },
-  { value: 'uniform', label: 'Uniform (all 169 equal)' },
+const difficultyOptions: { value: DifficultyMode; label: string }[] = [
+  { value: 'normal', label: 'Normal' },
+  { value: 'hard', label: 'Hard (boundary-biased)' },
+  { value: 'uniform', label: 'Uniform' },
 ];
 
 export function SettingsPage({ data, onDataChange, onResetSession, onResetStats, onResetAll }: Props) {
@@ -49,6 +51,42 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
           </option>
         ))}
       </select>
+
+      <label htmlFor="preset-select">Default preset</label>
+      <select
+        id="preset-select"
+        value={data.settings.defaultPresetId}
+        onChange={(e: any) =>
+          onDataChange((prev) => ({
+            ...prev,
+            settings: { ...prev.settings, defaultPresetId: e.target.value as PresetId },
+          }))
+        }
+      >
+        {PRESET_IDS.map((presetId) => (
+          <option key={presetId} value={presetId}>
+            {PRESETS[presetId].name}
+          </option>
+        ))}
+      </select>
+
+      <button
+        onClick={() =>
+          onDataChange((prev) => {
+            const next = structuredClone(prev);
+            const selectedPreset = PRESETS[prev.settings.defaultPresetId];
+            for (const [position, shorthand] of Object.entries(selectedPreset.defaults)) {
+              const parsed = parseRangeShorthand(shorthand);
+              if (!parsed.ok) continue;
+              const key = `OPEN_9MAX_100BB_${position}`;
+              next.situations[key].policy.openHands = parsed.hands;
+            }
+            return next;
+          })
+        }
+      >
+        Apply preset to ranges
+      </button>
 
       <div className="stack">
         <button onClick={onResetSession}>Reset session</button>
