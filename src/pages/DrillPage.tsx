@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { FeedbackPanel } from '../components/FeedbackPanel';
 import { buildWeightedHandMap, computeCorrectAction, nextPrompt } from '../lib/logic';
 import { makeFacingOpenKey, makeRfiKey } from '../lib/storage';
@@ -21,13 +21,17 @@ type Props = {
 };
 
 export function DrillPage({ data, session, onDataChange, onSessionChange, onResetSession }: Props) {
-  const weightedMap = useMemo(() => buildWeightedHandMap(data), [data]);
+  const weightedMap = useMemo(
+    () => buildWeightedHandMap(data),
+    [data.situations, data.settings.difficulty],
+  );
   const [prompt, setPrompt] = useState(() => nextPrompt(data, weightedMap));
   const [status, setStatus] = useState<'idle' | 'correct' | 'incorrect'>('idle');
   const [correctAction, setCorrectAction] = useState<DrillAction>('FOLD');
   const [shownNotice, setShownNotice] = useState(false);
   const [questionStartTs, setQuestionStartTs] = useState(() => Date.now());
-  const [nextPromptTimeoutId, setNextPromptTimeoutId] = useState<number | null>(null);
+  const nextPromptTimeoutRef = useRef<number | null>(null);
+  const isAnswerLockedRef = useRef(false);
 
   const pickNextPrompt = (currentPrompt = prompt) => {
     let next = nextPrompt(data, weightedMap);
@@ -48,11 +52,22 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   }, [nextPromptTimeoutId]);
 
   useEffect(() => {
+    return () => {
+      if (nextPromptTimeoutRef.current !== null) window.clearTimeout(nextPromptTimeoutRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (nextPromptTimeoutRef.current !== null) {
+      window.clearTimeout(nextPromptTimeoutRef.current);
+      nextPromptTimeoutRef.current = null;
+    }
+    isAnswerLockedRef.current = false;
     const freshPrompt = nextPrompt(data, weightedMap);
     setPrompt(freshPrompt);
     setStatus('idle');
     setQuestionStartTs(Date.now());
-  }, [data.settings.drillType, data.settings.positionFocus, weightedMap]);
+  }, [data.settings.drillType, data.settings.positionFocus, data.situations, weightedMap]);
 
   const isFacingOpen = prompt.situation.facingAction === 'open';
   const key = isFacingOpen
@@ -81,13 +96,20 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   }, [isFacingOpen, policy, prompt.situation.heroPos]);
 
   const stepNext = () => {
+    if (nextPromptTimeoutRef.current !== null) {
+      window.clearTimeout(nextPromptTimeoutRef.current);
+      nextPromptTimeoutRef.current = null;
+    }
+    isAnswerLockedRef.current = false;
     setPrompt(pickNextPrompt());
     setQuestionStartTs(Date.now());
     setStatus('idle');
   };
 
   const answer = (action: DrillAction) => {
-    if (status !== 'idle') return;
+    if (isAnswerLockedRef.current || status !== 'idle') return;
+    isAnswerLockedRef.current = true;
+
     const expected = computeCorrectAction(data, prompt.situation, prompt.handClass);
     const ok = action === expected;
     setCorrectAction(expected);
@@ -148,14 +170,14 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
 
     if (ok) {
       setStatus('correct');
-      if (nextPromptTimeoutId !== null) window.clearTimeout(nextPromptTimeoutId);
-      const timeoutId = window.setTimeout(() => {
-        setNextPromptTimeoutId(null);
+      if (nextPromptTimeoutRef.current !== null) window.clearTimeout(nextPromptTimeoutRef.current);
+      nextPromptTimeoutRef.current = window.setTimeout(() => {
+        nextPromptTimeoutRef.current = null;
         stepNext();
       }, 300);
-      setNextPromptTimeoutId(timeoutId);
     } else {
       setStatus('incorrect');
+      isAnswerLockedRef.current = false;
     }
   };
 
