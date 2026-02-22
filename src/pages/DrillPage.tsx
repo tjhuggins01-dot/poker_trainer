@@ -33,6 +33,12 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   const nextPromptTimeoutRef = useRef<number | null>(null);
   const isAnswerLockedRef = useRef(false);
 
+  const clearNextPromptTimeout = () => {
+    if (nextPromptTimeoutRef.current === null) return;
+    window.clearTimeout(nextPromptTimeoutRef.current);
+    nextPromptTimeoutRef.current = null;
+  };
+
   const pickNextPrompt = (currentPrompt = prompt) => {
     let next = nextPrompt(data, weightedMap);
     if (
@@ -58,10 +64,13 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   }, []);
 
   useEffect(() => {
-    if (nextPromptTimeoutRef.current !== null) {
-      window.clearTimeout(nextPromptTimeoutRef.current);
-      nextPromptTimeoutRef.current = null;
-    }
+    return () => {
+      clearNextPromptTimeout();
+    };
+  }, []);
+
+  useEffect(() => {
+    clearNextPromptTimeout();
     isAnswerLockedRef.current = false;
     const freshPrompt = nextPrompt(data, weightedMap);
     setPrompt(freshPrompt);
@@ -96,10 +105,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   }, [isFacingOpen, policy, prompt.situation.heroPos]);
 
   const stepNext = () => {
-    if (nextPromptTimeoutRef.current !== null) {
-      window.clearTimeout(nextPromptTimeoutRef.current);
-      nextPromptTimeoutRef.current = null;
-    }
+    clearNextPromptTimeout();
     isAnswerLockedRef.current = false;
     setPrompt(pickNextPrompt());
     setQuestionStartTs(Date.now());
@@ -170,7 +176,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
 
     if (ok) {
       setStatus('correct');
-      if (nextPromptTimeoutRef.current !== null) window.clearTimeout(nextPromptTimeoutRef.current);
+      clearNextPromptTimeout();
       nextPromptTimeoutRef.current = window.setTimeout(() => {
         nextPromptTimeoutRef.current = null;
         stepNext();
