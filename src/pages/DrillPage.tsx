@@ -39,6 +39,21 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
     nextPromptTimeoutRef.current = null;
   };
 
+  const scheduleNextPrompt = (delayMs = 300) => {
+    clearNextPromptTimeout();
+    nextPromptTimeoutRef.current = window.setTimeout(() => {
+      nextPromptTimeoutRef.current = null;
+      stepNext();
+    }, delayMs);
+  };
+
+  const cancelAndResetDrillState = () => {
+    clearNextPromptTimeout();
+    isAnswerLockedRef.current = false;
+    setStatus('idle');
+    setQuestionStartTs(Date.now());
+  };
+
   const pickNextPrompt = (currentPrompt = prompt) => {
     let next = nextPrompt(data, weightedMap);
     if (
@@ -55,12 +70,9 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   useEffect(() => () => clearNextPromptTimeout(), []);
 
   useEffect(() => {
-    clearNextPromptTimeout();
-    isAnswerLockedRef.current = false;
+    cancelAndResetDrillState();
     const freshPrompt = nextPrompt(data, weightedMap);
     setPrompt(freshPrompt);
-    setStatus('idle');
-    setQuestionStartTs(Date.now());
   }, [data.settings.drillType, data.settings.positionFocus, data.situations, weightedMap]);
 
   const isFacingOpen = prompt.situation.facingAction === 'open';
@@ -90,11 +102,8 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   }, [isFacingOpen, policy, prompt.situation.heroPos]);
 
   const stepNext = () => {
-    clearNextPromptTimeout();
-    isAnswerLockedRef.current = false;
+    cancelAndResetDrillState();
     setPrompt(pickNextPrompt());
-    setQuestionStartTs(Date.now());
-    setStatus('idle');
   };
 
   const answer = (action: DrillAction) => {
@@ -161,11 +170,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
 
     if (ok) {
       setStatus('correct');
-      clearNextPromptTimeout();
-      nextPromptTimeoutRef.current = window.setTimeout(() => {
-        nextPromptTimeoutRef.current = null;
-        stepNext();
-      }, 300);
+      scheduleNextPrompt();
     } else {
       setStatus('incorrect');
       isAnswerLockedRef.current = false;
