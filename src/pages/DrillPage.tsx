@@ -1,6 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FeedbackPanel } from '../components/FeedbackPanel';
-import { buildWeightedHandMap, computeCorrectAction, nextPrompt } from '../lib/logic';
+import {
+  buildPromptMemoryKey,
+  buildWeightedHandMap,
+  computeCorrectAction,
+  getPromptSignature,
+  nextPrompt,
+  updatePromptMemory,
+} from '../lib/logic';
 import { fromLegacyDrillType, parseContextQuery, toLegacyDrillType } from '../lib/domain';
 import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../lib/storage';
 import {
@@ -78,6 +85,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   const [questionStartTs, setQuestionStartTs] = useState(() => Date.now());
   const nextPromptTimeoutRef = useRef<number | null>(null);
   const isAnswerLockedRef = useRef(false);
+  const recentPromptSignaturesRef = useRef<string[]>([]);
 
   const clearNextPromptTimeout = () => {
     if (nextPromptTimeoutRef.current === null) return;
@@ -101,15 +109,11 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   };
 
   const pickNextPrompt = (currentPrompt = prompt) => {
-    let next = nextPrompt(data, weightedMap);
-    if (
-      next.handClass === currentPrompt.handClass &&
-      next.situation.heroPos === currentPrompt.situation.heroPos &&
-      next.situation.villainPos === currentPrompt.situation.villainPos &&
-      next.situation.facingAction === currentPrompt.situation.facingAction
-    ) {
-      next = nextPrompt(data, weightedMap);
-    }
+    const recent = recentPromptSignaturesRef.current;
+    const withCurrent = [...recent, getPromptSignature(currentPrompt.situation, currentPrompt.handClass)];
+    const next = nextPrompt(data, weightedMap, withCurrent);
+    const nextSignature = getPromptSignature(next.situation, next.handClass);
+    recentPromptSignaturesRef.current = [...withCurrent, nextSignature].slice(-4);
     return next;
   };
 
@@ -117,7 +121,9 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
 
   useEffect(() => {
     cancelAndResetDrillState();
+    recentPromptSignaturesRef.current = [];
     const freshPrompt = nextPrompt(data, weightedMap);
+    recentPromptSignaturesRef.current = [getPromptSignature(freshPrompt.situation, freshPrompt.handClass)];
     setPrompt(freshPrompt);
   }, [drillResetKey]);
 
@@ -265,6 +271,12 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
           })()
         : prev.stats.mistakes;
 
+      const memoryKey = buildPromptMemoryKey(key, prompt.handClass);
+      const promptMemory = {
+        ...prev.stats.promptMemory,
+        [memoryKey]: updatePromptMemory(prev.stats.promptMemory[memoryKey], ok),
+      };
+
       return {
         ...prev,
         stats: {
@@ -275,6 +287,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
           byFacingMatchup,
           byRfiPosition,
           mistakes,
+          promptMemory,
         },
       };
     });

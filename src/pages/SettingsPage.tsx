@@ -27,6 +27,24 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
         {difficultyOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
       </select>
 
+      <label>
+        <input
+          type="checkbox"
+          checked={data.settings.adaptiveRepetition}
+          onChange={(e: any) =>
+            onDataChange((prev) => ({
+              ...prev,
+              settings: {
+                ...prev.settings,
+                adaptiveRepetition: Boolean(e.target.checked),
+              },
+            }))
+          }
+        />
+        Adaptive repetition
+      </label>
+      <p className="muted">Conservative spaced-repetition boost using per-prompt memory. Disable to revert to classic weighting.</p>
+
 
       <label htmlFor="stack-select">Effective stack</label>
       <select
