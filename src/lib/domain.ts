@@ -3,9 +3,12 @@ import {
   FACING_OPEN_VILLAIN_BY_HERO,
   POSITIONS,
   RFI_POSITIONS,
+  THREE_BET_HERO_POSITIONS,
+  THREE_BET_VILLAIN_BY_HERO,
   type AppData,
   type FacingOpenHeroPosition,
   type Position,
+  type ThreeBetHeroPosition,
   type Situation,
 } from './types';
 
@@ -33,16 +36,16 @@ export const DEFAULT_DRILL_CONTEXT: DrillContext = {
   heroPos: 'UTG',
 };
 
-export const toLegacyDrillType = (nodeType: NodeType): 'rfi' | 'facing_open' =>
-  nodeType === 'facingOpen' ? 'facing_open' : 'rfi';
+export const toLegacyDrillType = (nodeType: NodeType): 'rfi' | 'facing_open' | 'three_bet' =>
+  nodeType === 'facingOpen' ? 'facing_open' : nodeType === 'threeBet' ? 'three_bet' : 'rfi';
 
-export const fromLegacyDrillType = (drillType: 'rfi' | 'facing_open'): NodeType =>
-  drillType === 'facing_open' ? 'facingOpen' : 'rfi';
+export const fromLegacyDrillType = (drillType: 'rfi' | 'facing_open' | 'three_bet'): NodeType =>
+  drillType === 'facing_open' ? 'facingOpen' : drillType === 'three_bet' ? 'threeBet' : 'rfi';
 
 export const contextFromSituation = (situation: Situation): DrillContext => ({
   format: 'cash6max',
   effectiveStackBb: 100,
-  nodeType: situation.facingAction === 'open' ? 'facingOpen' : 'rfi',
+  nodeType: situation.facingAction === 'open' ? 'facingOpen' : situation.facingAction === 'three_bet' ? 'threeBet' : 'rfi',
   heroPos: situation.heroPos,
   villainPos: situation.villainPos,
 });
@@ -52,13 +55,15 @@ export const toSituation = (context: DrillContext): Situation => ({
   table: '9max',
   effectiveStackBb: 100,
   heroPos: context.heroPos,
-  facingAction: context.nodeType === 'facingOpen' ? 'open' : 'none',
-  villainPos: context.nodeType === 'facingOpen' ? context.villainPos : undefined,
+  facingAction: context.nodeType === 'facingOpen' ? 'open' : context.nodeType === 'threeBet' ? 'three_bet' : 'none',
+  villainPos: context.nodeType === 'facingOpen' || context.nodeType === 'threeBet' ? context.villainPos : undefined,
 });
 
 const isKnownPosition = (value: string): value is Position => POSITIONS.includes(value as Position);
 const isKnownFacingHero = (value: string): value is FacingOpenHeroPosition =>
   FACING_OPEN_HERO_POSITIONS.includes(value as FacingOpenHeroPosition);
+const isKnownThreeBetHero = (value: string): value is ThreeBetHeroPosition =>
+  THREE_BET_HERO_POSITIONS.includes(value as ThreeBetHeroPosition);
 
 export const isEligibleContext = (context: DrillContext, data: AppData): boolean => {
   if (context.nodeType === 'facingOpen') {
@@ -68,6 +73,11 @@ export const isEligibleContext = (context: DrillContext, data: AppData): boolean
   }
   if (context.nodeType === 'rfi' && !RFI_POSITIONS.includes(context.heroPos as any)) {
     return false;
+  }
+  if (context.nodeType === 'threeBet') {
+    if (!context.villainPos) return false;
+    if (!isKnownThreeBetHero(context.heroPos)) return false;
+    if (!THREE_BET_VILLAIN_BY_HERO[context.heroPos].includes(context.villainPos)) return false;
   }
   if (!isKnownPosition(context.heroPos)) return false;
   return data.situations ? true : false;

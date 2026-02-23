@@ -49,7 +49,11 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
             next.situations[key] = {
               situation: { game: 'NLH', table: '9max', effectiveStackBb: 100, heroPos: hero as any, facingAction: 'open', villainPos: villain as any },
               drillType: 'facing_open',
-              actionSet: ['FOLD', 'CALL', '3BET'],
+              actionSet: [
+                { id: 'FOLD', label: 'FOLD', color: 'fold' },
+                { id: 'CALL', label: 'CALL', color: 'call' },
+                { id: '3BET', label: '3BET', color: 'threebet' },
+              ],
               policy: { call: c.hands as any, threeBet: t.hands as any },
             };
             return;

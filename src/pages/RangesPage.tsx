@@ -32,12 +32,28 @@ export function RangesPage({ data, onDataChange }: Props) {
   const key = mode === 'rfi' ? makeRfiKey(position) : makeFacingOpenKey(facingHero, facingVillain);
   const policy = data.situations[key]?.policy as any;
 
+  const actionColors = useMemo(
+    () => Object.fromEntries((data.situations[key]?.actionSet ?? []).map((action: any) => [action.id, action.color])),
+    [data.situations, key],
+  );
+
   const actionMap = useMemo(() => {
     const map: any = {};
-    (policy?.raise ?? []).forEach((h: any) => (map[h] = 'raise'));
-    (policy?.limp ?? []).forEach((h: any) => (map[h] = 'limp'));
-    (policy?.call ?? []).forEach((h: any) => (map[h] = 'call'));
-    (policy?.threeBet ?? []).forEach((h: any) => (map[h] = 'threebet'));
+    Object.entries(policy ?? {}).forEach(([bucket, hands]: any) => {
+      const actionId =
+        bucket === 'raise'
+          ? 'RAISE'
+          : bucket === 'limp'
+            ? 'LIMP'
+            : bucket === 'call'
+              ? 'CALL'
+              : bucket === 'threeBet'
+                ? '3BET'
+                : bucket === 'fourBet'
+                  ? '4BET'
+                  : bucket.toUpperCase();
+      (hands ?? []).forEach((h: any) => (map[h] = actionId));
+    });
     return map;
   }, [policy]);
 
@@ -153,7 +169,7 @@ export function RangesPage({ data, onDataChange }: Props) {
         <p>Fold {pct(169 - counts.a - counts.b)}%</p>
       </div>
 
-      <HandGrid actionMap={actionMap} />
+      <HandGrid actionMap={actionMap} actionColors={actionColors as any} />
       <label>{mode === 'rfi' ? 'Raise import' : 'Call import'}</label>
       <textarea rows={3} value={raiseText} onChange={(e: any) => setRaiseText(e.target.value)} />
       <label>{mode === 'rfi' ? (position === 'SB' ? 'Limp import' : 'Secondary not used') : '3bet import'}</label>

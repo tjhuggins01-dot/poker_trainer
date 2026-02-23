@@ -1,9 +1,11 @@
 import { generateAllHandClasses169, handClassToGridCoord } from './hands';
-import { makeFacingOpenKey, makeRfiKey } from './storage';
+import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from './storage';
 import {
   FACING_OPEN_HERO_POSITIONS,
   FACING_OPEN_VILLAIN_BY_HERO,
   RFI_POSITIONS,
+  THREE_BET_HERO_POSITIONS,
+  THREE_BET_VILLAIN_BY_HERO,
   type AppData,
   type DifficultyMode,
   type DrillAction,
@@ -20,10 +22,15 @@ const allHands = generateAllHandClasses169();
 
 export const randomPick = <T>(list: T[]): T => list[Math.floor(Math.random() * list.length)];
 
-const getSituationKeyFromContext = (context: DrillContext): string =>
-  context.nodeType === 'facingOpen' && context.villainPos
-    ? makeFacingOpenKey(context.heroPos as FacingOpenHeroPosition, context.villainPos)
-    : makeRfiKey(context.heroPos as RfiPosition);
+const getSituationKeyFromContext = (context: DrillContext): string => {
+  if (context.nodeType === 'facingOpen' && context.villainPos) {
+    return makeFacingOpenKey(context.heroPos as FacingOpenHeroPosition, context.villainPos);
+  }
+  if (context.nodeType === 'threeBet' && context.villainPos) {
+    return makeThreeBetKey(context.heroPos as any, context.villainPos);
+  }
+  return makeRfiKey(context.heroPos as RfiPosition);
+};
 
 export const resolvePolicy = (
   appData: AppData,
@@ -42,22 +49,20 @@ export const computeCorrectAction = (
   const context: DrillContext = {
     format: 'cash6max',
     effectiveStackBb: 100,
-    nodeType: situation.facingAction === 'open' ? 'facingOpen' : 'rfi',
+    nodeType: situation.facingAction === 'open' ? 'facingOpen' : situation.facingAction === 'three_bet' ? 'threeBet' : 'rfi',
     heroPos: situation.heroPos,
     villainPos: situation.villainPos,
   };
   const { record } = resolvePolicy(appData, context);
-  const policy = record?.policy as any;
+  if (!record) return 'FOLD';
 
-  if (context.nodeType === 'facingOpen') {
-    if (policy?.threeBet?.includes(handClass)) return '3BET';
-    if (policy?.call?.includes(handClass)) return 'CALL';
-    return 'FOLD';
+  const foldAction = record.actionSet.find((action) => action.color === 'fold')?.id ?? 'FOLD';
+  for (const action of record.actionSet) {
+    if (action.color === 'fold') continue;
+    const policyKey = action.id === '3BET' ? 'threeBet' : action.id === '4BET' ? 'fourBet' : action.id.toLowerCase();
+    if ((record.policy as any)?.[policyKey]?.includes(handClass)) return action.id;
   }
-
-  if (policy?.raise?.includes(handClass)) return 'RAISE';
-  if (context.heroPos === 'SB' && policy?.limp?.includes(handClass)) return 'LIMP';
-  return 'FOLD';
+  return foldAction;
 };
 
 type WeightedHand = { hand: HandClass; weight: number };
@@ -151,6 +156,20 @@ const buildEligibleContexts = (data: AppData): DrillContext[] => {
       const villains = FACING_OPEN_VILLAIN_BY_HERO[heroPos];
       villains.forEach((villainPos) => {
         contexts.push({ ...base, heroPos, villainPos, nodeType: 'facingOpen' });
+      });
+    });
+  }
+
+
+  if (base.nodeType === 'threeBet') {
+    const focus = data.settings.positionFocus.three_bet.length
+      ? data.settings.positionFocus.three_bet
+      : [...THREE_BET_HERO_POSITIONS];
+
+    focus.forEach((heroPos) => {
+      const villains = THREE_BET_VILLAIN_BY_HERO[heroPos];
+      villains.forEach((villainPos) => {
+        contexts.push({ ...base, heroPos, villainPos, nodeType: 'threeBet' });
       });
     });
   }
