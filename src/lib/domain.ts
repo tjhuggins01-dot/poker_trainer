@@ -85,7 +85,21 @@ export const isEligibleContext = (context: DrillContext, data: AppData): boolean
     if (!THREE_BET_VILLAIN_BY_HERO[context.heroPos].includes(context.villainPos)) return false;
   }
   if (!isKnownPosition(context.heroPos)) return false;
-  return data.situations ? true : false;
+
+  const expectedFacingAction =
+    context.nodeType === 'facingOpen' ? 'open' : context.nodeType === 'threeBet' ? 'three_bet' : 'none';
+
+  return Object.values(data.situations ?? {}).some((record) => {
+    const situation = record?.situation;
+    if (!situation) return false;
+    if (situation.effectiveStackBb !== context.effectiveStackBb) return false;
+    if (situation.heroPos !== context.heroPos) return false;
+    if (situation.facingAction !== expectedFacingAction) return false;
+    if (expectedFacingAction === 'open' || expectedFacingAction === 'three_bet') {
+      return situation.villainPos === context.villainPos;
+    }
+    return true;
+  });
 };
 
 export const parseContextQuery = (query: URLSearchParams): Partial<DrillContext> => {
