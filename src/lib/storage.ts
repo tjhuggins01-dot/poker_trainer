@@ -83,6 +83,10 @@ const normalizeSession = (raw: any): SessionStats => {
 const normalizeCurrentData = (raw: any): AppData => {
   const next = structuredClone(raw) as AppData;
   const defaults = createDefaultData();
+  next.situations = {
+    ...defaults.situations,
+    ...(next.situations ?? {}),
+  };
   next.stats = next.stats ?? defaults.stats;
   next.stats.total = withDefaultStatsEntry(next.stats.total);
   next.stats.byRfiPosition = next.stats.byRfiPosition ?? createEmptyRfiStats();
