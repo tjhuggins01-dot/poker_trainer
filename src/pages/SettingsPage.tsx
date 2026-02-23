@@ -1,6 +1,7 @@
 import { parseRangeShorthand } from '../lib/parser';
 import { PRESET_IDS, PRESETS, type PresetId } from '../lib/presets';
 import { hasNoOverlap, makeFacingOpenKey, makeRfiKey } from '../lib/storage';
+import { STACK_SIZES_BB } from '../lib/constants';
 import { APP_VERSION, RFI_POSITIONS, STORAGE_VERSION, type AppData, type DifficultyMode } from '../lib/types';
 
 type Props = {
@@ -26,6 +27,31 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
         {difficultyOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
       </select>
 
+
+      <label htmlFor="stack-select">Effective stack</label>
+      <select
+        id="stack-select"
+        value={data.settings.drillContext.effectiveStackBb}
+        onChange={(e: any) =>
+          onDataChange((prev) => ({
+            ...prev,
+            settings: {
+              ...prev.settings,
+              drillContext: {
+                ...prev.settings.drillContext,
+                effectiveStackBb: Number(e.target.value) as any,
+              },
+            },
+          }))
+        }
+      >
+        {STACK_SIZES_BB.map((stack) => (
+          <option key={stack} value={stack} disabled={!Object.keys(data.situations).some((key) => key.includes(`_${stack}BB_`))}>
+            {stack}bb{!Object.keys(data.situations).some((key) => key.includes(`_${stack}BB_`)) ? ' (no data)' : ''}
+          </option>
+        ))}
+      </select>
+
       <label htmlFor="preset-select">Default preset</label>
       <select id="preset-select" value={data.settings.defaultPresetId} onChange={(e: any) => onDataChange((prev) => ({ ...prev, settings: { ...prev.settings, defaultPresetId: e.target.value as PresetId } }))}>
         {PRESET_IDS.map((presetId) => <option key={presetId} value={presetId}>{PRESETS[presetId].name}</option>)}
@@ -36,18 +62,20 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
         const preset = PRESETS[prev.settings.defaultPresetId];
         RFI_POSITIONS.forEach((pos) => {
           const r = parseRangeShorthand(preset.rfi.raise[pos]);
-          if (r.ok) (next.situations[makeRfiKey(pos)].policy as any).raise = r.hands;
+          const rfiKey = makeRfiKey(pos, prev.settings.drillContext.format, prev.settings.drillContext.effectiveStackBb);
+          if (r.ok && next.situations[rfiKey]) (next.situations[rfiKey].policy as any).raise = r.hands;
         });
         const l = parseRangeShorthand(preset.rfi.limp.SB);
-        if (l.ok) (next.situations[makeRfiKey('SB')].policy as any).limp = l.hands;
+        const sbKey = makeRfiKey('SB', prev.settings.drillContext.format, prev.settings.drillContext.effectiveStackBb);
+        if (l.ok && next.situations[sbKey]) (next.situations[sbKey].policy as any).limp = l.hands;
         Object.entries(preset.facingOpen).forEach(([k, v]) => {
           const [hero, villain] = k.replace('FO_', '').split('_VS_');
-          const key = makeFacingOpenKey(hero as any, villain as any);
+          const key = makeFacingOpenKey(hero as any, villain as any, prev.settings.drillContext.format, prev.settings.drillContext.effectiveStackBb);
           const c = parseRangeShorthand(v.call); const t = parseRangeShorthand(v.threeBet);
           if (!c.ok || !t.ok || !hasNoOverlap(c.hands, t.hands)) return;
           if (!next.situations[key]) {
             next.situations[key] = {
-              situation: { game: 'NLH', table: '9max', effectiveStackBb: 100, heroPos: hero as any, facingAction: 'open', villainPos: villain as any },
+              situation: { game: 'NLH', table: '9max', effectiveStackBb: prev.settings.drillContext.effectiveStackBb, heroPos: hero as any, facingAction: 'open', villainPos: villain as any },
               drillType: 'facing_open',
               actionSet: [
                 { id: 'FOLD', label: 'FOLD', color: 'fold' },

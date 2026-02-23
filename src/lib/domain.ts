@@ -11,12 +11,17 @@ import {
   type ThreeBetHeroPosition,
   type Situation,
 } from './types';
+import {
+  DEFAULT_FORMAT,
+  DEFAULT_STACK_BB,
+  FORMAT_IDS,
+  STACK_SIZES_BB,
+  type DrillFormat,
+  type EffectiveStackBb,
+} from './constants';
 
-export const DRILL_FORMATS = ['cash6max'] as const;
-export type DrillFormat = (typeof DRILL_FORMATS)[number];
-
-export const EFFECTIVE_STACKS = [30, 60, 100, 150] as const;
-export type EffectiveStackBb = (typeof EFFECTIVE_STACKS)[number];
+export const DRILL_FORMATS = FORMAT_IDS;
+export const EFFECTIVE_STACKS = STACK_SIZES_BB;
 
 export const NODE_TYPES = ['rfi', 'facingOpen', 'threeBet'] as const;
 export type NodeType = (typeof NODE_TYPES)[number];
@@ -30,8 +35,8 @@ export type DrillContext = {
 };
 
 export const DEFAULT_DRILL_CONTEXT: DrillContext = {
-  format: 'cash6max',
-  effectiveStackBb: 100,
+  format: DEFAULT_FORMAT,
+  effectiveStackBb: DEFAULT_STACK_BB,
   nodeType: 'rfi',
   heroPos: 'UTG',
 };
@@ -43,8 +48,8 @@ export const fromLegacyDrillType = (drillType: 'rfi' | 'facing_open' | 'three_be
   drillType === 'facing_open' ? 'facingOpen' : drillType === 'three_bet' ? 'threeBet' : 'rfi';
 
 export const contextFromSituation = (situation: Situation): DrillContext => ({
-  format: 'cash6max',
-  effectiveStackBb: 100,
+  format: DEFAULT_FORMAT,
+  effectiveStackBb: situation.effectiveStackBb,
   nodeType: situation.facingAction === 'open' ? 'facingOpen' : situation.facingAction === 'three_bet' ? 'threeBet' : 'rfi',
   heroPos: situation.heroPos,
   villainPos: situation.villainPos,
@@ -53,7 +58,7 @@ export const contextFromSituation = (situation: Situation): DrillContext => ({
 export const toSituation = (context: DrillContext): Situation => ({
   game: 'NLH',
   table: '9max',
-  effectiveStackBb: 100,
+  effectiveStackBb: context.effectiveStackBb,
   heroPos: context.heroPos,
   facingAction: context.nodeType === 'facingOpen' ? 'open' : context.nodeType === 'threeBet' ? 'three_bet' : 'none',
   villainPos: context.nodeType === 'facingOpen' || context.nodeType === 'threeBet' ? context.villainPos : undefined,

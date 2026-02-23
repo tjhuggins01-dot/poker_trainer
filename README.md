@@ -68,6 +68,32 @@ Preset profiles:
 - **Version 1** tighter
 - **Version 2** wider
 
+## Data contract (formats + stack buckets)
+
+The drill resolver now requires **format + effective stack** when looking up policies.
+
+- Situation keys are stack-aware:
+  - `RFI_{format}_{stack}BB_{hero}`
+  - `FACING_OPEN_{format}_{stack}BB_{hero}_VS_{villain}`
+  - `THREE_BET_{format}_{stack}BB_{hero}_VS_{villain}`
+- Missing spots are treated as unavailable UI choices (disabled options / read-only views), rather than runtime crashes.
+
+Range data is organized by format/stack under `src/lib/data/{format}/{stack}/`.
+Current baseline data lives in:
+
+- `src/lib/data/cash6max/100/rfi.ts`
+- `src/lib/data/cash6max/100/facingOpen.ts`
+- `src/lib/data/cash6max/100/threeBet.ts`
+- registered via `src/lib/data/catalog.ts`
+
+### Adding a new format (e.g. MTT) with minimal core changes
+
+1. Add stack folder(s): `src/lib/data/<newFormat>/<stack>/...` with `rfi`, `facingOpen`, and `threeBet` exports.
+2. Register those bundles in `src/lib/data/catalog.ts`.
+3. Ensure the format/stack IDs are present in `src/lib/constants.ts`.
+
+That workflow is intentionally “**add data + register format/stack**” instead of rewriting resolver logic.
+
 ## Persistence and migration
 
 - Main app key: `poker_range_drill_v2`
