@@ -190,21 +190,23 @@ export const PRESETS: Record<PresetId, PresetDefinition> = {
     name: 'Version 1 (Tight / rake-sensitive)',
     rfi: {
       raise: {
-        UTG: '77+,ATs+,KJs+,QJs,AQo+',
-        UTG1: '77+,ATs+,KJs+,QJs,AJo+,KQo',
-        UTG2: '77+,ATs+,KTs+,QTs+,JTs,AJo+,KQo',
-        LJ: '77+,A9s+,KTs+,QTs+,JTs,T9s,AJo+,KQo',
-        HJ: '55+,A8s+,KTs+,QTs+,JTs,T9s,98s,AJo+,KQo',
+        UTG: '88+,AJs+,KQs,AQo+',
+        UTG1: '77+,AJs+,KQs,AQo+,KQo',
+        UTG2: '66+,ATs+,KQs,QJs,JTs,AQo+,KQo',
+        LJ: '66+,ATs+,KJs+,QJs,JTs,T9s,AJo+,KQo',
+        HJ: '55+,A9s+,KTs+,QTs+,JTs,T9s,98s,AJo+,KQo',
         CO: '33+,A5s+,K9s+,Q9s+,J9s+,T9s,98s,ATo+,KJo+',
         BTN: '22+,A2s+,K7s+,Q8s+,J8s+,T8s+,97s+,87s,76s,A8o+,KTo+,QTo+,JTo',
         SB: '55+,A8s+,KTs+,QTs+,JTs,T9s,98s,A9o+,KJo+',
       },
       limp: {
-        SB: '22-44,A2s,A3s,A4s,A5s,A6s,A7s,K6s,K7s,K8s,K9s,Q7s,Q8s,Q9s,J7s,J8s,J9s,T7s,T8s,T9s,97s,86s,75s,65s,A2o,A3o,A4o,A5o,A6o,A7o,A8o,K9o,KTo,Q9o,QTo,J9o,JTo',
+        // Disjoint from SB raise. No pair intervals. Added 76s,87s to remove weird gaps.
+        SB: '22,33,44,A2s,A3s,A4s,A5s,A6s,A7s,K6s,K7s,K8s,K9s,Q7s,Q8s,Q9s,J7s,J8s,J9s,T7s,T8s,97s,87s,86s,76s,75s,65s,A2o,A3o,A4o,A5o,A6o,A7o,A8o,K9o,KTo,Q9o,QTo,J9o,JTo',
       },
     },
     facingOpen: toFacingOpenPreset(VS_OPEN_DEFAULTS_V2),
   },
+
   v2_standard: {
     name: 'Version 2 (Standard / looser)',
     rfi: {
@@ -215,11 +217,13 @@ export const PRESETS: Record<PresetId, PresetDefinition> = {
         LJ: '44+,A7s+,KTs+,QTs+,JTs,T9s,AJo+,KQo',
         HJ: '33+,A5s+,K9s+,Q9s+,J9s+,T9s,AJo+,KQo',
         CO: '22+,A2s+,K7s+,Q8s+,J8s+,T8s+,97s+,86s+,76s,65s,A8o+,KTo+,QTo+,JTo',
-        BTN: '22+,A2s+,K2s+,Q5s+,J6s+,T6s+,95s+,85s+,75s+,64s+,54s,A2o+,K7o+,Q8o+,J8o+,T8o+,98o',
-        SB: '44+,A5s+,K8s+,Q9s+,J9s+,T8s+,98s,87s,A8o+,KTo+,QTo+,JTo',
+        BTN: '22+,A2s+,K2s+,Q5s+,J6s+,T6s+,95s+,85s+,75s+,64s+,54s,A2o+,K7o+,Q8o+,J8o+,T8o+',
+        // Added T9s,76s,65s to remove weird gaps/inconsistencies.
+        SB: '44+,A5s+,K8s+,Q9s+,J9s+,T8s+,T9s,98s,87s,76s,65s,A8o+,KTo+,QTo+,JTo',
       },
       limp: {
-        SB: '22-33,A2s,A3s,A4s,K4s,K5s,K6s,K7s,Q6s,Q7s,Q8s,J7s,J8s,T7s,T8s,T9s,97s,86s,75s,64s,54s,A2o,A3o,A4o,A5o,A6o,A7o,K8o,K9o,Q8o,Q9o,J8o,J9o,T8o,T9o,98o',
+        // Disjoint from SB raise. No pair intervals. Wider than v1.
+        SB: '22,33,A2s,A3s,A4s,K4s,K5s,K6s,K7s,Q6s,Q7s,Q8s,J7s,J8s,T7s,T8s,97s,86s,75s,64s,54s,A2o,A3o,A4o,A5o,A6o,A7o,K8o,K9o,Q8o,Q9o,J8o,J9o,T8o,T9o',
       },
     },
     facingOpen: toFacingOpenPreset(VS_OPEN_DEFAULTS_V2),
