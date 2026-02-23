@@ -98,7 +98,11 @@ export function RangesPage({ data, onDataChange }: Props) {
                 : firstVillain;
               onDataChange((prev) => ({
                 ...prev,
-                settings: { ...prev.settings, facingOpenSelection: { heroPos, villainPos } },
+                settings: {
+                  ...prev.settings,
+                  facingOpenSelection: { heroPos, villainPos },
+                  drillContext: { ...prev.settings.drillContext, heroPos, villainPos },
+                },
               }));
             }}
           >
@@ -122,6 +126,7 @@ export function RangesPage({ data, onDataChange }: Props) {
                     heroPos: prev.settings.facingOpenSelection.heroPos,
                     villainPos,
                   },
+                  drillContext: { ...prev.settings.drillContext, villainPos },
                 },
               }));
             }}
