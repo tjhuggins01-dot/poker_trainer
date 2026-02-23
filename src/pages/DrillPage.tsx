@@ -8,7 +8,7 @@ import {
   nextPrompt,
   updatePromptMemory,
 } from '../lib/logic';
-import { fromLegacyDrillType, parseContextQuery, toLegacyDrillType } from '../lib/domain';
+import { fromLegacyDrillType, isEligibleContext, parseContextQuery, toLegacyDrillType } from '../lib/domain';
 import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../lib/storage';
 import {
   FACING_OPEN_HERO_POSITIONS,
@@ -48,17 +48,27 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   useEffect(() => {
     const parsed = parseContextQuery(new URLSearchParams(window.location.search));
     if (!Object.values(parsed).some(Boolean)) return;
-    onDataChange((prev) => ({
-      ...prev,
-      settings: {
-        ...prev.settings,
-        drillContext: {
-          ...prev.settings.drillContext,
-          ...parsed,
+    onDataChange((prev) => {
+      const mergedContext = {
+        ...prev.settings.drillContext,
+        ...parsed,
+      };
+      const candidateContext = {
+        ...mergedContext,
+        villainPos: mergedContext.nodeType === 'rfi' ? undefined : mergedContext.villainPos,
+      };
+      if (!isEligibleContext(candidateContext, prev)) {
+        return prev;
+      }
+      return {
+        ...prev,
+        settings: {
+          ...prev.settings,
+          drillContext: candidateContext,
+          drillType: toLegacyDrillType(candidateContext.nodeType),
         },
-        drillType: parsed.nodeType ? toLegacyDrillType(parsed.nodeType) : prev.settings.drillType,
-      },
-    }));
+      };
+    });
   }, []);
 
   useEffect(() => {
