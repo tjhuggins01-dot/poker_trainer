@@ -1,5 +1,6 @@
 import { PRESETS, facingOpenKey, type PresetId } from './presets';
 import { parseRangeShorthand } from './parser';
+import { DEFAULT_DRILL_CONTEXT, fromLegacyDrillType } from './domain';
 import {
   FACING_OPEN_HERO_POSITIONS,
   FACING_OPEN_VILLAIN_BY_HERO,
@@ -81,6 +82,16 @@ const normalizeCurrentData = (raw: any): AppData => {
     facing_open: next.settings.positionFocus?.facing_open ?? defaults.settings.positionFocus.facing_open,
   };
   next.settings.facingOpenSelection = next.settings.facingOpenSelection ?? defaultFacingOpenSelection;
+  next.settings.drillContext = next.settings.drillContext ?? {
+    ...DEFAULT_DRILL_CONTEXT,
+    nodeType: fromLegacyDrillType(next.settings.drillType),
+    heroPos:
+      next.settings.drillType === 'facing_open'
+        ? next.settings.facingOpenSelection.heroPos
+        : next.settings.positionFocus.rfi[0] ?? DEFAULT_DRILL_CONTEXT.heroPos,
+    villainPos:
+      next.settings.drillType === 'facing_open' ? next.settings.facingOpenSelection.villainPos : undefined,
+  };
   return next;
 };
 
@@ -170,6 +181,7 @@ export const createDefaultData = (): AppData => {
       drillType: 'rfi',
       positionFocus: { rfi: [...RFI_POSITIONS], facing_open: [...FACING_OPEN_HERO_POSITIONS] },
       facingOpenSelection: defaultFacingOpenSelection,
+      drillContext: DEFAULT_DRILL_CONTEXT,
     },
   };
 };
@@ -203,6 +215,16 @@ const migrateV5ToCurrent = (record: any): AppData => {
   const next = structuredClone(record) as AppData;
   next.version = STORAGE_VERSION;
   next.settings.facingOpenSelection = next.settings.facingOpenSelection ?? defaultFacingOpenSelection;
+  next.settings.drillContext = next.settings.drillContext ?? {
+    ...DEFAULT_DRILL_CONTEXT,
+    nodeType: fromLegacyDrillType(next.settings.drillType ?? 'rfi'),
+    heroPos:
+      next.settings.drillType === 'facing_open'
+        ? next.settings.facingOpenSelection.heroPos
+        : next.settings.positionFocus?.rfi?.[0] ?? DEFAULT_DRILL_CONTEXT.heroPos,
+    villainPos:
+      next.settings.drillType === 'facing_open' ? next.settings.facingOpenSelection.villainPos : undefined,
+  };
   applyFacingOpenPreset(next.situations, next.settings.defaultPresetId ?? defaultPresetId);
   return next;
 };
@@ -211,7 +233,7 @@ const migrateToCurrent = (rawData: unknown): AppData => {
   if (!rawData || typeof rawData !== 'object') return createDefaultData();
   const record = rawData as any;
   if (record.version === STORAGE_VERSION) return normalizeCurrentData(record);
-  if (record.version === 5) return migrateV5ToCurrent(record);
+  if (record.version === 6 || record.version === 5) return migrateV5ToCurrent(record);
   if (record.version === 4) return migrateLegacy(record);
   return migrateLegacy(record);
 };

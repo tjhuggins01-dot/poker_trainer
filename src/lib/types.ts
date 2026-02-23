@@ -68,7 +68,7 @@ export type MistakeEntry = { count: number; lastTs: number };
 export type DifficultyMode = 'normal' | 'hard' | 'uniform';
 
 export type AppData = {
-  version: 6;
+  version: 7;
   meta: { game: 'NLH'; table: '9max'; effectiveStackBb: 100 };
   rangesetName: string;
   situations: Record<string, SituationPolicyRecord>;
@@ -95,6 +95,7 @@ export type AppData = {
       heroPos: FacingOpenHeroPosition;
       villainPos: Position;
     };
+    drillContext: import('./domain').DrillContext;
   };
   migrationNotice?: string;
 };
@@ -109,6 +110,6 @@ export type SessionStats = {
 };
 
 export const APP_VERSION = '2.0.0';
-export const STORAGE_VERSION = 6;
+export const STORAGE_VERSION = 7;
 export const STORAGE_KEY = 'poker_range_drill_v2';
 export const SESSION_STORAGE_KEY = 'poker_range_drill_session_v2';

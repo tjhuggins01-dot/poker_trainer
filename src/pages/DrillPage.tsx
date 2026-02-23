@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FeedbackPanel } from '../components/FeedbackPanel';
 import { buildWeightedHandMap, computeCorrectAction, nextPrompt } from '../lib/logic';
+import { fromLegacyDrillType, parseContextQuery, toLegacyDrillType } from '../lib/domain';
 import { makeFacingOpenKey, makeRfiKey } from '../lib/storage';
 import {
   FACING_OPEN_HERO_POSITIONS,
@@ -35,6 +36,34 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
     return [...focus].sort().join('|');
   }, [data.settings.drillType, data.settings.positionFocus]);
   const drillResetKey = `${data.settings.drillType}:${selectedFocusKey}:${data.settings.difficulty}:${situationsPolicyKey}`;
+
+  useEffect(() => {
+    const parsed = parseContextQuery(new URLSearchParams(window.location.search));
+    if (!Object.values(parsed).some(Boolean)) return;
+    onDataChange((prev) => ({
+      ...prev,
+      settings: {
+        ...prev.settings,
+        drillContext: {
+          ...prev.settings.drillContext,
+          ...parsed,
+        },
+        drillType: parsed.nodeType ? toLegacyDrillType(parsed.nodeType) : prev.settings.drillType,
+      },
+    }));
+  }, []);
+
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search);
+    q.set('format', data.settings.drillContext.format);
+    q.set('stack', String(data.settings.drillContext.effectiveStackBb));
+    q.set('node', data.settings.drillContext.nodeType);
+    q.set('hero', data.settings.drillContext.heroPos);
+    if (data.settings.drillContext.villainPos) q.set('villain', data.settings.drillContext.villainPos);
+    else q.delete('villain');
+    const nextUrl = `${window.location.pathname}?${q.toString()}${window.location.hash}`;
+    window.history.replaceState(null, '', nextUrl);
+  }, [data.settings.drillContext]);
   const [prompt, setPrompt] = useState(() => nextPrompt(data, weightedMap));
   const [status, setStatus] = useState<'idle' | 'correct' | 'incorrect'>('idle');
   const [correctAction, setCorrectAction] = useState<DrillAction>('FOLD');
@@ -253,7 +282,22 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
         id="drill-type"
         value={data.settings.drillType}
         onChange={(e: any) =>
-          onDataChange((prev) => ({ ...prev, settings: { ...prev.settings, drillType: e.target.value } as any }))
+          onDataChange((prev) => {
+            const drillType = e.target.value as 'rfi' | 'facing_open';
+            const nodeType = fromLegacyDrillType(drillType);
+            return {
+              ...prev,
+              settings: {
+                ...prev.settings,
+                drillType,
+                drillContext: {
+                  ...prev.settings.drillContext,
+                  nodeType,
+                  villainPos: nodeType === 'facingOpen' ? prev.settings.facingOpenSelection.villainPos : undefined,
+                },
+              },
+            };
+          })
         }
       >
         <option value="rfi">Open First In (RFI)</option>
@@ -275,6 +319,10 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
                   if (e.target.checked) list.add(position as any);
                   else list.delete(position as any);
                   next.settings.positionFocus[keyFocus] = [...list] as any;
+                  const selected = [...list][0] as string | undefined;
+                  if (selected) {
+                    next.settings.drillContext.heroPos = selected as any;
+                  }
                   return next;
                 })
               }
