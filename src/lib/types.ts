@@ -76,10 +76,19 @@ export type StatsEntry = { attempts: number; correct: number };
 
 export type MistakeEntry = { count: number; lastTs: number };
 
+export type PromptMemoryEntry = {
+  seenCount: number;
+  wrongCount: number;
+  lastSeenAt: number;
+  nextDueAt: number;
+  ease: number;
+  correctStreak: number;
+};
+
 export type DifficultyMode = 'normal' | 'hard' | 'uniform';
 
 export type AppData = {
-  version: 7;
+  version: 8;
   meta: { game: 'NLH'; table: '9max'; effectiveStackBb: EffectiveStackBb };
   rangesetName: string;
   situations: Record<string, SituationPolicyRecord>;
@@ -90,9 +99,11 @@ export type AppData = {
     byFacingMatchup: Record<string, StatsEntry>;
     byHand: Record<string, StatsEntry>;
     mistakes: Record<string, MistakeEntry>;
+    promptMemory: Record<string, PromptMemoryEntry>;
   };
   settings: {
     revealOnIncorrectOnly: boolean;
+    adaptiveRepetition: boolean;
     handDisplayMode: 'class';
     randomHandMode: 'uniform169';
     difficulty: DifficultyMode;
@@ -122,6 +133,6 @@ export type SessionStats = {
 };
 
 export const APP_VERSION = '2.0.0';
-export const STORAGE_VERSION = 7;
+export const STORAGE_VERSION = 8;
 export const STORAGE_KEY = 'poker_range_drill_v2';
 export const SESSION_STORAGE_KEY = 'poker_range_drill_session_v2';

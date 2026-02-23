@@ -11,6 +11,7 @@ import {
   type DrillAction,
   type FacingOpenHeroPosition,
   type HandClass,
+  type PromptMemoryEntry,
   type Position,
   type RfiPosition,
   type Situation,
@@ -79,6 +80,61 @@ export const computeCorrectAction = (
 };
 
 type WeightedHand = { hand: HandClass; weight: number };
+
+const MIN_EASE = 1.3;
+const MAX_EASE = 3;
+const DEFAULT_EASE = 2.3;
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+export const buildPromptMemoryKey = (situationKey: string, hand: HandClass): string => `${situationKey}|${hand}`;
+
+export const getPromptSignature = (situation: Situation, handClass: HandClass): string =>
+  `${situation.facingAction}:${situation.heroPos}:${situation.villainPos ?? '-'}:${handClass}`;
+
+const computeSpacedRepBoost = (memory: PromptMemoryEntry | undefined, nowTs: number): number => {
+  if (!memory || memory.seenCount === 0) return 1;
+
+  const errorRate = memory.seenCount > 0 ? memory.wrongCount / memory.seenCount : 0;
+  const errorBoost = 1 + errorRate;
+
+  const dueDelta = nowTs - memory.nextDueAt;
+  const overdueBoost = dueDelta > 0 ? 1 + Math.min(dueDelta / DAY_MS, 1) * 0.75 : 1;
+  const notDueSuppression = dueDelta < 0 ? Math.max(0.2, 1 - Math.min(Math.abs(dueDelta) / DAY_MS, 0.8)) : 1;
+
+  const sinceLastSeen = Math.max(0, nowTs - memory.lastSeenAt);
+  const recencySuppression = sinceLastSeen < 20_000 ? 0.15 : sinceLastSeen < 60_000 ? 0.35 : 1;
+
+  return Math.min(Math.max(errorBoost * overdueBoost * notDueSuppression * recencySuppression, 0.05), 4);
+};
+
+const clampEase = (ease: number) => Math.min(Math.max(ease, MIN_EASE), MAX_EASE);
+
+export const updatePromptMemory = (
+  memory: PromptMemoryEntry | undefined,
+  ok: boolean,
+  nowTs = Date.now(),
+): PromptMemoryEntry => {
+  const seenCount = (memory?.seenCount ?? 0) + 1;
+  const wrongCount = (memory?.wrongCount ?? 0) + (ok ? 0 : 1);
+  const nextStreak = ok ? (memory?.correctStreak ?? 0) + 1 : 0;
+
+  const previousEase = memory?.ease ?? DEFAULT_EASE;
+  const ease = clampEase(previousEase + (ok ? 0.06 : -0.2));
+
+  const priorInterval = memory ? Math.max(memory.nextDueAt - memory.lastSeenAt, 30_000) : 60_000;
+  const intervalMs = ok
+    ? Math.min(priorInterval * Math.max(1.15, ease - 0.15) * (1 + Math.min(nextStreak, 5) * 0.2), 14 * DAY_MS)
+    : Math.max(20_000, priorInterval * 0.4);
+
+  return {
+    seenCount,
+    wrongCount,
+    lastSeenAt: nowTs,
+    nextDueAt: nowTs + intervalMs,
+    ease,
+    correctStreak: nextStreak,
+  };
+};
 
 const distanceBetweenHands = (a: HandClass, b: HandClass): number => {
   const aCoord = handClassToGridCoord(a);
@@ -196,6 +252,7 @@ const buildEligibleContexts = (data: AppData): DrillContext[] => {
 export const nextPrompt = (
   data: AppData,
   weightedMap: Record<string, WeightedHand[]>,
+  recentPromptSignatures: string[] = [],
 ): { situation: Situation; handClass: HandClass } => {
   const eligible = buildEligibleContexts(data);
   const fallback = {
@@ -209,8 +266,36 @@ export const nextPrompt = (
   const { key } = resolvePolicy(data, pickedContext);
   const weightedHands = key ? weightedMap[key] : undefined;
 
+  const situation = toSituation(pickedContext);
+  const recentSet = new Set(recentPromptSignatures);
+  const nowTs = Date.now();
+
+  if (!weightedHands || !data.settings.adaptiveRepetition) {
+    const eligibleHands = weightedHands
+      ? weightedHands.filter((item) => !recentSet.has(getPromptSignature(situation, item.hand)))
+      : [];
+    return {
+      situation,
+      handClass: weightedHands
+        ? weightedPick(eligibleHands.length ? eligibleHands : weightedHands)
+        : (() => { const nonRecentHands = allHands.filter((hand) => !recentSet.has(getPromptSignature(situation, hand))); return randomPick(nonRecentHands.length ? nonRecentHands : allHands); })(),
+    };
+  }
+
+  const adjustedWeights = weightedHands.map((item) => {
+    const memoryKey = key ? buildPromptMemoryKey(key, item.hand) : undefined;
+    const memory = memoryKey ? data.stats.promptMemory[memoryKey] : undefined;
+    const spacedRepBoost = computeSpacedRepBoost(memory, nowTs);
+    return {
+      ...item,
+      weight: item.weight * spacedRepBoost,
+    };
+  });
+
+  const nonRecent = adjustedWeights.filter((item) => !recentSet.has(getPromptSignature(situation, item.hand)));
+
   return {
-    situation: toSituation(pickedContext),
-    handClass: weightedHands ? weightedPick(weightedHands) : randomPick(allHands),
+    situation,
+    handClass: weightedPick(nonRecent.length ? nonRecent : adjustedWeights),
   };
 };

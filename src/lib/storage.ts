@@ -90,6 +90,7 @@ const normalizeCurrentData = (raw: any): AppData => {
   next.stats.byFacingMatchup = next.stats.byFacingMatchup ?? {};
   next.stats.byHand = next.stats.byHand ?? {};
   next.stats.mistakes = next.stats.mistakes ?? {};
+  next.stats.promptMemory = next.stats.promptMemory ?? {};
 
   Object.values(next.situations).forEach((record: any) => {
     if (record && record.actionSet && typeof record.actionSet[0] === 'string') {
@@ -274,9 +275,11 @@ export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: E
       byFacingMatchup: {},
       byHand: {},
       mistakes: {},
+      promptMemory: {},
     },
     settings: {
       revealOnIncorrectOnly: true,
+      adaptiveRepetition: false,
       handDisplayMode: 'class',
       randomHandMode: 'uniform169',
       difficulty: 'normal',
@@ -329,14 +332,14 @@ const migrateV5ToCurrent = (record: any): AppData => {
       next.settings.drillType === 'facing_open' ? next.settings.facingOpenSelection.villainPos : undefined,
   };
   applyFacingOpenPreset(next.situations, next.settings.defaultPresetId ?? defaultPresetId);
-  return next;
+  return normalizeCurrentData(next);
 };
 
 const migrateToCurrent = (rawData: unknown): AppData => {
   if (!rawData || typeof rawData !== 'object') return createDefaultData();
   const record = rawData as any;
   if (record.version === STORAGE_VERSION) return normalizeCurrentData(record);
-  if (record.version === 6 || record.version === 5) return migrateV5ToCurrent(record);
+  if (record.version === 7 || record.version === 6 || record.version === 5) return migrateV5ToCurrent(record);
   if (record.version === 4) return migrateLegacy(record);
   return migrateLegacy(record);
 };
