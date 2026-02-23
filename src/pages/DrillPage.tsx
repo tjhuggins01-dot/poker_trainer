@@ -36,7 +36,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
     const focus = data.settings.positionFocus[data.settings.drillType] as string[];
     return [...focus].sort().join('|');
   }, [data.settings.drillType, data.settings.positionFocus]);
-  const drillResetKey = `${data.settings.drillType}:${selectedFocusKey}:${data.settings.difficulty}:${situationsPolicyKey}`;
+  const drillResetKey = `${data.settings.drillType}:${selectedFocusKey}:${data.settings.difficulty}:${data.settings.drillContext.format}:${data.settings.drillContext.effectiveStackBb}:${situationsPolicyKey}`;
 
   useEffect(() => {
     const parsed = parseContextQuery(new URLSearchParams(window.location.search));
@@ -65,6 +65,12 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
     const nextUrl = `${window.location.pathname}?${q.toString()}${window.location.hash}`;
     window.history.replaceState(null, '', nextUrl);
   }, [data.settings.drillContext]);
+
+  const stackPrefix = `${data.settings.drillContext.format}_${data.settings.drillContext.effectiveStackBb}BB_`;
+  const hasRfiData = Object.keys(data.situations).some((k) => k.startsWith(`RFI_${stackPrefix}`));
+  const hasFacingOpenData = Object.keys(data.situations).some((k) => k.startsWith(`FACING_OPEN_${stackPrefix}`));
+  const hasThreeBetData = Object.keys(data.situations).some((k) => k.startsWith(`THREE_BET_${stackPrefix}`));
+
   const [prompt, setPrompt] = useState(() => nextPrompt(data, weightedMap));
   const [status, setStatus] = useState<'idle' | 'correct' | 'incorrect'>('idle');
   const [correctAction, setCorrectAction] = useState<DrillAction>('FOLD');
@@ -118,10 +124,10 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   const isFacingOpen = prompt.situation.facingAction === 'open';
   const isThreeBet = prompt.situation.facingAction === 'three_bet';
   const key = isFacingOpen
-    ? makeFacingOpenKey(prompt.situation.heroPos as FacingOpenHeroPosition, prompt.situation.villainPos!)
+    ? makeFacingOpenKey(prompt.situation.heroPos as FacingOpenHeroPosition, prompt.situation.villainPos!, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb)
     : isThreeBet
-      ? makeThreeBetKey(prompt.situation.heroPos as any, prompt.situation.villainPos!)
-    : makeRfiKey(prompt.situation.heroPos as RfiPosition);
+      ? makeThreeBetKey(prompt.situation.heroPos as any, prompt.situation.villainPos!, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb)
+    : makeRfiKey(prompt.situation.heroPos as RfiPosition, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb);
   const policy = data.situations[key]?.policy as any;
 
   const actionColors = useMemo(
@@ -330,9 +336,9 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
           })
         }
       >
-        <option value="rfi">Open First In (RFI)</option>
-        <option value="facing_open">Facing an Open</option>
-        <option value="three_bet">Facing a 3-bet</option>
+        <option value="rfi" disabled={!hasRfiData}>Open First In (RFI){!hasRfiData ? " (no data)" : ""}</option>
+        <option value="facing_open" disabled={!hasFacingOpenData}>Facing an Open{!hasFacingOpenData ? " (no data)" : ""}</option>
+        <option value="three_bet" disabled={!hasThreeBetData}>Facing a 3-bet{!hasThreeBetData ? " (no data)" : ""}</option>
       </select>
 
       <p className="muted">Position Focus</p>
@@ -369,7 +375,9 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
         <p className="big-hand">{prompt.handClass}</p>
       </div>
       <div className="actions">
-        {isFacingOpen || isThreeBet ? (
+        {!policy ? (
+          <p className="muted">No range data for this format/stack spot yet.</p>
+        ) : isFacingOpen || isThreeBet ? (
           <>
             <button className="fold" onClick={() => answer('FOLD')}>
               FOLD

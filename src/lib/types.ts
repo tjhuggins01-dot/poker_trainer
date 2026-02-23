@@ -32,6 +32,8 @@ export const THREE_BET_VILLAIN_BY_HERO: Record<ThreeBetHeroPosition, Position[]>
 
 export type DrillType = 'rfi' | 'facing_open' | 'three_bet';
 export type TableFormat = '9max';
+
+export type EffectiveStackBb = import('./constants').EffectiveStackBb;
 export type FacingAction = 'none' | 'open' | 'three_bet';
 
 export type DrillAction = string;
@@ -55,7 +57,7 @@ export type HandClass = PairHandClass | SuitedHandClass | OffsuitHandClass;
 export type Situation = {
   game: 'NLH';
   table: TableFormat;
-  effectiveStackBb: 100;
+  effectiveStackBb: EffectiveStackBb;
   heroPos: Position;
   facingAction: FacingAction;
   villainPos?: Position;
@@ -78,7 +80,7 @@ export type DifficultyMode = 'normal' | 'hard' | 'uniform';
 
 export type AppData = {
   version: 7;
-  meta: { game: 'NLH'; table: '9max'; effectiveStackBb: 100 };
+  meta: { game: 'NLH'; table: '9max'; effectiveStackBb: EffectiveStackBb };
   rangesetName: string;
   situations: Record<string, SituationPolicyRecord>;
   stats: {

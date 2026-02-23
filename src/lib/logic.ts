@@ -24,12 +24,17 @@ export const randomPick = <T>(list: T[]): T => list[Math.floor(Math.random() * l
 
 const getSituationKeyFromContext = (context: DrillContext): string => {
   if (context.nodeType === 'facingOpen' && context.villainPos) {
-    return makeFacingOpenKey(context.heroPos as FacingOpenHeroPosition, context.villainPos);
+    return makeFacingOpenKey(
+      context.heroPos as FacingOpenHeroPosition,
+      context.villainPos,
+      context.format,
+      context.effectiveStackBb,
+    );
   }
   if (context.nodeType === 'threeBet' && context.villainPos) {
-    return makeThreeBetKey(context.heroPos as any, context.villainPos);
+    return makeThreeBetKey(context.heroPos as any, context.villainPos, context.format, context.effectiveStackBb);
   }
-  return makeRfiKey(context.heroPos as RfiPosition);
+  return makeRfiKey(context.heroPos as RfiPosition, context.format, context.effectiveStackBb);
 };
 
 export const resolvePolicy = (
@@ -38,7 +43,15 @@ export const resolvePolicy = (
 ): { record?: SituationPolicyRecord; key?: string } => {
   const key = getSituationKeyFromContext(context);
   const record = appData.situations[key];
-  return { record, key };
+  if (record) return { record, key };
+
+  const legacyKey =
+    context.nodeType === 'facingOpen' && context.villainPos
+      ? makeFacingOpenKey(context.heroPos as FacingOpenHeroPosition, context.villainPos)
+      : context.nodeType === 'threeBet' && context.villainPos
+        ? makeThreeBetKey(context.heroPos as any, context.villainPos)
+        : makeRfiKey(context.heroPos as RfiPosition);
+  return { record: appData.situations[legacyKey], key: appData.situations[legacyKey] ? legacyKey : key };
 };
 
 export const computeCorrectAction = (
@@ -47,8 +60,8 @@ export const computeCorrectAction = (
   handClass: HandClass,
 ): DrillAction => {
   const context: DrillContext = {
-    format: 'cash6max',
-    effectiveStackBb: 100,
+    format: appData.settings.drillContext.format,
+    effectiveStackBb: situation.effectiveStackBb,
     nodeType: situation.facingAction === 'open' ? 'facingOpen' : situation.facingAction === 'three_bet' ? 'threeBet' : 'rfi',
     heroPos: situation.heroPos,
     villainPos: situation.villainPos,

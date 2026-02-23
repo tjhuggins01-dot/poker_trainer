@@ -1,7 +1,8 @@
 import { PRESETS, facingOpenKey, type PresetId } from './presets';
-import { THREE_BET_DEFAULTS } from './data/threeBet/defaults';
+import { getStackDataBundle } from './data/catalog';
 import { parseRangeShorthand } from './parser';
 import { DEFAULT_DRILL_CONTEXT, fromLegacyDrillType } from './domain';
+import { DEFAULT_FORMAT, DEFAULT_STACK_BB, type DrillFormat, type EffectiveStackBb } from './constants';
 import {
   FACING_OPEN_HERO_POSITIONS,
   FACING_OPEN_VILLAIN_BY_HERO,
@@ -24,11 +25,19 @@ const LEGACY_SESSION_KEYS = ['poker_range_drill_session_v1'];
 
 const defaultPresetId: PresetId = 'v2_standard';
 
-const makeRfiKey = (heroPos: RfiPosition): string => `RFI_9MAX_100BB_${heroPos}`;
-const makeFacingOpenKey = (heroPos: FacingOpenHeroPosition, villainPos: Position): string =>
-  `FACING_OPEN_9MAX_100BB_${heroPos}_VS_${villainPos}`;
-const makeThreeBetKey = (heroPos: ThreeBetHeroPosition, villainPos: Position): string =>
-  `THREE_BET_9MAX_100BB_${heroPos}_VS_${villainPos}`;
+const makeRfiKey = (heroPos: RfiPosition, format: DrillFormat = 'cash6max', stack: EffectiveStackBb = 100): string => `RFI_${format}_${stack}BB_${heroPos}`;
+const makeFacingOpenKey = (
+  heroPos: FacingOpenHeroPosition,
+  villainPos: Position,
+  format: DrillFormat = 'cash6max',
+  stack: EffectiveStackBb = 100,
+): string => `FACING_OPEN_${format}_${stack}BB_${heroPos}_VS_${villainPos}`;
+const makeThreeBetKey = (
+  heroPos: ThreeBetHeroPosition,
+  villainPos: Position,
+  format: DrillFormat = 'cash6max',
+  stack: EffectiveStackBb = 100,
+): string => `THREE_BET_${format}_${stack}BB_${heroPos}_VS_${villainPos}`;
 
 const createEmptyRfiStats = () =>
   Object.fromEntries(RFI_POSITIONS.map((p) => [p, { attempts: 0, correct: 0 }])) as Record<
@@ -118,8 +127,9 @@ const makeRfiSituationRecord = (
   heroPos: RfiPosition,
   raiseHands: string[],
   limpHands: string[],
+  stack: EffectiveStackBb,
 ): SituationPolicyRecord => ({
-  situation: { game: 'NLH', table: '9max', effectiveStackBb: 100, heroPos, facingAction: 'none' },
+  situation: { game: 'NLH', table: '9max', effectiveStackBb: stack, heroPos, facingAction: 'none' },
   drillType: 'rfi',
   actionSet:
     heroPos === 'SB'
@@ -140,11 +150,12 @@ const makeFacingOpenSituationRecord = (
   villainPos: Position,
   callHands: string[],
   threeBetHands: string[],
+  stack: EffectiveStackBb,
 ): SituationPolicyRecord => ({
   situation: {
     game: 'NLH',
     table: '9max',
-    effectiveStackBb: 100,
+    effectiveStackBb: stack,
     heroPos,
     facingAction: 'open',
     villainPos,
@@ -164,11 +175,12 @@ const makeThreeBetSituationRecord = (
   villainPos: Position,
   callHands: string[],
   fourBetHands: string[],
+  stack: EffectiveStackBb,
 ): SituationPolicyRecord => ({
   situation: {
     game: 'NLH',
     table: '9max',
-    effectiveStackBb: 100,
+    effectiveStackBb: stack,
     heroPos,
     facingAction: 'three_bet',
     villainPos,
@@ -182,8 +194,16 @@ const makeThreeBetSituationRecord = (
   policy: { call: callHands as any, fourBet: fourBetHands as any },
 });
 
-const applyFacingOpenPreset = (situations: AppData['situations'], presetId: PresetId) => {
-  Object.entries(PRESETS[presetId].facingOpen).forEach(([matchupKey, range]) => {
+const applyFacingOpenPreset = (
+  situations: AppData['situations'],
+  presetId: PresetId,
+  format: DrillFormat = DEFAULT_FORMAT,
+  stack: EffectiveStackBb = DEFAULT_STACK_BB,
+) => {
+  const bundle = getStackDataBundle(format, stack);
+  if (!bundle) return;
+  const facingOpenSource = PRESETS[presetId]?.facingOpen ?? bundle.facingOpen;
+  Object.entries(facingOpenSource).forEach(([matchupKey, range]) => {
     const match = matchupKey.match(/^FO_(.+)_VS_(.+)$/);
     if (!match) return;
     const hero = match[1] as FacingOpenHeroPosition;
@@ -191,49 +211,60 @@ const applyFacingOpenPreset = (situations: AppData['situations'], presetId: Pres
     const call = parseRangeShorthand(range.call);
     const threeBet = parseRangeShorthand(range.threeBet);
     if (!call.ok || !threeBet.ok || !hasNoOverlap(call.hands, threeBet.hands)) return;
-    situations[makeFacingOpenKey(hero, villain)] = makeFacingOpenSituationRecord(
+    situations[makeFacingOpenKey(hero, villain, format, stack)] = makeFacingOpenSituationRecord(
       hero,
       villain,
       call.hands,
       threeBet.hands,
+      stack,
     );
   });
 };
 
 
-const applyThreeBetDefaults = (situations: AppData['situations']) => {
-  Object.entries(THREE_BET_DEFAULTS).forEach(([matchupKey, range]) => {
+const applyThreeBetDefaults = (
+  situations: AppData['situations'],
+  format: DrillFormat = DEFAULT_FORMAT,
+  stack: EffectiveStackBb = DEFAULT_STACK_BB,
+) => {
+  const bundle = getStackDataBundle(format, stack);
+  if (!bundle) return;
+  Object.entries(bundle.threeBet).forEach(([matchupKey, range]) => {
     const [hero, villain] = matchupKey.split('_VS_');
     const call = parseRangeShorthand(range.call);
     const fourBet = parseRangeShorthand(range.fourBet);
     if (!call.ok || !fourBet.ok || !hasNoOverlap(call.hands, fourBet.hands)) return;
-    situations[makeThreeBetKey(hero as ThreeBetHeroPosition, villain as Position)] = makeThreeBetSituationRecord(
+    situations[makeThreeBetKey(hero as ThreeBetHeroPosition, villain as Position, format, stack)] = makeThreeBetSituationRecord(
       hero as ThreeBetHeroPosition,
       villain as Position,
       call.hands,
       fourBet.hands,
+      stack,
     );
   });
 };
 
-export const createDefaultData = (): AppData => {
+export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: EffectiveStackBb = DEFAULT_STACK_BB): AppData => {
   const situations: AppData['situations'] = {};
+  const bundle = getStackDataBundle(format, stack);
+  const rfiDefaults = bundle?.rfi ?? PRESETS[defaultPresetId].rfi;
   RFI_POSITIONS.forEach((position) => {
-    const raiseParsed = parseRangeShorthand(PRESETS[defaultPresetId].rfi.raise[position]);
+    const raiseParsed = parseRangeShorthand(rfiDefaults.raise[position]);
     const limpParsed =
-      position === 'SB' ? parseRangeShorthand(PRESETS[defaultPresetId].rfi.limp.SB) : { ok: true, hands: [] };
-    situations[makeRfiKey(position)] = makeRfiSituationRecord(
+      position === 'SB' ? parseRangeShorthand(rfiDefaults.limp.SB) : { ok: true, hands: [] };
+    situations[makeRfiKey(position, format, stack)] = makeRfiSituationRecord(
       position,
       raiseParsed.ok ? raiseParsed.hands : [],
       limpParsed.ok ? limpParsed.hands : [],
+      stack,
     );
   });
-  applyFacingOpenPreset(situations, defaultPresetId);
-  applyThreeBetDefaults(situations);
+  applyFacingOpenPreset(situations, defaultPresetId, format, stack);
+  applyThreeBetDefaults(situations, format, stack);
 
   return {
     version: STORAGE_VERSION,
-    meta: { game: 'NLH', table: '9max', effectiveStackBb: 100 },
+    meta: { game: 'NLH', table: '9max', effectiveStackBb: stack },
     rangesetName: '9-max 100bb preflop',
     situations,
     stats: {
@@ -253,7 +284,7 @@ export const createDefaultData = (): AppData => {
       drillType: 'rfi',
       positionFocus: { rfi: [...RFI_POSITIONS], facing_open: [...FACING_OPEN_HERO_POSITIONS], three_bet: [...THREE_BET_HERO_POSITIONS] },
       facingOpenSelection: defaultFacingOpenSelection,
-      drillContext: DEFAULT_DRILL_CONTEXT,
+      drillContext: { ...DEFAULT_DRILL_CONTEXT, format, effectiveStackBb: stack },
     },
   };
 };
@@ -264,7 +295,7 @@ const migrateLegacy = (rawData: any): AppData => {
   RFI_POSITIONS.forEach((position) => {
     const oldKey = `OPEN_9MAX_100BB_${position}`;
     const oldHands: string[] = legacySituations[oldKey]?.policy?.openHands ?? [];
-    next.situations[makeRfiKey(position)] = makeRfiSituationRecord(position, oldHands, []);
+    next.situations[makeRfiKey(position, DEFAULT_FORMAT, DEFAULT_STACK_BB)] = makeRfiSituationRecord(position, oldHands, [], DEFAULT_STACK_BB);
   });
 
   if (rawData?.stats) {

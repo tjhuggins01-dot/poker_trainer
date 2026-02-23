@@ -29,8 +29,9 @@ export function RangesPage({ data, onDataChange }: Props) {
     ? data.settings.facingOpenSelection.villainPos
     : villainOptions[0];
 
-  const key = mode === 'rfi' ? makeRfiKey(position) : makeFacingOpenKey(facingHero, facingVillain);
+  const key = mode === 'rfi' ? makeRfiKey(position, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb) : makeFacingOpenKey(facingHero, facingVillain, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb);
   const policy = data.situations[key]?.policy as any;
+  const hasSpotData = Boolean(data.situations[key]);
 
   const actionColors = useMemo(
     () => Object.fromEntries((data.situations[key]?.actionSet ?? []).map((action: any) => [action.id, action.color])),
@@ -169,21 +170,23 @@ export function RangesPage({ data, onDataChange }: Props) {
         <p>Fold {pct(169 - counts.a - counts.b)}%</p>
       </div>
 
+      {!hasSpotData && <p className="muted">No range data for this format/stack spot yet.</p>}
       <HandGrid actionMap={actionMap} actionColors={actionColors as any} />
       <label>{mode === 'rfi' ? 'Raise import' : 'Call import'}</label>
-      <textarea rows={3} value={raiseText} onChange={(e: any) => setRaiseText(e.target.value)} />
+      <textarea rows={3} value={raiseText} onChange={(e: any) => setRaiseText(e.target.value)} disabled={!hasSpotData} />
       <label>{mode === 'rfi' ? (position === 'SB' ? 'Limp import' : 'Secondary not used') : '3bet import'}</label>
       <textarea
         rows={3}
         value={secondaryText}
         onChange={(e: any) => setSecondaryText(e.target.value)}
-        disabled={mode === 'rfi' && position !== 'SB'}
+        disabled={!hasSpotData || (mode === 'rfi' && position !== 'SB')}
       />
       <div className="row">
-        <button className="primary" onClick={apply}>
+        <button className="primary" onClick={apply} disabled={!hasSpotData}>
           Apply
         </button>
         <button
+          disabled={!hasSpotData}
           onClick={() => {
             const preset = PRESETS[data.settings.defaultPresetId];
             onDataChange((prev) => {
