@@ -1,7 +1,13 @@
 import { PRESETS, facingOpenKey, type PresetId } from './presets';
 import { getStackDataBundle } from './data/catalog';
 import { parseRangeShorthand } from './parser';
-import { DEFAULT_DRILL_CONTEXT, fromLegacyDrillType } from './domain';
+import {
+  DEFAULT_DRILL_CONTEXT,
+  fromLegacyDrillType,
+  isEligibleContext,
+  toLegacyDrillType,
+  type DrillContext,
+} from './domain';
 import { DEFAULT_FORMAT, DEFAULT_STACK_BB, type DrillFormat, type EffectiveStackBb } from './constants';
 import {
   FACING_OPEN_HERO_POSITIONS,
@@ -108,17 +114,35 @@ const normalizeCurrentData = (raw: any): AppData => {
     facing_open: next.settings.positionFocus?.facing_open ?? defaults.settings.positionFocus.facing_open,
     three_bet: next.settings.positionFocus?.three_bet ?? defaults.settings.positionFocus.three_bet,
   };
-  next.settings.facingOpenSelection = next.settings.facingOpenSelection ?? defaultFacingOpenSelection;
-  next.settings.drillContext = next.settings.drillContext ?? {
+  next.settings.facingOpenSelection = {
+    ...defaultFacingOpenSelection,
+    ...next.settings.facingOpenSelection,
+  };
+
+  const legacyNodeType = fromLegacyDrillType(next.settings.drillType);
+  const baseContext: DrillContext = {
     ...DEFAULT_DRILL_CONTEXT,
-    nodeType: fromLegacyDrillType(next.settings.drillType),
+    nodeType: legacyNodeType,
     heroPos:
       next.settings.drillType === 'facing_open'
         ? next.settings.facingOpenSelection.heroPos
-        : next.settings.positionFocus.rfi[0] ?? DEFAULT_DRILL_CONTEXT.heroPos,
+        : next.settings.drillType === 'three_bet'
+          ? next.settings.positionFocus.three_bet[0] ?? DEFAULT_DRILL_CONTEXT.heroPos
+          : next.settings.positionFocus.rfi[0] ?? DEFAULT_DRILL_CONTEXT.heroPos,
     villainPos:
-      next.settings.drillType === 'facing_open' ? next.settings.facingOpenSelection.villainPos : undefined,
+      next.settings.drillType === 'facing_open'
+        ? next.settings.facingOpenSelection.villainPos
+        : undefined,
   };
+  next.settings.drillContext = {
+    ...baseContext,
+    ...(next.settings.drillContext ?? {}),
+  };
+
+  if (!isEligibleContext(next.settings.drillContext, next)) {
+    next.settings.drillContext = baseContext;
+  }
+  next.settings.drillType = toLegacyDrillType(next.settings.drillContext.nodeType);
   return next;
 };
 
