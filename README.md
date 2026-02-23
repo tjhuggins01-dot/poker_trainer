@@ -100,6 +100,17 @@ That workflow is intentionally “**add data + register format/stack**” instea
 - Session key: `poker_range_drill_session_v2`
 - Legacy v1 data is migrated into the v2 schema (RFI ranges preserved; facing-open initialized).
 
+
+## Mobile visual regression checklist
+
+Run this quick pass after UI/theme changes at narrow widths (320px and 375px):
+
+- Toggle **Settings → Theme** through `system`, `light`, and `dark`; verify text contrast is readable on cards, tabs, and buttons.
+- On **Drill**, verify action buttons remain at least thumb-friendly height and status text stays readable.
+- Trigger an incorrect answer and confirm the feedback 13x13 hand grid shows all 13 columns without horizontal clipping.
+- On **Ranges**, verify the 13x13 grid fully fits the content area, including the final column, in both RFI and Facing Open modes.
+- Confirm tabs are still fully visible and active state is distinct in dark mode.
+
 ## Local development
 
 ```bash

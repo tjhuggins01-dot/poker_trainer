@@ -86,9 +86,10 @@ export type PromptMemoryEntry = {
 };
 
 export type DifficultyMode = 'normal' | 'hard' | 'uniform';
+export type ThemeMode = 'system' | 'light' | 'dark';
 
 export type AppData = {
-  version: 8;
+  version: 9;
   meta: { game: 'NLH'; table: '9max'; effectiveStackBb: EffectiveStackBb };
   rangesetName: string;
   situations: Record<string, SituationPolicyRecord>;
@@ -107,6 +108,7 @@ export type AppData = {
     handDisplayMode: 'class';
     randomHandMode: 'uniform169';
     difficulty: DifficultyMode;
+    themeMode: ThemeMode;
     defaultPresetId: import('./presets').PresetId;
     drillType: DrillType;
     positionFocus: {
@@ -133,6 +135,6 @@ export type SessionStats = {
 };
 
 export const APP_VERSION = '2.0.0';
-export const STORAGE_VERSION = 8;
+export const STORAGE_VERSION = 9;
 export const STORAGE_KEY = 'poker_range_drill_v2';
 export const SESSION_STORAGE_KEY = 'poker_range_drill_session_v2';

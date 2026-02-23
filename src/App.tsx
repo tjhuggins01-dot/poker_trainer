@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DrillPage } from './pages/DrillPage';
 import { RangesPage } from './pages/RangesPage';
 import { SettingsPage } from './pages/SettingsPage';
@@ -12,6 +12,22 @@ function App() {
   const [tab, setTab] = useState<Tab>('drill');
   const [data, setData] = useState<AppData>(() => loadData());
   const [session, setSession] = useState<SessionStats>(() => loadSession());
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const applyTheme = () => {
+      const resolvedTheme = data.settings.themeMode === 'system' ? (media.matches ? 'dark' : 'light') : data.settings.themeMode;
+      root.dataset.theme = resolvedTheme;
+      root.classList.toggle('theme-dark', resolvedTheme === 'dark');
+      root.classList.toggle('theme-light', resolvedTheme === 'light');
+    };
+
+    applyTheme();
+    media.addEventListener('change', applyTheme);
+    return () => media.removeEventListener('change', applyTheme);
+  }, [data.settings.themeMode]);
 
   const onDataChange = (updater: (prev: AppData) => AppData) => {
     setData((prev) => {
