@@ -2,7 +2,7 @@ import { parseRangeShorthand } from '../lib/parser';
 import { PRESET_IDS, PRESETS, type PresetId } from '../lib/presets';
 import { hasNoOverlap, makeFacingOpenKey, makeRfiKey } from '../lib/storage';
 import { STACK_SIZES_BB } from '../lib/constants';
-import { APP_VERSION, RFI_POSITIONS, STORAGE_VERSION, type AppData, type DifficultyMode } from '../lib/types';
+import { APP_VERSION, RFI_POSITIONS, STORAGE_VERSION, type AppData, type DifficultyMode, type ThemeMode } from '../lib/types';
 
 type Props = {
   data: AppData;
@@ -16,6 +16,12 @@ const difficultyOptions: { value: DifficultyMode; label: string }[] = [
   { value: 'normal', label: 'Normal' },
   { value: 'hard', label: 'Hard (boundary-biased)' },
   { value: 'uniform', label: 'Uniform' },
+];
+
+const themeOptions: { value: ThemeMode; label: string }[] = [
+  { value: 'system', label: 'System' },
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
 ];
 
 export function SettingsPage({ data, onDataChange, onResetSession, onResetStats, onResetAll }: Props) {
@@ -45,6 +51,27 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
       </label>
       <p className="muted">Conservative spaced-repetition boost using per-prompt memory. Disable to revert to classic weighting.</p>
 
+
+      <label htmlFor="theme-select">Theme</label>
+      <select
+        id="theme-select"
+        value={data.settings.themeMode}
+        onChange={(e: any) =>
+          onDataChange((prev) => ({
+            ...prev,
+            settings: {
+              ...prev.settings,
+              themeMode: e.target.value as ThemeMode,
+            },
+          }))
+        }
+      >
+        {themeOptions.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
 
       <label htmlFor="stack-select">Effective stack</label>
       <select

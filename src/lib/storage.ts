@@ -283,6 +283,7 @@ export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: E
       handDisplayMode: 'class',
       randomHandMode: 'uniform169',
       difficulty: 'normal',
+      themeMode: 'system',
       defaultPresetId,
       drillType: 'rfi',
       positionFocus: { rfi: [...RFI_POSITIONS], facing_open: [...FACING_OPEN_HERO_POSITIONS], three_bet: [...THREE_BET_HERO_POSITIONS] },
