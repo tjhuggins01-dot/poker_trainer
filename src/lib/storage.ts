@@ -1,4 +1,5 @@
 import { PRESETS, facingOpenKey, type PresetId } from './presets';
+import { THREE_BET_DEFAULTS } from './data/threeBet/defaults';
 import { parseRangeShorthand } from './parser';
 import { DEFAULT_DRILL_CONTEXT, fromLegacyDrillType } from './domain';
 import {
@@ -11,9 +12,11 @@ import {
   type AppData,
   type FacingOpenHeroPosition,
   type Position,
+  THREE_BET_HERO_POSITIONS,
   type RfiPosition,
   type SessionStats,
   type SituationPolicyRecord,
+  type ThreeBetHeroPosition,
 } from './types';
 
 const LEGACY_STORAGE_KEYS = ['poker_range_drill_v1'];
@@ -24,6 +27,8 @@ const defaultPresetId: PresetId = 'v2_standard';
 const makeRfiKey = (heroPos: RfiPosition): string => `RFI_9MAX_100BB_${heroPos}`;
 const makeFacingOpenKey = (heroPos: FacingOpenHeroPosition, villainPos: Position): string =>
   `FACING_OPEN_9MAX_100BB_${heroPos}_VS_${villainPos}`;
+const makeThreeBetKey = (heroPos: ThreeBetHeroPosition, villainPos: Position): string =>
+  `THREE_BET_9MAX_100BB_${heroPos}_VS_${villainPos}`;
 
 const createEmptyRfiStats = () =>
   Object.fromEntries(RFI_POSITIONS.map((p) => [p, { attempts: 0, correct: 0 }])) as Record<
@@ -76,10 +81,22 @@ const normalizeCurrentData = (raw: any): AppData => {
   next.stats.byFacingMatchup = next.stats.byFacingMatchup ?? {};
   next.stats.byHand = next.stats.byHand ?? {};
   next.stats.mistakes = next.stats.mistakes ?? {};
+
+  Object.values(next.situations).forEach((record: any) => {
+    if (record && record.actionSet && typeof record.actionSet[0] === 'string') {
+      record.actionSet = record.actionSet.map((id: string) => ({
+        id,
+        label: id,
+        color: id === 'RAISE' ? 'raise' : id === 'LIMP' ? 'limp' : id === '3BET' || id === '4BET' ? 'threebet' : id === 'CALL' ? 'call' : 'fold',
+      }));
+    }
+  });
+
   next.settings = { ...defaults.settings, ...next.settings };
   next.settings.positionFocus = {
     rfi: next.settings.positionFocus?.rfi ?? defaults.settings.positionFocus.rfi,
     facing_open: next.settings.positionFocus?.facing_open ?? defaults.settings.positionFocus.facing_open,
+    three_bet: next.settings.positionFocus?.three_bet ?? defaults.settings.positionFocus.three_bet,
   };
   next.settings.facingOpenSelection = next.settings.facingOpenSelection ?? defaultFacingOpenSelection;
   next.settings.drillContext = next.settings.drillContext ?? {
@@ -104,8 +121,18 @@ const makeRfiSituationRecord = (
 ): SituationPolicyRecord => ({
   situation: { game: 'NLH', table: '9max', effectiveStackBb: 100, heroPos, facingAction: 'none' },
   drillType: 'rfi',
-  actionSet: heroPos === 'SB' ? ['RAISE', 'LIMP', 'FOLD'] : ['RAISE', 'FOLD'],
-  policy: { raise: raiseHands as any, limp: heroPos === 'SB' ? (limpHands as any) : undefined },
+  actionSet:
+    heroPos === 'SB'
+      ? [
+          { id: 'RAISE', label: 'RAISE', color: 'raise' },
+          { id: 'LIMP', label: 'LIMP', color: 'limp' },
+          { id: 'FOLD', label: 'FOLD', color: 'fold' },
+        ]
+      : [
+          { id: 'RAISE', label: 'RAISE', color: 'raise' },
+          { id: 'FOLD', label: 'FOLD', color: 'fold' },
+        ],
+  policy: { raise: raiseHands as any, limp: heroPos === 'SB' ? (limpHands as any) : [] },
 });
 
 const makeFacingOpenSituationRecord = (
@@ -123,8 +150,36 @@ const makeFacingOpenSituationRecord = (
     villainPos,
   },
   drillType: 'facing_open',
-  actionSet: ['FOLD', 'CALL', '3BET'],
+  actionSet: [
+    { id: 'FOLD', label: 'FOLD', color: 'fold' },
+    { id: 'CALL', label: 'CALL', color: 'call' },
+    { id: '3BET', label: '3BET', color: 'threebet' },
+  ],
   policy: { call: callHands as any, threeBet: threeBetHands as any },
+});
+
+
+const makeThreeBetSituationRecord = (
+  heroPos: ThreeBetHeroPosition,
+  villainPos: Position,
+  callHands: string[],
+  fourBetHands: string[],
+): SituationPolicyRecord => ({
+  situation: {
+    game: 'NLH',
+    table: '9max',
+    effectiveStackBb: 100,
+    heroPos,
+    facingAction: 'three_bet',
+    villainPos,
+  },
+  drillType: 'three_bet',
+  actionSet: [
+    { id: 'FOLD', label: 'FOLD', color: 'fold' },
+    { id: 'CALL', label: 'CALL', color: 'call' },
+    { id: '4BET', label: '4BET', color: 'threebet' },
+  ],
+  policy: { call: callHands as any, fourBet: fourBetHands as any },
 });
 
 const applyFacingOpenPreset = (situations: AppData['situations'], presetId: PresetId) => {
@@ -145,6 +200,22 @@ const applyFacingOpenPreset = (situations: AppData['situations'], presetId: Pres
   });
 };
 
+
+const applyThreeBetDefaults = (situations: AppData['situations']) => {
+  Object.entries(THREE_BET_DEFAULTS).forEach(([matchupKey, range]) => {
+    const [hero, villain] = matchupKey.split('_VS_');
+    const call = parseRangeShorthand(range.call);
+    const fourBet = parseRangeShorthand(range.fourBet);
+    if (!call.ok || !fourBet.ok || !hasNoOverlap(call.hands, fourBet.hands)) return;
+    situations[makeThreeBetKey(hero as ThreeBetHeroPosition, villain as Position)] = makeThreeBetSituationRecord(
+      hero as ThreeBetHeroPosition,
+      villain as Position,
+      call.hands,
+      fourBet.hands,
+    );
+  });
+};
+
 export const createDefaultData = (): AppData => {
   const situations: AppData['situations'] = {};
   RFI_POSITIONS.forEach((position) => {
@@ -158,6 +229,7 @@ export const createDefaultData = (): AppData => {
     );
   });
   applyFacingOpenPreset(situations, defaultPresetId);
+  applyThreeBetDefaults(situations);
 
   return {
     version: STORAGE_VERSION,
@@ -179,7 +251,7 @@ export const createDefaultData = (): AppData => {
       difficulty: 'normal',
       defaultPresetId,
       drillType: 'rfi',
-      positionFocus: { rfi: [...RFI_POSITIONS], facing_open: [...FACING_OPEN_HERO_POSITIONS] },
+      positionFocus: { rfi: [...RFI_POSITIONS], facing_open: [...FACING_OPEN_HERO_POSITIONS], three_bet: [...THREE_BET_HERO_POSITIONS] },
       facingOpenSelection: defaultFacingOpenSelection,
       drillContext: DEFAULT_DRILL_CONTEXT,
     },
@@ -310,4 +382,4 @@ export const resetStatsOnly = (data: AppData): AppData => ({
 
 export const resetAll = (): AppData => createDefaultData();
 
-export { makeFacingOpenKey, makeRfiKey, facingOpenKey, hasNoOverlap };
+export { makeFacingOpenKey, makeRfiKey, makeThreeBetKey, facingOpenKey, hasNoOverlap };

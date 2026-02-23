@@ -2,10 +2,11 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { FeedbackPanel } from '../components/FeedbackPanel';
 import { buildWeightedHandMap, computeCorrectAction, nextPrompt } from '../lib/logic';
 import { fromLegacyDrillType, parseContextQuery, toLegacyDrillType } from '../lib/domain';
-import { makeFacingOpenKey, makeRfiKey } from '../lib/storage';
+import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../lib/storage';
 import {
   FACING_OPEN_HERO_POSITIONS,
   RFI_POSITIONS,
+  THREE_BET_HERO_POSITIONS,
   type AppData,
   type DrillAction,
   type FacingOpenHeroPosition,
@@ -115,30 +116,50 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   }, [drillResetKey]);
 
   const isFacingOpen = prompt.situation.facingAction === 'open';
+  const isThreeBet = prompt.situation.facingAction === 'three_bet';
   const key = isFacingOpen
     ? makeFacingOpenKey(prompt.situation.heroPos as FacingOpenHeroPosition, prompt.situation.villainPos!)
+    : isThreeBet
+      ? makeThreeBetKey(prompt.situation.heroPos as any, prompt.situation.villainPos!)
     : makeRfiKey(prompt.situation.heroPos as RfiPosition);
   const policy = data.situations[key]?.policy as any;
 
+  const actionColors = useMemo(
+    () => Object.fromEntries((data.situations[key]?.actionSet ?? []).map((action: any) => [action.id, action.color])),
+    [data.situations, key],
+  );
+
   const actionMap = useMemo(() => {
     const map: any = {};
-    (policy?.raise ?? []).forEach((h: any) => (map[h] = 'raise'));
-    (policy?.limp ?? []).forEach((h: any) => (map[h] = 'limp'));
-    (policy?.call ?? []).forEach((h: any) => (map[h] = 'call'));
-    (policy?.threeBet ?? []).forEach((h: any) => (map[h] = 'threebet'));
+    Object.entries(policy ?? {}).forEach(([bucket, hands]: any) => {
+      const actionId =
+        bucket === 'raise'
+          ? 'RAISE'
+          : bucket === 'limp'
+            ? 'LIMP'
+            : bucket === 'call'
+              ? 'CALL'
+              : bucket === 'threeBet'
+                ? '3BET'
+                : bucket === 'fourBet'
+                  ? '4BET'
+                  : bucket.toUpperCase();
+      (hands ?? []).forEach((h: any) => (map[h] = actionId));
+    });
     return map;
   }, [policy]);
 
   const percentageText = useMemo(() => {
-    if (isFacingOpen) {
+    if (isFacingOpen || isThreeBet) {
       const call = policy?.call?.length ?? 0;
-      const three = policy?.threeBet?.length ?? 0;
-      return `Call ${((call / 169) * 100).toFixed(1)}% • 3bet ${((three / 169) * 100).toFixed(1)}% • Fold ${(((169 - call - three) / 169) * 100).toFixed(1)}%`;
+      const three = (policy?.threeBet?.length ?? 0) + (policy?.fourBet?.length ?? 0);
+      const label = isThreeBet ? '4bet' : '3bet';
+      return `Call ${((call / 169) * 100).toFixed(1)}% • ${label} ${((three / 169) * 100).toFixed(1)}% • Fold ${(((169 - call - three) / 169) * 100).toFixed(1)}%`;
     }
     const raise = policy?.raise?.length ?? 0;
     const limp = prompt.situation.heroPos === 'SB' ? policy?.limp?.length ?? 0 : 0;
     return `Raise ${((raise / 169) * 100).toFixed(1)}%${prompt.situation.heroPos === 'SB' ? ` • Limp ${((limp / 169) * 100).toFixed(1)}%` : ''} • Fold ${(((169 - raise - limp) / 169) * 100).toFixed(1)}%`;
-  }, [isFacingOpen, policy, prompt.situation.heroPos]);
+  }, [isFacingOpen, isThreeBet, policy, prompt.situation.heroPos]);
 
   const stepNext = () => {
     cancelAndResetDrillState();
@@ -264,9 +285,18 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   const sessionAccuracy = session.attempts === 0 ? 0 : (session.correct / session.attempts) * 100;
   const avgResponse = session.attempts === 0 ? 0 : session.totalResponseMs / session.attempts;
 
-  const focusOptions = data.settings.drillType === 'rfi' ? RFI_POSITIONS : FACING_OPEN_HERO_POSITIONS;
+  const focusOptions =
+    data.settings.drillType === 'rfi'
+      ? RFI_POSITIONS
+      : data.settings.drillType === 'three_bet'
+        ? THREE_BET_HERO_POSITIONS
+        : FACING_OPEN_HERO_POSITIONS;
   const selectedFocus =
-    data.settings.drillType === 'rfi' ? data.settings.positionFocus.rfi : data.settings.positionFocus.facing_open;
+    data.settings.drillType === 'rfi'
+      ? data.settings.positionFocus.rfi
+      : data.settings.drillType === 'three_bet'
+        ? data.settings.positionFocus.three_bet
+        : data.settings.positionFocus.facing_open;
 
   return (
     <section>
@@ -283,7 +313,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
         value={data.settings.drillType}
         onChange={(e: any) =>
           onDataChange((prev) => {
-            const drillType = e.target.value as 'rfi' | 'facing_open';
+            const drillType = e.target.value as 'rfi' | 'facing_open' | 'three_bet';
             const nodeType = fromLegacyDrillType(drillType);
             return {
               ...prev,
@@ -293,7 +323,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
                 drillContext: {
                   ...prev.settings.drillContext,
                   nodeType,
-                  villainPos: nodeType === 'facingOpen' ? prev.settings.facingOpenSelection.villainPos : undefined,
+                  villainPos: nodeType === 'rfi' ? undefined : prev.settings.facingOpenSelection.villainPos,
                 },
               },
             };
@@ -302,6 +332,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
       >
         <option value="rfi">Open First In (RFI)</option>
         <option value="facing_open">Facing an Open</option>
+        <option value="three_bet">Facing a 3-bet</option>
       </select>
 
       <p className="muted">Position Focus</p>
@@ -334,11 +365,11 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
 
       <div className="card">
         <p>Hero: {prompt.situation.heroPos}</p>
-        {isFacingOpen && <p>Facing open from: {prompt.situation.villainPos}</p>}
+        {(isFacingOpen || isThreeBet) && <p>{isThreeBet ? 'Facing 3-bet from' : 'Facing open from'}: {prompt.situation.villainPos}</p>}
         <p className="big-hand">{prompt.handClass}</p>
       </div>
       <div className="actions">
-        {isFacingOpen ? (
+        {isFacingOpen || isThreeBet ? (
           <>
             <button className="fold" onClick={() => answer('FOLD')}>
               FOLD
@@ -346,8 +377,8 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
             <button className="open" onClick={() => answer('CALL')}>
               CALL
             </button>
-            <button className="primary" onClick={() => answer('3BET')}>
-              3BET
+            <button className="primary" onClick={() => answer(isThreeBet ? '4BET' : '3BET')}>
+              {isThreeBet ? '4BET' : '3BET'}
             </button>
           </>
         ) : (
@@ -376,6 +407,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
         <FeedbackPanel
           correctAction={correctAction}
           actionMap={actionMap}
+          actionColors={actionColors as any}
           testedHand={prompt.handClass}
           percentages={percentageText}
           onNext={stepNext}

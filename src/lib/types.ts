@@ -7,6 +7,8 @@ export type RfiPosition = (typeof RFI_POSITIONS)[number];
 export const FACING_OPEN_HERO_POSITIONS = ['UTG1', 'UTG2', 'LJ', 'HJ', 'CO', 'BTN', 'SB', 'BB'] as const;
 export type FacingOpenHeroPosition = (typeof FACING_OPEN_HERO_POSITIONS)[number];
 
+export const THREE_BET_HERO_POSITIONS = ['LJ', 'HJ', 'CO', 'BTN', 'SB', 'BB'] as const;
+export type ThreeBetHeroPosition = (typeof THREE_BET_HERO_POSITIONS)[number];
 
 export const FACING_OPEN_VILLAIN_BY_HERO: Record<FacingOpenHeroPosition, Position[]> = {
   UTG1: ['UTG'],
@@ -19,13 +21,28 @@ export const FACING_OPEN_VILLAIN_BY_HERO: Record<FacingOpenHeroPosition, Positio
   BB: ['UTG', 'UTG1', 'UTG2', 'LJ', 'HJ', 'CO', 'BTN', 'SB'],
 };
 
-export type DrillType = 'rfi' | 'facing_open';
-export type TableFormat = '9max';
-export type FacingAction = 'none' | 'open';
+export const THREE_BET_VILLAIN_BY_HERO: Record<ThreeBetHeroPosition, Position[]> = {
+  LJ: ['HJ', 'CO', 'BTN', 'SB', 'BB'],
+  HJ: ['CO', 'BTN', 'SB', 'BB'],
+  CO: ['BTN', 'SB', 'BB'],
+  BTN: ['SB', 'BB'],
+  SB: ['BB'],
+  BB: ['SB'],
+};
 
-export type RfiAction = 'RAISE' | 'LIMP' | 'FOLD';
-export type FacingOpenAction = 'FOLD' | 'CALL' | '3BET';
-export type DrillAction = RfiAction | FacingOpenAction;
+export type DrillType = 'rfi' | 'facing_open' | 'three_bet';
+export type TableFormat = '9max';
+export type FacingAction = 'none' | 'open' | 'three_bet';
+
+export type DrillAction = string;
+
+export type ActionColor = 'raise' | 'limp' | 'call' | 'threebet' | 'fold';
+
+export type PolicyAction = {
+  id: string;
+  label: string;
+  color: ActionColor;
+};
 
 export const RANKS = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2'] as const;
 export type Rank = (typeof RANKS)[number];
@@ -44,21 +61,13 @@ export type Situation = {
   villainPos?: Position;
 };
 
-export type RfiPolicy = {
-  raise: HandClass[];
-  limp?: HandClass[];
-};
-
-export type FacingOpenPolicy = {
-  call: HandClass[];
-  threeBet: HandClass[];
-};
+export type ActionPolicy = Record<string, HandClass[]>;
 
 export type SituationPolicyRecord = {
   situation: Situation;
   drillType: DrillType;
-  actionSet: DrillAction[];
-  policy: RfiPolicy | FacingOpenPolicy;
+  actionSet: PolicyAction[];
+  policy: ActionPolicy;
 };
 
 export type StatsEntry = { attempts: number; correct: number };
@@ -90,6 +99,7 @@ export type AppData = {
     positionFocus: {
       rfi: RfiPosition[];
       facing_open: FacingOpenHeroPosition[];
+      three_bet: ThreeBetHeroPosition[];
     };
     facingOpenSelection: {
       heroPos: FacingOpenHeroPosition;
