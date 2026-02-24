@@ -9,7 +9,8 @@ import {
   updatePromptMemory,
 } from '../lib/logic';
 import { fromLegacyDrillType, isEligibleContext, parseContextQuery, toLegacyDrillType } from '../lib/domain';
-import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../domain/storage/keys';
+import { actionSetToColorMap, policyToActionMap } from '../domain/policy/mappers';
+import { policyKeyFromSituation } from '../domain/policy/resolver';
 import {
   FACING_OPEN_HERO_POSITIONS,
   RFI_POSITIONS,
@@ -139,37 +140,16 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
 
   const isFacingOpen = prompt.situation.facingAction === 'open';
   const isThreeBet = prompt.situation.facingAction === 'three_bet';
-  const key = isFacingOpen
-    ? makeFacingOpenKey(prompt.situation.heroPos as FacingOpenHeroPosition, prompt.situation.villainPos!, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb)
-    : isThreeBet
-      ? makeThreeBetKey(prompt.situation.heroPos as any, prompt.situation.villainPos!, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb)
-    : makeRfiKey(prompt.situation.heroPos as RfiPosition, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb);
+  const key = policyKeyFromSituation(
+    prompt.situation,
+    data.settings.drillContext.format,
+    data.settings.drillContext.effectiveStackBb,
+  );
   const policy = data.situations[key]?.policy as any;
 
-  const actionColors = useMemo(
-    () => Object.fromEntries((data.situations[key]?.actionSet ?? []).map((action: any) => [action.id, action.color])),
-    [data.situations, key],
-  );
+  const actionColors = useMemo(() => actionSetToColorMap(data.situations[key]?.actionSet), [data.situations, key]);
 
-  const actionMap = useMemo(() => {
-    const map: any = {};
-    Object.entries(policy ?? {}).forEach(([bucket, hands]: any) => {
-      const actionId =
-        bucket === 'raise'
-          ? 'RAISE'
-          : bucket === 'limp'
-            ? 'LIMP'
-            : bucket === 'call'
-              ? 'CALL'
-              : bucket === 'threeBet'
-                ? '3BET'
-                : bucket === 'fourBet'
-                  ? '4BET'
-                  : bucket.toUpperCase();
-      (hands ?? []).forEach((h: any) => (map[h] = actionId));
-    });
-    return map;
-  }, [policy]);
+  const actionMap = useMemo(() => policyToActionMap(policy), [policy]);
 
   const percentageText = useMemo(() => {
     if (isFacingOpen || isThreeBet) {

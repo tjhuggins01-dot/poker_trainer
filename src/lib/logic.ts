@@ -1,5 +1,5 @@
 import { generateAllHandClasses169, handClassToGridCoord } from './hands';
-import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../domain/storage/keys';
+import { resolvePolicyRecord } from '../domain/policy/resolver';
 import {
   FACING_OPEN_HERO_POSITIONS,
   FACING_OPEN_VILLAIN_BY_HERO,
@@ -11,12 +11,10 @@ import {
   type DrillAction,
   type FacingOpenHeroPosition,
   type HandClass,
-  type PromptMemoryEntry,
   type Position,
-  type RfiPosition,
+  type PromptMemoryEntry,
   type Situation,
   type SituationPolicyRecord,
-  type ThreeBetHeroPosition,
 } from './types';
 import { toSituation, type DrillContext } from './domain';
 
@@ -24,36 +22,11 @@ const allHands = generateAllHandClasses169();
 
 export const randomPick = <T>(list: T[]): T => list[Math.floor(Math.random() * list.length)];
 
-const getSituationKeyFromContext = (context: DrillContext): string => {
-  if (context.nodeType === 'facingOpen' && context.villainPos) {
-    return makeFacingOpenKey(
-      context.heroPos as FacingOpenHeroPosition,
-      context.villainPos,
-      context.format,
-      context.effectiveStackBb,
-    );
-  }
-  if (context.nodeType === 'threeBet' && context.villainPos) {
-    return makeThreeBetKey(context.heroPos as ThreeBetHeroPosition, context.villainPos, context.format, context.effectiveStackBb);
-  }
-  return makeRfiKey(context.heroPos as RfiPosition, context.format, context.effectiveStackBb);
-};
-
 export const resolvePolicy = (
   appData: AppData,
   context: DrillContext,
 ): { record?: SituationPolicyRecord; key?: string } => {
-  const key = getSituationKeyFromContext(context);
-  const record = appData.situations[key];
-  if (record) return { record, key };
-
-  const legacyKey =
-    context.nodeType === 'facingOpen' && context.villainPos
-      ? makeFacingOpenKey(context.heroPos as FacingOpenHeroPosition, context.villainPos)
-      : context.nodeType === 'threeBet' && context.villainPos
-        ? makeThreeBetKey(context.heroPos as ThreeBetHeroPosition, context.villainPos)
-        : makeRfiKey(context.heroPos as RfiPosition);
-  return { record: appData.situations[legacyKey], key: appData.situations[legacyKey] ? legacyKey : key };
+  return resolvePolicyRecord(appData, context);
 };
 
 export const computeCorrectAction = (

@@ -4,8 +4,9 @@ import { PositionSelector } from '../components/PositionSelector';
 import { parseRangeShorthand } from '../lib/parser';
 import { facingOpenKey, PRESETS } from '../lib/presets';
 import { getStackDataBundle } from '../lib/data/catalog';
-import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../domain/storage/keys';
 import { hasNoOverlap } from '../lib/storage';
+import { actionSetToColorMap, policyToActionMap } from '../domain/policy/mappers';
+import { policyKeyFromSituation } from '../domain/policy/resolver';
 import {
   FACING_OPEN_HERO_POSITIONS,
   FACING_OPEN_VILLAIN_BY_HERO,
@@ -41,39 +42,39 @@ export function RangesPage({ data, onDataChange }: Props) {
     ? threeBetVillain
     : threeBetVillainOptions[0];
 
-  const key =
+  const situation =
     mode === 'rfi'
-      ? makeRfiKey(position, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb)
+      ? {
+          game: 'NLH' as const,
+          table: '9max' as const,
+          effectiveStackBb: data.settings.drillContext.effectiveStackBb,
+          heroPos: position,
+          facingAction: 'none' as const,
+        }
       : mode === 'facing_open'
-        ? makeFacingOpenKey(facingHero, facingVillain, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb)
-        : makeThreeBetKey(threeBetHero, validThreeBetVillain, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb);
+        ? {
+            game: 'NLH' as const,
+            table: '9max' as const,
+            effectiveStackBb: data.settings.drillContext.effectiveStackBb,
+            heroPos: facingHero,
+            facingAction: 'open' as const,
+            villainPos: facingVillain,
+          }
+        : {
+            game: 'NLH' as const,
+            table: '9max' as const,
+            effectiveStackBb: data.settings.drillContext.effectiveStackBb,
+            heroPos: threeBetHero,
+            facingAction: 'three_bet' as const,
+            villainPos: validThreeBetVillain,
+          };
+  const key = policyKeyFromSituation(situation, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb);
   const policy = data.situations[key]?.policy as any;
   const hasSpotData = Boolean(data.situations[key]);
 
-  const actionColors = useMemo(
-    () => Object.fromEntries((data.situations[key]?.actionSet ?? []).map((action: any) => [action.id, action.color])),
-    [data.situations, key],
-  );
+  const actionColors = useMemo(() => actionSetToColorMap(data.situations[key]?.actionSet), [data.situations, key]);
 
-  const actionMap = useMemo(() => {
-    const map: any = {};
-    Object.entries(policy ?? {}).forEach(([bucket, hands]: any) => {
-      const actionId =
-        bucket === 'raise'
-          ? 'RAISE'
-          : bucket === 'limp'
-            ? 'LIMP'
-            : bucket === 'call'
-              ? 'CALL'
-              : bucket === 'threeBet'
-                ? '3BET'
-                : bucket === 'fourBet'
-                  ? '4BET'
-                  : bucket.toUpperCase();
-      (hands ?? []).forEach((h: any) => (map[h] = actionId));
-    });
-    return map;
-  }, [policy]);
+  const actionMap = useMemo(() => policyToActionMap(policy), [policy]);
 
   const apply = () => {
     const primary = parseRangeShorthand(raiseText);
