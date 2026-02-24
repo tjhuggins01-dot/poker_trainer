@@ -1,4 +1,4 @@
-import { FACING_OPEN_HERO_POSITIONS, RFI_POSITIONS, type AppData, type SessionStats } from '../lib/types';
+import { FACING_OPEN_HERO_POSITIONS, RFI_POSITIONS, type AppData, type SessionStats } from '../../lib/types';
 
 type Props = { data: AppData; session: SessionStats };
 

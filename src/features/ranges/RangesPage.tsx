@@ -1,12 +1,11 @@
 import { useMemo, useState } from 'react';
-import { HandGrid } from '../components/HandGrid';
-import { PositionSelector } from '../components/PositionSelector';
-import { parseRangeShorthand } from '../lib/parser';
-import { facingOpenKey, PRESETS } from '../lib/presets';
-import { getStackDataBundle } from '../lib/data/catalog';
-import { hasNoOverlap } from '../lib/storage';
-import { actionSetToColorMap, policyToActionMap } from '../domain/policy/mappers';
-import { policyKeyFromSituation } from '../domain/policy/resolver';
+import { HandGrid } from '../../components/HandGrid';
+import { PositionSelector } from '../../components/PositionSelector';
+import { parseRangeShorthand } from '../../lib/parser';
+import { facingOpenKey } from '../../lib/presets';
+import { actionSetToColorMap, policyToActionMap } from '../../domain/policy/mappers';
+import { policyKeyFromSituation } from '../../domain/policy/resolver';
+import { applyPresetToSpot } from '../../domain/presets/applyPreset';
 import {
   FACING_OPEN_HERO_POSITIONS,
   FACING_OPEN_VILLAIN_BY_HERO,
@@ -18,9 +17,11 @@ import {
   type Position,
   type RfiPosition,
   type ThreeBetHeroPosition,
-} from '../lib/types';
+} from '../../lib/types';
 
 type Props = { data: AppData; onDataChange: (updater: (prev: AppData) => AppData) => void };
+
+const hasNoOverlap = (a: string[], b: string[]) => !a.some((hand) => b.includes(hand));
 
 export function RangesPage({ data, onDataChange }: Props) {
   const [mode, setMode] = useState<'rfi' | 'facing_open' | 'three_bet'>('rfi');
@@ -251,40 +252,17 @@ export function RangesPage({ data, onDataChange }: Props) {
         <button
           disabled={!hasSpotData}
           onClick={() => {
-            const preset = PRESETS[data.settings.defaultPresetId];
-            onDataChange((prev) => {
-              const next = structuredClone(prev);
-              if (mode === 'rfi') {
-                const parsedRaise = parseRangeShorthand(preset.rfi.raise[position]);
-                if (parsedRaise.ok) (next.situations[key].policy as any).raise = parsedRaise.hands;
-                if (position === 'SB') {
-                  const parsedLimp = parseRangeShorthand(preset.rfi.limp.SB);
-                  if (parsedLimp.ok) (next.situations[key].policy as any).limp = parsedLimp.hands;
-                }
-              } else if (mode === 'facing_open') {
-                const m = preset.facingOpen[facingOpenKey(facingHero, facingVillain)];
-                if (m) {
-                  const c = parseRangeShorthand(m.call);
-                  const t = parseRangeShorthand(m.threeBet);
-                  if (c.ok && t.ok && hasNoOverlap(c.hands, t.hands) && next.situations[key]) {
-                    (next.situations[key].policy as any).call = c.hands;
-                    (next.situations[key].policy as any).threeBet = t.hands;
-                  }
-                }
-              } else {
-                const bundle = getStackDataBundle(prev.settings.drillContext.format, prev.settings.drillContext.effectiveStackBb);
-                const m = bundle?.threeBet[`${threeBetHero}_VS_${validThreeBetVillain}`];
-                if (m) {
-                  const c = parseRangeShorthand(m.call);
-                  const f = parseRangeShorthand(m.fourBet);
-                  if (c.ok && f.ok && hasNoOverlap(c.hands, f.hands) && next.situations[key]) {
-                    (next.situations[key].policy as any).call = c.hands;
-                    (next.situations[key].policy as any).fourBet = f.hands;
-                  }
-                }
-              }
-              return next;
-            });
+            onDataChange((prev) =>
+              applyPresetToSpot(
+                prev,
+                mode,
+                mode === 'rfi'
+                  ? { rfiPosition: position }
+                  : { heroPos: mode === 'facing_open' ? facingHero : threeBetHero, villainPos: mode === 'facing_open' ? facingVillain : validThreeBetVillain },
+                prev.settings.defaultPresetId,
+                prev.settings.drillContext,
+              ),
+            );
             setMessage('Reset to preset.');
           }}
         >
