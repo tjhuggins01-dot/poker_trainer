@@ -1,6 +1,6 @@
 import { parseRangeShorthand } from '../parser';
-import { THREE_BET_DEFAULTS } from './cash6max/100/threeBet';
-import { VS_ISO_DEFAULTS_SAFE, VS_LIMP_ISO_DEFAULTS } from './cash6max/100/limpBranch';
+import { THREE_BET_DEFAULTS } from './cash9max/100/threeBet';
+import { VS_ISO_DEFAULTS_SAFE, VS_LIMP_ISO_DEFAULTS } from './cash9max/100/limpBranch';
 
 const noOverlap = (a: string[], b: string[]) => !a.some((h) => b.includes(h));
 

@@ -1,7 +1,7 @@
-import { FACING_OPEN_DEFAULTS_100BB } from './cash6max/100/facingOpen';
-import { RFI_DEFAULTS_100BB } from './cash6max/100/rfi';
-import { THREE_BET_DEFAULTS } from './cash6max/100/threeBet';
-import { VS_ISO_DEFAULTS_SAFE, VS_LIMP_ISO_DEFAULTS } from './cash6max/100/limpBranch';
+import { FACING_OPEN_DEFAULTS_100BB } from './cash9max/100/facingOpen';
+import { RFI_DEFAULTS_100BB } from './cash9max/100/rfi';
+import { THREE_BET_DEFAULTS } from './cash9max/100/threeBet';
+import { VS_ISO_DEFAULTS_SAFE, VS_LIMP_ISO_DEFAULTS } from './cash9max/100/limpBranch';
 
 export type StackDataBundle = {
   rfi: typeof RFI_DEFAULTS_100BB;
@@ -11,7 +11,7 @@ export type StackDataBundle = {
   vsIso: typeof VS_ISO_DEFAULTS_SAFE;
 };
 
-const CASH6MAX_100_BUNDLE: StackDataBundle = {
+const CASH9MAX_100_BUNDLE: StackDataBundle = {
   rfi: RFI_DEFAULTS_100BB,
   facingOpen: FACING_OPEN_DEFAULTS_100BB,
   threeBet: THREE_BET_DEFAULTS,
@@ -20,6 +20,6 @@ const CASH6MAX_100_BUNDLE: StackDataBundle = {
 };
 
 export const getStackDataBundle = (format: string, stack: number): StackDataBundle | undefined => {
-  if (format === 'cash6max' && stack === 100) return CASH6MAX_100_BUNDLE;
+  if (format === 'cash9max' && stack === 100) return CASH9MAX_100_BUNDLE;
   return undefined;
 };

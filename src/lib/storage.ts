@@ -21,6 +21,18 @@ import {
   type SessionStats,
 } from './types';
 
+
+const normalizeFormatId = (value: unknown) => (value === 'cash6max' ? 'cash9max' : value);
+
+const remapSituationKeysToCurrentFormat = (situations: Record<string, any> | undefined) => {
+  const out: Record<string, any> = {};
+  Object.entries(situations ?? {}).forEach(([key, value]) => {
+    const nextKey = key.replace('_cash6max_', '_cash9max_');
+    out[nextKey] = value;
+  });
+  return out;
+};
+
 const withDefaultStatsEntry = (entry: any) => ({
   attempts: typeof entry?.attempts === 'number' ? entry.attempts : 0,
   correct: typeof entry?.correct === 'number' ? entry.correct : 0,
@@ -45,7 +57,7 @@ const normalizeCurrentData = (raw: any): AppData => {
   const defaults = createDefaultData();
   next.situations = {
     ...defaults.situations,
-    ...(next.situations ?? {}),
+    ...remapSituationKeysToCurrentFormat(next.situations as any),
   };
   next.stats = next.stats ?? defaults.stats;
   next.stats.total = withDefaultStatsEntry(next.stats.total);
@@ -73,6 +85,10 @@ const normalizeCurrentData = (raw: any): AppData => {
   });
 
   next.settings = { ...defaults.settings, ...next.settings };
+  next.settings.drillContext = {
+    ...next.settings.drillContext,
+    format: normalizeFormatId(next.settings.drillContext?.format) as any,
+  };
   next.settings.positionFocus = {
     rfi: next.settings.positionFocus?.rfi ?? defaults.settings.positionFocus.rfi,
     facing_open: next.settings.positionFocus?.facing_open ?? defaults.settings.positionFocus.facing_open,
@@ -104,6 +120,7 @@ const normalizeCurrentData = (raw: any): AppData => {
           : next.settings.drillType === 'limp_branch'
             ? (next.settings.positionFocus.limp_branch[0] === 'BB' ? 'SB' : 'BB')
             : undefined,
+    format: normalizeFormatId(next.settings.drillContext?.format ?? defaults.settings.drillContext.format) as any,
   };
   next.settings.drillContext = {
     ...baseContext,
