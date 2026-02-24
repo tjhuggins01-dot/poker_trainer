@@ -55,6 +55,9 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   const hasThreeBetData = Object.keys(data.situations).some((k) =>
     k.startsWith(`THREE_BET_${stackPrefix}`),
   );
+  const hasLimpBranchData = Object.keys(data.situations).some((k) =>
+    k.startsWith(`LIMP_ISO_${stackPrefix}`) || k.startsWith(`VS_ISO_${stackPrefix}`),
+  );
 
   const [shownNotice, setShownNotice] = useState(false);
 
@@ -68,6 +71,8 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
 
   const isFacingOpen = prompt.situation.facingAction === 'open';
   const isThreeBet = prompt.situation.facingAction === 'three_bet';
+  const isLimpIso = prompt.situation.facingAction === 'limp';
+  const isVsIso = prompt.situation.facingAction === 'iso';
   const key = policyKeyFromSituation(
     prompt.situation,
     data.settings.drillContext.format,
@@ -75,7 +80,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   );
   const policy = data.situations[key]?.policy;
   const policyBuckets = policy as
-    | Partial<Record<'call' | 'threeBet' | 'fourBet' | 'raise' | 'limp', string[]>>
+    | Partial<Record<'call' | 'threeBet' | 'fourBet' | 'raise' | 'limp' | 'isoRaise', string[]>>
     | undefined;
 
   const actionColors = useMemo(
@@ -92,23 +97,36 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
       const label = isThreeBet ? '4bet' : '3bet';
       return `Call ${((call / 169) * 100).toFixed(1)}% • ${label} ${((three / 169) * 100).toFixed(1)}% • Fold ${(((169 - call - three) / 169) * 100).toFixed(1)}%`;
     }
+    if (isLimpIso) {
+      const iso = policyBuckets?.isoRaise?.length ?? 0;
+      return `ISO ${((iso / 169) * 100).toFixed(1)}% • CHECK ${(((169 - iso) / 169) * 100).toFixed(1)}%`;
+    }
+    if (isVsIso) {
+      const call = policyBuckets?.call?.length ?? 0;
+      const three = policyBuckets?.threeBet?.length ?? 0;
+      return `3bet ${((three / 169) * 100).toFixed(1)}% • Call ${((call / 169) * 100).toFixed(1)}% • Fold ${(((169 - call - three) / 169) * 100).toFixed(1)}%`;
+    }
     const raise = policyBuckets?.raise?.length ?? 0;
     const limp = prompt.situation.heroPos === 'SB' ? (policyBuckets?.limp?.length ?? 0) : 0;
     return `Raise ${((raise / 169) * 100).toFixed(1)}%${prompt.situation.heroPos === 'SB' ? ` • Limp ${((limp / 169) * 100).toFixed(1)}%` : ''} • Fold ${(((169 - raise - limp) / 169) * 100).toFixed(1)}%`;
-  }, [isFacingOpen, isThreeBet, policyBuckets, prompt.situation.heroPos]);
+  }, [isFacingOpen, isThreeBet, isLimpIso, isVsIso, policyBuckets, prompt.situation.heroPos]);
 
   const focusOptions =
     data.settings.drillType === 'rfi'
       ? RFI_POSITIONS
       : data.settings.drillType === 'three_bet'
         ? THREE_BET_HERO_POSITIONS
-        : FACING_OPEN_HERO_POSITIONS;
+        : data.settings.drillType === 'limp_branch'
+          ? (['BB', 'SB'] as const)
+          : FACING_OPEN_HERO_POSITIONS;
   const selectedFocus =
     data.settings.drillType === 'rfi'
       ? data.settings.positionFocus.rfi
       : data.settings.drillType === 'three_bet'
         ? data.settings.positionFocus.three_bet
-        : data.settings.positionFocus.facing_open;
+        : data.settings.drillType === 'limp_branch'
+          ? data.settings.positionFocus.limp_branch
+          : data.settings.positionFocus.facing_open;
 
   return (
     <section>
@@ -125,6 +143,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
         hasRfiData={hasRfiData}
         hasFacingOpenData={hasFacingOpenData}
         hasThreeBetData={hasThreeBetData}
+        hasLimpBranchData={hasLimpBranchData}
         onChange={updateDrillType}
       />
 
@@ -136,9 +155,9 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
 
       <div className="card">
         <p>Hero: {prompt.situation.heroPos}</p>
-        {(isFacingOpen || isThreeBet) && (
+        {(isFacingOpen || isThreeBet || isLimpIso || isVsIso) && (
           <p>
-            {isThreeBet ? 'Facing 3-bet from' : 'Facing open from'}: {prompt.situation.villainPos}
+            {isThreeBet ? 'Facing 3-bet from' : isFacingOpen ? 'Facing open from' : isLimpIso ? 'SB limped, hero BB vs' : 'Facing BB ISO from'}: {prompt.situation.villainPos}
           </p>
         )}
         <p className="big-hand">{prompt.handClass}</p>
@@ -148,6 +167,8 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
         hasPolicy={!!policy}
         isFacingOpen={isFacingOpen}
         isThreeBet={isThreeBet}
+        isLimpIso={isLimpIso}
+        isVsIso={isVsIso}
         heroPos={prompt.situation.heroPos}
         onAnswer={answer}
       />

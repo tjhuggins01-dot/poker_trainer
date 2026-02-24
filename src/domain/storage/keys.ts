@@ -14,5 +14,9 @@ const makeThreeBetKey = (
   format: DrillFormat = 'cash6max',
   stack: EffectiveStackBb = 100,
 ): string => `THREE_BET_${format}_${stack}BB_${heroPos}_VS_${villainPos}`;
+const makeLimpIsoKey = (format: DrillFormat = 'cash6max', stack: EffectiveStackBb = 100): string =>
+  `LIMP_ISO_${format}_${stack}BB_BB_VS_SB`;
+const makeVsIsoKey = (format: DrillFormat = 'cash6max', stack: EffectiveStackBb = 100): string =>
+  `VS_ISO_${format}_${stack}BB_SB_VS_BB`;
 
-export { makeFacingOpenKey, makeRfiKey, makeThreeBetKey };
+export { makeFacingOpenKey, makeRfiKey, makeThreeBetKey, makeLimpIsoKey, makeVsIsoKey };

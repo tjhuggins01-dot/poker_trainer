@@ -1,27 +1,25 @@
-import { RFI_DEFAULTS_100BB } from './cash6max/100/rfi';
 import { FACING_OPEN_DEFAULTS_100BB } from './cash6max/100/facingOpen';
+import { RFI_DEFAULTS_100BB } from './cash6max/100/rfi';
 import { THREE_BET_DEFAULTS } from './cash6max/100/threeBet';
-import type { DrillFormat, EffectiveStackBb } from '../constants';
+import { VS_ISO_DEFAULTS_SAFE, VS_LIMP_ISO_DEFAULTS } from './cash6max/100/limpBranch';
 
 export type StackDataBundle = {
   rfi: typeof RFI_DEFAULTS_100BB;
   facingOpen: typeof FACING_OPEN_DEFAULTS_100BB;
   threeBet: typeof THREE_BET_DEFAULTS;
+  limpIso: typeof VS_LIMP_ISO_DEFAULTS;
+  vsIso: typeof VS_ISO_DEFAULTS_SAFE;
 };
 
-const CASH_6MAX_100BB: StackDataBundle = {
+const CASH6MAX_100_BUNDLE: StackDataBundle = {
   rfi: RFI_DEFAULTS_100BB,
   facingOpen: FACING_OPEN_DEFAULTS_100BB,
   threeBet: THREE_BET_DEFAULTS,
+  limpIso: VS_LIMP_ISO_DEFAULTS,
+  vsIso: VS_ISO_DEFAULTS_SAFE,
 };
 
-const DATA_CATALOG: Record<DrillFormat, Partial<Record<EffectiveStackBb, StackDataBundle>>> = {
-  cash6max: {
-    100: CASH_6MAX_100BB,
-  },
+export const getStackDataBundle = (format: string, stack: number): StackDataBundle | undefined => {
+  if (format === 'cash6max' && stack === 100) return CASH6MAX_100_BUNDLE;
+  return undefined;
 };
-
-export const getStackDataBundle = (
-  format: DrillFormat,
-  stack: EffectiveStackBb,
-): StackDataBundle | undefined => DATA_CATALOG[format]?.[stack];
