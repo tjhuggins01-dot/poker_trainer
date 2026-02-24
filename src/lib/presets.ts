@@ -37,32 +37,32 @@ const VS_OPEN_DEFAULTS_V2: Record<string, { call: string; threeBet: string }> = 
 
   LJ_vs_UTG: {
     threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
-    call: '66,77,88,99,TT,JJ,AQs,AJs,KQs,QJs,JTs,T9s',
+    call: '66,77,88,99,TT,JJ,AJs,KQs,QJs,JTs,T9s',
   },
   LJ_vs_UTG1: {
     threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
-    call: '55,66,77,88,99,TT,JJ,AQs,AJs,ATs,KQs,QJs,JTs,T9s,98s',
+    call: '55,66,77,88,99,TT,JJ,AJs,ATs,KQs,QJs,JTs,T9s,98s',
   },
   LJ_vs_UTG2: {
     threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs,AQo',
-    call: '44,55,66,77,88,99,TT,AQs,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s',
+    call: '44,55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s',
   },
 
   HJ_vs_UTG: {
     threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
-    call: '66,77,88,99,TT,JJ,AQs,AJs,KQs,QJs,JTs,T9s',
+    call: '66,77,88,99,TT,JJ,AJs,KQs,QJs,JTs,T9s',
   },
   HJ_vs_UTG1: {
     threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs',
-    call: '55,66,77,88,99,TT,AQs,AJs,ATs,KQs,QJs,JTs,T9s,98s',
+    call: '55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s',
   },
   HJ_vs_UTG2: {
     threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs,AQo',
-    call: '44,55,66,77,88,99,TT,AQs,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s',
+    call: '44,55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s',
   },
   HJ_vs_LJ: {
     threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs,AQo',
-    call: '33,44,55,66,77,88,99,TT,AQs,AJs,ATs,KQs,KJs,QJs,JTs,T9s,98s,87s',
+    call: '33,44,55,66,77,88,99,TT,AJs,ATs,KQs,KJs,QJs,JTs,T9s,98s,87s',
   },
 
   CO_vs_UTG: {
@@ -135,7 +135,7 @@ const VS_OPEN_DEFAULTS_V2: Record<string, { call: string; threeBet: string }> = 
   },
   SB_vs_CO: {
     threeBet: '99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,KQs,KJs,QJs,JTs,T9s',
-    call: '22,33,44,55,66,77,88,A2s,A3s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,KTs,KQo,QTs,QJo,JTo,T9s,98s,87s,76s,65s,54s,T9o',
+    call: '22,33,44,55,66,77,88,A2s,A3s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,KTs,KQo,QTs,QJo,JTo,98s,87s,76s,65s,54s,T9o',
   },
   SB_vs_BTN: {
     threeBet: '88,99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,KQs,KJs,QJs,JTs,T9s,98s',
@@ -164,11 +164,11 @@ const VS_OPEN_DEFAULTS_V2: Record<string, { call: string; threeBet: string }> = 
   },
   BB_vs_CO: {
     threeBet: '99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,KQs,KJs,QJs,JTs',
-    call: '22,33,44,55,66,77,88,A2s,A3s,A4s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,K9s,KTs,KQo,QTs,QJo,JTo,T8s,T9s,97s,98s,87s,76s,65s,54s,T9o',
+    call: '22,33,44,55,66,77,88,A2s,A3s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,K9s,KTs,KQo,QTs,QJo,JTo,T8s,T9s,97s,98s,87s,76s,65s,54s,T9o',
   },
   BB_vs_BTN: {
     threeBet: '88,99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,A3s,KQs,KJs,QJs,JTs,T9s,98s,87s',
-    call: '22,33,44,55,66,77,A2s,A3s,A4s,A5s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,ATo,K7s,K8s,K9s,KTs,KQo,Q8s,QTs,QJo,J8s,JTo,T8s,T9o,97s,86s,76s,65s,54s,43s',
+    call: '22,33,44,55,66,77,A2s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,ATo,K7s,K8s,K9s,KTs,KQo,Q8s,QTs,QJo,J8s,JTo,T8s,T9o,97s,86s,76s,65s,54s,43s',
   },
   BB_vs_SB: {
     threeBet: '99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,KQs,KJs,QJs',
