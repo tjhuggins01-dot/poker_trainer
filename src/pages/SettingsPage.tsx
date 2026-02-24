@@ -1,6 +1,7 @@
 import { parseRangeShorthand } from '../lib/parser';
 import { PRESET_IDS, PRESETS, type PresetId } from '../lib/presets';
-import { hasNoOverlap, makeFacingOpenKey, makeRfiKey } from '../lib/storage';
+import { getStackDataBundle } from '../lib/data/catalog';
+import { hasNoOverlap, makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../lib/storage';
 import { STACK_SIZES_BB } from '../lib/constants';
 import { APP_VERSION, RFI_POSITIONS, STORAGE_VERSION, type AppData, type DifficultyMode, type ThemeMode } from '../lib/types';
 
@@ -105,6 +106,7 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
       <button onClick={() => onDataChange((prev) => {
         const next = structuredClone(prev);
         const preset = PRESETS[prev.settings.defaultPresetId];
+        const bundle = getStackDataBundle(prev.settings.drillContext.format, prev.settings.drillContext.effectiveStackBb);
         RFI_POSITIONS.forEach((pos) => {
           const r = parseRangeShorthand(preset.rfi.raise[pos]);
           const rfiKey = makeRfiKey(pos, prev.settings.drillContext.format, prev.settings.drillContext.effectiveStackBb);
@@ -133,6 +135,17 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
           }
           (next.situations[key].policy as any).call = c.hands;
           (next.situations[key].policy as any).threeBet = t.hands;
+        });
+
+        Object.entries(bundle?.threeBet ?? {}).forEach(([k, v]) => {
+          const [hero, villain] = k.split('_VS_');
+          const key = makeThreeBetKey(hero as any, villain as any, prev.settings.drillContext.format, prev.settings.drillContext.effectiveStackBb);
+          const c = parseRangeShorthand(v.call);
+          const f = parseRangeShorthand(v.fourBet);
+          if (!c.ok || !f.ok || !hasNoOverlap(c.hands, f.hands)) return;
+          if (!next.situations[key]) return;
+          (next.situations[key].policy as any).call = c.hands;
+          (next.situations[key].policy as any).fourBet = f.hands;
         });
         return next;
       })}>Apply preset to all ranges</button>
