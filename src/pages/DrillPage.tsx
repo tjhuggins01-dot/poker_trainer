@@ -1,24 +1,26 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FeedbackPanel } from '../components/FeedbackPanel';
 import {
-  buildPromptMemoryKey,
   buildWeightedHandMap,
   computeCorrectAction,
   getPromptSignature,
   nextPrompt,
-  updatePromptMemory,
 } from '../lib/logic';
-import { fromLegacyDrillType, isEligibleContext, parseContextQuery, toLegacyDrillType } from '../lib/domain';
+import {
+  fromLegacyDrillType,
+  isEligibleContext,
+  parseContextQuery,
+  toLegacyDrillType,
+} from '../lib/domain';
 import { actionSetToColorMap, policyToActionMap } from '../domain/policy/mappers';
 import { policyKeyFromSituation } from '../domain/policy/resolver';
+import { reduceAppDataStatsOnAnswer, reduceSessionOnAnswer } from '../domain/stats/reducers';
 import {
   FACING_OPEN_HERO_POSITIONS,
   RFI_POSITIONS,
   THREE_BET_HERO_POSITIONS,
   type AppData,
   type DrillAction,
-  type FacingOpenHeroPosition,
-  type RfiPosition,
   type SessionStats,
 } from '../lib/types';
 
@@ -35,11 +37,16 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
     () =>
       Object.entries(data.situations)
         .sort(([a], [b]) => a.localeCompare(b))
-        .map(([key, situation]) => `${key}:${situation.drillType}:${JSON.stringify(situation.policy)}`)
+        .map(
+          ([key, situation]) => `${key}:${situation.drillType}:${JSON.stringify(situation.policy)}`,
+        )
         .join('|'),
     [data.situations],
   );
-  const weightedMap = useMemo(() => buildWeightedHandMap(data), [situationsPolicyKey, data.settings.difficulty]);
+  const weightedMap = useMemo(
+    () => buildWeightedHandMap(data),
+    [situationsPolicyKey, data.settings.difficulty],
+  );
   const selectedFocusKey = useMemo(() => {
     const focus = data.settings.positionFocus[data.settings.drillType] as string[];
     return [...focus].sort().join('|');
@@ -78,7 +85,8 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
     q.set('stack', String(data.settings.drillContext.effectiveStackBb));
     q.set('node', data.settings.drillContext.nodeType);
     q.set('hero', data.settings.drillContext.heroPos);
-    if (data.settings.drillContext.villainPos) q.set('villain', data.settings.drillContext.villainPos);
+    if (data.settings.drillContext.villainPos)
+      q.set('villain', data.settings.drillContext.villainPos);
     else q.delete('villain');
     const nextUrl = `${window.location.pathname}?${q.toString()}${window.location.hash}`;
     window.history.replaceState(null, '', nextUrl);
@@ -86,8 +94,12 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
 
   const stackPrefix = `${data.settings.drillContext.format}_${data.settings.drillContext.effectiveStackBb}BB_`;
   const hasRfiData = Object.keys(data.situations).some((k) => k.startsWith(`RFI_${stackPrefix}`));
-  const hasFacingOpenData = Object.keys(data.situations).some((k) => k.startsWith(`FACING_OPEN_${stackPrefix}`));
-  const hasThreeBetData = Object.keys(data.situations).some((k) => k.startsWith(`THREE_BET_${stackPrefix}`));
+  const hasFacingOpenData = Object.keys(data.situations).some((k) =>
+    k.startsWith(`FACING_OPEN_${stackPrefix}`),
+  );
+  const hasThreeBetData = Object.keys(data.situations).some((k) =>
+    k.startsWith(`THREE_BET_${stackPrefix}`),
+  );
 
   const [prompt, setPrompt] = useState(() => nextPrompt(data, weightedMap));
   const [status, setStatus] = useState<'idle' | 'correct' | 'incorrect'>('idle');
@@ -121,7 +133,10 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
 
   const pickNextPrompt = (currentPrompt = prompt) => {
     const recent = recentPromptSignaturesRef.current;
-    const withCurrent = [...recent, getPromptSignature(currentPrompt.situation, currentPrompt.handClass)];
+    const withCurrent = [
+      ...recent,
+      getPromptSignature(currentPrompt.situation, currentPrompt.handClass),
+    ];
     const next = nextPrompt(data, weightedMap, withCurrent);
     const nextSignature = getPromptSignature(next.situation, next.handClass);
     recentPromptSignaturesRef.current = [...withCurrent, nextSignature].slice(-4);
@@ -134,7 +149,9 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
     cancelAndResetDrillState();
     recentPromptSignaturesRef.current = [];
     const freshPrompt = nextPrompt(data, weightedMap);
-    recentPromptSignaturesRef.current = [getPromptSignature(freshPrompt.situation, freshPrompt.handClass)];
+    recentPromptSignaturesRef.current = [
+      getPromptSignature(freshPrompt.situation, freshPrompt.handClass),
+    ];
     setPrompt(freshPrompt);
   }, [drillResetKey]);
 
@@ -147,7 +164,10 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
   );
   const policy = data.situations[key]?.policy as any;
 
-  const actionColors = useMemo(() => actionSetToColorMap(data.situations[key]?.actionSet), [data.situations, key]);
+  const actionColors = useMemo(
+    () => actionSetToColorMap(data.situations[key]?.actionSet),
+    [data.situations, key],
+  );
 
   const actionMap = useMemo(() => policyToActionMap(policy), [policy]);
 
@@ -159,7 +179,7 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
       return `Call ${((call / 169) * 100).toFixed(1)}% • ${label} ${((three / 169) * 100).toFixed(1)}% • Fold ${(((169 - call - three) / 169) * 100).toFixed(1)}%`;
     }
     const raise = policy?.raise?.length ?? 0;
-    const limp = prompt.situation.heroPos === 'SB' ? policy?.limp?.length ?? 0 : 0;
+    const limp = prompt.situation.heroPos === 'SB' ? (policy?.limp?.length ?? 0) : 0;
     return `Raise ${((raise / 169) * 100).toFixed(1)}%${prompt.situation.heroPos === 'SB' ? ` • Limp ${((limp / 169) * 100).toFixed(1)}%` : ''} • Fold ${(((169 - raise - limp) / 169) * 100).toFixed(1)}%`;
   }, [isFacingOpen, isThreeBet, policy, prompt.situation.heroPos]);
 
@@ -177,110 +197,23 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
     setCorrectAction(expected);
     const responseMs = Date.now() - questionStartTs;
 
-    onSessionChange((prev) => {
-      const next = structuredClone(prev);
-      next.attempts += 1;
-      next.totalResponseMs += responseMs;
-      if (prompt.situation.facingAction === 'open') {
-        next.byFacingHero[prompt.situation.heroPos as FacingOpenHeroPosition].attempts += 1;
-        if (ok) next.byFacingHero[prompt.situation.heroPos as FacingOpenHeroPosition].correct += 1;
-      } else {
-        next.byRfiPosition[prompt.situation.heroPos as RfiPosition].attempts += 1;
-        if (ok) next.byRfiPosition[prompt.situation.heroPos as RfiPosition].correct += 1;
-      }
-      if (ok) next.correct += 1;
-      return next;
-    });
+    onSessionChange((prev) =>
+      reduceSessionOnAnswer(prev, {
+        situation: prompt.situation,
+        isCorrect: ok,
+        responseMs,
+      }),
+    );
 
-    onDataChange((prev) => {
-      const byHandEntry = prev.stats.byHand[prompt.handClass] ?? { attempts: 0, correct: 0 };
-      const byHand = {
-        ...prev.stats.byHand,
-        [prompt.handClass]: {
-          attempts: byHandEntry.attempts + 1,
-          correct: byHandEntry.correct + (ok ? 1 : 0),
-        },
-      };
-
-      const total = {
-        attempts: prev.stats.total.attempts + 1,
-        correct: prev.stats.total.correct + (ok ? 1 : 0),
-      };
-
-      let byFacingHero = prev.stats.byFacingHero;
-      let byFacingMatchup = prev.stats.byFacingMatchup;
-      let byRfiPosition = prev.stats.byRfiPosition;
-
-      if (prompt.situation.facingAction === 'open') {
-        const hero = prompt.situation.heroPos as FacingOpenHeroPosition;
-        const matchup = `${prompt.situation.heroPos}vs${prompt.situation.villainPos}`;
-        const heroEntry = prev.stats.byFacingHero[hero];
-        const matchupEntry = prev.stats.byFacingMatchup[matchup] ?? { attempts: 0, correct: 0 };
-
-        byFacingHero = {
-          ...prev.stats.byFacingHero,
-          [hero]: {
-            attempts: heroEntry.attempts + 1,
-            correct: heroEntry.correct + (ok ? 1 : 0),
-          },
-        };
-
-        byFacingMatchup = {
-          ...prev.stats.byFacingMatchup,
-          [matchup]: {
-            attempts: matchupEntry.attempts + 1,
-            correct: matchupEntry.correct + (ok ? 1 : 0),
-          },
-        };
-      } else {
-        const hero = prompt.situation.heroPos as RfiPosition;
-        const heroEntry = prev.stats.byRfiPosition[hero];
-        byRfiPosition = {
-          ...prev.stats.byRfiPosition,
-          [hero]: {
-            attempts: heroEntry.attempts + 1,
-            correct: heroEntry.correct + (ok ? 1 : 0),
-          },
-        };
-      }
-
-      const mistakes = !ok
-        ? (() => {
-            const mKey =
-              prompt.situation.facingAction === 'open'
-                ? `${prompt.situation.heroPos}vs${prompt.situation.villainPos}|${prompt.handClass}|${expected}`
-                : `${prompt.situation.heroPos}|${prompt.handClass}|${expected}`;
-            const prevEntry = prev.stats.mistakes[mKey] ?? { count: 0, lastTs: 0 };
-            return {
-              ...prev.stats.mistakes,
-              [mKey]: {
-                count: prevEntry.count + 1,
-                lastTs: Date.now(),
-              },
-            };
-          })()
-        : prev.stats.mistakes;
-
-      const memoryKey = buildPromptMemoryKey(key, prompt.handClass);
-      const promptMemory = {
-        ...prev.stats.promptMemory,
-        [memoryKey]: updatePromptMemory(prev.stats.promptMemory[memoryKey], ok),
-      };
-
-      return {
-        ...prev,
-        stats: {
-          ...prev.stats,
-          total,
-          byHand,
-          byFacingHero,
-          byFacingMatchup,
-          byRfiPosition,
-          mistakes,
-          promptMemory,
-        },
-      };
-    });
+    onDataChange((prev) =>
+      reduceAppDataStatsOnAnswer(prev, {
+        situation: prompt.situation,
+        handClass: prompt.handClass,
+        expectedAction: expected,
+        policyKey: key,
+        isCorrect: ok,
+      }),
+    );
 
     if (ok) {
       setStatus('correct');
@@ -332,16 +265,23 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
                 drillContext: {
                   ...prev.settings.drillContext,
                   nodeType,
-                  villainPos: nodeType === 'rfi' ? undefined : prev.settings.facingOpenSelection.villainPos,
+                  villainPos:
+                    nodeType === 'rfi' ? undefined : prev.settings.facingOpenSelection.villainPos,
                 },
               },
             };
           })
         }
       >
-        <option value="rfi" disabled={!hasRfiData}>Open First In (RFI){!hasRfiData ? " (no data)" : ""}</option>
-        <option value="facing_open" disabled={!hasFacingOpenData}>Facing an Open{!hasFacingOpenData ? " (no data)" : ""}</option>
-        <option value="three_bet" disabled={!hasThreeBetData}>Facing a 3-bet{!hasThreeBetData ? " (no data)" : ""}</option>
+        <option value="rfi" disabled={!hasRfiData}>
+          Open First In (RFI){!hasRfiData ? ' (no data)' : ''}
+        </option>
+        <option value="facing_open" disabled={!hasFacingOpenData}>
+          Facing an Open{!hasFacingOpenData ? ' (no data)' : ''}
+        </option>
+        <option value="three_bet" disabled={!hasThreeBetData}>
+          Facing a 3-bet{!hasThreeBetData ? ' (no data)' : ''}
+        </option>
       </select>
 
       <p className="muted">Position Focus</p>
@@ -374,7 +314,11 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
 
       <div className="card">
         <p>Hero: {prompt.situation.heroPos}</p>
-        {(isFacingOpen || isThreeBet) && <p>{isThreeBet ? 'Facing 3-bet from' : 'Facing open from'}: {prompt.situation.villainPos}</p>}
+        {(isFacingOpen || isThreeBet) && (
+          <p>
+            {isThreeBet ? 'Facing 3-bet from' : 'Facing open from'}: {prompt.situation.villainPos}
+          </p>
+        )}
         <p className="big-hand">{prompt.handClass}</p>
       </div>
       <div className="actions">
