@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { DrillPage } from './features/drill/DrillPage';
-import { RangesPage } from './pages/RangesPage';
-import { SettingsPage } from './pages/SettingsPage';
-import { StatsPage } from './pages/StatsPage';
+import { RangesPage } from './features/ranges/RangesPage';
+import { SettingsPage } from './features/settings/SettingsPage';
+import { StatsPage } from './features/stats/StatsPage';
 import { loadData, loadSession, resetAll, resetSession, resetStatsOnly, saveData, saveSession } from './lib/storage';
 import type { AppData, SessionStats } from './lib/types';
 

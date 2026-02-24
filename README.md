@@ -94,6 +94,26 @@ Current baseline data lives in:
 
 That workflow is intentionally “**add data + register format/stack**” instead of rewriting resolver logic.
 
+
+## Architecture (current)
+
+- `src/features/*` contains page-level UI by feature:
+  - `src/features/drill/DrillPage.tsx`
+  - `src/features/ranges/RangesPage.tsx`
+  - `src/features/stats/StatsPage.tsx`
+  - `src/features/settings/SettingsPage.tsx`
+- `src/domain/*` contains domain services and pure logic:
+  - `src/domain/policy/*` for policy mapping/resolution
+  - `src/domain/presets/applyPreset.ts` for preset application flows (`applyPresetToAllRanges`, `applyPresetToSpot`)
+  - `src/domain/storage/*` for default data and key builders
+- `src/lib/*` contains shared types, constants, parser, and static data catalogs.
+
+### Where to add future drill/policy data
+
+1. Add new policy data files under `src/lib/data/<format>/<stack>/` (for example `rfi.ts`, `facingOpen.ts`, `threeBet.ts`, or future drill families).
+2. Register the new dataset in `src/lib/data/catalog.ts` so resolvers/services can load it.
+3. If a new drill family needs preset support, extend `src/domain/presets/applyPreset.ts` and wire the UI action in the relevant feature page.
+
 ## Persistence and migration
 
 - Main app key: `poker_range_drill_v2`

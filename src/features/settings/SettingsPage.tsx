@@ -1,10 +1,7 @@
-import { parseRangeShorthand } from '../lib/parser';
-import { PRESET_IDS, PRESETS, type PresetId } from '../lib/presets';
-import { getStackDataBundle } from '../lib/data/catalog';
-import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../domain/storage/keys';
-import { hasNoOverlap } from '../lib/storage';
-import { STACK_SIZES_BB } from '../lib/constants';
-import { APP_VERSION, RFI_POSITIONS, STORAGE_VERSION, type AppData, type DifficultyMode, type ThemeMode } from '../lib/types';
+import { PRESET_IDS, PRESETS, type PresetId } from '../../lib/presets';
+import { STACK_SIZES_BB } from '../../lib/constants';
+import { applyPresetToAllRanges } from '../../domain/presets/applyPreset';
+import { APP_VERSION, STORAGE_VERSION, type AppData, type DifficultyMode, type ThemeMode } from '../../lib/types';
 
 type Props = {
   data: AppData;
@@ -104,52 +101,13 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
         {PRESET_IDS.map((presetId) => <option key={presetId} value={presetId}>{PRESETS[presetId].name}</option>)}
       </select>
 
-      <button onClick={() => onDataChange((prev) => {
-        const next = structuredClone(prev);
-        const preset = PRESETS[prev.settings.defaultPresetId];
-        const bundle = getStackDataBundle(prev.settings.drillContext.format, prev.settings.drillContext.effectiveStackBb);
-        RFI_POSITIONS.forEach((pos) => {
-          const r = parseRangeShorthand(preset.rfi.raise[pos]);
-          const rfiKey = makeRfiKey(pos, prev.settings.drillContext.format, prev.settings.drillContext.effectiveStackBb);
-          if (r.ok && next.situations[rfiKey]) (next.situations[rfiKey].policy as any).raise = r.hands;
-        });
-        const l = parseRangeShorthand(preset.rfi.limp.SB);
-        const sbKey = makeRfiKey('SB', prev.settings.drillContext.format, prev.settings.drillContext.effectiveStackBb);
-        if (l.ok && next.situations[sbKey]) (next.situations[sbKey].policy as any).limp = l.hands;
-        Object.entries(preset.facingOpen).forEach(([k, v]) => {
-          const [hero, villain] = k.replace('FO_', '').split('_VS_');
-          const key = makeFacingOpenKey(hero as any, villain as any, prev.settings.drillContext.format, prev.settings.drillContext.effectiveStackBb);
-          const c = parseRangeShorthand(v.call); const t = parseRangeShorthand(v.threeBet);
-          if (!c.ok || !t.ok || !hasNoOverlap(c.hands, t.hands)) return;
-          if (!next.situations[key]) {
-            next.situations[key] = {
-              situation: { game: 'NLH', table: '9max', effectiveStackBb: prev.settings.drillContext.effectiveStackBb, heroPos: hero as any, facingAction: 'open', villainPos: villain as any },
-              drillType: 'facing_open',
-              actionSet: [
-                { id: 'FOLD', label: 'FOLD', color: 'fold' },
-                { id: 'CALL', label: 'CALL', color: 'call' },
-                { id: '3BET', label: '3BET', color: 'threebet' },
-              ],
-              policy: { call: c.hands as any, threeBet: t.hands as any },
-            };
-            return;
-          }
-          (next.situations[key].policy as any).call = c.hands;
-          (next.situations[key].policy as any).threeBet = t.hands;
-        });
-
-        Object.entries(bundle?.threeBet ?? {}).forEach(([k, v]) => {
-          const [hero, villain] = k.split('_VS_');
-          const key = makeThreeBetKey(hero as any, villain as any, prev.settings.drillContext.format, prev.settings.drillContext.effectiveStackBb);
-          const c = parseRangeShorthand(v.call);
-          const f = parseRangeShorthand(v.fourBet);
-          if (!c.ok || !f.ok || !hasNoOverlap(c.hands, f.hands)) return;
-          if (!next.situations[key]) return;
-          (next.situations[key].policy as any).call = c.hands;
-          (next.situations[key].policy as any).fourBet = f.hands;
-        });
-        return next;
-      })}>Apply preset to all ranges</button>
+      <button
+        onClick={() =>
+          onDataChange((prev) => applyPresetToAllRanges(prev, prev.settings.defaultPresetId, prev.settings.drillContext))
+        }
+      >
+        Apply preset to all ranges
+      </button>
 
       <div className="stack">
         <button onClick={onResetSession}>Reset session</button>

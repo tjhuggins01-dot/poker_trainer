@@ -1,4 +1,3 @@
-import { facingOpenKey } from './presets';
 import {
   DEFAULT_DRILL_CONTEXT,
   fromLegacyDrillType,
@@ -6,7 +5,6 @@ import {
   toLegacyDrillType,
   type DrillContext,
 } from './domain';
-import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../domain/storage/keys';
 import {
   createDefaultData,
   createDefaultSession,
@@ -112,7 +110,6 @@ const normalizeCurrentData = (raw: any): AppData => {
   return next;
 };
 
-const hasNoOverlap = (a: string[], b: string[]) => !a.some((hand) => b.includes(hand));
 
 const migrateToCurrent = (rawData: unknown): AppData => {
   if (!rawData || typeof rawData !== 'object') return createDefaultData();
@@ -176,4 +173,3 @@ export const resetStatsOnly = (data: AppData): AppData => ({
 
 export const resetAll = (): AppData => createDefaultData();
 
-export { makeFacingOpenKey, makeRfiKey, makeThreeBetKey, facingOpenKey, hasNoOverlap };
