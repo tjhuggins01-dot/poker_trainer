@@ -4,7 +4,8 @@ import { PositionSelector } from '../components/PositionSelector';
 import { parseRangeShorthand } from '../lib/parser';
 import { facingOpenKey, PRESETS } from '../lib/presets';
 import { getStackDataBundle } from '../lib/data/catalog';
-import { hasNoOverlap, makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../lib/storage';
+import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../domain/storage/keys';
+import { hasNoOverlap } from '../lib/storage';
 import {
   FACING_OPEN_HERO_POSITIONS,
   FACING_OPEN_VILLAIN_BY_HERO,

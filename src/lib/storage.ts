@@ -9,6 +9,7 @@ import {
   type DrillContext,
 } from './domain';
 import { DEFAULT_FORMAT, DEFAULT_STACK_BB, type DrillFormat, type EffectiveStackBb } from './constants';
+import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../domain/storage/keys';
 import {
   FACING_OPEN_HERO_POSITIONS,
   FACING_OPEN_VILLAIN_BY_HERO,
@@ -30,20 +31,6 @@ const LEGACY_STORAGE_KEYS = ['poker_range_drill_v1'];
 const LEGACY_SESSION_KEYS = ['poker_range_drill_session_v1'];
 
 const defaultPresetId: PresetId = 'v2_standard';
-
-const makeRfiKey = (heroPos: RfiPosition, format: DrillFormat = 'cash6max', stack: EffectiveStackBb = 100): string => `RFI_${format}_${stack}BB_${heroPos}`;
-const makeFacingOpenKey = (
-  heroPos: FacingOpenHeroPosition,
-  villainPos: Position,
-  format: DrillFormat = 'cash6max',
-  stack: EffectiveStackBb = 100,
-): string => `FACING_OPEN_${format}_${stack}BB_${heroPos}_VS_${villainPos}`;
-const makeThreeBetKey = (
-  heroPos: ThreeBetHeroPosition,
-  villainPos: Position,
-  format: DrillFormat = 'cash6max',
-  stack: EffectiveStackBb = 100,
-): string => `THREE_BET_${format}_${stack}BB_${heroPos}_VS_${villainPos}`;
 
 const createEmptyRfiStats = () =>
   Object.fromEntries(RFI_POSITIONS.map((p) => [p, { attempts: 0, correct: 0 }])) as Record<

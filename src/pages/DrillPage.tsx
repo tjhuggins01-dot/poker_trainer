@@ -9,7 +9,7 @@ import {
   updatePromptMemory,
 } from '../lib/logic';
 import { fromLegacyDrillType, isEligibleContext, parseContextQuery, toLegacyDrillType } from '../lib/domain';
-import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../lib/storage';
+import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../domain/storage/keys';
 import {
   FACING_OPEN_HERO_POSITIONS,
   RFI_POSITIONS,

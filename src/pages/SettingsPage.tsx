@@ -1,7 +1,8 @@
 import { parseRangeShorthand } from '../lib/parser';
 import { PRESET_IDS, PRESETS, type PresetId } from '../lib/presets';
 import { getStackDataBundle } from '../lib/data/catalog';
-import { hasNoOverlap, makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../lib/storage';
+import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../domain/storage/keys';
+import { hasNoOverlap } from '../lib/storage';
 import { STACK_SIZES_BB } from '../lib/constants';
 import { APP_VERSION, RFI_POSITIONS, STORAGE_VERSION, type AppData, type DifficultyMode, type ThemeMode } from '../lib/types';
 
