@@ -12,9 +12,12 @@ import {
   type Position,
   THREE_BET_HERO_POSITIONS,
   type RfiPosition,
+  type HandClass,
   type SessionStats,
-  type SituationPolicyRecord,
   type ThreeBetHeroPosition,
+  type RfiSituationPolicyRecord,
+  type FacingOpenSituationPolicyRecord,
+  type ThreeBetSituationPolicyRecord,
 } from '../../lib/types';
 import { DEFAULT_DRILL_CONTEXT } from '../../lib/domain';
 import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from './keys';
@@ -41,10 +44,10 @@ const hasNoOverlap = (a: string[], b: string[]) => !a.some((hand) => b.includes(
 
 const makeRfiSituationRecord = (
   heroPos: RfiPosition,
-  raiseHands: string[],
-  limpHands: string[],
+  raiseHands: HandClass[],
+  limpHands: HandClass[],
   stack: EffectiveStackBb,
-): SituationPolicyRecord => ({
+): RfiSituationPolicyRecord => ({
   situation: { game: 'NLH', table: '9max', effectiveStackBb: stack, heroPos, facingAction: 'none' },
   drillType: 'rfi',
   actionSet:
@@ -58,16 +61,16 @@ const makeRfiSituationRecord = (
           { id: 'RAISE', label: 'RAISE', color: 'raise' },
           { id: 'FOLD', label: 'FOLD', color: 'fold' },
         ],
-  policy: { raise: raiseHands as any, limp: heroPos === 'SB' ? (limpHands as any) : [] },
+  policy: heroPos === 'SB' ? { raise: raiseHands, limp: limpHands } : { raise: raiseHands },
 });
 
 const makeFacingOpenSituationRecord = (
   heroPos: FacingOpenHeroPosition,
   villainPos: Position,
-  callHands: string[],
-  threeBetHands: string[],
+  callHands: HandClass[],
+  threeBetHands: HandClass[],
   stack: EffectiveStackBb,
-): SituationPolicyRecord => ({
+): FacingOpenSituationPolicyRecord => ({
   situation: {
     game: 'NLH',
     table: '9max',
@@ -82,16 +85,16 @@ const makeFacingOpenSituationRecord = (
     { id: 'CALL', label: 'CALL', color: 'call' },
     { id: '3BET', label: '3BET', color: 'threebet' },
   ],
-  policy: { call: callHands as any, threeBet: threeBetHands as any },
+  policy: { call: callHands, threeBet: threeBetHands },
 });
 
 const makeThreeBetSituationRecord = (
   heroPos: ThreeBetHeroPosition,
   villainPos: Position,
-  callHands: string[],
-  fourBetHands: string[],
+  callHands: HandClass[],
+  fourBetHands: HandClass[],
   stack: EffectiveStackBb,
-): SituationPolicyRecord => ({
+): ThreeBetSituationPolicyRecord => ({
   situation: {
     game: 'NLH',
     table: '9max',
@@ -106,7 +109,7 @@ const makeThreeBetSituationRecord = (
     { id: 'CALL', label: 'CALL', color: 'call' },
     { id: '4BET', label: '4BET', color: 'threebet' },
   ],
-  policy: { call: callHands as any, fourBet: fourBetHands as any },
+  policy: { call: callHands, fourBet: fourBetHands },
 });
 
 const applyFacingOpenPreset = (

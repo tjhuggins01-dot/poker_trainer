@@ -16,6 +16,7 @@ import {
   type RfiPosition,
   type Situation,
   type SituationPolicyRecord,
+  type ThreeBetHeroPosition,
 } from './types';
 import { toSituation, type DrillContext } from './domain';
 
@@ -33,7 +34,7 @@ const getSituationKeyFromContext = (context: DrillContext): string => {
     );
   }
   if (context.nodeType === 'threeBet' && context.villainPos) {
-    return makeThreeBetKey(context.heroPos as any, context.villainPos, context.format, context.effectiveStackBb);
+    return makeThreeBetKey(context.heroPos as ThreeBetHeroPosition, context.villainPos, context.format, context.effectiveStackBb);
   }
   return makeRfiKey(context.heroPos as RfiPosition, context.format, context.effectiveStackBb);
 };
@@ -50,7 +51,7 @@ export const resolvePolicy = (
     context.nodeType === 'facingOpen' && context.villainPos
       ? makeFacingOpenKey(context.heroPos as FacingOpenHeroPosition, context.villainPos)
       : context.nodeType === 'threeBet' && context.villainPos
-        ? makeThreeBetKey(context.heroPos as any, context.villainPos)
+        ? makeThreeBetKey(context.heroPos as ThreeBetHeroPosition, context.villainPos)
         : makeRfiKey(context.heroPos as RfiPosition);
   return { record: appData.situations[legacyKey], key: appData.situations[legacyKey] ? legacyKey : key };
 };
@@ -71,11 +72,18 @@ export const computeCorrectAction = (
   if (!record) return 'FOLD';
 
   const foldAction = record.actionSet.find((action) => action.color === 'fold')?.id ?? 'FOLD';
-  for (const action of record.actionSet) {
-    if (action.color === 'fold') continue;
-    const policyKey = action.id === '3BET' ? 'threeBet' : action.id === '4BET' ? 'fourBet' : action.id.toLowerCase();
-    if ((record.policy as any)?.[policyKey]?.includes(handClass)) return action.id;
+  if (record.drillType === 'rfi') {
+    if (record.policy.raise.includes(handClass)) return 'RAISE';
+    if (record.policy.limp?.includes(handClass)) return 'LIMP';
+    return foldAction;
   }
+  if (record.drillType === 'facing_open') {
+    if (record.policy.call.includes(handClass)) return 'CALL';
+    if (record.policy.threeBet.includes(handClass)) return '3BET';
+    return foldAction;
+  }
+  if (record.policy.call.includes(handClass)) return 'CALL';
+  if (record.policy.fourBet.includes(handClass)) return '4BET';
   return foldAction;
 };
 
@@ -174,8 +182,12 @@ export const buildWeightedHandMap = (data: AppData): Record<string, WeightedHand
   const bySituation: Record<string, WeightedHand[]> = {};
 
   Object.entries(data.situations).forEach(([key, record]) => {
-    const policy = record.policy as any;
-    const priorityHands: HandClass[] = record.drillType === 'facing_open' ? policy.call ?? [] : policy.raise ?? [];
+    const priorityHands: HandClass[] =
+      record.drillType === 'facing_open'
+        ? record.policy.call
+        : record.drillType === 'rfi'
+          ? record.policy.raise
+          : record.policy.call;
     const boundaryDistances = computeBoundaryDistances(priorityHands);
     bySituation[key] = allHands.map((hand) => ({
       hand,

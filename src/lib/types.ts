@@ -63,14 +63,47 @@ export type Situation = {
   villainPos?: Position;
 };
 
-export type ActionPolicy = Record<string, HandClass[]>;
-
-export type SituationPolicyRecord = {
-  situation: Situation;
-  drillType: DrillType;
-  actionSet: PolicyAction[];
-  policy: ActionPolicy;
+export type RfiPolicy = {
+  raise: HandClass[];
+  limp?: HandClass[];
 };
+
+export type FacingOpenPolicy = {
+  call: HandClass[];
+  threeBet: HandClass[];
+};
+
+export type ThreeBetPolicy = {
+  call: HandClass[];
+  fourBet: HandClass[];
+};
+
+export type RfiAction = PolicyAction & { id: 'RAISE' | 'LIMP' | 'FOLD' };
+export type FacingOpenAction = PolicyAction & { id: 'FOLD' | 'CALL' | '3BET' };
+export type ThreeBetAction = PolicyAction & { id: 'FOLD' | 'CALL' | '4BET' };
+
+export type RfiSituationPolicyRecord = {
+  situation: Situation & { facingAction: 'none'; heroPos: RfiPosition; villainPos?: undefined };
+  drillType: 'rfi';
+  actionSet: RfiAction[];
+  policy: RfiPolicy;
+};
+
+export type FacingOpenSituationPolicyRecord = {
+  situation: Situation & { facingAction: 'open'; heroPos: FacingOpenHeroPosition; villainPos: Position };
+  drillType: 'facing_open';
+  actionSet: FacingOpenAction[];
+  policy: FacingOpenPolicy;
+};
+
+export type ThreeBetSituationPolicyRecord = {
+  situation: Situation & { facingAction: 'three_bet'; heroPos: ThreeBetHeroPosition; villainPos: Position };
+  drillType: 'three_bet';
+  actionSet: ThreeBetAction[];
+  policy: ThreeBetPolicy;
+};
+
+export type SituationPolicyRecord = RfiSituationPolicyRecord | FacingOpenSituationPolicyRecord | ThreeBetSituationPolicyRecord;
 
 export type StatsEntry = { attempts: number; correct: number };
 
