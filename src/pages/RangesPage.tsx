@@ -3,22 +3,27 @@ import { HandGrid } from '../components/HandGrid';
 import { PositionSelector } from '../components/PositionSelector';
 import { parseRangeShorthand } from '../lib/parser';
 import { facingOpenKey, PRESETS } from '../lib/presets';
-import { hasNoOverlap, makeFacingOpenKey, makeRfiKey } from '../lib/storage';
+import { getStackDataBundle } from '../lib/data/catalog';
+import { hasNoOverlap, makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../lib/storage';
 import {
   FACING_OPEN_HERO_POSITIONS,
   FACING_OPEN_VILLAIN_BY_HERO,
   RFI_POSITIONS,
+  THREE_BET_HERO_POSITIONS,
+  THREE_BET_VILLAIN_BY_HERO,
   type AppData,
   type FacingOpenHeroPosition,
   type Position,
   type RfiPosition,
+  type ThreeBetHeroPosition,
 } from '../lib/types';
 
 type Props = { data: AppData; onDataChange: (updater: (prev: AppData) => AppData) => void };
 
 export function RangesPage({ data, onDataChange }: Props) {
-  const [mode, setMode] = useState<'rfi' | 'facing_open'>('rfi');
+  const [mode, setMode] = useState<'rfi' | 'facing_open' | 'three_bet'>('rfi');
   const [position, setPosition] = useState<RfiPosition>('UTG');
+  const [threeBetHero, setThreeBetHero] = useState<ThreeBetHeroPosition>('CO');
   const [raiseText, setRaiseText] = useState('');
   const [secondaryText, setSecondaryText] = useState('');
   const [message, setMessage] = useState('');
@@ -28,8 +33,19 @@ export function RangesPage({ data, onDataChange }: Props) {
   const facingVillain = villainOptions.includes(data.settings.facingOpenSelection.villainPos)
     ? data.settings.facingOpenSelection.villainPos
     : villainOptions[0];
+  const threeBetVillainOptions = THREE_BET_VILLAIN_BY_HERO[threeBetHero];
+  const [threeBetVillain, setThreeBetVillain] = useState<Position>(threeBetVillainOptions[0]);
 
-  const key = mode === 'rfi' ? makeRfiKey(position, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb) : makeFacingOpenKey(facingHero, facingVillain, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb);
+  const validThreeBetVillain = threeBetVillainOptions.includes(threeBetVillain)
+    ? threeBetVillain
+    : threeBetVillainOptions[0];
+
+  const key =
+    mode === 'rfi'
+      ? makeRfiKey(position, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb)
+      : mode === 'facing_open'
+        ? makeFacingOpenKey(facingHero, facingVillain, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb)
+        : makeThreeBetKey(threeBetHero, validThreeBetVillain, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb);
   const policy = data.situations[key]?.policy as any;
   const hasSpotData = Boolean(data.situations[key]);
 
@@ -75,9 +91,12 @@ export function RangesPage({ data, onDataChange }: Props) {
       if (mode === 'rfi') {
         p.raise = primary.hands;
         if (position === 'SB') p.limp = secondary.hands;
-      } else {
+      } else if (mode === 'facing_open') {
         p.call = primary.hands;
         p.threeBet = secondary.hands;
+      } else {
+        p.call = primary.hands;
+        p.fourBet = secondary.hands;
       }
       return next;
     });
@@ -88,7 +107,9 @@ export function RangesPage({ data, onDataChange }: Props) {
   const counts =
     mode === 'rfi'
       ? { a: policy?.raise?.length ?? 0, b: position === 'SB' ? policy?.limp?.length ?? 0 : 0 }
-      : { a: policy?.call?.length ?? 0, b: policy?.threeBet?.length ?? 0 };
+      : mode === 'facing_open'
+        ? { a: policy?.call?.length ?? 0, b: policy?.threeBet?.length ?? 0 }
+        : { a: policy?.call?.length ?? 0, b: policy?.fourBet?.length ?? 0 };
 
   return (
     <section>
@@ -97,11 +118,12 @@ export function RangesPage({ data, onDataChange }: Props) {
       <select value={mode} onChange={(e: any) => setMode(e.target.value)}>
         <option value="rfi">RFI</option>
         <option value="facing_open">Facing Open</option>
+        <option value="three_bet">Facing 3-bet</option>
       </select>
 
       {mode === 'rfi' ? (
         <PositionSelector value={position} options={RFI_POSITIONS} onChange={setPosition} />
-      ) : (
+      ) : mode === 'facing_open' ? (
         <>
           <label>Hero position</label>
           <select
@@ -156,6 +178,35 @@ export function RangesPage({ data, onDataChange }: Props) {
           </select>
           <p className="muted">Selected matchup: {facingOpenKey(facingHero, facingVillain)}</p>
         </>
+      ) : (
+        <>
+          <label>Hero position</label>
+          <select
+            value={threeBetHero}
+            onChange={(e: any) => {
+              const heroPos = e.target.value as ThreeBetHeroPosition;
+              const firstVillain = THREE_BET_VILLAIN_BY_HERO[heroPos][0];
+              setThreeBetHero(heroPos);
+              setThreeBetVillain(firstVillain);
+            }}
+          >
+            {THREE_BET_HERO_POSITIONS.map((heroPos) => (
+              <option key={heroPos} value={heroPos}>
+                {heroPos}
+              </option>
+            ))}
+          </select>
+
+          <label>Villain 3-bet position</label>
+          <select value={validThreeBetVillain} onChange={(e: any) => setThreeBetVillain(e.target.value as Position)}>
+            {threeBetVillainOptions.map((villainPos) => (
+              <option key={villainPos} value={villainPos}>
+                {villainPos}
+              </option>
+            ))}
+          </select>
+          <p className="muted">Selected matchup: {threeBetHero}_VS_{validThreeBetVillain}</p>
+        </>
       )}
 
       <div className="card">
@@ -165,6 +216,8 @@ export function RangesPage({ data, onDataChange }: Props) {
             ? `Limp ${pct(counts.b)}%`
             : mode === 'facing_open'
               ? `3bet ${pct(counts.b)}%`
+              : mode === 'three_bet'
+                ? `4bet ${pct(counts.b)}%`
               : null}
         </p>
         <p>Fold {pct(169 - counts.a - counts.b)}%</p>
@@ -174,7 +227,15 @@ export function RangesPage({ data, onDataChange }: Props) {
       <HandGrid actionMap={actionMap} actionColors={actionColors as any} />
       <label>{mode === 'rfi' ? 'Raise import' : 'Call import'}</label>
       <textarea rows={3} value={raiseText} onChange={(e: any) => setRaiseText(e.target.value)} disabled={!hasSpotData} />
-      <label>{mode === 'rfi' ? (position === 'SB' ? 'Limp import' : 'Secondary not used') : '3bet import'}</label>
+      <label>
+        {mode === 'rfi'
+          ? position === 'SB'
+            ? 'Limp import'
+            : 'Secondary not used'
+          : mode === 'facing_open'
+            ? '3bet import'
+            : '4bet import'}
+      </label>
       <textarea
         rows={3}
         value={secondaryText}
@@ -198,7 +259,7 @@ export function RangesPage({ data, onDataChange }: Props) {
                   const parsedLimp = parseRangeShorthand(preset.rfi.limp.SB);
                   if (parsedLimp.ok) (next.situations[key].policy as any).limp = parsedLimp.hands;
                 }
-              } else {
+              } else if (mode === 'facing_open') {
                 const m = preset.facingOpen[facingOpenKey(facingHero, facingVillain)];
                 if (m) {
                   const c = parseRangeShorthand(m.call);
@@ -206,6 +267,17 @@ export function RangesPage({ data, onDataChange }: Props) {
                   if (c.ok && t.ok && hasNoOverlap(c.hands, t.hands) && next.situations[key]) {
                     (next.situations[key].policy as any).call = c.hands;
                     (next.situations[key].policy as any).threeBet = t.hands;
+                  }
+                }
+              } else {
+                const bundle = getStackDataBundle(prev.settings.drillContext.format, prev.settings.drillContext.effectiveStackBb);
+                const m = bundle?.threeBet[`${threeBetHero}_VS_${validThreeBetVillain}`];
+                if (m) {
+                  const c = parseRangeShorthand(m.call);
+                  const f = parseRangeShorthand(m.fourBet);
+                  if (c.ok && f.ok && hasNoOverlap(c.hands, f.hands) && next.situations[key]) {
+                    (next.situations[key].policy as any).call = c.hands;
+                    (next.situations[key].policy as any).fourBet = f.hands;
                   }
                 }
               }
