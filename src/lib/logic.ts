@@ -1,5 +1,5 @@
 import { generateAllHandClasses169, handClassToGridCoord } from './hands';
-import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from './storage';
+import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../domain/storage/keys';
 import {
   FACING_OPEN_HERO_POSITIONS,
   FACING_OPEN_VILLAIN_BY_HERO,
