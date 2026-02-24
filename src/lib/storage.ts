@@ -6,7 +6,6 @@ import {
   toLegacyDrillType,
   type DrillContext,
 } from './domain';
-import { DEFAULT_FORMAT, DEFAULT_STACK_BB } from './constants';
 import { makeFacingOpenKey, makeRfiKey, makeThreeBetKey } from '../domain/storage/keys';
 import {
   createDefaultData,
@@ -20,15 +19,9 @@ import {
   RFI_POSITIONS,
   SESSION_STORAGE_KEY,
   STORAGE_KEY,
-  STORAGE_VERSION,
   type AppData,
   type SessionStats,
 } from './types';
-
-const LEGACY_STORAGE_KEYS = ['poker_range_drill_v1'];
-const LEGACY_SESSION_KEYS = ['poker_range_drill_session_v1'];
-
-const defaultPresetId = 'v2_standard';
 
 const withDefaultStatsEntry = (entry: any) => ({
   attempts: typeof entry?.attempts === 'number' ? entry.attempts : 0,
@@ -121,63 +114,13 @@ const normalizeCurrentData = (raw: any): AppData => {
 
 const hasNoOverlap = (a: string[], b: string[]) => !a.some((hand) => b.includes(hand));
 
-const migrateLegacy = (rawData: any): AppData => {
-  const next = createDefaultData();
-  const legacySituations = rawData?.situations ?? {};
-  RFI_POSITIONS.forEach((position) => {
-    const oldKey = `OPEN_9MAX_100BB_${position}`;
-    const oldHands: string[] = legacySituations[oldKey]?.policy?.openHands ?? [];
-    const key = makeRfiKey(position, DEFAULT_FORMAT, DEFAULT_STACK_BB);
-    if (next.situations[key]) {
-      next.situations[key].policy.raise = oldHands as any;
-      if (position === 'SB') next.situations[key].policy.limp = [];
-    }
-  });
-
-  if (rawData?.stats) {
-    next.stats.total = rawData.stats.total ?? next.stats.total;
-    next.stats.byHand = rawData.stats.byHand ?? {};
-    next.stats.mistakes = rawData.stats.mistakes ?? {};
-    RFI_POSITIONS.forEach((position) => {
-      next.stats.byRfiPosition[position] = rawData.stats.byPosition?.[position] ?? { attempts: 0, correct: 0 };
-    });
-  }
-
-  next.settings.defaultPresetId = rawData?.settings?.defaultPresetId ?? defaultPresetId;
-  next.settings.difficulty = rawData?.settings?.difficulty ?? 'normal';
-  next.settings.revealOnIncorrectOnly = rawData?.settings?.revealOnIncorrectOnly ?? true;
-  next.migrationNotice = 'Data migrated to v2 schema. Facing-open stats were initialized.';
-  return next;
-};
-
-const migrateV5ToCurrent = (record: any): AppData => {
-  const next = structuredClone(record) as AppData;
-  next.version = STORAGE_VERSION;
-  next.settings.facingOpenSelection = next.settings.facingOpenSelection ?? defaultFacingOpenSelection;
-  next.settings.drillContext = next.settings.drillContext ?? {
-    ...DEFAULT_DRILL_CONTEXT,
-    nodeType: fromLegacyDrillType(next.settings.drillType ?? 'rfi'),
-    heroPos:
-      next.settings.drillType === 'facing_open'
-        ? next.settings.facingOpenSelection.heroPos
-        : next.settings.positionFocus?.rfi?.[0] ?? DEFAULT_DRILL_CONTEXT.heroPos,
-    villainPos:
-      next.settings.drillType === 'facing_open' ? next.settings.facingOpenSelection.villainPos : undefined,
-  };
-  return normalizeCurrentData(next);
-};
-
 const migrateToCurrent = (rawData: unknown): AppData => {
   if (!rawData || typeof rawData !== 'object') return createDefaultData();
-  const record = rawData as any;
-  if (record.version === STORAGE_VERSION) return normalizeCurrentData(record);
-  if (record.version === 7 || record.version === 6 || record.version === 5) return migrateV5ToCurrent(record);
-  if (record.version === 4) return migrateLegacy(record);
-  return migrateLegacy(record);
+  return normalizeCurrentData(rawData);
 };
 
 export const loadData = (): AppData => {
-  const raw = localStorage.getItem(STORAGE_KEY) ?? LEGACY_STORAGE_KEYS.map((k) => localStorage.getItem(k)).find(Boolean);
+  const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) {
     const initial = createDefaultData();
     saveData(initial);
@@ -198,21 +141,15 @@ export const saveData = (data: AppData): void => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 };
 
-const migrateSession = (raw: any): SessionStats => {
-  return normalizeSession(raw);
-};
-
 export const loadSession = (): SessionStats => {
-  const raw =
-    localStorage.getItem(SESSION_STORAGE_KEY) ??
-    LEGACY_SESSION_KEYS.map((k) => localStorage.getItem(k)).find(Boolean);
+  const raw = localStorage.getItem(SESSION_STORAGE_KEY);
   if (!raw) {
     const initial = createDefaultSession();
     saveSession(initial);
     return initial;
   }
   try {
-    const migrated = migrateSession(JSON.parse(raw));
+    const migrated = normalizeSession(JSON.parse(raw));
     saveSession(migrated);
     return migrated;
   } catch {
