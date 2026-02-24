@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { DrillPage } from './pages/DrillPage';
+import { DrillPage } from './features/drill/DrillPage';
 import { RangesPage } from './pages/RangesPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { StatsPage } from './pages/StatsPage';
