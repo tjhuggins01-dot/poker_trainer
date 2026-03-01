@@ -24,59 +24,59 @@ export const VS_3BET_DEFAULTS: Record<
   LJ_vs_CO_3BET: { fourBet: 'JJ+,AKs,AKo,AQs,AQo,A5s', call: 'TT,99,88,77,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s' },
   LJ_vs_BTN_3BET: {
     fourBet: 'TT+,AKs,AKo,AQs,AQo,A5s,A4s',
-    call: '99,88,77,66,AJs,ATs,AQo,KQs,QJs,JTs,T9s,98s,87s,76s',
+    call: '99,88,77,66,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s,76s',
   },
   LJ_vs_SB_3BET: {
     fourBet: 'TT+,AKs,AKo,AQs,AQo,A5s,A4s',
-    call: '99,88,77,66,AJs,ATs,AQo,KQs,QJs,JTs,T9s,98s,87s,76s',
+    call: '99,88,77,66,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s,76s',
   },
   LJ_vs_BB_3BET: {
     fourBet: 'TT+,AKs,AKo,AQs,AQo,A5s,A4s',
-    call: '99,88,77,66,AJs,ATs,AQo,KQs,QJs,JTs,T9s,98s,87s,76s',
+    call: '99,88,77,66,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s,76s',
   },
 
   HJ_vs_CO_3BET: {
     fourBet: 'TT+,AKs,AKo,AQs,AQo,A5s',
-    call: '99,88,77,66,AJs,ATs,AQo,KQs,KJs,QJs,JTs,T9s,98s,87s',
+    call: '99,88,77,66,AJs,ATs,KQs,KJs,QJs,JTs,T9s,98s,87s',
   },
   HJ_vs_BTN_3BET: {
     fourBet: 'TT+,AKs,AKo,AQs,AQo,A5s,A4s,A3s',
-    call: '99,88,77,66,55,AJs,ATs,AQo,KQs,KJs,QJs,JTs,T9s,98s,87s,76s',
+    call: '99,88,77,66,55,AJs,ATs,KQs,KJs,QJs,JTs,T9s,98s,87s,76s',
   },
   HJ_vs_SB_3BET: {
     fourBet: 'TT+,AKs,AKo,AQs,AQo,A5s,A4s,A3s',
-    call: '99,88,77,66,55,AJs,ATs,AQo,KQs,KJs,QJs,JTs,T9s,98s,87s,76s',
+    call: '99,88,77,66,55,AJs,ATs,KQs,KJs,QJs,JTs,T9s,98s,87s,76s',
   },
   HJ_vs_BB_3BET: {
     fourBet: 'TT+,AKs,AKo,AQs,AQo,A5s,A4s,A3s',
-    call: '99,88,77,66,55,AJs,ATs,AQo,KQs,KJs,QJs,JTs,T9s,98s,87s,76s',
+    call: '99,88,77,66,55,AJs,ATs,KQs,KJs,QJs,JTs,T9s,98s,87s,76s',
   },
 
   CO_vs_BTN_3BET: {
     fourBet: 'TT+,AKs,AKo,AQs,AQo,A5s,A4s,A3s',
-    call: '99,88,77,66,55,AJs,ATs,AQo,KQs,KJs,QJs,JTs,T9s,98s,87s,76s',
+    call: '99,88,77,66,55,AJs,ATs,KQs,KJs,QJs,JTs,T9s,98s,87s,76s',
   },
   CO_vs_SB_3BET: {
     fourBet: 'TT+,AKs,AKo,AQs,AQo,A5s,A4s,A3s',
-    call: '99,88,77,66,55,AJs,ATs,AQo,KQs,KJs,QJs,JTs,T9s,98s,87s,76s',
+    call: '99,88,77,66,55,AJs,ATs,KQs,KJs,QJs,JTs,T9s,98s,87s,76s',
   },
   CO_vs_BB_3BET: {
     fourBet: 'TT+,AKs,AKo,AQs,AQo,A5s,A4s,A3s',
-    call: '99,88,77,66,55,AJs,ATs,AQo,KQs,KJs,QJs,JTs,T9s,98s,87s,76s',
+    call: '99,88,77,66,55,AJs,ATs,KQs,KJs,QJs,JTs,T9s,98s,87s,76s',
   },
 
   BTN_vs_SB_3BET: {
     fourBet: '99+,AKs,AKo,AQs,AQo,A5s,A4s,A3s,KQs',
-    call: '88,77,66,55,44,AJs,ATs,AQo,AJo,KQs,KJs,QJs,JTs,T9s,98s,87s,76s,65s',
+    call: '88,77,66,55,44,AJs,ATs,AJo,KJs,QJs,JTs,T9s,98s,87s,76s,65s',
   },
   BTN_vs_BB_3BET: {
     fourBet: '99+,AKs,AKo,AQs,AQo,A5s,A4s,A3s,KQs',
-    call: '88,77,66,55,44,AJs,ATs,AQo,AJo,KQs,KJs,QJs,JTs,T9s,98s,87s,76s,65s',
+    call: '88,77,66,55,44,AJs,ATs,AJo,KJs,QJs,JTs,T9s,98s,87s,76s,65s',
   },
 
   SB_vs_BB_3BET: {
     fourBet: '99+,AKs,AKo,AQs,AQo,A5s,A4s,KQs',
-    call: '88,77,66,55,44,AJs,ATs,AQo,AJo,KQs,KJs,QJs,JTs,T9s,98s,87s,76s,65s',
+    call: '88,77,66,55,44,AJs,ATs,AJo,KJs,QJs,JTs,T9s,98s,87s,76s,65s',
   },
 };
 

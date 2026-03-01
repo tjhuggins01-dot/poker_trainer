@@ -5,6 +5,7 @@ import {
   toLegacyDrillType,
   type DrillContext,
 } from './domain';
+import { FORMAT_IDS } from './constants';
 import {
   createDefaultData,
   createDefaultSession,
@@ -110,6 +111,10 @@ const normalizeCurrentData = (raw: any): AppData => {
     ...baseContext,
     ...(next.settings.drillContext ?? {}),
   };
+
+  if (!FORMAT_IDS.includes(next.settings.drillContext.format as any)) {
+    next.settings.drillContext.format = DEFAULT_DRILL_CONTEXT.format;
+  }
 
   if (!isEligibleContext(next.settings.drillContext, next)) {
     next.settings.drillContext = baseContext;
