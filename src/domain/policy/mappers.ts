@@ -6,6 +6,7 @@ const POLICY_BUCKET_TO_ACTION_ID: Record<string, string> = {
   call: 'CALL',
   threeBet: '3BET',
   fourBet: '4BET',
+  isoRaise: 'ISO',
 };
 
 export const policyToActionMap = (policy: SituationPolicyRecord['policy'] | undefined): Partial<Record<HandClass, string>> => {

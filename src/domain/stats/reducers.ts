@@ -1,13 +1,5 @@
 import { buildPromptMemoryKey, updatePromptMemory } from '../../lib/logic';
-import type {
-  AppData,
-  DrillAction,
-  FacingOpenHeroPosition,
-  HandClass,
-  RfiPosition,
-  SessionStats,
-  Situation,
-} from '../../lib/types';
+import { RFI_POSITIONS, type AppData, type DrillAction, type FacingOpenHeroPosition, type HandClass, type RfiPosition, type SessionStats, type Situation } from '../../lib/types';
 
 type SessionReduceAnswerInput = {
   situation: Situation;
@@ -36,7 +28,7 @@ export const reduceSessionOnAnswer = (
     const hero = situation.heroPos as FacingOpenHeroPosition;
     next.byFacingHero[hero].attempts += 1;
     if (isCorrect) next.byFacingHero[hero].correct += 1;
-  } else {
+  } else if (RFI_POSITIONS.includes(situation.heroPos as RfiPosition)) {
     const hero = situation.heroPos as RfiPosition;
     next.byRfiPosition[hero].attempts += 1;
     if (isCorrect) next.byRfiPosition[hero].correct += 1;
@@ -96,7 +88,7 @@ export const reduceAppDataStatsOnAnswer = (
         correct: matchupEntry.correct + (isCorrect ? 1 : 0),
       },
     };
-  } else {
+  } else if (RFI_POSITIONS.includes(situation.heroPos as RfiPosition)) {
     const hero = situation.heroPos as RfiPosition;
     const heroEntry = prev.stats.byRfiPosition[hero];
     byRfiPosition = {

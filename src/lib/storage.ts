@@ -21,6 +21,7 @@ import {
   type SessionStats,
 } from './types';
 
+
 const withDefaultStatsEntry = (entry: any) => ({
   attempts: typeof entry?.attempts === 'number' ? entry.attempts : 0,
   correct: typeof entry?.correct === 'number' ? entry.correct : 0,
@@ -77,6 +78,7 @@ const normalizeCurrentData = (raw: any): AppData => {
     rfi: next.settings.positionFocus?.rfi ?? defaults.settings.positionFocus.rfi,
     facing_open: next.settings.positionFocus?.facing_open ?? defaults.settings.positionFocus.facing_open,
     three_bet: next.settings.positionFocus?.three_bet ?? defaults.settings.positionFocus.three_bet,
+    limp_branch: next.settings.positionFocus?.limp_branch ?? defaults.settings.positionFocus.limp_branch,
   };
   next.settings.facingOpenSelection = {
     ...defaultFacingOpenSelection,
@@ -92,11 +94,17 @@ const normalizeCurrentData = (raw: any): AppData => {
         ? next.settings.facingOpenSelection.heroPos
         : next.settings.drillType === 'three_bet'
           ? next.settings.positionFocus.three_bet[0] ?? DEFAULT_DRILL_CONTEXT.heroPos
-          : next.settings.positionFocus.rfi[0] ?? DEFAULT_DRILL_CONTEXT.heroPos,
+          : next.settings.drillType === 'limp_branch'
+            ? next.settings.positionFocus.limp_branch[0] ?? 'BB'
+            : next.settings.positionFocus.rfi[0] ?? DEFAULT_DRILL_CONTEXT.heroPos,
     villainPos:
       next.settings.drillType === 'facing_open'
         ? next.settings.facingOpenSelection.villainPos
-        : undefined,
+        : next.settings.drillType === 'three_bet'
+          ? 'BB'
+          : next.settings.drillType === 'limp_branch'
+            ? (next.settings.positionFocus.limp_branch[0] === 'BB' ? 'SB' : 'BB')
+            : undefined,
   };
   next.settings.drillContext = {
     ...baseContext,

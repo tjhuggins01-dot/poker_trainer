@@ -44,7 +44,7 @@ export function useDrillQuerySync(data: AppData, onDataChange: OnDataChange) {
   }, [data.settings.drillContext]);
 
   return {
-    updateDrillType: (drillType: 'rfi' | 'facing_open' | 'three_bet') => {
+    updateDrillType: (drillType: 'rfi' | 'facing_open' | 'three_bet' | 'limp_branch') => {
       onDataChange((prev) => {
         const nodeType = fromLegacyDrillType(drillType);
         return {
@@ -56,7 +56,7 @@ export function useDrillQuerySync(data: AppData, onDataChange: OnDataChange) {
               ...prev.settings.drillContext,
               nodeType,
               villainPos:
-                nodeType === 'rfi' ? undefined : prev.settings.facingOpenSelection.villainPos,
+                nodeType === 'rfi' ? undefined : nodeType === 'facingOpen' ? prev.settings.facingOpenSelection.villainPos : nodeType === 'limpBranch' ? (prev.settings.positionFocus.limp_branch[0] === 'BB' ? 'SB' : 'BB') : 'BB',
             },
           },
         };

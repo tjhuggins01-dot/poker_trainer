@@ -37,7 +37,7 @@ export const computeCorrectAction = (
   const context: DrillContext = {
     format: appData.settings.drillContext.format,
     effectiveStackBb: situation.effectiveStackBb,
-    nodeType: situation.facingAction === 'open' ? 'facingOpen' : situation.facingAction === 'three_bet' ? 'threeBet' : 'rfi',
+    nodeType: situation.facingAction === 'open' ? 'facingOpen' : situation.facingAction === 'three_bet' ? 'threeBet' : (situation.facingAction === 'limp' || situation.facingAction === 'iso') ? 'limpBranch' : 'rfi',
     heroPos: situation.heroPos,
     villainPos: situation.villainPos,
   };
@@ -55,8 +55,19 @@ export const computeCorrectAction = (
     if (record.policy.threeBet.includes(handClass)) return '3BET';
     return foldAction;
   }
-  if (record.policy.call.includes(handClass)) return 'CALL';
-  if (record.policy.fourBet.includes(handClass)) return '4BET';
+  if (record.drillType === 'three_bet') {
+    if (record.policy.call.includes(handClass)) return 'CALL';
+    if (record.policy.fourBet.includes(handClass)) return '4BET';
+    return foldAction;
+  }
+  if (record.situation.facingAction === 'limp') {
+    const limpPolicy = record.policy as { isoRaise: HandClass[] };
+    if (limpPolicy.isoRaise.includes(handClass)) return 'ISO';
+    return 'CHECK';
+  }
+  const isoPolicy = record.policy as { call: HandClass[]; threeBet: HandClass[] };
+  if (isoPolicy.call.includes(handClass)) return 'CALL';
+  if (isoPolicy.threeBet.includes(handClass)) return '3BET';
   return foldAction;
 };
 
@@ -160,7 +171,11 @@ export const buildWeightedHandMap = (data: AppData): Record<string, WeightedHand
         ? record.policy.call
         : record.drillType === 'rfi'
           ? record.policy.raise
-          : record.policy.call;
+          : record.drillType === 'three_bet'
+            ? record.policy.call
+            : record.situation.facingAction === 'limp'
+              ? (record.policy as { isoRaise: HandClass[] }).isoRaise
+              : (record.policy as { call: HandClass[] }).call;
     const boundaryDistances = computeBoundaryDistances(priorityHands);
     bySituation[key] = allHands.map((hand) => ({
       hand,
@@ -225,6 +240,18 @@ const buildEligibleContexts = (data: AppData): DrillContext[] => {
       villains.forEach((villainPos) => {
         contexts.push({ ...base, heroPos, villainPos, nodeType: 'threeBet' });
       });
+    });
+  }
+
+
+  if (base.nodeType === 'limpBranch') {
+    const focus = data.settings.positionFocus.limp_branch.length
+      ? data.settings.positionFocus.limp_branch
+      : (['BB', 'SB'] as const);
+
+    focus.forEach((heroPos) => {
+      const villainPos = heroPos === 'BB' ? 'SB' : 'BB';
+      contexts.push({ ...base, heroPos, villainPos, nodeType: 'limpBranch' });
     });
   }
 
