@@ -32,7 +32,7 @@ const VS_OPEN_DEFAULTS_V2: Record<string, { call: string; threeBet: string }> = 
   },
   UTG2_vs_UTG1: {
     threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
-    call: '99,TT,JJ,AJs,ATs,KQs,QJs,JTs,T9s,98s',
+    call: '99,TT,JJ,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s',
   },
 
   LJ_vs_UTG: {
