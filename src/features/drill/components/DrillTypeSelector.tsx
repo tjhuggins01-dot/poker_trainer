@@ -5,6 +5,7 @@ type Props = {
   hasRfiData: boolean;
   hasFacingOpenData: boolean;
   hasThreeBetData: boolean;
+  hasLimpBranchData: boolean;
   onChange: (drillType: DrillType) => void;
 };
 
@@ -13,6 +14,7 @@ export function DrillTypeSelector({
   hasRfiData,
   hasFacingOpenData,
   hasThreeBetData,
+  hasLimpBranchData,
   onChange,
 }: Props) {
   return (
@@ -31,6 +33,9 @@ export function DrillTypeSelector({
         </option>
         <option value="three_bet" disabled={!hasThreeBetData}>
           Facing a 3-bet{!hasThreeBetData ? ' (no data)' : ''}
+        </option>
+        <option value="limp_branch" disabled={!hasLimpBranchData}>
+          SB Limp Branch{!hasLimpBranchData ? ' (no data)' : ''}
         </option>
       </select>
     </>
