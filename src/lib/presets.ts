@@ -196,7 +196,7 @@ export const PRESETS: Record<PresetId, PresetDefinition> = {
         HJ: '55+,A9s+,KTs+,QTs+,JTs,T9s,98s,AJo+,KQo',
         CO: '33+,A5s+,K9s+,Q9s+,J9s+,T9s,98s,ATo+,KJo+',
         BTN: '22+,A2s+,K7s+,Q8s+,J8s+,T8s+,97s+,87s,76s,A8o+,KTo+,QTo+,JTo',
-        SB: '55+,A8s+,KTs+,QTs+,JTs,T9s,98s,A9o+,KJo+',
+        SB: '55+,A8s+,KTs+,QTs+,JTs,T9s,98s,A9o+,KJo+,QJo',
       },
       limp: {
         // Disjoint from SB raise. No pair intervals. Added 76s,87s to remove weird gaps.
@@ -222,7 +222,7 @@ export const PRESETS: Record<PresetId, PresetDefinition> = {
       },
       limp: {
         // Disjoint from SB raise. No pair intervals. Wider than v1.
-        SB: '22,33,A2s,A3s,A4s,K4s,K5s,K6s,K7s,Q6s,Q7s,Q8s,J7s,J8s,T7s,T8s,97s,86s,75s,64s,54s,A2o,A3o,A4o,A5o,A6o,A7o,K8o,K9o,Q8o,Q9o,J8o,J9o,T8o,T9o',
+        SB: '22,33,A2s,A3s,A4s,K4s,K5s,K6s,K7s,Q6s,Q7s,Q8s,J7s,J8s,T7s,97s,86s,75s,64s,54s,A2o,A3o,A4o,A5o,A6o,A7o,K8o,K9o,Q8o,Q9o,J8o,J9o,T8o,T9o',
       },
     },
     facingOpen: toFacingOpenPreset(VS_OPEN_DEFAULTS_V2),
