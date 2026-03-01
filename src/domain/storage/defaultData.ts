@@ -154,9 +154,13 @@ export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: E
 
   applyFacingOpenPreset(situations, defaultPresetId, format, stack);
 
-  validateDefaultRanges();
+  const defaultValidation = validateDefaultRanges({ presetId: defaultPresetId, format, stack });
   applyThreeBetDefaults(situations, format, stack);
   applyLimpBranchDefaults(situations, format, stack);
+
+  const migrationNotice = defaultValidation.ok
+    ? undefined
+    : `Default range validation failed: ${defaultValidation.errors.join(' | ')}`;
 
   return {
     version: STORAGE_VERSION,
@@ -190,7 +194,7 @@ export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: E
       facingOpenSelection: defaultFacingOpenSelection,
       drillContext: { ...DEFAULT_DRILL_CONTEXT, format, effectiveStackBb: stack },
     },
-    migrationNotice: undefined,
+    migrationNotice,
   };
 };
 
