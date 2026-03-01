@@ -139,7 +139,7 @@ const VS_OPEN_DEFAULTS_V2: Record<string, { call: string; threeBet: string }> = 
   },
   SB_vs_BTN: {
     threeBet: '88,99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,KQs,KJs,QJs,JTs,T9s,98s',
-    call: '22,33,44,55,66,77,A2s,A3s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,K9s,KTs,QTs,QJo,JTo,T8s,87s,76s,65s,54s,T9o',
+    call: '22,33,44,55,66,77,A2s,A3s,A6s,A7s,A8s,A9s,ATs,AJs,AJo,K9s,KTs,KQo,QTs,QJo,JTo,T8s,87s,76s,65s,54s,T9o',
   },
 
   BB_vs_UTG: {
