@@ -24,15 +24,15 @@ export const facingOpenKey = (heroPos: FacingOpenHeroPosition, villainPos: Posit
 const VS_OPEN_DEFAULTS_V2: Record<string, { call: string; threeBet: string }> = {
   UTG1_vs_UTG: {
     threeBet: 'QQ,KK,AA,AKs,AKo',
-    call: 'TT,JJ,AQs,AJs,KQs,QJs,JTs,T9s',
+    call: 'TT,JJ,AQs,AJs,KQs,QJs',
   },
   UTG2_vs_UTG: {
     threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
-    call: '99,TT,JJ,AJs,ATs,KQs,QJs,JTs,T9s,98s',
+    call: '99,TT,JJ,AJs,ATs,KQs,QJs,JTs',
   },
   UTG2_vs_UTG1: {
     threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
-    call: '99,TT,JJ,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s',
+    call: '99,TT,JJ,AJs,ATs,KQs,QJs,JTs',
   },
 
   LJ_vs_UTG: {
@@ -41,11 +41,11 @@ const VS_OPEN_DEFAULTS_V2: Record<string, { call: string; threeBet: string }> = 
   },
   LJ_vs_UTG1: {
     threeBet: 'QQ,KK,AA,AKs,AKo,AQs',
-    call: '55,66,77,88,99,TT,JJ,AJs,ATs,KQs,QJs,JTs,T9s,98s',
+    call: '55,66,77,88,99,TT,JJ,AJs,ATs,KQs,QJs,JTs,T9s',
   },
   LJ_vs_UTG2: {
     threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs,AQo',
-    call: '44,55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s',
+    call: '44,55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s',
   },
 
   HJ_vs_UTG: {
@@ -54,15 +54,15 @@ const VS_OPEN_DEFAULTS_V2: Record<string, { call: string; threeBet: string }> = 
   },
   HJ_vs_UTG1: {
     threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs',
-    call: '55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s',
+    call: '55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s',
   },
   HJ_vs_UTG2: {
     threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs,AQo',
-    call: '44,55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s,98s,87s',
+    call: '44,55,66,77,88,99,TT,AJs,ATs,KQs,QJs,JTs,T9s',
   },
   HJ_vs_LJ: {
     threeBet: 'JJ,QQ,KK,AA,AKs,AKo,AQs,AQo',
-    call: '33,44,55,66,77,88,99,TT,AJs,ATs,KQs,KJs,QJs,JTs,T9s,98s,87s',
+    call: '33,44,55,66,77,88,99,TT,AJs,ATs,KQs,KJs,QJs,JTs,T9s',
   },
 
   CO_vs_UTG: {
