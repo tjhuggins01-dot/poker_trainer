@@ -153,7 +153,7 @@ export type PromptMemoryEntry = {
   correctStreak: number;
 };
 
-export type DifficultyMode = 'normal' | 'hard' | 'uniform';
+export type DifficultyMode = 'normal' | 'hard' | 'extra_hard' | 'uniform';
 export type ThemeMode = 'system' | 'light' | 'dark';
 
 export type AppData = {

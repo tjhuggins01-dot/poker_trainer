@@ -75,6 +75,9 @@ const normalizeCurrentData = (raw: any): AppData => {
   });
 
   next.settings = { ...defaults.settings, ...next.settings };
+  if (!['normal', 'hard', 'extra_hard', 'uniform'].includes(next.settings.difficulty as any)) {
+    next.settings.difficulty = defaults.settings.difficulty;
+  }
   next.settings.positionFocus = {
     rfi: next.settings.positionFocus?.rfi ?? defaults.settings.positionFocus.rfi,
     facing_open: next.settings.positionFocus?.facing_open ?? defaults.settings.positionFocus.facing_open,

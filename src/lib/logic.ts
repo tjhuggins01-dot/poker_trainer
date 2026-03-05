@@ -158,6 +158,7 @@ const computeBoundaryDistances = (actionHands: HandClass[]): Record<HandClass, n
 
 const difficultyWeight = (distance: number, mode: DifficultyMode): number => {
   if (mode === 'uniform') return 1;
+  if (mode === 'extra_hard') return distance === 1 ? 1 : 0;
   if (mode === 'hard') return 1 / (distance + 0.25) ** 2;
   return 1 / (distance + 1);
 };
@@ -179,7 +180,7 @@ export const buildWeightedHandMap = (data: AppData): Record<string, WeightedHand
     const boundaryDistances = computeBoundaryDistances(priorityHands);
     bySituation[key] = allHands.map((hand) => ({
       hand,
-      weight: Math.max(difficultyWeight(boundaryDistances[hand], data.settings.difficulty), 0.0001),
+      weight: difficultyWeight(boundaryDistances[hand], data.settings.difficulty),
     }));
   });
 
@@ -188,6 +189,7 @@ export const buildWeightedHandMap = (data: AppData): Record<string, WeightedHand
 
 const weightedPick = (weights: WeightedHand[]): HandClass => {
   const total = weights.reduce((sum, item) => sum + item.weight, 0);
+  if (total <= 0) return randomPick(weights.map((item) => item.hand));
   const roll = Math.random() * total;
   let running = 0;
   for (const item of weights) {
