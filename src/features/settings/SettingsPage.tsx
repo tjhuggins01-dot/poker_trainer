@@ -14,6 +14,7 @@ type Props = {
 const difficultyOptions: { value: DifficultyMode; label: string }[] = [
   { value: 'normal', label: 'Normal' },
   { value: 'hard', label: 'Hard (boundary-biased)' },
+  { value: 'extra_hard', label: 'Extra hard (boundary-only)' },
   { value: 'uniform', label: 'Uniform' },
 ];
 
