@@ -104,8 +104,8 @@ const VS_OPEN_DEFAULTS_V2: Record<string, { call: string; threeBet: string }> = 
   },
   BTN_vs_HJ: {
     // AQs MUST continue (call or 3bet) — never fold.
-    threeBet: '99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,KQs,KJs',
-    call: '22,33,44,55,66,77,88,A9s,ATs,AJs,AJo,KTs,QTs,QJs,QJo,JTs,JTs,T9s,98s,87s,76s,65s,54s',
+    threeBet: '99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AJs,AQo,A5s,KQs,KJs',
+    call: '22,33,44,55,66,77,88,A9s,ATs,AJo,KTs,QTs,QJs,QJo,JTs,JTs,T9s,98s,87s,76s,65s,54s',
   },
   BTN_vs_CO: {
     // AQs MUST continue (call or 3bet) — never fold.
