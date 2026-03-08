@@ -160,7 +160,7 @@ const VS_OPEN_DEFAULTS_V2: Record<string, { call: string; threeBet: string }> = 
   },
   BB_vs_HJ: {
     threeBet: '99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,AJs,A5s,A4s,KQs,KJs',
-    call: '22,33,44,55,66,77,88,A9s,ATs,AJo,KTs,KQo,QTs,QJs,JTs,T9s,98s,87s,76s,65s,54s,T9o',
+    call: '22,33,44,55,66,77,88,A9s,ATs,AJo,KTs,KQo,QTs,QJs,QJo,JTs,JTo,T9s,98s,87s,76s,65s,54s,T9o',
   },
   BB_vs_CO: {
     threeBet: '99,TT,JJ,QQ,KK,AA,AKs,AKo,AQs,AQo,A5s,A4s,A3s,KQs,KJs,QJs,JTs,T9s',
