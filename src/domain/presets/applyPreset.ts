@@ -26,18 +26,20 @@ export const applyPresetToAllRanges = (data: AppData, presetId: PresetId, contex
   const next = structuredClone(data);
   const preset = PRESETS[presetId];
   const bundle = getStackDataBundle(context.format, context.effectiveStackBb);
+  const rfiSource = bundle?.rfi ?? preset.rfi;
+  const facingOpenSource = bundle?.facingOpen ?? preset.facingOpen;
 
   RFI_POSITIONS.forEach((pos) => {
-    const parsedRaise = parseRangeShorthand(preset.rfi.raise[pos]);
+    const parsedRaise = parseRangeShorthand(rfiSource.raise[pos]);
     const key = makeRfiKey(pos, context.format, context.effectiveStackBb);
     if (parsedRaise.ok && next.situations[key]) (next.situations[key].policy as any).raise = parsedRaise.hands;
   });
 
-  const parsedSbLimp = parseRangeShorthand(preset.rfi.limp.SB);
+  const parsedSbLimp = parseRangeShorthand(rfiSource.limp.SB);
   const sbKey = makeRfiKey('SB', context.format, context.effectiveStackBb);
   if (parsedSbLimp.ok && next.situations[sbKey]) (next.situations[sbKey].policy as any).limp = parsedSbLimp.hands;
 
-  Object.entries(preset.facingOpen).forEach(([k, v]) => {
+  Object.entries(facingOpenSource).forEach(([k, v]) => {
     const [hero, villain] = k.replace('FO_', '').split('_VS_');
     const key = makeFacingOpenKey(hero as FacingOpenHeroPosition, villain as Position, context.format, context.effectiveStackBb);
     const call = parseRangeShorthand(v.call);
@@ -86,13 +88,16 @@ export const applyPresetToSpot = (
 ): AppData => {
   const next = structuredClone(data);
   const preset = PRESETS[presetId];
+  const bundle = getStackDataBundle(context.format, context.effectiveStackBb);
+  const rfiSource = bundle?.rfi ?? preset.rfi;
+  const facingOpenSource = bundle?.facingOpen ?? preset.facingOpen;
 
   if (mode === 'rfi' && spot.rfiPosition) {
     const key = makeRfiKey(spot.rfiPosition, context.format, context.effectiveStackBb);
-    const parsedRaise = parseRangeShorthand(preset.rfi.raise[spot.rfiPosition]);
+    const parsedRaise = parseRangeShorthand(rfiSource.raise[spot.rfiPosition]);
     if (parsedRaise.ok && next.situations[key]) (next.situations[key].policy as any).raise = parsedRaise.hands;
     if (spot.rfiPosition === 'SB') {
-      const parsedLimp = parseRangeShorthand(preset.rfi.limp.SB);
+      const parsedLimp = parseRangeShorthand(rfiSource.limp.SB);
       if (parsedLimp.ok && next.situations[key]) (next.situations[key].policy as any).limp = parsedLimp.hands;
     }
     return next;
@@ -100,7 +105,7 @@ export const applyPresetToSpot = (
 
   if (mode === 'facing_open' && spot.heroPos && spot.villainPos) {
     const key = makeFacingOpenKey(spot.heroPos as FacingOpenHeroPosition, spot.villainPos, context.format, context.effectiveStackBb);
-    const matchup = preset.facingOpen[facingOpenKey(spot.heroPos as FacingOpenHeroPosition, spot.villainPos)];
+    const matchup = facingOpenSource[facingOpenKey(spot.heroPos as FacingOpenHeroPosition, spot.villainPos)];
     if (!matchup || !next.situations[key]) return next;
     const call = parseRangeShorthand(matchup.call);
     const threeBet = parseRangeShorthand(matchup.threeBet);
@@ -112,7 +117,6 @@ export const applyPresetToSpot = (
   }
 
   if (mode === 'three_bet' && spot.heroPos && spot.villainPos) {
-    const bundle = getStackDataBundle(context.format, context.effectiveStackBb);
     const key = makeThreeBetKey(spot.heroPos as ThreeBetHeroPosition, spot.villainPos, context.format, context.effectiveStackBb);
     const matchup = bundle?.threeBet[`${spot.heroPos}_VS_${spot.villainPos}`];
     if (!matchup || !next.situations[key]) return next;
@@ -126,7 +130,6 @@ export const applyPresetToSpot = (
   }
 
   if (mode === 'limp_branch' && spot.heroPos) {
-    const bundle = getStackDataBundle(context.format, context.effectiveStackBb);
     if (spot.heroPos === 'BB') {
       const matchup = bundle?.limpIso.BB_vs_SB_LIMP;
       const key = makeLimpIsoKey(context.format, context.effectiveStackBb);

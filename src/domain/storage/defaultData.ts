@@ -103,7 +103,7 @@ const makeVsIsoSituationRecord = (callHands: HandClass[], threeBetHands: HandCla
 const applyFacingOpenPreset = (situations: AppData['situations'], presetId: PresetId, format: DrillFormat = DEFAULT_FORMAT, stack: EffectiveStackBb = DEFAULT_STACK_BB) => {
   const bundle = getStackDataBundle(format, stack);
   if (!bundle) return;
-  const facingOpenSource = PRESETS[presetId]?.facingOpen ?? bundle.facingOpen;
+  const facingOpenSource = bundle.facingOpen ?? PRESETS[presetId]?.facingOpen;
   Object.entries(facingOpenSource).forEach(([matchupKey, range]) => {
     const match = matchupKey.match(/^FO_(.+)_VS_(.+)$/);
     if (!match) return;

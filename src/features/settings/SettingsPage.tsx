@@ -2,6 +2,7 @@ import { PRESET_IDS, PRESETS, type PresetId } from '../../lib/presets';
 import { STACK_SIZES_BB } from '../../lib/constants';
 import { applyPresetToAllRanges } from '../../domain/presets/applyPreset';
 import { APP_VERSION, STORAGE_VERSION, type AppData, type DifficultyMode, type ThemeMode } from '../../lib/types';
+import { getStackDataBundle } from '../../lib/data/catalog';
 
 type Props = {
   data: AppData;
@@ -25,6 +26,10 @@ const themeOptions: { value: ThemeMode; label: string }[] = [
 ];
 
 export function SettingsPage({ data, onDataChange, onResetSession, onResetStats, onResetAll }: Props) {
+  const hasStackData = (stack: number) =>
+    Boolean(getStackDataBundle(data.settings.drillContext.format, stack))
+    || Object.keys(data.situations).some((key) => key.includes(`_${stack}BB_`));
+
   return (
     <section>
       <h2>Settings</h2>
@@ -91,8 +96,8 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
         }
       >
         {STACK_SIZES_BB.map((stack) => (
-          <option key={stack} value={stack} disabled={!Object.keys(data.situations).some((key) => key.includes(`_${stack}BB_`))}>
-            {stack}bb{!Object.keys(data.situations).some((key) => key.includes(`_${stack}BB_`)) ? ' (no data)' : ''}
+          <option key={stack} value={stack} disabled={!hasStackData(stack)}>
+            {stack}bb{!hasStackData(stack) ? ' (no data)' : ''}
           </option>
         ))}
       </select>
