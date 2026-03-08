@@ -100,10 +100,10 @@ const makeVsIsoSituationRecord = (callHands: HandClass[], threeBetHands: HandCla
   policy: { call: callHands, threeBet: threeBetHands },
 });
 
-const applyFacingOpenPreset = (situations: AppData['situations'], presetId: PresetId, format: DrillFormat = DEFAULT_FORMAT, stack: EffectiveStackBb = DEFAULT_STACK_BB) => {
+const applyFacingOpenPreset = (situations: AppData['situations'], _presetId: PresetId, format: DrillFormat = DEFAULT_FORMAT, stack: EffectiveStackBb = DEFAULT_STACK_BB) => {
   const bundle = getStackDataBundle(format, stack);
   if (!bundle) return;
-  const facingOpenSource = bundle.facingOpen ?? PRESETS[presetId]?.facingOpen;
+  const facingOpenSource = bundle.facingOpen;
   Object.entries(facingOpenSource).forEach(([matchupKey, range]) => {
     const match = matchupKey.match(/^FO_(.+)_VS_(.+)$/);
     if (!match) return;
@@ -145,7 +145,8 @@ const applyLimpBranchDefaults = (situations: AppData['situations'], format: Dril
 export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: EffectiveStackBb = DEFAULT_STACK_BB): AppData => {
   const situations: AppData['situations'] = {};
   const bundle = getStackDataBundle(format, stack);
-  const rfiDefaults = bundle?.rfi ?? PRESETS[defaultPresetId].rfi;
+  const rfiDefaults = bundle?.rfi;
+  if (!rfiDefaults) throw new Error(`Missing stack data bundle for format=${format} stack=${stack}`);
   RFI_POSITIONS.forEach((position) => {
     const raiseParsed = parseRangeShorthand(rfiDefaults.raise[position]);
     const limpParsed = position === 'SB' ? parseRangeShorthand(rfiDefaults.limp.SB) : { ok: true, hands: [] as HandClass[] };
@@ -154,7 +155,7 @@ export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: E
 
   applyFacingOpenPreset(situations, defaultPresetId, format, stack);
 
-  const defaultValidation = validateDefaultRanges({ presetId: defaultPresetId, format, stack });
+  const defaultValidation = validateDefaultRanges({ format, stack });
   applyThreeBetDefaults(situations, format, stack);
   applyLimpBranchDefaults(situations, format, stack);
 

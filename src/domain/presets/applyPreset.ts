@@ -1,7 +1,7 @@
 import { getStackDataBundle } from '../../lib/data/catalog';
 import type { DrillContext } from '../../lib/domain';
 import { parseRangeShorthand } from '../../lib/parser';
-import { PRESETS, facingOpenKey, type PresetId } from '../../lib/presets';
+import { facingOpenKey, type PresetId } from '../../lib/presets';
 import {
   RFI_POSITIONS,
   type AppData,
@@ -22,12 +22,12 @@ export type PresetSpot = {
   villainPos?: Position;
 };
 
-export const applyPresetToAllRanges = (data: AppData, presetId: PresetId, context: DrillContext): AppData => {
+export const applyPresetToAllRanges = (data: AppData, _presetId: PresetId, context: DrillContext): AppData => {
   const next = structuredClone(data);
-  const preset = PRESETS[presetId];
   const bundle = getStackDataBundle(context.format, context.effectiveStackBb);
-  const rfiSource = bundle?.rfi ?? preset.rfi;
-  const facingOpenSource = bundle?.facingOpen ?? preset.facingOpen;
+  if (!bundle) return next;
+  const rfiSource = bundle.rfi;
+  const facingOpenSource = bundle.facingOpen;
 
   RFI_POSITIONS.forEach((pos) => {
     const parsedRaise = parseRangeShorthand(rfiSource.raise[pos]);
@@ -49,7 +49,7 @@ export const applyPresetToAllRanges = (data: AppData, presetId: PresetId, contex
     (next.situations[key].policy as any).threeBet = threeBet.hands;
   });
 
-  Object.entries(bundle?.threeBet ?? {}).forEach(([k, v]) => {
+  Object.entries(bundle.threeBet).forEach(([k, v]) => {
     const [hero, villain] = k.split('_VS_');
     const key = makeThreeBetKey(hero as ThreeBetHeroPosition, villain as Position, context.format, context.effectiveStackBb);
     const call = parseRangeShorthand(v.call);
@@ -59,8 +59,8 @@ export const applyPresetToAllRanges = (data: AppData, presetId: PresetId, contex
     (next.situations[key].policy as any).fourBet = fourBet.hands;
   });
 
-  const limpIso = bundle?.limpIso.BB_vs_SB_LIMP;
-  const vsIso = bundle?.vsIso.SB_vs_BB_ISO;
+  const limpIso = bundle.limpIso.BB_vs_SB_LIMP;
+  const vsIso = bundle.vsIso.SB_vs_BB_ISO;
   if (limpIso) {
     const parsedIso = parseRangeShorthand(limpIso.isoRaise);
     const key = makeLimpIsoKey(context.format, context.effectiveStackBb);
@@ -83,14 +83,14 @@ export const applyPresetToSpot = (
   data: AppData,
   mode: PresetApplyMode,
   spot: PresetSpot,
-  presetId: PresetId,
+  _presetId: PresetId,
   context: DrillContext,
 ): AppData => {
   const next = structuredClone(data);
-  const preset = PRESETS[presetId];
   const bundle = getStackDataBundle(context.format, context.effectiveStackBb);
-  const rfiSource = bundle?.rfi ?? preset.rfi;
-  const facingOpenSource = bundle?.facingOpen ?? preset.facingOpen;
+  if (!bundle) return next;
+  const rfiSource = bundle.rfi;
+  const facingOpenSource = bundle.facingOpen;
 
   if (mode === 'rfi' && spot.rfiPosition) {
     const key = makeRfiKey(spot.rfiPosition, context.format, context.effectiveStackBb);
@@ -118,7 +118,7 @@ export const applyPresetToSpot = (
 
   if (mode === 'three_bet' && spot.heroPos && spot.villainPos) {
     const key = makeThreeBetKey(spot.heroPos as ThreeBetHeroPosition, spot.villainPos, context.format, context.effectiveStackBb);
-    const matchup = bundle?.threeBet[`${spot.heroPos}_VS_${spot.villainPos}`];
+    const matchup = bundle.threeBet[`${spot.heroPos}_VS_${spot.villainPos}`];
     if (!matchup || !next.situations[key]) return next;
     const call = parseRangeShorthand(matchup.call);
     const fourBet = parseRangeShorthand(matchup.fourBet);
@@ -131,14 +131,14 @@ export const applyPresetToSpot = (
 
   if (mode === 'limp_branch' && spot.heroPos) {
     if (spot.heroPos === 'BB') {
-      const matchup = bundle?.limpIso.BB_vs_SB_LIMP;
+      const matchup = bundle.limpIso.BB_vs_SB_LIMP;
       const key = makeLimpIsoKey(context.format, context.effectiveStackBb);
       if (!matchup || !next.situations[key]) return next;
       const iso = parseRangeShorthand(matchup.isoRaise);
       if (iso.ok) (next.situations[key].policy as any).isoRaise = iso.hands;
       return next;
     }
-    const matchup = bundle?.vsIso.SB_vs_BB_ISO;
+    const matchup = bundle.vsIso.SB_vs_BB_ISO;
     const key = makeVsIsoKey(context.format, context.effectiveStackBb);
     if (!matchup || !next.situations[key]) return next;
     const call = parseRangeShorthand(matchup.call);

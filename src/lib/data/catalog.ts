@@ -1,32 +1,34 @@
 import { FACING_OPEN_DEFAULTS_100BB } from './cash9max/100/facingOpen';
+import { VS_ISO_DEFAULTS_SAFE as VS_ISO_DEFAULTS_SAFE_100BB, VS_LIMP_ISO_DEFAULTS as VS_LIMP_ISO_DEFAULTS_100BB } from './cash9max/100/limpBranch';
 import { RFI_DEFAULTS_100BB } from './cash9max/100/rfi';
-import { THREE_BET_DEFAULTS } from './cash9max/100/threeBet';
-import { VS_ISO_DEFAULTS_SAFE, VS_LIMP_ISO_DEFAULTS } from './cash9max/100/limpBranch';
+import { THREE_BET_DEFAULTS as THREE_BET_DEFAULTS_100BB } from './cash9max/100/threeBet';
 import { FACING_OPEN_DEFAULTS_200BB } from './cash9max/200/facingOpen';
+import { VS_ISO_DEFAULTS_SAFE as VS_ISO_DEFAULTS_SAFE_200BB, VS_LIMP_ISO_DEFAULTS as VS_LIMP_ISO_DEFAULTS_200BB } from './cash9max/200/limpBranch';
 import { RFI_DEFAULTS_200BB } from './cash9max/200/rfi';
+import { THREE_BET_DEFAULTS as THREE_BET_DEFAULTS_200BB } from './cash9max/200/threeBet';
 
 export type StackDataBundle = {
-  rfi: typeof RFI_DEFAULTS_100BB;
-  facingOpen: typeof FACING_OPEN_DEFAULTS_100BB;
-  threeBet: typeof THREE_BET_DEFAULTS;
-  limpIso: typeof VS_LIMP_ISO_DEFAULTS;
-  vsIso: typeof VS_ISO_DEFAULTS_SAFE;
+  rfi: { raise: Record<string, string>; limp: { SB: string } };
+  facingOpen: Record<string, { call: string; threeBet: string }>;
+  threeBet: Record<string, { call: string; fourBet: string }>;
+  limpIso: Record<string, { isoRaise: string }>;
+  vsIso: Record<string, { threeBet: string; call: string }>;
 };
 
 const CASH9MAX_100_BUNDLE: StackDataBundle = {
   rfi: RFI_DEFAULTS_100BB,
   facingOpen: FACING_OPEN_DEFAULTS_100BB,
-  threeBet: THREE_BET_DEFAULTS,
-  limpIso: VS_LIMP_ISO_DEFAULTS,
-  vsIso: VS_ISO_DEFAULTS_SAFE,
+  threeBet: THREE_BET_DEFAULTS_100BB,
+  limpIso: VS_LIMP_ISO_DEFAULTS_100BB,
+  vsIso: VS_ISO_DEFAULTS_SAFE_100BB,
 };
 
 const CASH9MAX_200_BUNDLE: StackDataBundle = {
   rfi: RFI_DEFAULTS_200BB,
   facingOpen: FACING_OPEN_DEFAULTS_200BB,
-  threeBet: THREE_BET_DEFAULTS,
-  limpIso: VS_LIMP_ISO_DEFAULTS,
-  vsIso: VS_ISO_DEFAULTS_SAFE,
+  threeBet: THREE_BET_DEFAULTS_200BB,
+  limpIso: VS_LIMP_ISO_DEFAULTS_200BB,
+  vsIso: VS_ISO_DEFAULTS_SAFE_200BB,
 };
 
 export const getStackDataBundle = (format: string, stack: number): StackDataBundle | undefined => {
