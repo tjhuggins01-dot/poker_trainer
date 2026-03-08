@@ -5,7 +5,8 @@ import {
   toLegacyDrillType,
   type DrillContext,
 } from './domain';
-import { FORMAT_IDS } from './constants';
+import { FORMAT_IDS, STACK_SIZES_BB } from './constants';
+import { getStackDataBundle } from './data/catalog';
 import {
   createDefaultData,
   createDefaultSession,
@@ -45,8 +46,15 @@ const normalizeSession = (raw: any): SessionStats => {
 const normalizeCurrentData = (raw: any): AppData => {
   const next = structuredClone(raw) as AppData;
   const defaults = createDefaultData();
+  const stackDefaults = FORMAT_IDS.flatMap((format) =>
+    STACK_SIZES_BB
+      .filter((stack) => Boolean(getStackDataBundle(format, stack)))
+      .map((stack) => createDefaultData(format, stack).situations),
+  );
+
   next.situations = {
     ...defaults.situations,
+    ...Object.assign({}, ...stackDefaults),
     ...(next.situations ?? {}),
   };
   next.stats = next.stats ?? defaults.stats;
@@ -188,4 +196,3 @@ export const resetStatsOnly = (data: AppData): AppData => ({
 });
 
 export const resetAll = (): AppData => createDefaultData();
-
