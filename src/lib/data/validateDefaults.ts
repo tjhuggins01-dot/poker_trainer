@@ -20,7 +20,7 @@ export const validateDefaultRanges = ({
 }: ValidateDefaultsInput = {}) => {
   const errors: string[] = [];
   const bundle = getStackDataBundle(format, stack);
-  const facingOpenSource = PRESETS[presetId]?.facingOpen ?? bundle?.facingOpen;
+  const facingOpenSource = bundle?.facingOpen ?? PRESETS[presetId]?.facingOpen;
 
   if (!facingOpenSource) {
     errors.push(`[facingOpen] missing default source for preset=${presetId} format=${format} stack=${stack}`);
