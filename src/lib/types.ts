@@ -35,7 +35,7 @@ export const THREE_BET_VILLAIN_BY_HERO: Record<ThreeBetHeroPosition, Position[]>
   SB: ['BB'],
 };
 
-export type DrillType = 'rfi' | 'facing_open' | 'three_bet' | 'limp_branch';
+export type DrillType = 'rfi' | 'facing_open' | 'three_bet' | 'limp_branch' | 'postflop_hand_category';
 export type TableFormat = '9max';
 
 export type EffectiveStackBb = import('./constants').EffectiveStackBb;
@@ -156,6 +156,15 @@ export type PromptMemoryEntry = {
 export type DifficultyMode = 'normal' | 'hard' | 'extra_hard' | 'uniform';
 export type ThemeMode = 'system' | 'light' | 'dark';
 
+export type PostflopHandCategoryStats = {
+  totalAnswered: number;
+  correct: number;
+  totalResponseMs: number;
+  missedByCategory: Partial<Record<import('../domain/postflop/types').HandCategoryAnswer, number>>;
+  missedFingerprints: Record<string, number>;
+  mistakeTags: Partial<Record<import('../domain/postflop/types').PostflopMistakeTag, number>>;
+};
+
 export type AppData = {
   version: 10;
   meta: { game: 'NLH'; table: '9max'; effectiveStackBb: EffectiveStackBb };
@@ -169,6 +178,9 @@ export type AppData = {
     byHand: Record<string, StatsEntry>;
     mistakes: Record<string, MistakeEntry>;
     promptMemory: Record<string, PromptMemoryEntry>;
+    postflop: {
+      handCategory: PostflopHandCategoryStats;
+    };
   };
   settings: {
     revealOnIncorrectOnly: boolean;
@@ -184,6 +196,7 @@ export type AppData = {
       facing_open: FacingOpenHeroPosition[];
       three_bet: ThreeBetHeroPosition[];
       limp_branch: LimpBranchHeroPosition[];
+      postflop_hand_category: [];
     };
     facingOpenSelection: {
       heroPos: FacingOpenHeroPosition;
@@ -201,6 +214,13 @@ export type SessionStats = {
   byRfiPosition: Record<RfiPosition, StatsEntry>;
   byFacingHero: Record<FacingOpenHeroPosition, StatsEntry>;
   totalResponseMs: number;
+  postflop: {
+    handCategory: {
+      attempts: number;
+      correct: number;
+      totalResponseMs: number;
+    };
+  };
 };
 
 export const APP_VERSION = '2.0.0';

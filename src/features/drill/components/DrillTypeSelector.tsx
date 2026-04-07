@@ -37,6 +37,8 @@ export function DrillTypeSelector({
         <option value="limp_branch" disabled={!hasLimpBranchData}>
           SB Limp Branch{!hasLimpBranchData ? ' (no data)' : ''}
         </option>
+
+        <option value="postflop_hand_category">Postflop: Hand Category</option>
       </select>
     </>
   );

@@ -11,6 +11,7 @@ import {
   type AppData,
   type SessionStats,
 } from '../../lib/types';
+import { HandCategoryPage } from '../postflop/hand-category/HandCategoryPage';
 import { DrillActionButtons } from './components/DrillActionButtons';
 import { DrillTypeSelector } from './components/DrillTypeSelector';
 import { PositionFocusSelector } from './components/PositionFocusSelector';
@@ -26,7 +27,63 @@ type Props = {
   onResetSession: () => void;
 };
 
-export function DrillPage({ data, session, onDataChange, onSessionChange, onResetSession }: Props) {
+export function DrillPage(props: Props) {
+  const { updateDrillType } = useDrillQuerySync(props.data, props.onDataChange);
+  const stackPrefix = `${props.data.settings.drillContext.format}_${props.data.settings.drillContext.effectiveStackBb}BB_`;
+  const hasRfiData = Object.keys(props.data.situations).some((k) => k.startsWith(`RFI_${stackPrefix}`));
+  const hasFacingOpenData = Object.keys(props.data.situations).some((k) =>
+    k.startsWith(`FACING_OPEN_${stackPrefix}`),
+  );
+  const hasThreeBetData = Object.keys(props.data.situations).some((k) =>
+    k.startsWith(`THREE_BET_${stackPrefix}`),
+  );
+  const hasLimpBranchData = Object.keys(props.data.situations).some((k) =>
+    k.startsWith(`LIMP_ISO_${stackPrefix}`) || k.startsWith(`VS_ISO_${stackPrefix}`),
+  );
+
+  if (props.data.settings.drillType === 'postflop_hand_category') {
+    return (
+      <section>
+        <h2>Drill</h2>
+        <DrillTypeSelector
+          drillType={props.data.settings.drillType}
+          hasRfiData={hasRfiData}
+          hasFacingOpenData={hasFacingOpenData}
+          hasThreeBetData={hasThreeBetData}
+          hasLimpBranchData={hasLimpBranchData}
+          onChange={updateDrillType}
+        />
+        <HandCategoryPage
+          data={props.data}
+          session={props.session}
+          onDataChange={props.onDataChange}
+          onSessionChange={props.onSessionChange}
+        />
+      </section>
+    );
+  }
+
+  return <PreflopDrillPage {...props} updateDrillType={updateDrillType} hasRfiData={hasRfiData} hasFacingOpenData={hasFacingOpenData} hasThreeBetData={hasThreeBetData} hasLimpBranchData={hasLimpBranchData} />;
+}
+
+function PreflopDrillPage({
+  data,
+  session,
+  onDataChange,
+  onSessionChange,
+  onResetSession,
+  updateDrillType,
+  hasRfiData,
+  hasFacingOpenData,
+  hasThreeBetData,
+  hasLimpBranchData,
+}: Props & {
+  updateDrillType: ReturnType<typeof useDrillQuerySync>['updateDrillType'];
+  hasRfiData: boolean;
+  hasFacingOpenData: boolean;
+  hasThreeBetData: boolean;
+  hasLimpBranchData: boolean;
+}) {
   const situationsPolicyKey = useMemo(
     () =>
       Object.entries(data.situations)
@@ -40,24 +97,11 @@ export function DrillPage({ data, session, onDataChange, onSessionChange, onRese
     [situationsPolicyKey, data.settings.difficulty],
   );
   const selectedFocusKey = useMemo(() => {
-    const focus = data.settings.positionFocus[data.settings.drillType] as string[];
+    const key = data.settings.drillType === 'postflop_hand_category' ? 'rfi' : data.settings.drillType;
+    const focus = data.settings.positionFocus[key] as string[];
     return [...focus].sort().join('|');
   }, [data.settings.drillType, data.settings.positionFocus]);
   const drillResetKey = `${data.settings.drillType}:${selectedFocusKey}:${data.settings.difficulty}:${data.settings.drillContext.format}:${data.settings.drillContext.effectiveStackBb}:${situationsPolicyKey}`;
-
-  const { updateDrillType } = useDrillQuerySync(data, onDataChange);
-
-  const stackPrefix = `${data.settings.drillContext.format}_${data.settings.drillContext.effectiveStackBb}BB_`;
-  const hasRfiData = Object.keys(data.situations).some((k) => k.startsWith(`RFI_${stackPrefix}`));
-  const hasFacingOpenData = Object.keys(data.situations).some((k) =>
-    k.startsWith(`FACING_OPEN_${stackPrefix}`),
-  );
-  const hasThreeBetData = Object.keys(data.situations).some((k) =>
-    k.startsWith(`THREE_BET_${stackPrefix}`),
-  );
-  const hasLimpBranchData = Object.keys(data.situations).some((k) =>
-    k.startsWith(`LIMP_ISO_${stackPrefix}`) || k.startsWith(`VS_ISO_${stackPrefix}`),
-  );
 
   const [shownNotice, setShownNotice] = useState(false);
 

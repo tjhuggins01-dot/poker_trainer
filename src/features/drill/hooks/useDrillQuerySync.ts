@@ -44,8 +44,17 @@ export function useDrillQuerySync(data: AppData, onDataChange: OnDataChange) {
   }, [data.settings.drillContext]);
 
   return {
-    updateDrillType: (drillType: 'rfi' | 'facing_open' | 'three_bet' | 'limp_branch') => {
+    updateDrillType: (drillType: 'rfi' | 'facing_open' | 'three_bet' | 'limp_branch' | 'postflop_hand_category') => {
       onDataChange((prev) => {
+        if (drillType === 'postflop_hand_category') {
+          return {
+            ...prev,
+            settings: {
+              ...prev.settings,
+              drillType,
+            },
+          };
+        }
         const nodeType = fromLegacyDrillType(drillType);
         return {
           ...prev,

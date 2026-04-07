@@ -176,6 +176,16 @@ export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: E
       byHand: {},
       mistakes: {},
       promptMemory: {},
+      postflop: {
+        handCategory: {
+          totalAnswered: 0,
+          correct: 0,
+          totalResponseMs: 0,
+          missedByCategory: {},
+          missedFingerprints: {},
+          mistakeTags: {},
+        },
+      },
     },
     settings: {
       revealOnIncorrectOnly: false,
@@ -191,6 +201,7 @@ export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: E
         facing_open: [...FACING_OPEN_HERO_POSITIONS],
         three_bet: [...THREE_BET_HERO_POSITIONS],
         limp_branch: [...LIMP_BRANCH_HERO_POSITIONS],
+        postflop_hand_category: [],
       },
       facingOpenSelection: defaultFacingOpenSelection,
       drillContext: { ...DEFAULT_DRILL_CONTEXT, format, effectiveStackBb: stack },
@@ -206,4 +217,7 @@ export const createDefaultSession = (): SessionStats => ({
   byRfiPosition: createEmptyRfiStats(),
   byFacingHero: createEmptyFacingStats(),
   totalResponseMs: 0,
+  postflop: {
+    handCategory: { attempts: 0, correct: 0, totalResponseMs: 0 },
+  },
 });

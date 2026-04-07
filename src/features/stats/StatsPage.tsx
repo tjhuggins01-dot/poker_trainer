@@ -35,6 +35,12 @@ export function StatsPage({ data, session }: Props) {
         <ul>{Object.entries(data.stats.byFacingMatchup).map(([k, v]) => <li key={k}>{k}: {v.correct}/{v.attempts} ({pct(v.correct, v.attempts)})</li>)}</ul>
       )}
 
+
+      <h3>Postflop hand category</h3>
+      <p>Answered: {data.stats.postflop.handCategory.totalAnswered}</p>
+      <p>Correct: {data.stats.postflop.handCategory.correct}</p>
+      <p>Accuracy: {pct(data.stats.postflop.handCategory.correct, data.stats.postflop.handCategory.totalAnswered)}</p>
+
       <h3>Top missed spots</h3>
       {topMistakes.length === 0 ? <p className="muted">No mistakes recorded yet.</p> : (
         <ol>{topMistakes.map(([key, value]) => <li key={key}>{key} — {value.count}</li>)}</ol>
