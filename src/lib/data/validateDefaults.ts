@@ -1,6 +1,5 @@
 import { parseRangeShorthand } from '../parser';
 import { DEFAULT_FORMAT, DEFAULT_STACK_BB, type DrillFormat, type EffectiveStackBb } from '../constants';
-import { PRESETS, type PresetId } from '../presets';
 import { getStackDataBundle } from './catalog';
 import { THREE_BET_DEFAULTS } from './cash9max/100/threeBet';
 import { VS_ISO_DEFAULTS_SAFE, VS_LIMP_ISO_DEFAULTS } from './cash9max/100/limpBranch';
@@ -8,22 +7,20 @@ import { VS_ISO_DEFAULTS_SAFE, VS_LIMP_ISO_DEFAULTS } from './cash9max/100/limpB
 const noOverlap = (a: string[], b: string[]) => !a.some((h) => b.includes(h));
 
 type ValidateDefaultsInput = {
-  presetId?: PresetId;
   format?: DrillFormat;
   stack?: EffectiveStackBb;
 };
 
 export const validateDefaultRanges = ({
-  presetId = 'v2_standard',
   format = DEFAULT_FORMAT,
   stack = DEFAULT_STACK_BB,
 }: ValidateDefaultsInput = {}) => {
   const errors: string[] = [];
   const bundle = getStackDataBundle(format, stack);
-  const facingOpenSource = bundle?.facingOpen ?? PRESETS[presetId]?.facingOpen;
+  const facingOpenSource = bundle?.facingOpen;
 
   if (!facingOpenSource) {
-    errors.push(`[facingOpen] missing default source for preset=${presetId} format=${format} stack=${stack}`);
+    errors.push(`[facingOpen] missing default source for format=${format} stack=${stack}`);
   } else {
     Object.entries(facingOpenSource).forEach(([k, v]) => {
       const call = parseRangeShorthand(v.call);
