@@ -140,10 +140,12 @@ const migrateToCurrent = (rawData: unknown): AppData => {
   return normalizeCurrentData(rawData);
 };
 
+const createCurrentDefaultData = (): AppData => migrateToCurrent(createDefaultData());
+
 export const loadData = (): AppData => {
   const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) {
-    const initial = createDefaultData();
+    const initial = createCurrentDefaultData();
     saveData(initial);
     return initial;
   }
@@ -152,7 +154,7 @@ export const loadData = (): AppData => {
     saveData(migrated);
     return migrated;
   } catch {
-    const initial = createDefaultData();
+    const initial = createCurrentDefaultData();
     saveData(initial);
     return initial;
   }
@@ -195,4 +197,4 @@ export const resetStatsOnly = (data: AppData): AppData => ({
   stats: createDefaultData().stats,
 });
 
-export const resetAll = (): AppData => createDefaultData();
+export const resetAll = (): AppData => createCurrentDefaultData();
