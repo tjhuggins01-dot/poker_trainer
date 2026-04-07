@@ -34,6 +34,13 @@ const normalizeSession = (raw: any): SessionStats => {
   next.attempts = typeof raw?.attempts === 'number' ? raw.attempts : 0;
   next.correct = typeof raw?.correct === 'number' ? raw.correct : 0;
   next.totalResponseMs = typeof raw?.totalResponseMs === 'number' ? raw.totalResponseMs : 0;
+  next.postflop = {
+    handCategory: {
+      attempts: typeof raw?.postflop?.handCategory?.attempts === 'number' ? raw.postflop.handCategory.attempts : 0,
+      correct: typeof raw?.postflop?.handCategory?.correct === 'number' ? raw.postflop.handCategory.correct : 0,
+      totalResponseMs: typeof raw?.postflop?.handCategory?.totalResponseMs === 'number' ? raw.postflop.handCategory.totalResponseMs : 0,
+    },
+  }; 
   RFI_POSITIONS.forEach((position) => {
     next.byRfiPosition[position] = withDefaultStatsEntry(raw?.byRfiPosition?.[position] ?? raw?.byPosition?.[position]);
   });
@@ -71,6 +78,14 @@ const normalizeCurrentData = (raw: any): AppData => {
   next.stats.byHand = next.stats.byHand ?? {};
   next.stats.mistakes = next.stats.mistakes ?? {};
   next.stats.promptMemory = next.stats.promptMemory ?? {};
+  next.stats.postflop = next.stats.postflop ?? defaults.stats.postflop;
+  next.stats.postflop.handCategory = {
+    ...defaults.stats.postflop.handCategory,
+    ...(next.stats.postflop?.handCategory ?? {}),
+    missedByCategory: next.stats.postflop?.handCategory?.missedByCategory ?? {},
+    missedFingerprints: next.stats.postflop?.handCategory?.missedFingerprints ?? {},
+    mistakeTags: next.stats.postflop?.handCategory?.mistakeTags ?? {},
+  }; 
 
   Object.values(next.situations).forEach((record: any) => {
     if (record && record.actionSet && typeof record.actionSet[0] === 'string') {
@@ -91,13 +106,15 @@ const normalizeCurrentData = (raw: any): AppData => {
     facing_open: next.settings.positionFocus?.facing_open ?? defaults.settings.positionFocus.facing_open,
     three_bet: next.settings.positionFocus?.three_bet ?? defaults.settings.positionFocus.three_bet,
     limp_branch: next.settings.positionFocus?.limp_branch ?? defaults.settings.positionFocus.limp_branch,
+    postflop_hand_category: [],
   };
   next.settings.facingOpenSelection = {
     ...defaultFacingOpenSelection,
     ...next.settings.facingOpenSelection,
   };
 
-  const legacyNodeType = fromLegacyDrillType(next.settings.drillType);
+  const legacyDrillType = next.settings.drillType === 'postflop_hand_category' ? 'rfi' : next.settings.drillType;
+  const legacyNodeType = fromLegacyDrillType(legacyDrillType);
   const baseContext: DrillContext = {
     ...DEFAULT_DRILL_CONTEXT,
     nodeType: legacyNodeType,
@@ -130,7 +147,9 @@ const normalizeCurrentData = (raw: any): AppData => {
   if (!isEligibleContext(next.settings.drillContext, next)) {
     next.settings.drillContext = baseContext;
   }
-  next.settings.drillType = toLegacyDrillType(next.settings.drillContext.nodeType);
+  if (next.settings.drillType !== 'postflop_hand_category') {
+    next.settings.drillType = toLegacyDrillType(next.settings.drillContext.nodeType);
+  }
   return next;
 };
 

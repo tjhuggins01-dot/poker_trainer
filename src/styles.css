@@ -267,3 +267,7 @@ td {
     min-height: 44px;
   }
 }
+
+.postflop-actions {
+  grid-template-columns: repeat(3, 1fr);
+}

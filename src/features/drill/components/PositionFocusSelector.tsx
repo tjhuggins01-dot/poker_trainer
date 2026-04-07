@@ -10,7 +10,7 @@ export function PositionFocusSelector({ focusOptions, selectedFocus, onDataChang
   const onPositionToggle = (position: string, checked: boolean) => {
     onDataChange((prev) => {
       const next = structuredClone(prev);
-      const keyFocus = prev.settings.drillType;
+      const keyFocus = prev.settings.drillType === 'postflop_hand_category' ? 'rfi' : prev.settings.drillType;
       const list = new Set(next.settings.positionFocus[keyFocus]);
       if (checked) list.add(position as never);
       else list.delete(position as never);
