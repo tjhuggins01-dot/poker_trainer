@@ -5,6 +5,7 @@ import { validateUniqueCards } from '../../src/domain/postflop/board.ts';
 import { evaluateFlopHandCategory, evaluateHandCategory } from '../../src/domain/postflop/evaluate.ts';
 import { detectDrawCategory } from '../../src/domain/postflop/draws.ts';
 import { generateHandCategorySequencePrompt } from '../../src/domain/postflop/generators.ts';
+import { createSequenceSeedGenerator } from '../../src/domain/postflop/seeding.ts';
 import { nextStreet, shouldShowStreetFeedback } from '../../src/domain/postflop/sessionFlow.ts';
 import { createDefaultData, createDefaultSession } from '../../src/domain/storage/defaultData.ts';
 import { reduceAppDataStatsOnAnswer, reduceSessionOnAnswer } from '../../src/domain/stats/reducers.ts';
@@ -59,6 +60,14 @@ test('street progression prompts even when category remains same', () => {
   assert.equal(nextStreet('flop'), 'turn');
   assert.equal(nextStreet('turn'), 'river');
   assert.equal(nextStreet('river'), null);
+});
+
+
+test('sequence seed generator yields unique advancing seeds', () => {
+  const nextSeed = createSequenceSeedGenerator(1000);
+  assert.equal(nextSeed(), 'session-1001');
+  assert.equal(nextSeed(), 'session-1002');
+  assert.equal(nextSeed(), 'session-1003');
 });
 
 test('settings behavior: correct can skip feedback, incorrect cannot', () => {
