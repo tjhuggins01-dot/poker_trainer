@@ -124,7 +124,7 @@ button.danger {
   background: var(--surface);
   border-top: 1px solid var(--border);
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   max-width: 540px;
   margin: 0 auto;
 }
