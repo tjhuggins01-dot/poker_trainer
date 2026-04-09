@@ -5,9 +5,9 @@ export const HAND_CATEGORY_LABELS: Record<HandCategoryAnswer, string> = {
   'one-pair': 'One Pair',
   'two-pair': 'Two Pair',
   trips: 'Trips',
-  set: 'Set',
   straight: 'Straight',
   flush: 'Flush',
   'full-house': 'Full House',
   quads: 'Quads',
+  'straight-flush': 'Straight Flush',
 };

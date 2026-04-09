@@ -57,6 +57,25 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
       <p className="muted">Conservative spaced-repetition boost using per-prompt memory. Disable to revert to classic weighting.</p>
 
 
+
+      <label>
+        <input
+          type="checkbox"
+          checked={data.settings.showCorrectAnswerFeedback}
+          onChange={(e: any) =>
+            onDataChange((prev) => ({
+              ...prev,
+              settings: {
+                ...prev.settings,
+                showCorrectAnswerFeedback: Boolean(e.target.checked),
+              },
+            }))
+          }
+        />
+        Show feedback on correct postflop answers
+      </label>
+      <p className="muted">If disabled, correct postflop answers immediately move to the next street/hand.</p>
+
       <label htmlFor="theme-select">Theme</label>
       <select
         id="theme-select"

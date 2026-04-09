@@ -6,16 +6,18 @@ export type Card = { rank: Rank; suit: Suit };
 export type HoleCards = [Card, Card];
 export type FlopBoard = [Card, Card, Card];
 
+export type Street = 'flop' | 'turn' | 'river';
+
 export type HandCategoryAnswer =
   | 'high-card'
   | 'one-pair'
   | 'two-pair'
   | 'trips'
-  | 'set'
   | 'straight'
   | 'flush'
   | 'full-house'
-  | 'quads';
+  | 'quads'
+  | 'straight-flush';
 
 export type PromptDifficulty = 'easy' | 'medium' | 'hard';
 
@@ -54,18 +56,28 @@ export type HandCategoryEvaluation = {
   hasBackdoorStraightDraw?: boolean;
 };
 
-export type HandCategoryPrompt = {
-  id: string;
-  heroHand: HoleCards;
-  board: FlopBoard;
+export type BoardRunout = {
+  flop: FlopBoard;
+  turn: Card;
+  river: Card;
+};
+
+export type StreetPrompt = {
+  street: Street;
+  board: Card[];
   correctAnswer: HandCategoryAnswer;
   explanation: DrillExplanation;
+};
+
+export type HandCategorySequencePrompt = {
+  id: string;
+  heroHand: HoleCards;
+  runout: BoardRunout;
+  streets: Record<Street, StreetPrompt>;
   difficulty: PromptDifficulty;
 };
 
 export type PostflopMistakeTag =
   | 'misread-made-hand'
   | 'misread-pair-strength'
-  | 'missed-draw'
-  | 'trips-vs-set-confusion'
   | 'board-pair-confusion';
