@@ -1,20 +1,20 @@
 import { cardToString } from './cards';
-import type { DrillExplanation, DrillExplanationBullet, HandCategoryEvaluation, HandCategoryPrompt } from './types';
+import type { Card, DrillExplanation, DrillExplanationBullet, HandCategoryEvaluation, HoleCards } from './types';
 
 const LABELS: Record<string, string> = {
   'high-card': 'High Card',
   'one-pair': 'One Pair',
   'two-pair': 'Two Pair',
   trips: 'Trips',
-  set: 'Set',
   straight: 'Straight',
   flush: 'Flush',
   'full-house': 'Full House',
   quads: 'Quads',
+  'straight-flush': 'Straight Flush',
 };
 
 export const buildHandCategoryExplanation = (
-  prompt: Omit<HandCategoryPrompt, 'explanation'>,
+  prompt: { heroHand: HoleCards; board: Card[] },
   evaluation: HandCategoryEvaluation,
 ): DrillExplanation => {
   const bullets: DrillExplanationBullet[] = [];
@@ -27,10 +27,8 @@ export const buildHandCategoryExplanation = (
     bullets.push({ label: 'Pair detail', text: evaluation.pairSubtype.replace('-', ' ') });
   }
 
-  if (evaluation.drawCategory && evaluation.drawCategory !== 'none') {
+  if (prompt.board.length === 3 && evaluation.drawCategory && evaluation.drawCategory !== 'none') {
     bullets.push({ label: 'Draw', text: evaluation.drawCategory.replace('-', ' ') });
-  } else if (evaluation.hasBackdoorFlushDraw || evaluation.hasBackdoorStraightDraw) {
-    bullets.push({ label: 'Secondary', text: 'Backdoor draw potential present' });
   }
 
   return {
