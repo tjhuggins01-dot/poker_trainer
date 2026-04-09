@@ -2,6 +2,7 @@ declare module 'react' {
   export type ReactNode = unknown;
   export function useState<T>(initial: T | (() => T)): [T, (value: T | ((prev: T) => T)) => void];
   export function useMemo<T>(factory: () => T, deps: readonly unknown[]): T;
+  export function useCallback<T extends (...args: never[]) => unknown>(callback: T, deps: readonly unknown[]): T;
   export function useEffect(effect: () => void | (() => void), deps?: readonly unknown[]): void;
   export function useRef<T>(initial: T): { current: T };
 }

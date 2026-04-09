@@ -148,6 +148,27 @@ const normalizeCurrentData = (raw: any): AppData => {
     ...defaultFacingOpenSelection,
     ...next.settings.facingOpenSelection,
   };
+  next.settings.analyzer = {
+    ...defaults.settings.analyzer,
+    ...(next.settings.analyzer ?? {}),
+  };
+  if (!FORMAT_IDS.includes(next.settings.analyzer.format as any)) {
+    next.settings.analyzer.format = defaults.settings.analyzer.format;
+  }
+  if (
+    typeof next.settings.analyzer.effectiveStackBb !== 'number'
+    || !STACK_SIZES_BB.includes(next.settings.analyzer.effectiveStackBb as any)
+  ) {
+    next.settings.analyzer.effectiveStackBb = defaults.settings.analyzer.effectiveStackBb;
+  }
+  if (typeof next.settings.analyzer.spotId !== 'string') {
+    next.settings.analyzer.spotId = null;
+  }
+  const analyzerFlop = next.settings.analyzer.flop;
+  next.settings.analyzer.flop =
+    Array.isArray(analyzerFlop) && analyzerFlop.length === 3 && analyzerFlop.every((card) => typeof card === 'string')
+      ? [analyzerFlop[0], analyzerFlop[1], analyzerFlop[2]]
+      : null;
 
   const legacyDrillType = next.settings.drillType === 'postflop_hand_category' ? 'rfi' : next.settings.drillType;
   const legacyNodeType = fromLegacyDrillType(legacyDrillType);

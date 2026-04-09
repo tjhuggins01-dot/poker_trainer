@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { DrillPage } from './features/drill/DrillPage';
 import { RangesPage } from './features/ranges/RangesPage';
 import { SettingsPage } from './features/settings/SettingsPage';
+import { AnalyzerPage } from './features/analyzer/AnalyzerPage';
 import { StatsPage } from './features/stats/StatsPage';
 import { loadData, loadSession, resetAll, resetSession, resetStatsOnly, saveData, saveSession } from './lib/storage';
 import type { AppData, SessionStats } from './lib/types';
 
-type Tab = 'drill' | 'ranges' | 'stats' | 'settings';
+type Tab = 'drill' | 'ranges' | 'analyzer' | 'stats' | 'settings';
 
 function App() {
   const [tab, setTab] = useState<Tab>('drill');
@@ -66,6 +67,7 @@ function App() {
           />
         )}
         {tab === 'ranges' && <RangesPage data={data} onDataChange={onDataChange} />}
+        {tab === 'analyzer' && <AnalyzerPage data={data} onDataChange={onDataChange} />}
         {tab === 'stats' && <StatsPage data={data} session={session} />}
         {tab === 'settings' && (
           <SettingsPage
@@ -88,6 +90,9 @@ function App() {
         </button>
         <button className={tab === 'ranges' ? 'active' : ''} onClick={() => setTab('ranges')}>
           Ranges
+        </button>
+        <button className={tab === 'analyzer' ? 'active' : ''} onClick={() => setTab('analyzer')}>
+          Analyzer
         </button>
         <button className={tab === 'stats' ? 'active' : ''} onClick={() => setTab('stats')}>
           Stats

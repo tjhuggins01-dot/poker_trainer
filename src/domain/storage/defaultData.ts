@@ -225,6 +225,12 @@ export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: E
       },
       facingOpenSelection: defaultFacingOpenSelection,
       drillContext: { ...DEFAULT_DRILL_CONTEXT, format, effectiveStackBb: stack },
+      analyzer: {
+        format,
+        effectiveStackBb: stack,
+        spotId: null,
+        flop: null,
+      },
     },
     migrationNotice,
   };

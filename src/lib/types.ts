@@ -209,6 +209,12 @@ export type AppData = {
       villainPos: Position;
     };
     drillContext: import('./domain').DrillContext;
+    analyzer: {
+      format: import('./constants').DrillFormat;
+      effectiveStackBb: EffectiveStackBb;
+      spotId: string | null;
+      flop: [string, string, string] | null;
+    };
   };
   migrationNotice?: string;
 };
