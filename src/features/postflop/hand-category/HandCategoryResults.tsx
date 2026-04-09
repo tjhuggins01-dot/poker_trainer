@@ -1,12 +1,13 @@
 import { HAND_CATEGORY_LABELS } from '../../../lib/postflop/constants';
-import type { HandCategoryPrompt } from '../../../domain/postflop/types';
+import type { StreetPrompt } from '../../../domain/postflop/types';
 
 type Props = {
-  prompt: HandCategoryPrompt;
+  prompt: StreetPrompt;
   onNext: () => void;
+  isFinalStreet: boolean;
 };
 
-export function HandCategoryResults({ prompt, onNext }: Props) {
+export function HandCategoryResults({ prompt, onNext, isFinalStreet }: Props) {
   return (
     <div className="feedback">
       <p>Correct: {HAND_CATEGORY_LABELS[prompt.correctAnswer]}</p>
@@ -18,7 +19,7 @@ export function HandCategoryResults({ prompt, onNext }: Props) {
           </li>
         ))}
       </ul>
-      <button className="primary" onClick={onNext}>Next question</button>
+      <button className="primary" onClick={onNext}>{isFinalStreet ? 'Next hand' : 'Next street'}</button>
     </div>
   );
 }

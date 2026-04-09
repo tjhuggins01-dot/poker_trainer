@@ -10,6 +10,8 @@ import { getStackDataBundle } from './data/catalog';
 import {
   createDefaultData,
   createDefaultSession,
+  createEmptyDrillResponseMs,
+  createEmptyDrillStats,
   createEmptyFacingStats,
   createEmptyRfiStats,
   defaultFacingOpenSelection,
@@ -34,6 +36,18 @@ const normalizeSession = (raw: any): SessionStats => {
   next.attempts = typeof raw?.attempts === 'number' ? raw.attempts : 0;
   next.correct = typeof raw?.correct === 'number' ? raw.correct : 0;
   next.totalResponseMs = typeof raw?.totalResponseMs === 'number' ? raw.totalResponseMs : 0;
+  next.byDrill = createEmptyDrillStats();
+  Object.keys(next.byDrill).forEach((drill) => {
+    next.byDrill[drill as keyof typeof next.byDrill] = withDefaultStatsEntry(raw?.byDrill?.[drill]);
+  });
+  next.byDrillResponseMs = {
+    ...createEmptyDrillResponseMs(),
+    ...(raw?.byDrillResponseMs ?? {}),
+  };
+  Object.keys(next.byDrillResponseMs).forEach((drill) => {
+    const value = next.byDrillResponseMs[drill as keyof typeof next.byDrillResponseMs];
+    next.byDrillResponseMs[drill as keyof typeof next.byDrillResponseMs] = typeof value === 'number' && Number.isFinite(value) ? value : 0;
+  });
   next.postflop = {
     handCategory: {
       attempts: typeof raw?.postflop?.handCategory?.attempts === 'number' ? raw.postflop.handCategory.attempts : 0,
@@ -66,6 +80,21 @@ const normalizeCurrentData = (raw: any): AppData => {
   };
   next.stats = next.stats ?? defaults.stats;
   next.stats.total = withDefaultStatsEntry(next.stats.total);
+  next.stats.byDrill = {
+    ...createEmptyDrillStats(),
+    ...(next.stats.byDrill ?? {}),
+  };
+  next.stats.byDrillResponseMs = {
+    ...createEmptyDrillResponseMs(),
+    ...(next.stats.byDrillResponseMs ?? {}),
+  };
+  Object.keys(next.stats.byDrillResponseMs).forEach((drill) => {
+    const value = next.stats.byDrillResponseMs[drill as keyof typeof next.stats.byDrillResponseMs];
+    next.stats.byDrillResponseMs[drill as keyof typeof next.stats.byDrillResponseMs] = typeof value === 'number' && Number.isFinite(value) ? value : 0;
+  });
+  Object.keys(next.stats.byDrill).forEach((drill) => {
+    next.stats.byDrill[drill as keyof typeof next.stats.byDrill] = withDefaultStatsEntry(next.stats.byDrill[drill as keyof typeof next.stats.byDrill]);
+  });
   next.stats.byRfiPosition = next.stats.byRfiPosition ?? createEmptyRfiStats();
   RFI_POSITIONS.forEach((position) => {
     next.stats.byRfiPosition[position] = withDefaultStatsEntry(next.stats.byRfiPosition[position]);
@@ -85,7 +114,13 @@ const normalizeCurrentData = (raw: any): AppData => {
     missedByCategory: next.stats.postflop?.handCategory?.missedByCategory ?? {},
     missedFingerprints: next.stats.postflop?.handCategory?.missedFingerprints ?? {},
     mistakeTags: next.stats.postflop?.handCategory?.mistakeTags ?? {},
-  }; 
+  };
+
+  if (typeof (next.stats.postflop.handCategory.missedByCategory as Record<string, number>).set === 'number') {
+    const setMisses = (next.stats.postflop.handCategory.missedByCategory as Record<string, number>).set;
+    next.stats.postflop.handCategory.missedByCategory.trips = (next.stats.postflop.handCategory.missedByCategory.trips ?? 0) + setMisses;
+    delete (next.stats.postflop.handCategory.missedByCategory as Record<string, number>).set;
+  }
 
   Object.values(next.situations).forEach((record: any) => {
     if (record && record.actionSet && typeof record.actionSet[0] === 'string') {
@@ -98,6 +133,7 @@ const normalizeCurrentData = (raw: any): AppData => {
   });
 
   next.settings = { ...defaults.settings, ...next.settings };
+  next.settings.showCorrectAnswerFeedback = next.settings.showCorrectAnswerFeedback !== false;
   if (!['normal', 'hard', 'extra_hard', 'uniform'].includes(next.settings.difficulty as any)) {
     next.settings.difficulty = defaults.settings.difficulty;
   }

@@ -1,7 +1,9 @@
-import { useMemo, useState } from 'react';
-import { generateHandCategoryPrompt } from '../../../domain/postflop/generators';
+import { useMemo, useRef, useState } from 'react';
+import { generateHandCategorySequencePrompt } from '../../../domain/postflop/generators';
 import { buildPostflopFingerprint, getPostflopMistakeTags } from '../../../domain/postflop/stats';
-import type { HandCategoryAnswer } from '../../../domain/postflop/types';
+import { createSequenceSeedGenerator } from '../../../domain/postflop/seeding';
+import { nextStreet, shouldShowStreetFeedback } from '../../../domain/postflop/sessionFlow';
+import type { HandCategoryAnswer, Street } from '../../../domain/postflop/types';
 import type { AppData, SessionStats } from '../../../lib/types';
 import { HandCategoryQuestion } from './HandCategoryQuestion';
 import { HandCategoryResults } from './HandCategoryResults';
@@ -14,28 +16,61 @@ type Props = {
 };
 
 export function HandCategoryPage({ data, session, onDataChange, onSessionChange }: Props) {
-  const [prompt, setPrompt] = useState(() => generateHandCategoryPrompt('medium', 'initial'));
+  const seedGeneratorRef = useRef(createSequenceSeedGenerator());
+  const nextPrompt = () => generateHandCategorySequencePrompt('medium', seedGeneratorRef.current());
+
+  const [prompt, setPrompt] = useState(() => nextPrompt());
+  const [street, setStreet] = useState<Street>('flop');
   const [selected, setSelected] = useState<HandCategoryAnswer | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [questionStartTs, setQuestionStartTs] = useState(Date.now());
+
+  const streetPrompt = prompt.streets[street];
 
   const accuracy = useMemo(() => {
     const stats = data.stats.postflop.handCategory;
     return stats.totalAnswered === 0 ? '0.0%' : `${((stats.correct / stats.totalAnswered) * 100).toFixed(1)}%`;
   }, [data.stats.postflop.handCategory]);
 
+  const advanceStreetOrHand = () => {
+    const upcomingStreet = nextStreet(street);
+    if (upcomingStreet) {
+      setStreet(upcomingStreet);
+      setSelected(null);
+      setRevealed(false);
+      setQuestionStartTs(Date.now());
+      return;
+    }
+
+    setPrompt(nextPrompt());
+    setStreet('flop');
+    setSelected(null);
+    setRevealed(false);
+    setQuestionStartTs(Date.now());
+  };
+
   const answer = (choice: HandCategoryAnswer) => {
     if (revealed) return;
-    const isCorrect = choice === prompt.correctAnswer;
+    const isCorrect = choice === streetPrompt.correctAnswer;
     const responseMs = Date.now() - questionStartTs;
     setSelected(choice);
-    setRevealed(true);
 
     onSessionChange((prev) => ({
       ...prev,
       attempts: prev.attempts + 1,
       correct: prev.correct + (isCorrect ? 1 : 0),
       totalResponseMs: prev.totalResponseMs + responseMs,
+      byDrill: {
+        ...prev.byDrill,
+        postflop_hand_category: {
+          attempts: prev.byDrill.postflop_hand_category.attempts + 1,
+          correct: prev.byDrill.postflop_hand_category.correct + (isCorrect ? 1 : 0),
+        },
+      },
+      byDrillResponseMs: {
+        ...prev.byDrillResponseMs,
+        postflop_hand_category: prev.byDrillResponseMs.postflop_hand_category + responseMs,
+      },
       postflop: {
         ...prev.postflop,
         handCategory: {
@@ -49,11 +84,26 @@ export function HandCategoryPage({ data, session, onDataChange, onSessionChange 
 
     onDataChange((prev) => {
       const current = prev.stats.postflop.handCategory;
-      const fingerprint = buildPostflopFingerprint(prompt.correctAnswer);
+      const fingerprint = buildPostflopFingerprint(streetPrompt.correctAnswer);
       return {
         ...prev,
         stats: {
           ...prev.stats,
+          total: {
+            attempts: prev.stats.total.attempts + 1,
+            correct: prev.stats.total.correct + (isCorrect ? 1 : 0),
+          },
+          byDrill: {
+            ...prev.stats.byDrill,
+            postflop_hand_category: {
+              attempts: prev.stats.byDrill.postflop_hand_category.attempts + 1,
+              correct: prev.stats.byDrill.postflop_hand_category.correct + (isCorrect ? 1 : 0),
+            },
+          },
+          byDrillResponseMs: {
+            ...prev.stats.byDrillResponseMs,
+            postflop_hand_category: prev.stats.byDrillResponseMs.postflop_hand_category + responseMs,
+          },
           postflop: {
             ...prev.stats.postflop,
             handCategory: {
@@ -65,7 +115,7 @@ export function HandCategoryPage({ data, session, onDataChange, onSessionChange 
                 ? current.missedByCategory
                 : {
                     ...current.missedByCategory,
-                    [prompt.correctAnswer]: (current.missedByCategory[prompt.correctAnswer] ?? 0) + 1,
+                    [streetPrompt.correctAnswer]: (current.missedByCategory[streetPrompt.correctAnswer] ?? 0) + 1,
                   },
               missedFingerprints: isCorrect
                 ? current.missedFingerprints
@@ -75,7 +125,7 @@ export function HandCategoryPage({ data, session, onDataChange, onSessionChange 
                   },
               mistakeTags: isCorrect
                 ? current.mistakeTags
-                : getPostflopMistakeTags(prompt.correctAnswer, choice).reduce(
+                : getPostflopMistakeTags(streetPrompt.correctAnswer, choice).reduce(
                     (acc, tag) => ({ ...acc, [tag]: (acc[tag] ?? 0) + 1 }),
                     current.mistakeTags,
                   ),
@@ -84,24 +134,25 @@ export function HandCategoryPage({ data, session, onDataChange, onSessionChange 
         },
       };
     });
-  };
 
-  const next = () => {
-    setPrompt(generateHandCategoryPrompt('medium', `${Date.now()}`));
-    setSelected(null);
-    setRevealed(false);
-    setQuestionStartTs(Date.now());
+    if (!shouldShowStreetFeedback(isCorrect, data.settings.showCorrectAnswerFeedback)) {
+      advanceStreetOrHand();
+      return;
+    }
+
+    setRevealed(true);
   };
 
   return (
     <>
       <h3>Postflop: Hand Category</h3>
+      <p className="muted">Street sequence: Flop → Turn → River</p>
       <p className="session">
         Postflop accuracy: {data.stats.postflop.handCategory.correct}/{data.stats.postflop.handCategory.totalAnswered} ({accuracy})
-        {' '}• Session: {session.postflop.handCategory.correct}/{session.postflop.handCategory.attempts}
+        {' '}• Session: {session.byDrill.postflop_hand_category.correct}/{session.byDrill.postflop_hand_category.attempts}
       </p>
-      <HandCategoryQuestion prompt={prompt} selected={selected} revealed={revealed} onAnswer={answer} />
-      {revealed && <HandCategoryResults prompt={prompt} onNext={next} />}
+      <HandCategoryQuestion heroHand={prompt.heroHand} prompt={streetPrompt} selected={selected} revealed={revealed} onAnswer={answer} />
+      {revealed && <HandCategoryResults prompt={streetPrompt} onNext={advanceStreetOrHand} isFinalStreet={street === 'river'} />}
     </>
   );
 }

@@ -1,13 +1,13 @@
 import { createDeck } from './cards';
-import { evaluateFlopHandCategory } from './evaluate';
+import { evaluateHandCategory } from './evaluate';
 import { buildHandCategoryExplanation } from './explanations';
-import type { Card, FlopBoard, HandCategoryAnswer, HandCategoryPrompt, HoleCards, PromptDifficulty } from './types';
+import type { Card, FlopBoard, HandCategoryAnswer, HandCategorySequencePrompt, HoleCards, PromptDifficulty } from './types';
 
-const difficultyAccepts = (difficulty: PromptDifficulty, category: HandCategoryAnswer, board: Card[]): boolean => {
-  const isPairedBoard = new Set(board.map((c) => c.rank)).size < 3;
-  const isMonotone = new Set(board.map((c) => c.suit)).size === 1;
-  if (difficulty === 'easy') return !isPairedBoard && !isMonotone && ['high-card', 'one-pair', 'two-pair', 'set', 'straight', 'flush'].includes(category);
-  if (difficulty === 'hard') return isPairedBoard || isMonotone || ['trips', 'full-house', 'quads'].includes(category);
+const difficultyAccepts = (difficulty: PromptDifficulty, category: HandCategoryAnswer, flop: FlopBoard): boolean => {
+  const isPairedBoard = new Set(flop.map((c) => c.rank)).size < 3;
+  const isMonotone = new Set(flop.map((c) => c.suit)).size === 1;
+  if (difficulty === 'easy') return !isPairedBoard && !isMonotone && ['high-card', 'one-pair', 'two-pair', 'trips', 'straight', 'flush'].includes(category);
+  if (difficulty === 'hard') return isPairedBoard || isMonotone || ['trips', 'full-house', 'quads', 'straight-flush'].includes(category);
   return true;
 };
 
@@ -19,40 +19,69 @@ const mulberry32 = (seed: number) => () => {
   return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 };
 
-export const generateHandCategoryPrompt = (difficulty: PromptDifficulty = 'medium', seed = `${Date.now()}`): HandCategoryPrompt => {
+const buildSequencePrompt = (
+  id: string,
+  heroHand: HoleCards,
+  flop: FlopBoard,
+  turn: Card,
+  river: Card,
+  difficulty: PromptDifficulty,
+): HandCategorySequencePrompt => {
+  const turnBoard = [...flop, turn];
+  const riverBoard = [...turnBoard, river];
+
+  const flopEval = evaluateHandCategory(heroHand, flop);
+  const turnEval = evaluateHandCategory(heroHand, turnBoard);
+  const riverEval = evaluateHandCategory(heroHand, riverBoard);
+
+  return {
+    id,
+    heroHand,
+    runout: { flop, turn, river },
+    difficulty,
+    streets: {
+      flop: {
+        street: 'flop',
+        board: flop,
+        correctAnswer: flopEval.category,
+        explanation: buildHandCategoryExplanation({ heroHand, board: flop }, flopEval),
+      },
+      turn: {
+        street: 'turn',
+        board: turnBoard,
+        correctAnswer: turnEval.category,
+        explanation: buildHandCategoryExplanation({ heroHand, board: turnBoard }, turnEval),
+      },
+      river: {
+        street: 'river',
+        board: riverBoard,
+        correctAnswer: riverEval.category,
+        explanation: buildHandCategoryExplanation({ heroHand, board: riverBoard }, riverEval),
+      },
+    },
+  };
+};
+
+export const generateHandCategorySequencePrompt = (difficulty: PromptDifficulty = 'medium', seed = `${Date.now()}`): HandCategorySequencePrompt => {
   const random = mulberry32(hash(`${difficulty}:${seed}`));
   const deck = createDeck();
 
   for (let tries = 0; tries < 400; tries += 1) {
     const shuffled = [...deck].sort(() => random() - 0.5);
     const heroHand: HoleCards = [shuffled[0], shuffled[1]];
-    const board: FlopBoard = [shuffled[2], shuffled[3], shuffled[4]];
-    const evaluation = evaluateFlopHandCategory(heroHand, board);
-    if (!difficultyAccepts(difficulty, evaluation.category, board)) continue;
+    const flop: FlopBoard = [shuffled[2], shuffled[3], shuffled[4]];
+    const turn = shuffled[5];
+    const river = shuffled[6];
 
-    const basePrompt = {
-      id: `pf-${difficulty}-${hash(`${seed}-${tries}`)}`,
-      heroHand,
-      board,
-      correctAnswer: evaluation.category,
-      difficulty,
-    };
+    const flopEval = evaluateHandCategory(heroHand, flop);
+    if (!difficultyAccepts(difficulty, flopEval.category, flop)) continue;
 
-    return {
-      ...basePrompt,
-      explanation: buildHandCategoryExplanation(basePrompt, evaluation),
-    };
+    return buildSequencePrompt(`pf-${difficulty}-${hash(`${seed}-${tries}`)}`, heroHand, flop, turn, river, difficulty);
   }
 
   const fallbackHero: HoleCards = [deck[0], deck[1]];
-  const fallbackBoard: FlopBoard = [deck[2], deck[3], deck[4]];
-  const evaluation = evaluateFlopHandCategory(fallbackHero, fallbackBoard);
-  const basePrompt = {
-    id: `pf-fallback-${Date.now()}`,
-    heroHand: fallbackHero,
-    board: fallbackBoard,
-    correctAnswer: evaluation.category,
-    difficulty,
-  };
-  return { ...basePrompt, explanation: buildHandCategoryExplanation(basePrompt, evaluation) };
+  const fallbackFlop: FlopBoard = [deck[2], deck[3], deck[4]];
+  return buildSequencePrompt(`pf-fallback-${Date.now()}`, fallbackHero, fallbackFlop, deck[5], deck[6], difficulty);
 };
+
+export const generateHandCategoryPrompt = generateHandCategorySequencePrompt;

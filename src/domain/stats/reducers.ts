@@ -13,8 +13,20 @@ type AppDataReduceAnswerInput = {
   expectedAction: DrillAction;
   policyKey: string;
   isCorrect: boolean;
+  responseMs: number;
   nowTs?: number;
 };
+
+
+const drillKeyFromSituation = (situation: Situation): 'rfi' | 'facing_open' | 'three_bet' | 'limp_branch' => (
+  situation.facingAction === 'open'
+    ? 'facing_open'
+    : situation.facingAction === 'three_bet'
+      ? 'three_bet'
+      : situation.facingAction === 'limp' || situation.facingAction === 'iso'
+        ? 'limp_branch'
+        : 'rfi'
+);
 
 export const reduceSessionOnAnswer = (
   prev: SessionStats,
@@ -23,6 +35,10 @@ export const reduceSessionOnAnswer = (
   const next = structuredClone(prev);
   next.attempts += 1;
   next.totalResponseMs += responseMs;
+
+  const drillKey = drillKeyFromSituation(situation);
+  next.byDrill[drillKey].attempts += 1;
+  next.byDrillResponseMs[drillKey] += responseMs;
 
   if (situation.facingAction === 'open') {
     const hero = situation.heroPos as FacingOpenHeroPosition;
@@ -34,7 +50,10 @@ export const reduceSessionOnAnswer = (
     if (isCorrect) next.byRfiPosition[hero].correct += 1;
   }
 
-  if (isCorrect) next.correct += 1;
+  if (isCorrect) {
+    next.correct += 1;
+    next.byDrill[drillKey].correct += 1;
+  }
   return next;
 };
 
@@ -46,6 +65,7 @@ export const reduceAppDataStatsOnAnswer = (
     expectedAction,
     policyKey,
     isCorrect,
+    responseMs,
     nowTs = Date.now(),
   }: AppDataReduceAnswerInput,
 ): AppData => {
@@ -61,6 +81,19 @@ export const reduceAppDataStatsOnAnswer = (
   const total = {
     attempts: prev.stats.total.attempts + 1,
     correct: prev.stats.total.correct + (isCorrect ? 1 : 0),
+  };
+
+  const drillKey = drillKeyFromSituation(situation);
+  const byDrill = {
+    ...prev.stats.byDrill,
+    [drillKey]: {
+      attempts: prev.stats.byDrill[drillKey].attempts + 1,
+      correct: prev.stats.byDrill[drillKey].correct + (isCorrect ? 1 : 0),
+    },
+  };
+  const byDrillResponseMs = {
+    ...prev.stats.byDrillResponseMs,
+    [drillKey]: prev.stats.byDrillResponseMs[drillKey] + responseMs,
   };
 
   let byFacingHero = prev.stats.byFacingHero;
@@ -129,6 +162,8 @@ export const reduceAppDataStatsOnAnswer = (
       ...prev.stats,
       total,
       byHand,
+      byDrill,
+      byDrillResponseMs,
       byFacingHero,
       byFacingMatchup,
       byRfiPosition,

@@ -19,7 +19,15 @@ const hasStraight = (cards: Card[]): boolean => {
   return false;
 };
 
-const getPairSubtype = (heroHand: HoleCards, board: FlopBoard): PairSubtype | undefined => {
+const hasStraightFlush = (cards: Card[]): boolean => {
+  const suits = ['s', 'h', 'd', 'c'] as const;
+  return suits.some((suit) => {
+    const suitedCards = cards.filter((card) => card.suit === suit);
+    return suitedCards.length >= 5 && hasStraight(suitedCards);
+  });
+};
+
+const getPairSubtype = (heroHand: HoleCards, board: Card[]): PairSubtype | undefined => {
   const [h1, h2] = heroHand;
   const boardValues = board.map((card) => RANK_TO_VALUE[card.rank]).sort((a, b) => b - a);
   const top = boardValues[0];
@@ -40,35 +48,35 @@ const getPairSubtype = (heroHand: HoleCards, board: FlopBoard): PairSubtype | un
   return 'bottom-pair';
 };
 
-const classifyCategory = (heroHand: HoleCards, board: FlopBoard): HandCategoryAnswer => {
+const classifyCategory = (heroHand: HoleCards, board: Card[]): HandCategoryAnswer => {
   const cards = [...heroHand, ...board];
   const rankCounts = Object.values(countByRank(cards)).sort((a, b) => b - a);
   const suitCounts = Object.values(countBySuit(cards));
 
+  if (hasStraightFlush(cards)) return 'straight-flush';
   if (rankCounts[0] === 4) return 'quads';
   if (rankCounts[0] === 3 && rankCounts[1] === 2) return 'full-house';
   if (suitCounts.some((count) => count >= 5)) return 'flush';
   if (hasStraight(cards)) return 'straight';
-
-  const heroPocketPair = heroHand[0].rank === heroHand[1].rank;
-  const matchesBoard = board.some((card) => card.rank === heroHand[0].rank) || board.some((card) => card.rank === heroHand[1].rank);
-  if (heroPocketPair && matchesBoard) return 'set';
-
   if (rankCounts[0] === 3) return 'trips';
   if (rankCounts[0] === 2 && rankCounts[1] === 2) return 'two-pair';
   if (rankCounts[0] === 2) return 'one-pair';
   return 'high-card';
 };
 
-export const evaluateFlopHandCategory = (heroHand: HoleCards, board: FlopBoard): HandCategoryEvaluation => {
+export const evaluateHandCategory = (heroHand: HoleCards, board: Card[]): HandCategoryEvaluation => {
   assertUniqueCards(heroHand, board);
   const category = classifyCategory(heroHand, board);
 
+  const isFlop = board.length === 3;
   return {
     category,
     pairSubtype: category === 'one-pair' ? getPairSubtype(heroHand, board) : undefined,
-    drawCategory: detectDrawCategory(heroHand, board),
-    hasBackdoorFlushDraw: hasBackdoorFlushDraw(heroHand, board),
-    hasBackdoorStraightDraw: hasBackdoorStraightDraw(heroHand, board),
+    drawCategory: isFlop ? detectDrawCategory(heroHand, board as FlopBoard) : undefined,
+    hasBackdoorFlushDraw: isFlop ? hasBackdoorFlushDraw(heroHand, board as FlopBoard) : undefined,
+    hasBackdoorStraightDraw: isFlop ? hasBackdoorStraightDraw(heroHand, board as FlopBoard) : undefined,
   };
 };
+
+export const evaluateFlopHandCategory = (heroHand: HoleCards, board: FlopBoard): HandCategoryEvaluation =>
+  evaluateHandCategory(heroHand, board);

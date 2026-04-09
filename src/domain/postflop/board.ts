@@ -1,5 +1,5 @@
 import { cardToString } from './cards';
-import type { Card, FlopBoard, HoleCards } from './types';
+import type { Card, HoleCards } from './types';
 
 export const validateUniqueCards = (cards: Card[]): boolean => {
   const seen = new Set<string>();
@@ -11,7 +11,7 @@ export const validateUniqueCards = (cards: Card[]): boolean => {
   return true;
 };
 
-export const assertUniqueCards = (heroHand: HoleCards, board: FlopBoard): void => {
+export const assertUniqueCards = (heroHand: HoleCards, board: Card[]): void => {
   if (!validateUniqueCards([...heroHand, ...board])) {
     throw new Error('Duplicate cards found between hero hand and board');
   }
