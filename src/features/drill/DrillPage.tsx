@@ -217,7 +217,7 @@ function PreflopDrillPage({
         onAnswer={answer}
       />
 
-      <SessionSummary session={session} status={status} onResetSession={onResetSession} />
+      <SessionSummary session={session} drillType={data.settings.drillType} status={status} onResetSession={onResetSession} />
 
       {status === 'incorrect' && (
         <FeedbackPanel

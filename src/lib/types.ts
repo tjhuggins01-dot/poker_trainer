@@ -36,6 +36,9 @@ export const THREE_BET_VILLAIN_BY_HERO: Record<ThreeBetHeroPosition, Position[]>
 };
 
 export type DrillType = 'rfi' | 'facing_open' | 'three_bet' | 'limp_branch' | 'postflop_hand_category';
+
+export type DrillStatsMap = Record<DrillType, StatsEntry>;
+export type DrillMsMap = Record<DrillType, number>;
 export type TableFormat = '9max';
 
 export type EffectiveStackBb = import('./constants').EffectiveStackBb;
@@ -172,6 +175,8 @@ export type AppData = {
   situations: Record<string, SituationPolicyRecord>;
   stats: {
     total: StatsEntry;
+    byDrill: DrillStatsMap;
+    byDrillResponseMs: DrillMsMap;
     byRfiPosition: Record<RfiPosition, StatsEntry>;
     byFacingHero: Record<FacingOpenHeroPosition, StatsEntry>;
     byFacingMatchup: Record<string, StatsEntry>;
@@ -184,6 +189,7 @@ export type AppData = {
   };
   settings: {
     revealOnIncorrectOnly: boolean;
+    showCorrectAnswerFeedback: boolean;
     adaptiveRepetition: boolean;
     handDisplayMode: 'class';
     randomHandMode: 'uniform169';
@@ -211,6 +217,8 @@ export type SessionStats = {
   version: 2;
   attempts: number;
   correct: number;
+  byDrill: DrillStatsMap;
+  byDrillResponseMs: DrillMsMap;
   byRfiPosition: Record<RfiPosition, StatsEntry>;
   byFacingHero: Record<FacingOpenHeroPosition, StatsEntry>;
   totalResponseMs: number;

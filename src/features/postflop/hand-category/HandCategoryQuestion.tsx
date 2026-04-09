@@ -1,19 +1,21 @@
 import { cardToString } from '../../../domain/postflop/cards';
-import type { HandCategoryAnswer, HandCategoryPrompt } from '../../../domain/postflop/types';
+import type { HandCategoryAnswer, HoleCards, StreetPrompt } from '../../../domain/postflop/types';
 import { HAND_CATEGORY_OPTIONS } from './handCategoryOptions';
 
 type Props = {
-  prompt: HandCategoryPrompt;
+  heroHand: HoleCards;
+  prompt: StreetPrompt;
   selected: HandCategoryAnswer | null;
   revealed: boolean;
   onAnswer: (answer: HandCategoryAnswer) => void;
 };
 
-export function HandCategoryQuestion({ prompt, selected, revealed, onAnswer }: Props) {
+export function HandCategoryQuestion({ heroHand, prompt, selected, revealed, onAnswer }: Props) {
   return (
     <>
       <div className="card">
-        <p>Hero: {prompt.heroHand.map(cardToString).join(' ')}</p>
+        <p>Street: {prompt.street.toUpperCase()}</p>
+        <p>Hero: {heroHand.map(cardToString).join(' ')}</p>
         <p>Board: {prompt.board.map(cardToString).join(' ')}</p>
         <p>What is your hand category?</p>
       </div>
