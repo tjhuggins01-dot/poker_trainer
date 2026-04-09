@@ -97,6 +97,7 @@ export function usePromptCycle({
           data.settings.drillContext.effectiveStackBb,
         ),
         isCorrect: ok,
+        responseMs,
       }),
     );
 

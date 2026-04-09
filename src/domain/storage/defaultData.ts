@@ -14,6 +14,7 @@ import {
   type Position,
   THREE_BET_HERO_POSITIONS,
   type RfiPosition,
+  type DrillType,
   type HandClass,
   type SessionStats,
   type ThreeBetHeroPosition,
@@ -31,6 +32,22 @@ const defaultPresetId: PresetId = 'v2_standard';
 export const createEmptyRfiStats = () =>
   Object.fromEntries(RFI_POSITIONS.map((p) => [p, { attempts: 0, correct: 0 }])) as Record<RfiPosition, { attempts: number; correct: number }>;
 
+
+export const createEmptyDrillStats = () => ({
+  rfi: { attempts: 0, correct: 0 },
+  facing_open: { attempts: 0, correct: 0 },
+  three_bet: { attempts: 0, correct: 0 },
+  limp_branch: { attempts: 0, correct: 0 },
+  postflop_hand_category: { attempts: 0, correct: 0 },
+}) as Record<DrillType, { attempts: number; correct: number }>;
+
+export const createEmptyDrillResponseMs = () => ({
+  rfi: 0,
+  facing_open: 0,
+  three_bet: 0,
+  limp_branch: 0,
+  postflop_hand_category: 0,
+}) as Record<DrillType, number>;
 export const createEmptyFacingStats = () =>
   Object.fromEntries(FACING_OPEN_HERO_POSITIONS.map((p) => [p, { attempts: 0, correct: 0 }])) as Record<FacingOpenHeroPosition, { attempts: number; correct: number }>;
 
@@ -170,6 +187,8 @@ export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: E
     situations,
     stats: {
       total: { attempts: 0, correct: 0 },
+      byDrill: createEmptyDrillStats(),
+      byDrillResponseMs: createEmptyDrillResponseMs(),
       byRfiPosition: createEmptyRfiStats(),
       byFacingHero: createEmptyFacingStats(),
       byFacingMatchup: {},
@@ -189,6 +208,7 @@ export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: E
     },
     settings: {
       revealOnIncorrectOnly: false,
+      showCorrectAnswerFeedback: true,
       adaptiveRepetition: true,
       handDisplayMode: 'class',
       randomHandMode: 'uniform169',
@@ -214,6 +234,8 @@ export const createDefaultSession = (): SessionStats => ({
   version: 2,
   attempts: 0,
   correct: 0,
+  byDrill: createEmptyDrillStats(),
+  byDrillResponseMs: createEmptyDrillResponseMs(),
   byRfiPosition: createEmptyRfiStats(),
   byFacingHero: createEmptyFacingStats(),
   totalResponseMs: 0,
