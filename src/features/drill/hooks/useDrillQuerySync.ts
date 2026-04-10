@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { fromLegacyDrillType, isEligibleContext, parseContextQuery, toLegacyDrillType } from '../../../lib/domain';
 import type { AppData, DrillType } from '../../../lib/types';
 
@@ -38,7 +38,12 @@ const mergeParsedContext = (base: CandidateDrillContext, parsed: Partial<Candida
 };
 
 export function useDrillQuerySync(data: AppData, onDataChange: OnDataChange) {
+  const didInitFromQueryRef = useRef(false);
+
   useEffect(() => {
+    if (didInitFromQueryRef.current) return;
+    didInitFromQueryRef.current = true;
+
     const params = new URLSearchParams(window.location.search);
     const parsed = parseContextQuery(params);
     const queryDrill = params.get('drill');
