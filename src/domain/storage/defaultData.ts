@@ -234,6 +234,8 @@ export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: E
         format,
         effectiveStackBb: stack,
         spotId: null,
+        openerPos: null,
+        callerPos: null,
         mode: 'range-vs-range',
         boardInputMode: 'exact',
         simplifiedPresetId: null,

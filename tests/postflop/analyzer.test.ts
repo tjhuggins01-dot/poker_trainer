@@ -12,6 +12,7 @@ import { loadData } from '../../src/lib/storage.ts';
 import { analyzeHandVsRange } from '../../src/domain/postflop-analysis/analyzeHandVsRange.ts';
 import { computeHandVsHandEquity, computeHandVsRangeEquity, computeRangeVsRangeEquities } from '../../src/domain/postflop-analysis/equity.ts';
 import { SIMPLIFIED_BOARD_PRESETS, flopMatchesPreset, generateFlopFromPreset } from '../../src/domain/postflop-analysis/simplifiedBoards.ts';
+import { buildAnalyzerSpots, parseAnalyzerSpotId } from '../../src/domain/postflop-analysis/catalog.ts';
 import type { Combo } from '../../src/domain/postflop-analysis/types.ts';
 
 const c = parseCard;
@@ -226,6 +227,41 @@ test('analyzer uses pure analysis and does not mutate drill stats', () => {
   assert.deepEqual(data.stats, before);
 });
 
+test('analyzer spots expand beyond BB and exclude missing matchups safely', () => {
+  const data = createDefaultData();
+  const spots = buildAnalyzerSpots(data, 'cash9max', 100);
+  assert.ok(spots.length > 0);
+  assert.ok(spots.some((spot) => spot.callerPos === 'BB'));
+  assert.ok(spots.some((spot) => spot.callerPos !== 'BB'));
+  assert.ok(spots.some((spot) => spot.openerPos === 'UTG' && spot.callerPos === 'UTG1'));
+
+  const firstNonBb = spots.find((spot) => spot.callerPos !== 'BB');
+  assert.ok(firstNonBb);
+  if (!firstNonBb) return;
+
+  const pruned = structuredClone(data);
+  delete pruned.situations[`FACING_OPEN_cash9max_100BB_${firstNonBb.callerPos}_VS_${firstNonBb.openerPos}`];
+  const prunedSpots = buildAnalyzerSpots(pruned, 'cash9max', 100);
+  assert.equal(prunedSpots.some((spot) => spot.id === firstNonBb.id), false);
+
+  const emptied = structuredClone(data);
+  const key = `FACING_OPEN_cash9max_100BB_${firstNonBb.callerPos}_VS_${firstNonBb.openerPos}`;
+  const record = emptied.situations[key];
+  if (record && record.drillType === 'facing_open') {
+    record.policy.call = [];
+  }
+  const emptiedSpots = buildAnalyzerSpots(emptied, 'cash9max', 100);
+  assert.equal(emptiedSpots.some((spot) => spot.id === firstNonBb.id), false);
+});
+
+test('analyzer spot id parsing only accepts supported opener/caller pairs', () => {
+  assert.deepEqual(parseAnalyzerSpotId('cash9max:100:UTG:CO:srp'), { openerPos: 'UTG', callerPos: 'CO' });
+  assert.equal(parseAnalyzerSpotId('cash9max:100:UTG:CO:not-srp'), null);
+  assert.equal(parseAnalyzerSpotId('cash9max:100:BB:CO:srp'), null);
+  assert.equal(parseAnalyzerSpotId('cash9max:100:UTG:UTG:srp'), null);
+  assert.equal(parseAnalyzerSpotId('cash9max:100:UTG:CO'), null);
+});
+
 test('persistence migration restores analyzer state safely', () => {
   const store = new Map<string, string>();
   const localStorageMock = {
@@ -245,6 +281,8 @@ test('persistence migration restores analyzer state safely', () => {
 
   const loadedData = loadData();
   assert.equal(loadedData.settings.analyzer.spotId, null);
+  assert.equal(loadedData.settings.analyzer.openerPos, null);
+  assert.equal(loadedData.settings.analyzer.callerPos, null);
   assert.equal(loadedData.settings.analyzer.flop, null);
   assert.equal(loadedData.settings.analyzer.mode, 'range-vs-range');
   assert.equal(loadedData.settings.analyzer.boardInputMode, 'exact');
@@ -268,7 +306,9 @@ test('persistence migration sanitizes malformed analyzer fields', () => {
   (malformed.settings as Record<string, unknown>).analyzer = {
     format: 'bad-format',
     effectiveStackBb: 'not-a-number',
-    spotId: { weird: true },
+    spotId: 'cash9max:100:UTG:CO:srp',
+    openerPos: 'bad-opener',
+    callerPos: 'bad-caller',
     mode: 'bad-mode',
     boardInputMode: 'bad-board-mode',
     simplifiedPresetId: 3,
@@ -280,7 +320,9 @@ test('persistence migration sanitizes malformed analyzer fields', () => {
   const loaded = loadData();
   assert.equal(loaded.settings.analyzer.format, 'cash9max');
   assert.equal(loaded.settings.analyzer.effectiveStackBb, 100);
-  assert.equal(loaded.settings.analyzer.spotId, null);
+  assert.equal(loaded.settings.analyzer.spotId, 'cash9max:100:UTG:CO:srp');
+  assert.equal(loaded.settings.analyzer.openerPos, 'UTG');
+  assert.equal(loaded.settings.analyzer.callerPos, 'CO');
   assert.equal(loaded.settings.analyzer.mode, 'range-vs-range');
   assert.equal(loaded.settings.analyzer.boardInputMode, 'exact');
   assert.equal(loaded.settings.analyzer.simplifiedPresetId, null);
