@@ -32,12 +32,12 @@ export const applyPresetToAllRanges = (data: AppData, _presetId: PresetId, conte
   RFI_POSITIONS.forEach((pos) => {
     const parsedRaise = parseRangeShorthand(rfiSource.raise[pos]);
     const key = makeRfiKey(pos, context.format, context.effectiveStackBb);
-    if (parsedRaise.ok && next.situations[key]) (next.situations[key].policy as any).raise = parsedRaise.hands;
+    if (parsedRaise.ok && next.situations[key]) (next.situations[key].policy as { raise: string[] }).raise = parsedRaise.hands;
   });
 
   const parsedSbLimp = parseRangeShorthand(rfiSource.limp.SB);
   const sbKey = makeRfiKey('SB', context.format, context.effectiveStackBb);
-  if (parsedSbLimp.ok && next.situations[sbKey]) (next.situations[sbKey].policy as any).limp = parsedSbLimp.hands;
+  if (parsedSbLimp.ok && next.situations[sbKey]) (next.situations[sbKey].policy as { limp?: string[] }).limp = parsedSbLimp.hands;
 
   Object.entries(facingOpenSource).forEach(([k, v]) => {
     const [hero, villain] = k.replace('FO_', '').split('_VS_');
@@ -45,8 +45,8 @@ export const applyPresetToAllRanges = (data: AppData, _presetId: PresetId, conte
     const call = parseRangeShorthand(v.call);
     const threeBet = parseRangeShorthand(v.threeBet);
     if (!call.ok || !threeBet.ok || !hasNoOverlap(call.hands, threeBet.hands) || !next.situations[key]) return;
-    (next.situations[key].policy as any).call = call.hands;
-    (next.situations[key].policy as any).threeBet = threeBet.hands;
+    (next.situations[key].policy as { call: string[] }).call = call.hands;
+    (next.situations[key].policy as { threeBet: string[] }).threeBet = threeBet.hands;
   });
 
   Object.entries(bundle.threeBet).forEach(([k, v]) => {
@@ -55,8 +55,8 @@ export const applyPresetToAllRanges = (data: AppData, _presetId: PresetId, conte
     const call = parseRangeShorthand(v.call);
     const fourBet = parseRangeShorthand(v.fourBet);
     if (!call.ok || !fourBet.ok || !hasNoOverlap(call.hands, fourBet.hands) || !next.situations[key]) return;
-    (next.situations[key].policy as any).call = call.hands;
-    (next.situations[key].policy as any).fourBet = fourBet.hands;
+    (next.situations[key].policy as { call: string[] }).call = call.hands;
+    (next.situations[key].policy as { fourBet: string[] }).fourBet = fourBet.hands;
   });
 
   const limpIso = bundle.limpIso.BB_vs_SB_LIMP;
@@ -64,15 +64,15 @@ export const applyPresetToAllRanges = (data: AppData, _presetId: PresetId, conte
   if (limpIso) {
     const parsedIso = parseRangeShorthand(limpIso.isoRaise);
     const key = makeLimpIsoKey(context.format, context.effectiveStackBb);
-    if (parsedIso.ok && next.situations[key]) (next.situations[key].policy as any).isoRaise = parsedIso.hands;
+    if (parsedIso.ok && next.situations[key]) (next.situations[key].policy as { isoRaise: string[] }).isoRaise = parsedIso.hands;
   }
   if (vsIso) {
     const call = parseRangeShorthand(vsIso.call);
     const threeBet = parseRangeShorthand(vsIso.threeBet);
     const key = makeVsIsoKey(context.format, context.effectiveStackBb);
     if (call.ok && threeBet.ok && hasNoOverlap(call.hands, threeBet.hands) && next.situations[key]) {
-      (next.situations[key].policy as any).call = call.hands;
-      (next.situations[key].policy as any).threeBet = threeBet.hands;
+      (next.situations[key].policy as { call: string[] }).call = call.hands;
+      (next.situations[key].policy as { threeBet: string[] }).threeBet = threeBet.hands;
     }
   }
 
@@ -95,10 +95,10 @@ export const applyPresetToSpot = (
   if (mode === 'rfi' && spot.rfiPosition) {
     const key = makeRfiKey(spot.rfiPosition, context.format, context.effectiveStackBb);
     const parsedRaise = parseRangeShorthand(rfiSource.raise[spot.rfiPosition]);
-    if (parsedRaise.ok && next.situations[key]) (next.situations[key].policy as any).raise = parsedRaise.hands;
+    if (parsedRaise.ok && next.situations[key]) (next.situations[key].policy as { raise: string[] }).raise = parsedRaise.hands;
     if (spot.rfiPosition === 'SB') {
       const parsedLimp = parseRangeShorthand(rfiSource.limp.SB);
-      if (parsedLimp.ok && next.situations[key]) (next.situations[key].policy as any).limp = parsedLimp.hands;
+      if (parsedLimp.ok && next.situations[key]) (next.situations[key].policy as { limp?: string[] }).limp = parsedLimp.hands;
     }
     return next;
   }
@@ -110,8 +110,8 @@ export const applyPresetToSpot = (
     const call = parseRangeShorthand(matchup.call);
     const threeBet = parseRangeShorthand(matchup.threeBet);
     if (call.ok && threeBet.ok && hasNoOverlap(call.hands, threeBet.hands)) {
-      (next.situations[key].policy as any).call = call.hands;
-      (next.situations[key].policy as any).threeBet = threeBet.hands;
+      (next.situations[key].policy as { call: string[] }).call = call.hands;
+      (next.situations[key].policy as { threeBet: string[] }).threeBet = threeBet.hands;
     }
     return next;
   }
@@ -123,8 +123,8 @@ export const applyPresetToSpot = (
     const call = parseRangeShorthand(matchup.call);
     const fourBet = parseRangeShorthand(matchup.fourBet);
     if (call.ok && fourBet.ok && hasNoOverlap(call.hands, fourBet.hands)) {
-      (next.situations[key].policy as any).call = call.hands;
-      (next.situations[key].policy as any).fourBet = fourBet.hands;
+      (next.situations[key].policy as { call: string[] }).call = call.hands;
+      (next.situations[key].policy as { fourBet: string[] }).fourBet = fourBet.hands;
     }
     return next;
   }
@@ -135,7 +135,7 @@ export const applyPresetToSpot = (
       const key = makeLimpIsoKey(context.format, context.effectiveStackBb);
       if (!matchup || !next.situations[key]) return next;
       const iso = parseRangeShorthand(matchup.isoRaise);
-      if (iso.ok) (next.situations[key].policy as any).isoRaise = iso.hands;
+      if (iso.ok) (next.situations[key].policy as { isoRaise: string[] }).isoRaise = iso.hands;
       return next;
     }
     const matchup = bundle.vsIso.SB_vs_BB_ISO;
@@ -144,8 +144,8 @@ export const applyPresetToSpot = (
     const call = parseRangeShorthand(matchup.call);
     const threeBet = parseRangeShorthand(matchup.threeBet);
     if (call.ok && threeBet.ok && hasNoOverlap(call.hands, threeBet.hands)) {
-      (next.situations[key].policy as any).call = call.hands;
-      (next.situations[key].policy as any).threeBet = threeBet.hands;
+      (next.situations[key].policy as { call: string[] }).call = call.hands;
+      (next.situations[key].policy as { threeBet: string[] }).threeBet = threeBet.hands;
     }
   }
 

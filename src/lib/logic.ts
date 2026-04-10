@@ -207,6 +207,39 @@ export const getFacingOpenPairs = (data: AppData): Array<{ heroPos: FacingOpenHe
       villainPos: s.situation.villainPos as Position,
     }));
 
+
+const buildUnfocusedContextsForNode = (data: AppData): DrillContext[] => {
+  const base = data.settings.drillContext;
+  const heroFocusSet = new Set(
+    base.nodeType === 'rfi'
+      ? data.settings.positionFocus.rfi
+      : base.nodeType === 'facingOpen'
+        ? data.settings.positionFocus.facing_open
+        : base.nodeType === 'threeBet'
+          ? data.settings.positionFocus.three_bet
+          : data.settings.positionFocus.limp_branch,
+  );
+
+  return Object.values(data.situations)
+    .filter((record) =>
+      base.nodeType === 'rfi'
+        ? record.drillType === 'rfi'
+        : base.nodeType === 'facingOpen'
+          ? record.drillType === 'facing_open'
+          : base.nodeType === 'threeBet'
+            ? record.drillType === 'three_bet'
+            : record.drillType === 'limp_branch',
+    )
+    .filter((record) => record.situation.effectiveStackBb === base.effectiveStackBb)
+    .filter((record) => heroFocusSet.size === 0 || heroFocusSet.has(record.situation.heroPos as never))
+    .map((record) => ({
+      ...base,
+      nodeType: base.nodeType,
+      heroPos: record.situation.heroPos,
+      villainPos: record.situation.villainPos,
+    }));
+};
+
 const buildEligibleContexts = (data: AppData): DrillContext[] => {
   const base = data.settings.drillContext;
   const contexts: DrillContext[] = [];
@@ -225,7 +258,10 @@ const buildEligibleContexts = (data: AppData): DrillContext[] => {
 
     focusHeroes.forEach((heroPos) => {
       const villains = FACING_OPEN_VILLAIN_BY_HERO[heroPos];
-      villains.forEach((villainPos) => {
+      const focusedVillains = data.settings.villainFocus.facing_open.length
+        ? villains.filter((villainPos) => data.settings.villainFocus.facing_open.includes(villainPos))
+        : villains;
+      focusedVillains.forEach((villainPos) => {
         contexts.push({ ...base, heroPos, villainPos, nodeType: 'facingOpen' });
       });
     });
@@ -239,7 +275,10 @@ const buildEligibleContexts = (data: AppData): DrillContext[] => {
 
     focus.forEach((heroPos) => {
       const villains = THREE_BET_VILLAIN_BY_HERO[heroPos];
-      villains.forEach((villainPos) => {
+      const focusedVillains = data.settings.villainFocus.three_bet.length
+        ? villains.filter((villainPos) => data.settings.villainFocus.three_bet.includes(villainPos))
+        : villains;
+      focusedVillains.forEach((villainPos) => {
         contexts.push({ ...base, heroPos, villainPos, nodeType: 'threeBet' });
       });
     });
@@ -253,6 +292,9 @@ const buildEligibleContexts = (data: AppData): DrillContext[] => {
 
     focus.forEach((heroPos) => {
       const villainPos = heroPos === 'BB' ? 'SB' : 'BB';
+      if (data.settings.villainFocus.limp_branch.length && !data.settings.villainFocus.limp_branch.includes(villainPos)) {
+        return;
+      }
       contexts.push({ ...base, heroPos, villainPos, nodeType: 'limpBranch' });
     });
   }
@@ -269,13 +311,13 @@ export const nextPrompt = (
   recentPromptSignatures: string[] = [],
 ): { situation: Situation; handClass: HandClass } => {
   const eligible = buildEligibleContexts(data);
-  const fallback = {
+  const fallbackContexts = buildUnfocusedContextsForNode(data);
+  const pickedContext = randomPick(eligible.length ? eligible : fallbackContexts.length ? fallbackContexts : [{
     ...data.settings.drillContext,
     nodeType: 'rfi' as const,
     heroPos: data.settings.positionFocus.rfi[0] ?? 'UTG',
     villainPos: undefined,
-  };
-  const pickedContext = randomPick(eligible.length ? eligible : [fallback]);
+  }]);
 
   const { key } = resolvePolicy(data, pickedContext);
   const weightedHands = key ? weightedMap[key] : undefined;

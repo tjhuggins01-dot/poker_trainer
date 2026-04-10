@@ -2,6 +2,13 @@ import { FACING_OPEN_HERO_POSITIONS, RFI_POSITIONS, type AppData, type DrillType
 
 type Props = { data: AppData; session: SessionStats };
 
+type MatchupRow = {
+  matchup: string;
+  attempts: number;
+  correct: number;
+  accuracy: string;
+};
+
 const pct = (correct: number, attempts: number): string => (attempts === 0 ? '0.0%' : `${((correct / attempts) * 100).toFixed(1)}%`);
 const drillLabel: Record<DrillType, string> = {
   rfi: 'RFI',
@@ -15,6 +22,15 @@ export function StatsPage({ data, session }: Props) {
   const topMistakes = Object.entries(data.stats.mistakes)
     .sort(([, a], [, b]) => b.count - a.count || b.lastTs - a.lastTs)
     .slice(0, 10);
+
+  const matchupRows: MatchupRow[] = Object.entries(data.stats.byFacingMatchup)
+    .map(([matchup, stats]) => ({
+      matchup,
+      attempts: stats.attempts,
+      correct: stats.correct,
+      accuracy: pct(stats.correct, stats.attempts),
+    }))
+    .sort((a, b) => b.attempts - a.attempts || b.correct - a.correct || a.matchup.localeCompare(b.matchup));
 
   return (
     <section>
@@ -43,8 +59,25 @@ export function StatsPage({ data, session }: Props) {
       ))}
 
       <h3>Facing-open by matchup</h3>
-      {Object.entries(data.stats.byFacingMatchup).length === 0 ? <p className="muted">No facing-open attempts yet.</p> : (
-        <ul>{Object.entries(data.stats.byFacingMatchup).map(([k, v]) => <li key={k}>{k}: {v.correct}/{v.attempts} ({pct(v.correct, v.attempts)})</li>)}</ul>
+      {matchupRows.length === 0 ? (
+        <p className="muted">No facing-open attempts yet.</p>
+      ) : (
+        <div className="matchup-grid" role="table" aria-label="Facing-open matchup stats">
+          <div className="matchup-grid-header" role="row">
+            <span>Matchup</span>
+            <span>Attempts</span>
+            <span>Correct</span>
+            <span>Accuracy</span>
+          </div>
+          {matchupRows.map((row) => (
+            <div className="matchup-grid-row" role="row" key={row.matchup}>
+              <strong>{row.matchup}</strong>
+              <span>{row.attempts}</span>
+              <span>{row.correct}</span>
+              <span>{row.accuracy}</span>
+            </div>
+          ))}
+        </div>
       )}
 
       <h3>Postflop hand category</h3>

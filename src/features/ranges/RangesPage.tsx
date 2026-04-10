@@ -56,7 +56,8 @@ export function RangesPage({ data, onDataChange }: Props) {
             : { game: 'NLH' as const, table: '9max' as const, effectiveStackBb: data.settings.drillContext.effectiveStackBb, heroPos: 'SB' as const, facingAction: 'iso' as const, villainPos: 'BB' as const };
 
   const key = policyKeyFromSituation(situation, data.settings.drillContext.format, data.settings.drillContext.effectiveStackBb);
-  const policy = data.situations[key]?.policy as any;
+  const policy = data.situations[key]?.policy as import('../../lib/types').SituationPolicyRecord['policy'] | undefined;
+  const policyBuckets = policy as Record<string, string[]> | undefined;
   const hasSpotData = Boolean(data.situations[key]);
 
   const actionColors = useMemo(() => actionSetToColorMap(data.situations[key]?.actionSet), [data.situations, key]);
@@ -78,7 +79,7 @@ export function RangesPage({ data, onDataChange }: Props) {
       const next = structuredClone(prev);
       const target = next.situations[key];
       if (!target) return prev;
-      const p = target.policy as any;
+      const p = target.policy as Record<string, string[]>;
       if (mode === 'rfi') {
         p.raise = primary.hands;
         if (position === 'SB') p.limp = secondary.hands;
@@ -102,20 +103,20 @@ export function RangesPage({ data, onDataChange }: Props) {
   const pct = (n: number) => ((n / 169) * 100).toFixed(1);
   const counts =
     mode === 'rfi'
-      ? { a: policy?.raise?.length ?? 0, b: position === 'SB' ? policy?.limp?.length ?? 0 : 0 }
+      ? { a: policyBuckets?.raise?.length ?? 0, b: position === 'SB' ? policyBuckets?.limp?.length ?? 0 : 0 }
       : mode === 'facing_open'
-        ? { a: policy?.call?.length ?? 0, b: policy?.threeBet?.length ?? 0 }
+        ? { a: policyBuckets?.call?.length ?? 0, b: policyBuckets?.threeBet?.length ?? 0 }
         : mode === 'three_bet'
-          ? { a: policy?.call?.length ?? 0, b: policy?.fourBet?.length ?? 0 }
+          ? { a: policyBuckets?.call?.length ?? 0, b: policyBuckets?.fourBet?.length ?? 0 }
           : limpNode === 'BB_vs_SB_LIMP'
-            ? { a: policy?.isoRaise?.length ?? 0, b: 0 }
-            : { a: policy?.call?.length ?? 0, b: policy?.threeBet?.length ?? 0 };
+            ? { a: policyBuckets?.isoRaise?.length ?? 0, b: 0 }
+            : { a: policyBuckets?.call?.length ?? 0, b: policyBuckets?.threeBet?.length ?? 0 };
 
   return (
     <section>
       <h2>Ranges</h2>
       <label>Mode</label>
-      <select value={mode} onChange={(e: any) => setMode(e.target.value)}>
+      <select value={mode} onChange={(e) => setMode((e.target as HTMLSelectElement).value as typeof mode)}>
         <option value="rfi">RFI</option>
         <option value="facing_open">Facing Open</option>
         <option value="three_bet">Facing 3-bet</option>
@@ -127,8 +128,8 @@ export function RangesPage({ data, onDataChange }: Props) {
       ) : mode === 'facing_open' ? (
         <>
           <label>Hero position</label>
-          <select value={facingHero} onChange={(e: any) => {
-            const heroPos = e.target.value as FacingOpenHeroPosition;
+          <select value={facingHero} onChange={(e) => {
+            const heroPos = (e.target as HTMLSelectElement).value as FacingOpenHeroPosition;
             const firstVillain = FACING_OPEN_VILLAIN_BY_HERO[heroPos][0];
             const currentVillain = data.settings.facingOpenSelection.villainPos as Position;
             const villainPos = FACING_OPEN_VILLAIN_BY_HERO[heroPos].includes(currentVillain) ? currentVillain : firstVillain;
@@ -137,8 +138,8 @@ export function RangesPage({ data, onDataChange }: Props) {
             {FACING_OPEN_HERO_POSITIONS.map((heroPos) => <option key={heroPos} value={heroPos}>{heroPos}</option>)}
           </select>
           <label>Villain RFI position</label>
-          <select value={facingVillain} onChange={(e: any) => {
-            const villainPos = e.target.value as Position;
+          <select value={facingVillain} onChange={(e) => {
+            const villainPos = (e.target as HTMLSelectElement).value as Position;
             onDataChange((prev) => ({ ...prev, settings: { ...prev.settings, facingOpenSelection: { heroPos: prev.settings.facingOpenSelection.heroPos, villainPos }, drillContext: { ...prev.settings.drillContext, villainPos } } }));
           }}>
             {villainOptions.map((villainPos) => <option key={villainPos} value={villainPos}>{villainPos}</option>)}
@@ -148,8 +149,8 @@ export function RangesPage({ data, onDataChange }: Props) {
       ) : mode === 'three_bet' ? (
         <>
           <label>Opener position</label>
-          <select value={threeBetHero} onChange={(e: any) => {
-            const heroPos = e.target.value as ThreeBetHeroPosition;
+          <select value={threeBetHero} onChange={(e) => {
+            const heroPos = (e.target as HTMLSelectElement).value as ThreeBetHeroPosition;
             const firstVillain = THREE_BET_VILLAIN_BY_HERO[heroPos][0];
             setThreeBetHero(heroPos);
             setThreeBetVillain(firstVillain);
@@ -157,7 +158,7 @@ export function RangesPage({ data, onDataChange }: Props) {
             {THREE_BET_HERO_POSITIONS.map((heroPos) => <option key={heroPos} value={heroPos}>{heroPos}</option>)}
           </select>
           <label>3-bettor position</label>
-          <select value={validThreeBetVillain} onChange={(e: any) => setThreeBetVillain(e.target.value as Position)}>
+          <select value={validThreeBetVillain} onChange={(e) => setThreeBetVillain((e.target as HTMLSelectElement).value as Position)}>
             {threeBetVillainOptions.map((villainPos) => <option key={villainPos} value={villainPos}>{villainPos}</option>)}
           </select>
           <p className="muted">Selected matchup: {threeBetHero}_VS_{validThreeBetVillain}</p>
@@ -165,7 +166,7 @@ export function RangesPage({ data, onDataChange }: Props) {
       ) : (
         <>
           <label>SB limp branch node</label>
-          <select value={limpNode} onChange={(e: any) => setLimpNode(e.target.value)}>
+          <select value={limpNode} onChange={(e) => setLimpNode((e.target as HTMLSelectElement).value as typeof limpNode)}>
             <option value="BB_vs_SB_LIMP">BB vs SB limp (ISO / CHECK)</option>
             <option value="SB_vs_BB_ISO">SB vs BB ISO (FOLD / CALL / 3BET)</option>
           </select>
@@ -191,13 +192,13 @@ export function RangesPage({ data, onDataChange }: Props) {
       </div>
 
       {!hasSpotData && <p className="muted">No range data for this format/stack spot yet.</p>}
-      <HandGrid actionMap={actionMap} actionColors={actionColors as any} />
+      <HandGrid actionMap={actionMap} actionColors={actionColors as Record<string, import('../../components/HandGrid').GridActionColor>} />
       <label>{mode === 'rfi' ? 'Raise import' : mode === 'limp_branch' && limpNode === 'BB_vs_SB_LIMP' ? 'ISO import' : 'Call import'}</label>
-      <textarea rows={3} value={raiseText} onChange={(e: any) => setRaiseText(e.target.value)} disabled={!hasSpotData} />
+      <textarea rows={3} value={raiseText} onChange={(e) => setRaiseText((e.target as HTMLTextAreaElement).value)} disabled={!hasSpotData} />
       <label>
         {mode === 'rfi' ? (position === 'SB' ? 'Limp import' : 'Secondary not used') : mode === 'facing_open' ? '3bet import' : mode === 'three_bet' ? '4bet import' : limpNode === 'SB_vs_BB_ISO' ? '3bet import' : 'Secondary not used'}
       </label>
-      <textarea rows={3} value={secondaryText} onChange={(e: any) => setSecondaryText(e.target.value)} disabled={!hasSpotData || (mode === 'rfi' && position !== 'SB') || (mode === 'limp_branch' && limpNode === 'BB_vs_SB_LIMP')} />
+      <textarea rows={3} value={secondaryText} onChange={(e) => setSecondaryText((e.target as HTMLTextAreaElement).value)} disabled={!hasSpotData || (mode === 'rfi' && position !== 'SB') || (mode === 'limp_branch' && limpNode === 'BB_vs_SB_LIMP')} />
       <div className="row">
         <button className="primary" onClick={apply} disabled={!hasSpotData}>Apply</button>
         <button disabled={!hasSpotData} onClick={() => {

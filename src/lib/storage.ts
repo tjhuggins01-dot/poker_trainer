@@ -25,47 +25,55 @@ import {
   type SessionStats,
 } from './types';
 
+type UnknownRecord = Record<string, unknown>;
+const asRecord = (value: unknown): UnknownRecord => (value && typeof value === 'object' ? (value as UnknownRecord) : {});
 
-const withDefaultStatsEntry = (entry: any) => ({
-  attempts: typeof entry?.attempts === 'number' ? entry.attempts : 0,
-  correct: typeof entry?.correct === 'number' ? entry.correct : 0,
-});
+const withDefaultStatsEntry = (entry: unknown) => {
+  const item = asRecord(entry);
+  return {
+    attempts: typeof item.attempts === 'number' ? item.attempts : 0,
+    correct: typeof item.correct === 'number' ? item.correct : 0,
+  };
+};
 
-const normalizeSession = (raw: any): SessionStats => {
+const normalizeSession = (raw: unknown): SessionStats => {
+  const rawRecord = asRecord(raw);
   const next = createDefaultSession();
-  next.attempts = typeof raw?.attempts === 'number' ? raw.attempts : 0;
-  next.correct = typeof raw?.correct === 'number' ? raw.correct : 0;
-  next.totalResponseMs = typeof raw?.totalResponseMs === 'number' ? raw.totalResponseMs : 0;
+  next.attempts = typeof rawRecord.attempts === 'number' ? rawRecord.attempts : 0;
+  next.correct = typeof rawRecord.correct === 'number' ? rawRecord.correct : 0;
+  next.totalResponseMs = typeof rawRecord.totalResponseMs === 'number' ? rawRecord.totalResponseMs : 0;
   next.byDrill = createEmptyDrillStats();
   Object.keys(next.byDrill).forEach((drill) => {
-    next.byDrill[drill as keyof typeof next.byDrill] = withDefaultStatsEntry(raw?.byDrill?.[drill]);
+    next.byDrill[drill as keyof typeof next.byDrill] = withDefaultStatsEntry(asRecord(rawRecord.byDrill)[drill]);
   });
   next.byDrillResponseMs = {
     ...createEmptyDrillResponseMs(),
-    ...(raw?.byDrillResponseMs ?? {}),
+    ...(asRecord(rawRecord.byDrillResponseMs)),
   };
   Object.keys(next.byDrillResponseMs).forEach((drill) => {
     const value = next.byDrillResponseMs[drill as keyof typeof next.byDrillResponseMs];
     next.byDrillResponseMs[drill as keyof typeof next.byDrillResponseMs] = typeof value === 'number' && Number.isFinite(value) ? value : 0;
   });
+  const rawPostflop = asRecord(rawRecord.postflop);
+  const rawHandCategory = asRecord(rawPostflop.handCategory);
   next.postflop = {
     handCategory: {
-      attempts: typeof raw?.postflop?.handCategory?.attempts === 'number' ? raw.postflop.handCategory.attempts : 0,
-      correct: typeof raw?.postflop?.handCategory?.correct === 'number' ? raw.postflop.handCategory.correct : 0,
-      totalResponseMs: typeof raw?.postflop?.handCategory?.totalResponseMs === 'number' ? raw.postflop.handCategory.totalResponseMs : 0,
+      attempts: typeof rawHandCategory.attempts === 'number' ? rawHandCategory.attempts : 0,
+      correct: typeof rawHandCategory.correct === 'number' ? rawHandCategory.correct : 0,
+      totalResponseMs: typeof rawHandCategory.totalResponseMs === 'number' ? rawHandCategory.totalResponseMs : 0,
     },
-  }; 
+  };
   RFI_POSITIONS.forEach((position) => {
-    next.byRfiPosition[position] = withDefaultStatsEntry(raw?.byRfiPosition?.[position] ?? raw?.byPosition?.[position]);
+    next.byRfiPosition[position] = withDefaultStatsEntry(asRecord(rawRecord.byRfiPosition)[position] ?? asRecord(rawRecord.byPosition)[position]);
   });
   FACING_OPEN_HERO_POSITIONS.forEach((position) => {
-    next.byFacingHero[position] = withDefaultStatsEntry(raw?.byFacingHero?.[position]);
+    next.byFacingHero[position] = withDefaultStatsEntry(asRecord(rawRecord.byFacingHero)[position]);
   });
   return next;
 };
 
-const normalizeCurrentData = (raw: any): AppData => {
-  const next = structuredClone(raw) as AppData;
+const normalizeCurrentData = (raw: unknown): AppData => {
+  const next = structuredClone(asRecord(raw)) as AppData;
   const defaults = createDefaultData();
   const stackDefaults = FORMAT_IDS.flatMap((format) =>
     STACK_SIZES_BB
@@ -122,19 +130,19 @@ const normalizeCurrentData = (raw: any): AppData => {
     delete (next.stats.postflop.handCategory.missedByCategory as Record<string, number>).set;
   }
 
-  Object.values(next.situations).forEach((record: any) => {
-    if (record && record.actionSet && typeof record.actionSet[0] === 'string') {
-      record.actionSet = record.actionSet.map((id: string) => ({
-        id,
-        label: id,
-        color: id === 'RAISE' ? 'raise' : id === 'LIMP' ? 'limp' : id === '3BET' || id === '4BET' ? 'threebet' : id === 'CALL' ? 'call' : 'fold',
-      }));
-    }
+  Object.values(next.situations).forEach((record) => {
+    if (!record || !record.actionSet.length || typeof record.actionSet[0] !== 'string') return;
+    const legacyActionSet = record.actionSet as unknown as string[];
+    record.actionSet = legacyActionSet.map((id) => ({
+      id,
+      label: id,
+      color: id === 'RAISE' ? 'raise' : id === 'LIMP' ? 'limp' : id === '3BET' || id === '4BET' ? 'threebet' : id === 'CALL' ? 'call' : 'fold',
+    })) as typeof record.actionSet;
   });
 
   next.settings = { ...defaults.settings, ...next.settings };
   next.settings.showCorrectAnswerFeedback = next.settings.showCorrectAnswerFeedback !== false;
-  if (!['normal', 'hard', 'extra_hard', 'uniform'].includes(next.settings.difficulty as any)) {
+  if (!['normal', 'hard', 'extra_hard', 'uniform'].includes(next.settings.difficulty as never)) {
     next.settings.difficulty = defaults.settings.difficulty;
   }
   next.settings.positionFocus = {
@@ -144,6 +152,11 @@ const normalizeCurrentData = (raw: any): AppData => {
     limp_branch: next.settings.positionFocus?.limp_branch ?? defaults.settings.positionFocus.limp_branch,
     postflop_hand_category: [],
   };
+  next.settings.villainFocus = {
+    facing_open: next.settings.villainFocus?.facing_open ?? [],
+    three_bet: next.settings.villainFocus?.three_bet ?? [],
+    limp_branch: next.settings.villainFocus?.limp_branch ?? [],
+  };
   next.settings.facingOpenSelection = {
     ...defaultFacingOpenSelection,
     ...next.settings.facingOpenSelection,
@@ -152,12 +165,12 @@ const normalizeCurrentData = (raw: any): AppData => {
     ...defaults.settings.analyzer,
     ...(next.settings.analyzer ?? {}),
   };
-  if (!FORMAT_IDS.includes(next.settings.analyzer.format as any)) {
+  if (!FORMAT_IDS.includes(next.settings.analyzer.format as never)) {
     next.settings.analyzer.format = defaults.settings.analyzer.format;
   }
   if (
     typeof next.settings.analyzer.effectiveStackBb !== 'number'
-    || !STACK_SIZES_BB.includes(next.settings.analyzer.effectiveStackBb as any)
+    || !STACK_SIZES_BB.includes(next.settings.analyzer.effectiveStackBb as never)
   ) {
     next.settings.analyzer.effectiveStackBb = defaults.settings.analyzer.effectiveStackBb;
   }
@@ -165,10 +178,10 @@ const normalizeCurrentData = (raw: any): AppData => {
     next.settings.analyzer.spotId = null;
   }
 
-  if (!['range-vs-range', 'hand-vs-range'].includes(next.settings.analyzer.mode as any)) {
+  if (!['range-vs-range', 'hand-vs-range'].includes(next.settings.analyzer.mode as never)) {
     next.settings.analyzer.mode = defaults.settings.analyzer.mode;
   }
-  if (!['exact', 'simplified'].includes(next.settings.analyzer.boardInputMode as any)) {
+  if (!['exact', 'simplified'].includes(next.settings.analyzer.boardInputMode as never)) {
     next.settings.analyzer.boardInputMode = defaults.settings.analyzer.boardInputMode;
   }
   if (typeof next.settings.analyzer.simplifiedPresetId !== 'string') {
@@ -213,7 +226,7 @@ const normalizeCurrentData = (raw: any): AppData => {
     ...(next.settings.drillContext ?? {}),
   };
 
-  if (!FORMAT_IDS.includes(next.settings.drillContext.format as any)) {
+  if (!FORMAT_IDS.includes(next.settings.drillContext.format as never)) {
     next.settings.drillContext.format = DEFAULT_DRILL_CONTEXT.format;
   }
 

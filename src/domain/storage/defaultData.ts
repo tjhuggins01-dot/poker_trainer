@@ -223,6 +223,11 @@ export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: E
         limp_branch: [...LIMP_BRANCH_HERO_POSITIONS],
         postflop_hand_category: [],
       },
+      villainFocus: {
+        facing_open: [],
+        three_bet: [],
+        limp_branch: [],
+      },
       facingOpenSelection: defaultFacingOpenSelection,
       drillContext: { ...DEFAULT_DRILL_CONTEXT, format, effectiveStackBb: stack },
       analyzer: {

@@ -88,7 +88,7 @@ export function useDrillQuerySync(data: AppData, onDataChange: OnDataChange) {
         },
       };
     });
-  }, []);
+  }, [onDataChange]);
 
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
