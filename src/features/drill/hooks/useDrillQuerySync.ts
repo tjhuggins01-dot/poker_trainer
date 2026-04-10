@@ -1,93 +1,17 @@
-import { useEffect } from 'react';
-import { fromLegacyDrillType, isEligibleContext, parseContextQuery, toLegacyDrillType } from '../../../lib/domain';
+import { useEffect, useRef } from 'react';
 import type { AppData, DrillType } from '../../../lib/types';
+import { buildContextForDrillFromData, createOneTimeQueryHydrator } from './queryHydration';
 
 type OnDataChange = (updater: (prev: AppData) => AppData) => void;
 
-type CandidateDrillContext = AppData['settings']['drillContext'];
-
-const isDrillType = (value: string | null): value is DrillType =>
-  value === 'rfi'
-  || value === 'facing_open'
-  || value === 'three_bet'
-  || value === 'limp_branch'
-  || value === 'postflop_hand_category';
-
-const buildContextForDrill = (prev: AppData, drillType: Exclude<DrillType, 'postflop_hand_category'>): CandidateDrillContext => {
-  const nodeType = fromLegacyDrillType(drillType);
-  return {
-    ...prev.settings.drillContext,
-    nodeType,
-    villainPos:
-      nodeType === 'rfi'
-        ? undefined
-        : nodeType === 'facingOpen'
-          ? prev.settings.facingOpenSelection.villainPos
-          : nodeType === 'limpBranch'
-            ? (prev.settings.positionFocus.limp_branch[0] === 'BB' ? 'SB' : 'BB')
-            : 'BB',
-  };
-};
-
-const mergeParsedContext = (base: CandidateDrillContext, parsed: Partial<CandidateDrillContext>): CandidateDrillContext => {
-  const merged = { ...base, ...parsed };
-  return {
-    ...merged,
-    villainPos: merged.nodeType === 'rfi' ? undefined : merged.villainPos,
-  };
-};
-
 export function useDrillQuerySync(data: AppData, onDataChange: OnDataChange) {
+  const queryHydratorRef = useRef(createOneTimeQueryHydrator());
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const parsed = parseContextQuery(params);
-    const queryDrill = params.get('drill');
-    const hasContextQuery = Object.values(parsed).some(Boolean);
-
-    if (!hasContextQuery && !queryDrill) return;
-
-    onDataChange((prev) => {
-      if (isDrillType(queryDrill)) {
-        if (queryDrill === 'postflop_hand_category') {
-          return {
-            ...prev,
-            settings: {
-              ...prev.settings,
-              drillType: queryDrill,
-            },
-          };
-        }
-
-        const baseContext = buildContextForDrill(prev, queryDrill);
-        const candidateContext = hasContextQuery ? mergeParsedContext(baseContext, parsed) : baseContext;
-
-        return {
-          ...prev,
-          settings: {
-            ...prev.settings,
-            drillType: queryDrill,
-            drillContext: isEligibleContext(candidateContext, prev) ? candidateContext : baseContext,
-          },
-        };
-      }
-
-      if (!hasContextQuery || prev.settings.drillType === 'postflop_hand_category') {
-        return prev;
-      }
-
-      const candidateContext = mergeParsedContext(prev.settings.drillContext, parsed);
-      if (!isEligibleContext(candidateContext, prev)) {
-        return prev;
-      }
-      return {
-        ...prev,
-        settings: {
-          ...prev.settings,
-          drillContext: candidateContext,
-          drillType: toLegacyDrillType(candidateContext.nodeType),
-        },
-      };
-    });
+    const hasDrillQuery = ['drill', 'format', 'stack', 'node', 'hero', 'villain'].some((key) => params.has(key));
+    if (!hasDrillQuery) return;
+    onDataChange((prev) => queryHydratorRef.current(prev, params));
   }, [onDataChange]);
 
   useEffect(() => {
@@ -123,7 +47,7 @@ export function useDrillQuerySync(data: AppData, onDataChange: OnDataChange) {
             },
           };
         }
-        const context = buildContextForDrill(prev, drillType);
+        const context = buildContextForDrillFromData(prev, drillType);
         return {
           ...prev,
           settings: {

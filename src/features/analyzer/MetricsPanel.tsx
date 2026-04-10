@@ -28,7 +28,7 @@ export function MetricsPanel({ analysis }: Props) {
           <tr>
             <th>Metric</th>
             <th>Hero (opener)</th>
-            <th>Villain (BB caller)</th>
+            <th>Villain (caller)</th>
           </tr>
         </thead>
         <tbody>

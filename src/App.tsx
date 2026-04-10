@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { DrillPage } from './features/drill/DrillPage';
 import { RangesPage } from './features/ranges/RangesPage';
 import { SettingsPage } from './features/settings/SettingsPage';
@@ -30,21 +30,21 @@ function App() {
     return () => media.removeEventListener('change', applyTheme);
   }, [data.settings.themeMode]);
 
-  const onDataChange = (updater: (prev: AppData) => AppData) => {
+  const onDataChange = useCallback((updater: (prev: AppData) => AppData) => {
     setData((prev) => {
       const next = updater(prev);
       saveData(next);
       return next;
     });
-  };
+  }, []);
 
-  const onSessionChange = (updater: (prev: SessionStats) => SessionStats) => {
+  const onSessionChange = useCallback((updater: (prev: SessionStats) => SessionStats) => {
     setSession((prev) => {
       const next = updater(prev);
       saveSession(next);
       return next;
     });
-  };
+  }, []);
 
   const onResetSession = () => {
     const freshSession = resetSession();

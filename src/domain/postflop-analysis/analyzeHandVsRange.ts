@@ -7,15 +7,27 @@ import { computeRangeMetricsFromCombos } from './rangeMetrics';
 import type { HandVsRangeAnalysis } from './types';
 import { evaluateFlopHandCategory } from '../postflop/evaluate';
 
-export const analyzeHandVsRange = (heroHand: HoleCards, villainRange: HandClass[], flop: FlopBoard): HandVsRangeAnalysis => {
+type AnalyzeHandVsRangeOptions = {
+  includeEquity?: boolean;
+};
+
+export const analyzeHandVsRange = (
+  heroHand: HoleCards,
+  villainRange: HandClass[],
+  flop: FlopBoard,
+  options: AnalyzeHandVsRangeOptions = {},
+): HandVsRangeAnalysis => {
   const rangeCombos = filterBlockedCombosByCards(expandRangeToCombos(villainRange), [...flop, ...heroHand]);
-  const equity = computeHandVsRangeEquity(heroHand, rangeCombos, flop);
+  const includeEquity = options.includeEquity ?? true;
+  const equity = includeEquity ? computeHandVsRangeEquity(heroHand, rangeCombos, flop) : null;
   const category = evaluateFlopHandCategory(heroHand, flop);
 
   const rangeMetrics = computeRangeMetricsFromCombos(rangeCombos, flop);
 
   const notes: string[] = [];
-  if (equity == null) notes.push('No legal range combos remain after blockers.');
+  if (!includeEquity) {
+    notes.push('Click Calc equity to compute exact hand-vs-range equity.');
+  } else if (equity == null) notes.push('No legal range combos remain after blockers.');
   else if (equity > 0.55) notes.push('This hand has a small equity edge versus the selected range on this flop.');
   else if (equity < 0.45) notes.push('This hand appears to trail the selected range on this flop.');
   else notes.push('This appears close in equity versus the selected range on this flop.');

@@ -6,10 +6,20 @@ import { computeRangeVsRangeEquities } from './equity';
 import { computeRangeMetricsFromCombos } from './rangeMetrics';
 import type { ComparativeAnalysis } from './types';
 
-export const compareRangesOnFlop = (heroRange: HandClass[], villainRange: HandClass[], flop: FlopBoard): ComparativeAnalysis => {
+type CompareRangesOptions = {
+  includeEquity?: boolean;
+};
+
+export const compareRangesOnFlop = (
+  heroRange: HandClass[],
+  villainRange: HandClass[],
+  flop: FlopBoard,
+  options: CompareRangesOptions = {},
+): ComparativeAnalysis => {
   const heroLive = filterBlockedCombos(expandRangeToCombos(heroRange), flop);
   const villainLive = filterBlockedCombos(expandRangeToCombos(villainRange), flop);
-  const equities = computeRangeVsRangeEquities(heroLive, villainLive, flop);
+  const includeEquity = options.includeEquity ?? true;
+  const equities = includeEquity ? computeRangeVsRangeEquities(heroLive, villainLive, flop) : { hero: null, villain: null };
 
   return {
     flop,
