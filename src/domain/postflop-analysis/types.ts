@@ -1,6 +1,9 @@
 import type { Card, FlopBoard, HoleCards, Suit } from '../postflop/types';
 import type { Position } from '../../lib/types';
 
+export type AnalyzerMode = 'range-vs-range' | 'hand-vs-range';
+export type BoardInputMode = 'exact' | 'simplified';
+
 export type Combo = {
   id: string;
   handClass: string;
@@ -35,6 +38,18 @@ export type ComparativeAnalysis = {
   flop: FlopBoard;
   hero: SideMetrics;
   villain: SideMetrics;
+};
+
+export type HandVsRangeAnalysis = {
+  flop: FlopBoard;
+  hand: {
+    hole: HoleCards;
+    category: import('../postflop/types').HandCategoryAnswer;
+    drawCategory: import('../postflop/types').DrawCategory | 'none';
+    rawEquity: number | null;
+  };
+  range: SideMetrics;
+  notes: string[];
 };
 
 export type AnalysisSummary = {

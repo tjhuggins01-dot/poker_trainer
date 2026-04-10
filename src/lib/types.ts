@@ -213,6 +213,10 @@ export type AppData = {
       format: import('./constants').DrillFormat;
       effectiveStackBb: EffectiveStackBb;
       spotId: string | null;
+      mode: 'range-vs-range' | 'hand-vs-range';
+      boardInputMode: 'exact' | 'simplified';
+      simplifiedPresetId: string | null;
+      exactHand: [string, string] | null;
       flop: [string, string, string] | null;
     };
   };

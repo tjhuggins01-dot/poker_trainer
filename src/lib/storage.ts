@@ -164,6 +164,22 @@ const normalizeCurrentData = (raw: any): AppData => {
   if (typeof next.settings.analyzer.spotId !== 'string') {
     next.settings.analyzer.spotId = null;
   }
+
+  if (!['range-vs-range', 'hand-vs-range'].includes(next.settings.analyzer.mode as any)) {
+    next.settings.analyzer.mode = defaults.settings.analyzer.mode;
+  }
+  if (!['exact', 'simplified'].includes(next.settings.analyzer.boardInputMode as any)) {
+    next.settings.analyzer.boardInputMode = defaults.settings.analyzer.boardInputMode;
+  }
+  if (typeof next.settings.analyzer.simplifiedPresetId !== 'string') {
+    next.settings.analyzer.simplifiedPresetId = null;
+  }
+  const analyzerExactHand = next.settings.analyzer.exactHand;
+  next.settings.analyzer.exactHand =
+    Array.isArray(analyzerExactHand) && analyzerExactHand.length === 2 && analyzerExactHand.every((card) => typeof card === 'string')
+      ? [analyzerExactHand[0], analyzerExactHand[1]]
+      : null;
+
   const analyzerFlop = next.settings.analyzer.flop;
   next.settings.analyzer.flop =
     Array.isArray(analyzerFlop) && analyzerFlop.length === 3 && analyzerFlop.every((card) => typeof card === 'string')

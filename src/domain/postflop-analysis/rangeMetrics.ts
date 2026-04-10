@@ -1,17 +1,23 @@
-import type { FlopBoard } from '../postflop/types';
-import { filterBlockedCombos } from './blockers';
+import type { Card, FlopBoard } from '../postflop/types';
+import { filterBlockedCombosByCards } from './blockers';
 import { expandRangeToCombos } from './comboExpansion';
 import { detectDrawFlags } from './drawMetrics';
 import { evaluateComboMadeHand } from './handStrength';
-import type { SideMetrics } from './types';
+import type { Combo, SideMetrics } from './types';
 import type { HandClass } from '../../lib/types';
 
 const ratio = (numerator: number, denominator: number): number => (denominator === 0 ? 0 : numerator / denominator);
 
-export const computeRangeMetrics = (range: HandClass[], flop: FlopBoard): SideMetrics => {
-  const expanded = expandRangeToCombos(range);
-  const liveCombos = filterBlockedCombos(expanded, flop);
+type MetricOptions = {
+  blockedCards?: Card[];
+  rawEquity?: number | null;
+};
 
+export const computeRangeMetricsFromCombos = (
+  liveCombos: Combo[],
+  flop: FlopBoard,
+  options?: Pick<MetricOptions, 'rawEquity'>,
+): SideMetrics => {
   const evaluated = liveCombos.map((combo) => {
     const made = evaluateComboMadeHand(combo, flop);
     made.draws = detectDrawFlags(combo.hole, flop, made.category, made.isFlushMade);
@@ -31,6 +37,12 @@ export const computeRangeMetrics = (range: HandClass[], flop: FlopBoard): SideMe
     flushDrawShare: ratio(count((entry) => entry.draws.hasFlushDraw), total),
     openEndedShare: ratio(count((entry) => entry.draws.hasOpenEnded), total),
     gutshotShare: ratio(count((entry) => entry.draws.hasGutshot), total),
-    rawEquity: null,
+    rawEquity: options?.rawEquity ?? null,
   };
+};
+
+export const computeRangeMetrics = (range: HandClass[], flop: FlopBoard, options?: MetricOptions): SideMetrics => {
+  const expanded = expandRangeToCombos(range);
+  const liveCombos = filterBlockedCombosByCards(expanded, [...flop, ...(options?.blockedCards ?? [])]);
+  return computeRangeMetricsFromCombos(liveCombos, flop, { rawEquity: options?.rawEquity });
 };
