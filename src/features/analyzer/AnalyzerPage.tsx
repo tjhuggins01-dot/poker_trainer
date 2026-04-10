@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo } from 'react';
-import { buildAnalyzerSpots, getAnalyzerStacks } from '../../domain/postflop-analysis/catalog';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { buildAnalyzerSpots, getAnalyzerStacks, parseAnalyzerSpotId } from '../../domain/postflop-analysis/catalog';
 import { analyzeHandVsRange } from '../../domain/postflop-analysis/analyzeHandVsRange';
 import { compareRangesOnFlop } from '../../domain/postflop-analysis/compareRanges';
 import { validateExactHandSelection, validateFlopSelection } from '../../domain/postflop-analysis/flopSelection';
@@ -11,7 +11,7 @@ import { MetricsPanel } from './MetricsPanel';
 import { SpotSelector } from './SpotSelector';
 import { SummaryPanel } from './SummaryPanel';
 import { CardRow } from '../../components/PlayingCard';
-import type { AppData } from '../../lib/types';
+import type { AppData, FacingOpenHeroPosition, RfiPosition } from '../../lib/types';
 
 type Props = {
   data: AppData;
@@ -31,7 +31,28 @@ export function AnalyzerPage({ data, onDataChange }: Props) {
     [data, analyzer.format, selectedStack],
   );
 
-  const selectedSpot = spots.find((spot) => spot.id === analyzer.spotId) ?? spots[0];
+  const openerOptions = useMemo(
+    () => [...new Set(spots.map((spot) => spot.openerPos))],
+    [spots],
+  );
+
+  const parsedSpot = useMemo(() => parseAnalyzerSpotId(analyzer.spotId), [analyzer.spotId]);
+  const desiredOpener = analyzer.openerPos ?? parsedSpot?.openerPos ?? openerOptions[0] ?? null;
+  const selectedOpener = desiredOpener && openerOptions.includes(desiredOpener) ? desiredOpener : openerOptions[0] ?? null;
+
+  const callerOptions = useMemo(
+    () => spots.filter((spot) => spot.openerPos === selectedOpener).map((spot) => spot.callerPos),
+    [selectedOpener, spots],
+  );
+
+  const desiredCaller = analyzer.callerPos ?? parsedSpot?.callerPos ?? callerOptions[0] ?? null;
+  const selectedCaller = desiredCaller && callerOptions.includes(desiredCaller) ? desiredCaller : callerOptions[0] ?? null;
+
+  const selectedSpot = useMemo(() => {
+    if (!selectedOpener || !selectedCaller) return null;
+    return spots.find((spot) => spot.openerPos === selectedOpener && spot.callerPos === selectedCaller) ?? null;
+  }, [selectedCaller, selectedOpener, spots]);
+
   const flopSelection = analyzer.flop ?? ['', '', ''];
   const exactFlopResult = validateFlopSelection(flopSelection);
   const simplifiedFlop = useMemo(() => {
@@ -51,16 +72,51 @@ export function AnalyzerPage({ data, onDataChange }: Props) {
   const handSelection = analyzer.exactHand ?? ['', ''];
   const handResult = activeFlopResult.ok ? validateExactHandSelection(handSelection, activeFlopResult.flop) : validateExactHandSelection(handSelection);
 
+  const [runToken, setRunToken] = useState(0);
+  const lastHandledRunTokenRef = useRef(0);
+  const [isRunning, setIsRunning] = useState(false);
+  const [rangeVsRangeAnalysis, setRangeVsRangeAnalysis] = useState<ReturnType<typeof compareRangesOnFlop> | null>(null);
+  const [handVsRangeAnalysis, setHandVsRangeAnalysis] = useState<ReturnType<typeof analyzeHandVsRange> | null>(null);
 
-  const rangeVsRangeAnalysis = useMemo(() => {
-    if (!selectedSpot || !activeFlopResult.ok || analyzer.mode !== 'range-vs-range') return null;
-    return compareRangesOnFlop(selectedSpot.heroRange, selectedSpot.villainRange, activeFlopResult.flop);
-  }, [activeFlopResult, analyzer.mode, selectedSpot]);
+  const canRun = Boolean(
+    selectedSpot
+    && activeFlopResult.ok
+    && (analyzer.mode === 'range-vs-range' || (analyzer.mode === 'hand-vs-range' && handResult.ok)),
+  );
+  const activeFlopKey = activeFlopResult.ok ? activeFlopResult.flop.map((card) => `${card.rank}${card.suit}`).join('-') : 'invalid-flop';
+  const handKey = handResult.ok ? handResult.hand.join('-') : 'invalid-hand';
 
-  const handVsRangeAnalysis = useMemo(() => {
-    if (!selectedSpot || !activeFlopResult.ok || !handResult.ok || analyzer.mode !== 'hand-vs-range') return null;
-    return analyzeHandVsRange(handResult.hand, selectedSpot.villainRange, activeFlopResult.flop);
-  }, [activeFlopResult, analyzer.mode, handResult, selectedSpot]);
+  useEffect(() => {
+    setRangeVsRangeAnalysis(null);
+    setHandVsRangeAnalysis(null);
+    setIsRunning(false);
+  }, [analyzer.mode, selectedSpot?.id, activeFlopKey, handKey]);
+
+  useEffect(() => {
+    if (!runToken || !selectedSpot || !activeFlopResult.ok) return;
+    if (analyzer.mode === 'hand-vs-range' && !handResult.ok) return;
+    if (runToken === lastHandledRunTokenRef.current) return;
+    lastHandledRunTokenRef.current = runToken;
+
+    let cancelled = false;
+    setIsRunning(true);
+    const timeout = window.setTimeout(() => {
+      if (cancelled) return;
+      if (analyzer.mode === 'range-vs-range') {
+        setRangeVsRangeAnalysis(compareRangesOnFlop(selectedSpot.heroRange, selectedSpot.villainRange, activeFlopResult.flop));
+        setHandVsRangeAnalysis(null);
+      } else if (handResult.ok) {
+        setHandVsRangeAnalysis(analyzeHandVsRange(handResult.hand, selectedSpot.villainRange, activeFlopResult.flop));
+        setRangeVsRangeAnalysis(null);
+      }
+      setIsRunning(false);
+    }, 0);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeout);
+    };
+  }, [activeFlopResult, analyzer.mode, handResult, runToken, selectedSpot]);
 
   const summary = useMemo(
     () => (rangeVsRangeAnalysis ? buildAnalysisSummary(rangeVsRangeAnalysis.hero, rangeVsRangeAnalysis.villain) : null),
@@ -86,14 +142,29 @@ export function AnalyzerPage({ data, onDataChange }: Props) {
     const nextSpotId = selectedSpot?.id ?? null;
     const stackChanged = analyzer.effectiveStackBb !== selectedStack;
     const spotChanged = analyzer.spotId !== nextSpotId;
-    if (!stackChanged && !spotChanged) return;
+    const openerChanged = analyzer.openerPos !== (selectedOpener ?? null);
+    const callerChanged = analyzer.callerPos !== (selectedCaller ?? null);
+    if (!stackChanged && !spotChanged && !openerChanged && !callerChanged) return;
 
     updateAnalyzer((prev: AppData['settings']['analyzer']) => ({
       ...prev,
       effectiveStackBb: selectedStack,
       spotId: nextSpotId,
+      openerPos: selectedOpener,
+      callerPos: selectedCaller,
     }));
-  }, [analyzer.effectiveStackBb, analyzer.spotId, selectedSpot?.id, selectedStack, stacks.length, updateAnalyzer]);
+  }, [
+    analyzer.callerPos,
+    analyzer.effectiveStackBb,
+    analyzer.openerPos,
+    analyzer.spotId,
+    selectedCaller,
+    selectedOpener,
+    selectedSpot?.id,
+    selectedStack,
+    stacks.length,
+    updateAnalyzer,
+  ]);
 
   return (
     <section>
@@ -122,6 +193,8 @@ export function AnalyzerPage({ data, onDataChange }: Props) {
             ...prev,
             effectiveStackBb: nextStack as typeof prev.effectiveStackBb,
             spotId: null,
+            openerPos: null,
+            callerPos: null,
           }));
         }}
       >
@@ -134,11 +207,25 @@ export function AnalyzerPage({ data, onDataChange }: Props) {
       </select>
 
       <SpotSelector
-        spots={spots}
-        value={selectedSpot?.id ?? null}
+        openerOptions={openerOptions}
+        callerOptions={callerOptions}
+        openerValue={selectedOpener}
+        callerValue={selectedCaller}
         disabled={!spots.length}
-        onChange={(spotId) => updateAnalyzer((prev: AppData['settings']['analyzer']) => ({ ...prev, spotId }))}
+        onOpenerChange={(openerPos: RfiPosition) => updateAnalyzer((prev: AppData['settings']['analyzer']) => ({
+          ...prev,
+          openerPos,
+          callerPos: null,
+          spotId: null,
+        }))}
+        onCallerChange={(callerPos: FacingOpenHeroPosition) => updateAnalyzer((prev: AppData['settings']['analyzer']) => ({
+          ...prev,
+          callerPos,
+          spotId: null,
+        }))}
       />
+
+      {selectedSpot && <p className="muted">Matchup: {selectedSpot.label}</p>}
 
       {analyzer.mode === 'hand-vs-range' && (
         <HandSelector
@@ -166,6 +253,11 @@ export function AnalyzerPage({ data, onDataChange }: Props) {
         }}
         error={activeFlopResult.ok ? null : activeFlopResult.error}
       />
+
+      <button type="button" onClick={() => setRunToken((value) => value + 1)} disabled={!canRun || isRunning}>
+        Calc equity
+      </button>
+      {isRunning && <p className="muted">Running...</p>}
 
       {!stacks.length && <p className="muted">No supported SRP analyzer spots available for current data.</p>}
       {stacks.length > 0 && !spots.length && <p className="muted">No SRP spots for this stack yet.</p>}

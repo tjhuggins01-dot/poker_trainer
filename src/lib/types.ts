@@ -218,6 +218,8 @@ export type AppData = {
       format: import('./constants').DrillFormat;
       effectiveStackBb: EffectiveStackBb;
       spotId: string | null;
+      openerPos: RfiPosition | null;
+      callerPos: FacingOpenHeroPosition | null;
       mode: 'range-vs-range' | 'hand-vs-range';
       boardInputMode: 'exact' | 'simplified';
       simplifiedPresetId: string | null;

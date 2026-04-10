@@ -7,6 +7,7 @@ import {
 } from './domain';
 import { FORMAT_IDS, STACK_SIZES_BB } from './constants';
 import { getStackDataBundle } from './data/catalog';
+import { parseAnalyzerSpotId } from '../domain/postflop-analysis/catalog';
 import {
   createDefaultData,
   createDefaultSession,
@@ -176,6 +177,20 @@ const normalizeCurrentData = (raw: unknown): AppData => {
   }
   if (typeof next.settings.analyzer.spotId !== 'string') {
     next.settings.analyzer.spotId = null;
+  }
+  if (!RFI_POSITIONS.includes(next.settings.analyzer.openerPos as never)) {
+    next.settings.analyzer.openerPos = null;
+  }
+  if (!FACING_OPEN_HERO_POSITIONS.includes(next.settings.analyzer.callerPos as never)) {
+    next.settings.analyzer.callerPos = null;
+  }
+
+  if ((!next.settings.analyzer.openerPos || !next.settings.analyzer.callerPos) && next.settings.analyzer.spotId) {
+    const parsedSpot = parseAnalyzerSpotId(next.settings.analyzer.spotId);
+    if (parsedSpot) {
+      next.settings.analyzer.openerPos = next.settings.analyzer.openerPos ?? parsedSpot.openerPos;
+      next.settings.analyzer.callerPos = next.settings.analyzer.callerPos ?? parsedSpot.callerPos;
+    }
   }
 
   if (!['range-vs-range', 'hand-vs-range'].includes(next.settings.analyzer.mode as never)) {

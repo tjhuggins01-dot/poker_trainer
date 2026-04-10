@@ -1,5 +1,5 @@
 import type { Card, FlopBoard, HoleCards, Suit } from '../postflop/types';
-import type { Position } from '../../lib/types';
+import type { FacingOpenHeroPosition, RfiPosition } from '../../lib/types';
 
 export type AnalyzerMode = 'range-vs-range' | 'hand-vs-range';
 export type BoardInputMode = 'exact' | 'simplified';
@@ -13,8 +13,8 @@ export type Combo = {
 export type AnalyzerSpot = {
   id: string;
   label: string;
-  openerPos: Position;
-  callerPos: 'BB';
+  openerPos: RfiPosition;
+  callerPos: FacingOpenHeroPosition;
   format: string;
   effectiveStackBb: number;
   heroRange: import('../../lib/types').HandClass[];
