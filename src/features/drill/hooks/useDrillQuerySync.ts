@@ -28,6 +28,8 @@ export function useDrillQuerySync(data: AppData, onDataChange: OnDataChange) {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    const hasDrillQuery = ['drill', 'format', 'stack', 'node', 'hero', 'villain'].some((key) => params.has(key));
+    if (!hasDrillQuery) return;
     onDataChange((prev) => queryHydratorRef.current(prev, params));
   }, [onDataChange]);
 
