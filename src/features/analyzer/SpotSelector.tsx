@@ -1,21 +1,50 @@
-import type { AnalyzerSpot } from '../../domain/postflop-analysis/types';
+import type { FacingOpenHeroPosition, RfiPosition } from '../../lib/types';
 
 type Props = {
-  spots: AnalyzerSpot[];
-  value: string | null;
+  openerOptions: RfiPosition[];
+  callerOptions: FacingOpenHeroPosition[];
+  openerValue: RfiPosition | null;
+  callerValue: FacingOpenHeroPosition | null;
   disabled?: boolean;
-  onChange: (spotId: string) => void;
+  onOpenerChange: (openerPos: RfiPosition) => void;
+  onCallerChange: (callerPos: FacingOpenHeroPosition) => void;
 };
 
-export function SpotSelector({ spots, value, disabled = false, onChange }: Props) {
+export function SpotSelector({
+  openerOptions,
+  callerOptions,
+  openerValue,
+  callerValue,
+  disabled = false,
+  onOpenerChange,
+  onCallerChange,
+}: Props) {
   return (
     <>
-      <label>SRP spot</label>
-      <select value={value ?? ''} onChange={(event) => onChange(event.target.value)} disabled={disabled}>
-        <option value="">Select a spot</option>
-        {spots.map((spot) => (
-          <option key={spot.id} value={spot.id}>
-            {spot.label}
+      <label>Opener position</label>
+      <select
+        value={openerValue ?? ''}
+        onChange={(event) => onOpenerChange(event.target.value as RfiPosition)}
+        disabled={disabled || !openerOptions.length}
+      >
+        {!openerOptions.length && <option value="">No opener positions available</option>}
+        {openerOptions.map((openerPos) => (
+          <option key={openerPos} value={openerPos}>
+            {openerPos}
+          </option>
+        ))}
+      </select>
+
+      <label>Caller position</label>
+      <select
+        value={callerValue ?? ''}
+        onChange={(event) => onCallerChange(event.target.value as FacingOpenHeroPosition)}
+        disabled={disabled || !callerOptions.length}
+      >
+        {!callerOptions.length && <option value="">No caller positions available</option>}
+        {callerOptions.map((callerPos) => (
+          <option key={callerPos} value={callerPos}>
+            {callerPos}
           </option>
         ))}
       </select>
