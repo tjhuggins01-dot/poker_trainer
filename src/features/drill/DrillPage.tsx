@@ -94,6 +94,8 @@ function PreflopDrillPage({
   );
   const weightedMap = useMemo(
     () => buildWeightedHandMap(data),
+    // buildWeightedHandMap only depends on policy matrix + difficulty; avoid recompute on stats/session updates.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [situationsPolicyKey, data.settings.difficulty],
   );
   const selectedFocusKey = useMemo(() => {
@@ -101,7 +103,11 @@ function PreflopDrillPage({
     const focus = data.settings.positionFocus[key] as string[];
     return [...focus].sort().join('|');
   }, [data.settings.drillType, data.settings.positionFocus]);
-  const drillResetKey = `${data.settings.drillType}:${selectedFocusKey}:${data.settings.difficulty}:${data.settings.drillContext.format}:${data.settings.drillContext.effectiveStackBb}:${situationsPolicyKey}`;
+  const selectedVillainKey = useMemo(() => {
+    if (data.settings.drillType === 'rfi' || data.settings.drillType === 'postflop_hand_category') return '';
+    return [...data.settings.villainFocus[data.settings.drillType]].sort().join('|');
+  }, [data.settings.drillType, data.settings.villainFocus]);
+  const drillResetKey = `${data.settings.drillType}:${selectedFocusKey}:${selectedVillainKey}:${data.settings.difficulty}:${data.settings.drillContext.format}:${data.settings.drillContext.effectiveStackBb}:${situationsPolicyKey}`;
 
   const [shownNotice, setShownNotice] = useState(false);
 
@@ -172,6 +178,27 @@ function PreflopDrillPage({
           ? data.settings.positionFocus.limp_branch
           : data.settings.positionFocus.facing_open;
 
+  const selectedVillains: string[] =
+    data.settings.drillType === 'facing_open'
+      ? data.settings.villainFocus.facing_open
+      : data.settings.drillType === 'three_bet'
+        ? data.settings.villainFocus.three_bet
+        : data.settings.villainFocus.limp_branch;
+
+  const villainOptions = Array.from(
+    new Set(
+      Object.values(data.situations)
+        .filter((record) => {
+          if (data.settings.drillType === 'facing_open') return record.drillType === 'facing_open';
+          if (data.settings.drillType === 'three_bet') return record.drillType === 'three_bet';
+          return data.settings.drillType === 'limp_branch' && record.drillType === 'limp_branch';
+        })
+        .filter((record) => selectedFocus.length === 0 || selectedFocus.includes(record.situation.heroPos as never))
+        .map((record) => record.situation.villainPos)
+        .filter((position): position is Exclude<typeof position, undefined> => Boolean(position)),
+    ),
+  );
+
   return (
     <section>
       <h2>Drill</h2>
@@ -194,6 +221,8 @@ function PreflopDrillPage({
       <PositionFocusSelector
         focusOptions={focusOptions}
         selectedFocus={selectedFocus}
+        villainOptions={data.settings.drillType === 'rfi' ? [] : villainOptions}
+        selectedVillains={data.settings.drillType === 'rfi' ? [] : selectedVillains}
         onDataChange={onDataChange}
       />
 

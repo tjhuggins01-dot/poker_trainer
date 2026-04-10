@@ -1,8 +1,8 @@
-import { cardToString } from '../../domain/postflop/cards';
 import { CARD_OPTIONS } from '../../domain/postflop-analysis/flopSelection';
 import { SIMPLIFIED_BOARD_PRESETS } from '../../domain/postflop-analysis/simplifiedBoards';
 import type { BoardInputMode } from '../../domain/postflop-analysis/types';
 import type { FlopBoard } from '../../domain/postflop/types';
+import { CardRow } from '../../components/PlayingCard';
 
 type Props = {
   boardInputMode: BoardInputMode;
@@ -62,7 +62,7 @@ export function FlopSelector({
           </select>
           {generatedFlop && (
             <p className="muted">
-              Generated exact flop: <strong>{generatedFlop.map((card) => cardToString(card).toUpperCase()).join(' ')}</strong>
+              Generated exact flop: <CardRow cards={generatedFlop} label="Generated flop" />
             </p>
           )}
         </>

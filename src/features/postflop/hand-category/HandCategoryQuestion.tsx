@@ -1,6 +1,6 @@
-import { cardToString } from '../../../domain/postflop/cards';
 import type { HandCategoryAnswer, HoleCards, StreetPrompt } from '../../../domain/postflop/types';
 import { HAND_CATEGORY_OPTIONS } from './handCategoryOptions';
+import { CardRow } from '../../../components/PlayingCard';
 
 type Props = {
   heroHand: HoleCards;
@@ -15,8 +15,8 @@ export function HandCategoryQuestion({ heroHand, prompt, selected, revealed, onA
     <>
       <div className="card">
         <p>Street: {prompt.street.toUpperCase()}</p>
-        <p>Hero: {heroHand.map(cardToString).join(' ')}</p>
-        <p>Board: {prompt.board.map(cardToString).join(' ')}</p>
+        <p>Hero: <CardRow cards={heroHand} label="Hero hand" /></p>
+        <p>Board: <CardRow cards={prompt.board} label="Board" /></p>
         <p>What is your hand category?</p>
       </div>
       <div className="actions postflop-actions">

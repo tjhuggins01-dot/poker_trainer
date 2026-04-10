@@ -1,4 +1,5 @@
 import { CARD_OPTIONS } from '../../domain/postflop-analysis/flopSelection';
+import { CardRow } from '../../components/PlayingCard';
 
 type Props = {
   selected: [string, string];
@@ -22,6 +23,11 @@ export function HandSelector({ selected, error, onChange }: Props) {
           </select>
         ))}
       </div>
+      {selected.every((value) => value) && (
+        <p className="muted">
+          Selected hand: <CardRow cards={selected as [string, string]} label="Exact hand" />
+        </p>
+      )}
       {error && <p className="muted">{error}</p>}
     </div>
   );

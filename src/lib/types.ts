@@ -204,6 +204,11 @@ export type AppData = {
       limp_branch: LimpBranchHeroPosition[];
       postflop_hand_category: [];
     };
+    villainFocus: {
+      facing_open: Position[];
+      three_bet: Position[];
+      limp_branch: Position[];
+    };
     facingOpenSelection: {
       heroPos: FacingOpenHeroPosition;
       villainPos: Position;

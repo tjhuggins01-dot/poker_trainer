@@ -5,12 +5,12 @@ import { compareRangesOnFlop } from '../../domain/postflop-analysis/compareRange
 import { validateExactHandSelection, validateFlopSelection } from '../../domain/postflop-analysis/flopSelection';
 import { generateFlopFromPreset } from '../../domain/postflop-analysis/simplifiedBoards';
 import { buildAnalysisSummary } from '../../domain/postflop-analysis/summaries';
-import { cardToString } from '../../domain/postflop/cards';
 import { FlopSelector } from './FlopSelector';
 import { HandSelector } from './HandSelector';
 import { MetricsPanel } from './MetricsPanel';
 import { SpotSelector } from './SpotSelector';
 import { SummaryPanel } from './SummaryPanel';
+import { CardRow } from '../../components/PlayingCard';
 import type { AppData } from '../../lib/types';
 
 type Props = {
@@ -42,25 +42,25 @@ export function AnalyzerPage({ data, onDataChange }: Props) {
       return null;
     }
   }, [analyzer.simplifiedPresetId]);
-  const activeFlopResult = analyzer.boardInputMode === 'exact'
-    ? exactFlopResult
-    : (simplifiedFlop ? { ok: true as const, flop: simplifiedFlop } : { ok: false as const, error: 'Select a simplified board preset.' });
+  const activeFlopResult = useMemo(() => (
+    analyzer.boardInputMode === 'exact'
+      ? exactFlopResult
+      : (simplifiedFlop ? { ok: true as const, flop: simplifiedFlop } : { ok: false as const, error: 'Select a simplified board preset.' })
+  ), [analyzer.boardInputMode, exactFlopResult, simplifiedFlop]);
 
   const handSelection = analyzer.exactHand ?? ['', ''];
   const handResult = activeFlopResult.ok ? validateExactHandSelection(handSelection, activeFlopResult.flop) : validateExactHandSelection(handSelection);
 
-  const activeFlopKey = activeFlopResult.ok ? activeFlopResult.flop.map(cardToString).join('') : '';
-  const handKey = handResult.ok ? handResult.hand.map(cardToString).join('') : '';
 
   const rangeVsRangeAnalysis = useMemo(() => {
     if (!selectedSpot || !activeFlopResult.ok || analyzer.mode !== 'range-vs-range') return null;
     return compareRangesOnFlop(selectedSpot.heroRange, selectedSpot.villainRange, activeFlopResult.flop);
-  }, [activeFlopKey, analyzer.mode, selectedSpot]);
+  }, [activeFlopResult, analyzer.mode, selectedSpot]);
 
   const handVsRangeAnalysis = useMemo(() => {
     if (!selectedSpot || !activeFlopResult.ok || !handResult.ok || analyzer.mode !== 'hand-vs-range') return null;
     return analyzeHandVsRange(handResult.hand, selectedSpot.villainRange, activeFlopResult.flop);
-  }, [activeFlopKey, analyzer.mode, handKey, selectedSpot]);
+  }, [activeFlopResult, analyzer.mode, handResult, selectedSpot]);
 
   const summary = useMemo(
     () => (rangeVsRangeAnalysis ? buildAnalysisSummary(rangeVsRangeAnalysis.hero, rangeVsRangeAnalysis.villain) : null),
@@ -181,8 +181,9 @@ export function AnalyzerPage({ data, onDataChange }: Props) {
         <div className="card">
           <h3>Hand vs Range</h3>
           <p>
-            Exact hand: <strong>{handVsRangeAnalysis.hand.hole.map((card) => cardToString(card).toUpperCase()).join(' ')}</strong>
+            Exact hand: <CardRow cards={handVsRangeAnalysis.hand.hole} label="Analyzed hand" />
           </p>
+          <p>Board: <CardRow cards={handVsRangeAnalysis.flop} label="Analyzed board" /></p>
           <p>Hand category: <strong>{handVsRangeAnalysis.hand.category}</strong></p>
           <p>Hand draws: <strong>{handVsRangeAnalysis.hand.drawCategory}</strong></p>
           <p>Hand raw equity: <strong>{handVsRangeAnalysis.hand.rawEquity == null ? 'N/A' : `${(handVsRangeAnalysis.hand.rawEquity * 100).toFixed(1)}%`}</strong></p>

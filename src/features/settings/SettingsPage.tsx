@@ -34,7 +34,7 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
     <section>
       <h2>Settings</h2>
       <label htmlFor="difficulty-select">Difficulty</label>
-      <select id="difficulty-select" value={data.settings.difficulty} onChange={(e: any) => onDataChange((prev) => ({ ...prev, settings: { ...prev.settings, difficulty: e.target.value as DifficultyMode } }))}>
+      <select id="difficulty-select" value={data.settings.difficulty} onChange={(e) => onDataChange((prev) => ({ ...prev, settings: { ...prev.settings, difficulty: (e.target as HTMLSelectElement).value as DifficultyMode } }))}>
         {difficultyOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
       </select>
 
@@ -42,12 +42,12 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
         <input
           type="checkbox"
           checked={data.settings.adaptiveRepetition}
-          onChange={(e: any) =>
+          onChange={(e) =>
             onDataChange((prev) => ({
               ...prev,
               settings: {
                 ...prev.settings,
-                adaptiveRepetition: Boolean(e.target.checked),
+                adaptiveRepetition: Boolean((e.target as HTMLInputElement).checked),
               },
             }))
           }
@@ -62,12 +62,12 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
         <input
           type="checkbox"
           checked={data.settings.showCorrectAnswerFeedback}
-          onChange={(e: any) =>
+          onChange={(e) =>
             onDataChange((prev) => ({
               ...prev,
               settings: {
                 ...prev.settings,
-                showCorrectAnswerFeedback: Boolean(e.target.checked),
+                showCorrectAnswerFeedback: Boolean((e.target as HTMLInputElement).checked),
               },
             }))
           }
@@ -80,12 +80,12 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
       <select
         id="theme-select"
         value={data.settings.themeMode}
-        onChange={(e: any) =>
+        onChange={(e) =>
           onDataChange((prev) => ({
             ...prev,
             settings: {
               ...prev.settings,
-              themeMode: e.target.value as ThemeMode,
+              themeMode: (e.target as HTMLSelectElement).value as ThemeMode,
             },
           }))
         }
@@ -101,14 +101,14 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
       <select
         id="stack-select"
         value={data.settings.drillContext.effectiveStackBb}
-        onChange={(e: any) =>
+        onChange={(e) =>
           onDataChange((prev) => ({
             ...prev,
             settings: {
               ...prev.settings,
               drillContext: {
                 ...prev.settings.drillContext,
-                effectiveStackBb: Number(e.target.value) as any,
+                effectiveStackBb: Number((e.target as HTMLSelectElement).value) as typeof prev.settings.drillContext.effectiveStackBb,
               },
             },
           }))
@@ -122,7 +122,7 @@ export function SettingsPage({ data, onDataChange, onResetSession, onResetStats,
       </select>
 
       <label htmlFor="preset-select">Default preset</label>
-      <select id="preset-select" value={data.settings.defaultPresetId} onChange={(e: any) => onDataChange((prev) => ({ ...prev, settings: { ...prev.settings, defaultPresetId: e.target.value as PresetId } }))}>
+      <select id="preset-select" value={data.settings.defaultPresetId} onChange={(e) => onDataChange((prev) => ({ ...prev, settings: { ...prev.settings, defaultPresetId: (e.target as HTMLSelectElement).value as PresetId } }))}>
         {PRESET_IDS.map((presetId) => <option key={presetId} value={presetId}>{PRESETS[presetId].name}</option>)}
       </select>
 

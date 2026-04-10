@@ -93,14 +93,14 @@ export const isEligibleContext = (context: DrillContext, data: AppData): boolean
     if (!isKnownFacingHero(context.heroPos)) return false;
     if (!FACING_OPEN_VILLAIN_BY_HERO[context.heroPos].includes(context.villainPos)) return false;
   }
-  if (context.nodeType === 'rfi' && !RFI_POSITIONS.includes(context.heroPos as any)) return false;
+  if (context.nodeType === 'rfi' && !RFI_POSITIONS.includes(context.heroPos as (typeof RFI_POSITIONS)[number])) return false;
   if (context.nodeType === 'threeBet') {
     if (!context.villainPos) return false;
     if (!isKnownThreeBetHero(context.heroPos)) return false;
     if (!THREE_BET_VILLAIN_BY_HERO[context.heroPos].includes(context.villainPos)) return false;
   }
   if (context.nodeType === 'limpBranch') {
-    if (!LIMP_BRANCH_HERO_POSITIONS.includes(context.heroPos as any)) return false;
+    if (!LIMP_BRANCH_HERO_POSITIONS.includes(context.heroPos as (typeof LIMP_BRANCH_HERO_POSITIONS)[number])) return false;
     if ((context.heroPos === 'BB' && context.villainPos !== 'SB') || (context.heroPos === 'SB' && context.villainPos !== 'BB')) return false;
   }
   if (!isKnownPosition(context.heroPos)) return false;

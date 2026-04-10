@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { computeCorrectAction, getPromptSignature, nextPrompt } from '../../../lib/logic';
 import { reduceAppDataStatsOnAnswer, reduceSessionOnAnswer } from '../../../domain/stats/reducers';
 import { policyKeyFromSituation } from '../../../domain/policy/resolver';
@@ -30,50 +30,58 @@ export function usePromptCycle({
   const nextPromptTimeoutRef = useRef<number | null>(null);
   const isAnswerLockedRef = useRef(false);
   const recentPromptSignaturesRef = useRef<string[]>([]);
+  const latestDataRef = useRef(data);
+  const latestWeightedMapRef = useRef(weightedMap);
 
-  const clearNextPromptTimeout = () => {
+  useEffect(() => {
+    latestDataRef.current = data;
+    latestWeightedMapRef.current = weightedMap;
+  }, [data, weightedMap]);
+
+  const clearNextPromptTimeout = useCallback(() => {
     if (nextPromptTimeoutRef.current === null) return;
     window.clearTimeout(nextPromptTimeoutRef.current);
     nextPromptTimeoutRef.current = null;
-  };
+  }, []);
 
-  const cancelAndResetDrillState = () => {
+  const cancelAndResetDrillState = useCallback(() => {
     clearNextPromptTimeout();
     isAnswerLockedRef.current = false;
     setStatus('idle');
     setQuestionStartTs(Date.now());
-  };
+  }, [clearNextPromptTimeout]);
 
-  const pickNextPrompt = (currentPrompt = prompt) => {
+  const pickNextPrompt = useCallback((currentPrompt = prompt) => {
     const recent = recentPromptSignaturesRef.current;
     const withCurrent = [
       ...recent,
       getPromptSignature(currentPrompt.situation, currentPrompt.handClass),
     ];
-    const next = nextPrompt(data, weightedMap, withCurrent);
+    const next = nextPrompt(latestDataRef.current, latestWeightedMapRef.current, withCurrent);
     const nextSignature = getPromptSignature(next.situation, next.handClass);
     recentPromptSignaturesRef.current = [...withCurrent, nextSignature].slice(-4);
     return next;
-  };
+  }, [prompt]);
 
-  const stepNext = () => {
+  const stepNext = useCallback(() => {
     cancelAndResetDrillState();
     setPrompt(pickNextPrompt());
-  };
+  }, [cancelAndResetDrillState, pickNextPrompt]);
 
-  const scheduleNextPrompt = (delayMs = 300) => {
+  const scheduleNextPrompt = useCallback((delayMs = 300) => {
     clearNextPromptTimeout();
     nextPromptTimeoutRef.current = window.setTimeout(() => {
       nextPromptTimeoutRef.current = null;
       stepNext();
     }, delayMs);
-  };
+  }, [clearNextPromptTimeout, stepNext]);
 
-  const answer = (action: DrillAction) => {
+  const answer = useCallback((action: DrillAction) => {
     if (isAnswerLockedRef.current || status !== 'idle') return;
     isAnswerLockedRef.current = true;
 
-    const expected = computeCorrectAction(data, prompt.situation, prompt.handClass);
+    const activeData = latestDataRef.current;
+    const expected = computeCorrectAction(activeData, prompt.situation, prompt.handClass);
     const ok = action === expected;
     setCorrectAction(expected);
     const responseMs = Date.now() - questionStartTs;
@@ -93,8 +101,8 @@ export function usePromptCycle({
         expectedAction: expected,
         policyKey: policyKeyFromSituation(
           prompt.situation,
-          data.settings.drillContext.format,
-          data.settings.drillContext.effectiveStackBb,
+          activeData.settings.drillContext.format,
+          activeData.settings.drillContext.effectiveStackBb,
         ),
         isCorrect: ok,
         responseMs,
@@ -108,17 +116,17 @@ export function usePromptCycle({
       setStatus('incorrect');
       isAnswerLockedRef.current = false;
     }
-  };
+  }, [onDataChange, onSessionChange, prompt.handClass, prompt.situation, questionStartTs, scheduleNextPrompt, status]);
 
-  useEffect(() => () => clearNextPromptTimeout(), []);
+  useEffect(() => () => clearNextPromptTimeout(), [clearNextPromptTimeout]);
 
   useEffect(() => {
     cancelAndResetDrillState();
     recentPromptSignaturesRef.current = [];
-    const freshPrompt = nextPrompt(data, weightedMap);
+    const freshPrompt = nextPrompt(latestDataRef.current, latestWeightedMapRef.current);
     recentPromptSignaturesRef.current = [getPromptSignature(freshPrompt.situation, freshPrompt.handClass)];
     setPrompt(freshPrompt);
-  }, [drillResetKey]);
+  }, [cancelAndResetDrillState, drillResetKey]);
 
   return {
     prompt,
