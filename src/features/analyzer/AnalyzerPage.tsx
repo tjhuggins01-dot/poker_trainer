@@ -72,11 +72,23 @@ export function AnalyzerPage({ data, onDataChange }: Props) {
   const handSelection = analyzer.exactHand ?? ['', ''];
   const handResult = activeFlopResult.ok ? validateExactHandSelection(handSelection, activeFlopResult.flop) : validateExactHandSelection(handSelection);
 
-  const [runToken, setRunToken] = useState(0);
-  const lastHandledRunTokenRef = useRef(0);
+  const timeoutRef = useRef<number | null>(null);
   const [isRunning, setIsRunning] = useState(false);
-  const [rangeVsRangeAnalysis, setRangeVsRangeAnalysis] = useState<ReturnType<typeof compareRangesOnFlop> | null>(null);
-  const [handVsRangeAnalysis, setHandVsRangeAnalysis] = useState<ReturnType<typeof analyzeHandVsRange> | null>(null);
+  const [rangeVsRangeWithEquity, setRangeVsRangeWithEquity] = useState<ReturnType<typeof compareRangesOnFlop> | null>(null);
+  const [handVsRangeWithEquity, setHandVsRangeWithEquity] = useState<ReturnType<typeof analyzeHandVsRange> | null>(null);
+
+  const baselineRangeVsRangeAnalysis = useMemo(() => {
+    if (!selectedSpot || !activeFlopResult.ok || analyzer.mode !== 'range-vs-range') return null;
+    return compareRangesOnFlop(selectedSpot.heroRange, selectedSpot.villainRange, activeFlopResult.flop, { includeEquity: false });
+  }, [activeFlopResult, analyzer.mode, selectedSpot]);
+
+  const baselineHandVsRangeAnalysis = useMemo(() => {
+    if (!selectedSpot || !activeFlopResult.ok || !handResult.ok || analyzer.mode !== 'hand-vs-range') return null;
+    return analyzeHandVsRange(handResult.hand, selectedSpot.villainRange, activeFlopResult.flop, { includeEquity: false });
+  }, [activeFlopResult, analyzer.mode, handResult, selectedSpot]);
+
+  const rangeVsRangeAnalysis = rangeVsRangeWithEquity ?? baselineRangeVsRangeAnalysis;
+  const handVsRangeAnalysis = handVsRangeWithEquity ?? baselineHandVsRangeAnalysis;
 
   const canRun = Boolean(
     selectedSpot
@@ -87,41 +99,49 @@ export function AnalyzerPage({ data, onDataChange }: Props) {
   const handKey = handResult.ok ? handResult.hand.join('-') : 'invalid-hand';
 
   useEffect(() => {
-    setRangeVsRangeAnalysis(null);
-    setHandVsRangeAnalysis(null);
+    setRangeVsRangeWithEquity(null);
+    setHandVsRangeWithEquity(null);
     setIsRunning(false);
+    if (timeoutRef.current != null) {
+      window.clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
   }, [analyzer.mode, selectedSpot?.id, activeFlopKey, handKey]);
 
-  useEffect(() => {
-    if (!runToken || !selectedSpot || !activeFlopResult.ok) return;
-    if (analyzer.mode === 'hand-vs-range' && !handResult.ok) return;
-    if (runToken === lastHandledRunTokenRef.current) return;
-    lastHandledRunTokenRef.current = runToken;
-
-    let cancelled = false;
-    setIsRunning(true);
-    const timeout = window.setTimeout(() => {
-      if (cancelled) return;
-      if (analyzer.mode === 'range-vs-range') {
-        setRangeVsRangeAnalysis(compareRangesOnFlop(selectedSpot.heroRange, selectedSpot.villainRange, activeFlopResult.flop));
-        setHandVsRangeAnalysis(null);
-      } else if (handResult.ok) {
-        setHandVsRangeAnalysis(analyzeHandVsRange(handResult.hand, selectedSpot.villainRange, activeFlopResult.flop));
-        setRangeVsRangeAnalysis(null);
-      }
-      setIsRunning(false);
-    }, 0);
-
-    return () => {
-      cancelled = true;
-      window.clearTimeout(timeout);
-    };
-  }, [activeFlopResult, analyzer.mode, handResult, runToken, selectedSpot]);
+  useEffect(() => () => {
+    if (timeoutRef.current != null) {
+      window.clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+  }, []);
 
   const summary = useMemo(
     () => (rangeVsRangeAnalysis ? buildAnalysisSummary(rangeVsRangeAnalysis.hero, rangeVsRangeAnalysis.villain) : null),
     [rangeVsRangeAnalysis],
   );
+
+  const runEquity = useCallback(() => {
+    if (!selectedSpot || !activeFlopResult.ok) return;
+    if (analyzer.mode === 'hand-vs-range' && !handResult.ok) return;
+
+    if (timeoutRef.current != null) {
+      window.clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+
+    setIsRunning(true);
+    timeoutRef.current = window.setTimeout(() => {
+      if (analyzer.mode === 'range-vs-range') {
+        setRangeVsRangeWithEquity(compareRangesOnFlop(selectedSpot.heroRange, selectedSpot.villainRange, activeFlopResult.flop, { includeEquity: true }));
+        setHandVsRangeWithEquity(null);
+      } else if (handResult.ok) {
+        setHandVsRangeWithEquity(analyzeHandVsRange(handResult.hand, selectedSpot.villainRange, activeFlopResult.flop, { includeEquity: true }));
+        setRangeVsRangeWithEquity(null);
+      }
+      setIsRunning(false);
+      timeoutRef.current = null;
+    }, 0);
+  }, [activeFlopResult, analyzer.mode, handResult, selectedSpot]);
 
   const updateAnalyzer = useCallback(
     (updater: (prev: AppData['settings']['analyzer']) => AppData['settings']['analyzer']) => {
@@ -254,7 +274,7 @@ export function AnalyzerPage({ data, onDataChange }: Props) {
         error={activeFlopResult.ok ? null : activeFlopResult.error}
       />
 
-      <button type="button" onClick={() => setRunToken((value) => value + 1)} disabled={!canRun || isRunning}>
+      <button type="button" onClick={runEquity} disabled={!canRun || isRunning}>
         Calc equity
       </button>
       {isRunning && <p className="muted">Running...</p>}

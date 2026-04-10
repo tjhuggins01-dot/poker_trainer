@@ -204,6 +204,19 @@ test('raw equity: range vs range returns real values and blocker sensitivity', (
   assert.ok((equities.hero ?? 0) > 0.85);
 });
 
+test('analysis supports metrics-only mode without running equity', () => {
+  const flop = [c('As'), c('Kd'), c('2c')] as const;
+  const rangeOnly = compareRangesOnFlop(['AA', 'AKs'], ['QQ', 'KQs'], flop, { includeEquity: false });
+  assert.equal(rangeOnly.hero.rawEquity, null);
+  assert.equal(rangeOnly.villain.rawEquity, null);
+  assert.ok(rangeOnly.hero.comboCount > 0);
+
+  const handOnly = analyzeHandVsRange([c('Ac'), c('Qd')], ['AQo', 'KQo', '77'], flop, { includeEquity: false });
+  assert.equal(handOnly.hand.rawEquity, null);
+  assert.equal(handOnly.range.rawEquity, null);
+  assert.ok(handOnly.notes.some((note) => note.includes('Calc equity')));
+});
+
 test('hand vs range analysis returns hand + range metrics on flop', () => {
   const result = analyzeHandVsRange(
     [c('As'), c('Kd')],
