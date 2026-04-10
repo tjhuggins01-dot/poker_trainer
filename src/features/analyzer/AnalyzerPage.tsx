@@ -1,9 +1,13 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { buildAnalyzerSpots, getAnalyzerStacks } from '../../domain/postflop-analysis/catalog';
+import { analyzeHandVsRange } from '../../domain/postflop-analysis/analyzeHandVsRange';
 import { compareRangesOnFlop } from '../../domain/postflop-analysis/compareRanges';
-import { validateFlopSelection } from '../../domain/postflop-analysis/flopSelection';
+import { validateExactHandSelection, validateFlopSelection } from '../../domain/postflop-analysis/flopSelection';
+import { generateFlopFromPreset } from '../../domain/postflop-analysis/simplifiedBoards';
 import { buildAnalysisSummary } from '../../domain/postflop-analysis/summaries';
+import { cardToString } from '../../domain/postflop/cards';
 import { FlopSelector } from './FlopSelector';
+import { HandSelector } from './HandSelector';
 import { MetricsPanel } from './MetricsPanel';
 import { SpotSelector } from './SpotSelector';
 import { SummaryPanel } from './SummaryPanel';
@@ -29,13 +33,39 @@ export function AnalyzerPage({ data, onDataChange }: Props) {
 
   const selectedSpot = spots.find((spot) => spot.id === analyzer.spotId) ?? spots[0];
   const flopSelection = analyzer.flop ?? ['', '', ''];
-  const flopResult = validateFlopSelection(flopSelection);
+  const exactFlopResult = validateFlopSelection(flopSelection);
+  const simplifiedFlop = useMemo(() => {
+    if (!analyzer.simplifiedPresetId) return null;
+    try {
+      return generateFlopFromPreset(analyzer.simplifiedPresetId);
+    } catch {
+      return null;
+    }
+  }, [analyzer.simplifiedPresetId]);
+  const activeFlopResult = analyzer.boardInputMode === 'exact'
+    ? exactFlopResult
+    : (simplifiedFlop ? { ok: true as const, flop: simplifiedFlop } : { ok: false as const, error: 'Select a simplified board preset.' });
 
-  const analysis = selectedSpot && flopResult.ok
-    ? compareRangesOnFlop(selectedSpot.heroRange, selectedSpot.villainRange, flopResult.flop)
-    : null;
+  const handSelection = analyzer.exactHand ?? ['', ''];
+  const handResult = activeFlopResult.ok ? validateExactHandSelection(handSelection, activeFlopResult.flop) : validateExactHandSelection(handSelection);
 
-  const summary = analysis ? buildAnalysisSummary(analysis.hero, analysis.villain) : null;
+  const activeFlopKey = activeFlopResult.ok ? activeFlopResult.flop.map(cardToString).join('') : '';
+  const handKey = handResult.ok ? handResult.hand.map(cardToString).join('') : '';
+
+  const rangeVsRangeAnalysis = useMemo(() => {
+    if (!selectedSpot || !activeFlopResult.ok || analyzer.mode !== 'range-vs-range') return null;
+    return compareRangesOnFlop(selectedSpot.heroRange, selectedSpot.villainRange, activeFlopResult.flop);
+  }, [activeFlopKey, analyzer.mode, selectedSpot]);
+
+  const handVsRangeAnalysis = useMemo(() => {
+    if (!selectedSpot || !activeFlopResult.ok || !handResult.ok || analyzer.mode !== 'hand-vs-range') return null;
+    return analyzeHandVsRange(handResult.hand, selectedSpot.villainRange, activeFlopResult.flop);
+  }, [activeFlopKey, analyzer.mode, handKey, selectedSpot]);
+
+  const summary = useMemo(
+    () => (rangeVsRangeAnalysis ? buildAnalysisSummary(rangeVsRangeAnalysis.hero, rangeVsRangeAnalysis.villain) : null),
+    [rangeVsRangeAnalysis],
+  );
 
   const updateAnalyzer = useCallback(
     (updater: (prev: AppData['settings']['analyzer']) => AppData['settings']['analyzer']) => {
@@ -68,7 +98,19 @@ export function AnalyzerPage({ data, onDataChange }: Props) {
   return (
     <section>
       <h2>Analyzer</h2>
-      <p className="muted">Compare stored SRP opener-vs-BB-call ranges on an exact flop.</p>
+      <p className="muted">Compare SRP ranges or an exact hand vs a stored range on the flop.</p>
+
+      <label>Analyzer mode</label>
+      <select
+        value={analyzer.mode}
+        onChange={(event) => updateAnalyzer((prev: AppData['settings']['analyzer']) => ({
+          ...prev,
+          mode: event.target.value as typeof prev.mode,
+        }))}
+      >
+        <option value="range-vs-range">Range vs Range</option>
+        <option value="hand-vs-range">Hand vs Range</option>
+      </select>
 
       <label>Stack</label>
       <select
@@ -98,24 +140,67 @@ export function AnalyzerPage({ data, onDataChange }: Props) {
         onChange={(spotId) => updateAnalyzer((prev: AppData['settings']['analyzer']) => ({ ...prev, spotId }))}
       />
 
+      {analyzer.mode === 'hand-vs-range' && (
+        <HandSelector
+          selected={handSelection}
+          error={handResult.ok || !activeFlopResult.ok ? null : handResult.error}
+          onChange={(index, value) => {
+            const next = [...handSelection] as [string, string];
+            next[index] = value;
+            updateAnalyzer((prev: AppData['settings']['analyzer']) => ({ ...prev, exactHand: next }));
+          }}
+        />
+      )}
+
       <FlopSelector
+        boardInputMode={analyzer.boardInputMode}
         selected={flopSelection}
+        selectedPresetId={analyzer.simplifiedPresetId}
+        generatedFlop={simplifiedFlop}
+        onBoardInputModeChange={(boardInputMode) => updateAnalyzer((prev: AppData['settings']['analyzer']) => ({ ...prev, boardInputMode }))}
+        onPresetChange={(presetId) => updateAnalyzer((prev: AppData['settings']['analyzer']) => ({ ...prev, simplifiedPresetId: presetId || null }))}
         onChange={(index, value) => {
           const next = [...flopSelection] as [string, string, string];
           next[index] = value;
           updateAnalyzer((prev: AppData['settings']['analyzer']) => ({ ...prev, flop: next }));
         }}
-        error={flopResult.ok ? null : flopResult.error}
+        error={activeFlopResult.ok ? null : activeFlopResult.error}
       />
 
       {!stacks.length && <p className="muted">No supported SRP analyzer spots available for current data.</p>}
       {stacks.length > 0 && !spots.length && <p className="muted">No SRP spots for this stack yet.</p>}
 
-      {analysis && summary && (
+      {rangeVsRangeAnalysis && summary && (
         <>
-          <MetricsPanel analysis={analysis} />
+          <MetricsPanel analysis={rangeVsRangeAnalysis} />
           <SummaryPanel summary={summary} />
         </>
+      )}
+
+      {handVsRangeAnalysis && (
+        <div className="card">
+          <h3>Hand vs Range</h3>
+          <p>
+            Exact hand: <strong>{handVsRangeAnalysis.hand.hole.map((card) => cardToString(card).toUpperCase()).join(' ')}</strong>
+          </p>
+          <p>Hand category: <strong>{handVsRangeAnalysis.hand.category}</strong></p>
+          <p>Hand draws: <strong>{handVsRangeAnalysis.hand.drawCategory}</strong></p>
+          <p>Hand raw equity: <strong>{handVsRangeAnalysis.hand.rawEquity == null ? 'N/A' : `${(handVsRangeAnalysis.hand.rawEquity * 100).toFixed(1)}%`}</strong></p>
+          <hr />
+          <p>Range combos after blockers: <strong>{handVsRangeAnalysis.range.comboCount}</strong></p>
+          <p>Range one pair+: <strong>{(handVsRangeAnalysis.range.onePairPlusShare * 100).toFixed(1)}%</strong></p>
+          <p>Range two pair+: <strong>{(handVsRangeAnalysis.range.twoPairPlusShare * 100).toFixed(1)}%</strong></p>
+          <p>Range trips+: <strong>{(handVsRangeAnalysis.range.tripsPlusShare * 100).toFixed(1)}%</strong></p>
+          <p>Range straight+: <strong>{(handVsRangeAnalysis.range.straightPlusShare * 100).toFixed(1)}%</strong></p>
+          <p>Range flush: <strong>{(handVsRangeAnalysis.range.flushShare * 100).toFixed(1)}%</strong></p>
+          <p>Range flush draw: <strong>{(handVsRangeAnalysis.range.flushDrawShare * 100).toFixed(1)}%</strong></p>
+          <p>Range open-ended: <strong>{(handVsRangeAnalysis.range.openEndedShare * 100).toFixed(1)}%</strong></p>
+          <p>Range gutshot: <strong>{(handVsRangeAnalysis.range.gutshotShare * 100).toFixed(1)}%</strong></p>
+          <ul>
+            {handVsRangeAnalysis.notes.map((note) => <li key={note}>{note}</li>)}
+          </ul>
+          <p className="muted">This is a range-interaction study view, not solver advice.</p>
+        </div>
       )}
     </section>
   );

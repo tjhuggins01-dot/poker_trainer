@@ -25,9 +25,5 @@ export const buildAnalysisSummary = (hero: SideMetrics, villain: SideMetrics): A
   if (topEndEdge === 'Close') notes.push('Top-end coverage appears relatively balanced.');
   else notes.push(`${topEndEdge} appears to hold more top-end made hand coverage.`);
 
-  if (hero.rawEquity == null || villain.rawEquity == null) {
-    notes.push('Raw equity is not computed in this MVP view; edge uses density proxies.');
-  }
-
   return { rawEquityEdge, topEndEdge, notes };
 };

@@ -1,5 +1,5 @@
 import { cardToString, parseCard } from '../postflop/cards';
-import type { FlopBoard } from '../postflop/types';
+import type { FlopBoard, HoleCards } from '../postflop/types';
 import { RANKS_DESC, SUITS, type CardOption } from './types';
 
 export const CARD_OPTIONS: CardOption[] = RANKS_DESC.flatMap((rank) =>
@@ -23,5 +23,26 @@ export const validateFlopSelection = (selected: string[]): { ok: true; flop: Flo
     return { ok: true, flop };
   } catch {
     return { ok: false, error: 'Invalid flop selection.' };
+  }
+};
+
+export const validateExactHandSelection = (
+  selected: [string, string] | null,
+  flop?: FlopBoard,
+): { ok: true; hand: HoleCards } | { ok: false; error: string } => {
+  if (!selected || selected.some((value) => !value)) return { ok: false, error: 'Select both exact hand cards.' };
+  if (selected[0] === selected[1]) return { ok: false, error: 'Exact hand cards must be unique.' };
+
+  try {
+    const hand = selected.map((value) => parseCard(value)) as HoleCards;
+    if (flop) {
+      const blocked = new Set(flop.map(cardToString));
+      if (hand.some((card) => blocked.has(cardToString(card)))) {
+        return { ok: false, error: 'Exact hand cannot use a board card.' };
+      }
+    }
+    return { ok: true, hand };
+  } catch {
+    return { ok: false, error: 'Invalid exact hand selection.' };
   }
 };
