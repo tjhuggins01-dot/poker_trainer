@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { CardRow } from '../../../components/PlayingCard';
 import {
   evaluateRangeNutQuizSelection,
@@ -6,6 +6,8 @@ import {
   getRangeNutQuizEntriesForSpot,
   nextPromptIndex,
   RANGE_NUT_MVP_SPOT_ID,
+  shuffleRangeNutQuizEntries,
+  toAnalyzerSpotId,
   type AdvantageAnswer,
 } from '../../../domain/postflop/rangeNutAdvantageQuiz';
 import { reduceDataOnRangeNutAnswer, reduceSessionOnRangeNutAnswer } from '../../../domain/postflop/rangeNutAdvantageStats';
@@ -27,17 +29,18 @@ type Props = {
   session: SessionStats;
   onDataChange: (updater: (prev: AppData) => AppData) => void;
   onSessionChange: (updater: (prev: SessionStats) => SessionStats) => void;
+  onOpenAnalyzer: () => void;
 };
 
-export function RangeNutAdvantagePage({ data, session, onDataChange, onSessionChange }: Props) {
+export function RangeNutAdvantagePage({ data, session, onDataChange, onSessionChange, onOpenAnalyzer }: Props) {
   const [spotId] = useState(RANGE_NUT_MVP_SPOT_ID);
+  const [entries, setEntries] = useState(() => shuffleRangeNutQuizEntries(getRangeNutQuizEntriesForSpot(RANGE_NUT_MVP_SPOT_ID)));
   const [promptIndex, setPromptIndex] = useState(0);
   const [rangeSelection, setRangeSelection] = useState<AdvantageAnswer | null>(null);
   const [nutSelection, setNutSelection] = useState<AdvantageAnswer | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [questionStartTs, setQuestionStartTs] = useState(Date.now());
 
-  const entries = useMemo(() => getRangeNutQuizEntriesForSpot(spotId), [spotId]);
   const prompt = entries[promptIndex];
   const selectedSpot = getEnabledRangeNutQuizSpots().find((spot) => spot.id === spotId);
 
@@ -56,8 +59,38 @@ export function RangeNutAdvantagePage({ data, session, onDataChange, onSessionCh
     setRevealed(true);
   };
 
+  const openAnalyzerForCurrentBoard = () => {
+    if (!prompt || !selectedSpot) return;
+    onDataChange((prev) => ({
+      ...prev,
+      settings: {
+        ...prev.settings,
+        analyzer: {
+          ...prev.settings.analyzer,
+          format: selectedSpot.format,
+          effectiveStackBb: selectedSpot.effectiveStackBb,
+          openerPos: selectedSpot.openerPos,
+          callerPos: selectedSpot.callerPos,
+          spotId: toAnalyzerSpotId(selectedSpot),
+          mode: 'range-vs-range',
+          boardInputMode: 'exact',
+          flop: prompt.board,
+          exactHand: null,
+          simplifiedPresetId: null,
+        },
+      },
+    }));
+    onOpenAnalyzer();
+  };
+
   const next = () => {
-    setPromptIndex((current) => nextPromptIndex(current, entries.length));
+    setPromptIndex((current) => {
+      const nextIndex = nextPromptIndex(current, entries.length);
+      if (nextIndex === 0 && entries.length > 1) {
+        setEntries((prev) => shuffleRangeNutQuizEntries(prev));
+      }
+      return nextIndex;
+    });
     setRangeSelection(null);
     setNutSelection(null);
     setRevealed(false);
@@ -134,6 +167,10 @@ export function RangeNutAdvantagePage({ data, session, onDataChange, onSessionCh
             {prompt.explanation.tags.length > 0 && (
               <p className="muted">{prompt.explanation.tags.join(' • ')}</p>
             )}
+            {prompt.familyTags.length > 0 && (
+              <p className="muted">Board texture: {prompt.familyTags.join(', ')}</p>
+            )}
+            <button onClick={openAnalyzerForCurrentBoard}>Open board in Analyzer</button>
             <button className="primary" onClick={next}>Next board</button>
           </div>
         )}
