@@ -17,7 +17,7 @@ export function useDrillQuerySync(data: AppData, onDataChange: OnDataChange) {
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
     q.set('drill', data.settings.drillType);
-    if (data.settings.drillType !== 'postflop_hand_category') {
+    if (data.settings.drillType !== 'postflop_hand_category' && data.settings.drillType !== 'postflop_range_nut_advantage') {
       q.set('format', data.settings.drillContext.format);
       q.set('stack', String(data.settings.drillContext.effectiveStackBb));
       q.set('node', data.settings.drillContext.nodeType);
@@ -38,7 +38,7 @@ export function useDrillQuerySync(data: AppData, onDataChange: OnDataChange) {
   return {
     updateDrillType: (drillType: DrillType) => {
       onDataChange((prev) => {
-        if (drillType === 'postflop_hand_category') {
+        if (drillType === 'postflop_hand_category' || drillType === 'postflop_range_nut_advantage') {
           return {
             ...prev,
             settings: {

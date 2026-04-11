@@ -39,6 +39,7 @@ export function DrillTypeSelector({
         </option>
 
         <option value="postflop_hand_category">Postflop: Hand Category</option>
+        <option value="postflop_range_nut_advantage">Postflop: Range / Nut Advantage</option>
       </select>
     </>
   );

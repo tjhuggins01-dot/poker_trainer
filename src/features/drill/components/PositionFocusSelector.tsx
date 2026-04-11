@@ -18,7 +18,10 @@ export function PositionFocusSelector({
   const onPositionToggle = (position: string, checked: boolean) => {
     onDataChange((prev) => {
       const next = structuredClone(prev);
-      const keyFocus = prev.settings.drillType === 'postflop_hand_category' ? 'rfi' : prev.settings.drillType;
+      const keyFocus =
+        prev.settings.drillType === 'postflop_hand_category' || prev.settings.drillType === 'postflop_range_nut_advantage'
+          ? 'rfi'
+          : prev.settings.drillType;
       const list = new Set(next.settings.positionFocus[keyFocus]);
       if (checked) list.add(position as never);
       else list.delete(position as never);
@@ -33,7 +36,11 @@ export function PositionFocusSelector({
 
   const onVillainToggle = (position: string, checked: boolean) => {
     onDataChange((prev) => {
-      if (prev.settings.drillType === 'rfi' || prev.settings.drillType === 'postflop_hand_category') return prev;
+      if (
+        prev.settings.drillType === 'rfi'
+        || prev.settings.drillType === 'postflop_hand_category'
+        || prev.settings.drillType === 'postflop_range_nut_advantage'
+      ) return prev;
       const next = structuredClone(prev);
       const list = new Set(next.settings.villainFocus[prev.settings.drillType]);
       if (checked) list.add(position as never);
