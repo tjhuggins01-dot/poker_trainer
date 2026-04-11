@@ -1,0 +1,56 @@
+[
+  {
+    "id": "cash9max-100-btn-vs-bb-srp-flop",
+    "format": "cash9max",
+    "effectiveStackBb": 100,
+    "openerPos": "BTN",
+    "callerPos": "BB",
+    "street": "flop",
+    "candidateSourceId": "coreFlopsV1",
+    "acceptedFile": "cash9max-100-btn-vs-bb-srp-flop.accepted.json",
+    "reviewFile": "cash9max-100-btn-vs-bb-srp-flop.review.json",
+    "acceptedCount": 29,
+    "rejectedCount": 20,
+    "familyCoverage": [
+      "a-high-dry",
+      "broadway-connected",
+      "k-high-dry",
+      "low-connected",
+      "low-disconnected",
+      "middling-connected",
+      "monotone-high",
+      "monotone-low",
+      "paired-high",
+      "paired-low",
+      "qj-high-dynamic",
+      "two-tone-dynamic"
+    ]
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop",
+    "format": "cash9max",
+    "effectiveStackBb": 100,
+    "openerPos": "CO",
+    "callerPos": "BB",
+    "street": "flop",
+    "candidateSourceId": "coreFlopsPlusV1",
+    "acceptedFile": "cash9max-100-co-vs-bb-srp-flop.accepted.json",
+    "reviewFile": "cash9max-100-co-vs-bb-srp-flop.review.json",
+    "acceptedCount": 30,
+    "rejectedCount": 25,
+    "familyCoverage": [
+      "a-high-dry",
+      "broadway-connected",
+      "k-high-dry",
+      "low-connected",
+      "low-disconnected",
+      "middling-connected",
+      "monotone-high",
+      "monotone-low",
+      "paired-high",
+      "paired-low",
+      "qj-high-dynamic",
+      "two-tone-dynamic"
+    ]
+  }
+]

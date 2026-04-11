@@ -1,0 +1,673 @@
+[
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-001",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "As",
+      "8d",
+      "3c"
+    ],
+    "familyTags": [
+      "a-high-dry"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:26.6pp",
+        "1p+:12.9pp",
+        "2p+:2.8pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-003",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "Ac",
+      "9h",
+      "4d"
+    ],
+    "familyTags": [
+      "a-high-dry"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "tags": [
+        "eq:11.8pp",
+        "1p+:4.3pp",
+        "2p+:4.2pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-005",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "Ks",
+      "8d",
+      "2c"
+    ],
+    "familyTags": [
+      "k-high-dry"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:20.0pp",
+        "1p+:13.3pp",
+        "2p+:-0.2pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-010",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "Qh",
+      "Jd",
+      "9c"
+    ],
+    "familyTags": [
+      "qj-high-dynamic",
+      "broadway-connected"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "tags": [
+        "eq:9.9pp",
+        "1p+:3.1pp",
+        "2p+:4.7pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-011",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "Js",
+      "Td",
+      "8c"
+    ],
+    "familyTags": [
+      "qj-high-dynamic",
+      "broadway-connected"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:4.1pp",
+        "1p+:-4.8pp",
+        "2p+:0.0pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-013",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "Kh",
+      "Qd",
+      "Jc"
+    ],
+    "familyTags": [
+      "broadway-connected"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+      "tags": [
+        "eq:16.6pp",
+        "1p+:4.2pp",
+        "2p+:-4.6pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-016",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "9s",
+      "8d",
+      "7c"
+    ],
+    "familyTags": [
+      "middling-connected"
+    ],
+    "rangeAdvantage": "close",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "Overall range interaction is close (slight equity lean to opener); top-end concentration is villain.",
+      "tags": [
+        "eq:0.5pp",
+        "1p+:1.4pp",
+        "2p+:-2.2pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-018",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "8h",
+      "7d",
+      "6c"
+    ],
+    "familyTags": [
+      "middling-connected",
+      "low-connected"
+    ],
+    "rangeAdvantage": "villain",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "caller has the clearer distribution edge (villain) while top-end concentration is villain.",
+      "tags": [
+        "eq:-4.6pp",
+        "1p+:-2.7pp",
+        "2p+:-8.7pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-019",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "Tc",
+      "8d",
+      "7h"
+    ],
+    "familyTags": [
+      "middling-connected"
+    ],
+    "rangeAdvantage": "close",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is close.",
+      "tags": [
+        "eq:-0.5pp",
+        "1p+:-1.4pp",
+        "2p+:-1.4pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-020",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "6s",
+      "5d",
+      "4c"
+    ],
+    "familyTags": [
+      "low-connected"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+      "tags": [
+        "eq:8.7pp",
+        "1p+:-1.5pp",
+        "2p+:-4.3pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-024",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "7s",
+      "4d",
+      "2c"
+    ],
+    "familyTags": [
+      "low-disconnected"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:13.8pp",
+        "1p+:-0.6pp",
+        "2p+:-1.4pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-028",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "As",
+      "Ad",
+      "7c"
+    ],
+    "familyTags": [
+      "paired-high",
+      "a-high-dry"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "tags": [
+        "eq:20.9pp",
+        "1p+:0.0pp",
+        "2p+:12.9pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-029",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "Kh",
+      "Kd",
+      "4s"
+    ],
+    "familyTags": [
+      "paired-high",
+      "k-high-dry"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "tags": [
+        "eq:18.0pp",
+        "1p+:0.0pp",
+        "2p+:5.3pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-030",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "Qh",
+      "Qs",
+      "8d"
+    ],
+    "familyTags": [
+      "paired-high"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "tags": [
+        "eq:13.1pp",
+        "1p+:0.0pp",
+        "2p+:7.0pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-031",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "Ts",
+      "Td",
+      "6h"
+    ],
+    "familyTags": [
+      "paired-high"
+    ],
+    "rangeAdvantage": "close",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is villain.",
+      "tags": [
+        "eq:-1.4pp",
+        "1p+:0.0pp",
+        "2p+:-4.9pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-032",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "5s",
+      "5d",
+      "2c"
+    ],
+    "familyTags": [
+      "paired-low"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:5.5pp",
+        "1p+:0.0pp",
+        "2p+:2.2pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-035",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "2s",
+      "2d",
+      "9h"
+    ],
+    "familyTags": [
+      "paired-low"
+    ],
+    "rangeAdvantage": "close",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is close.",
+      "tags": [
+        "eq:-1.8pp",
+        "1p+:0.0pp",
+        "2p+:0.8pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-036",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "As",
+      "Js",
+      "4s"
+    ],
+    "familyTags": [
+      "monotone-high"
+    ],
+    "rangeAdvantage": "villain",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "caller has the clearer distribution edge (villain) while top-end concentration is close.",
+      "tags": [
+        "eq:-7.2pp",
+        "1p+:9.7pp",
+        "2p+:-0.2pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-037",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "Ks",
+      "Ts",
+      "3s"
+    ],
+    "familyTags": [
+      "monotone-high"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:14.3pp",
+        "1p+:-3.1pp",
+        "2p+:1.3pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-038",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "Qs",
+      "9s",
+      "2s"
+    ],
+    "familyTags": [
+      "monotone-high"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+      "tags": [
+        "eq:22.3pp",
+        "1p+:0.6pp",
+        "2p+:-0.6pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-039",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "8c",
+      "6c",
+      "3c"
+    ],
+    "familyTags": [
+      "low-disconnected",
+      "monotone-low"
+    ],
+    "rangeAdvantage": "close",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is close.",
+      "tags": [
+        "eq:-0.1pp",
+        "1p+:3.1pp",
+        "2p+:-1.5pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-040",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "7d",
+      "5d",
+      "2d"
+    ],
+    "familyTags": [
+      "low-disconnected",
+      "monotone-low"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+      "tags": [
+        "eq:15.2pp",
+        "1p+:0.5pp",
+        "2p+:-2.6pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-041",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "6h",
+      "4h",
+      "2h"
+    ],
+    "familyTags": [
+      "low-connected",
+      "monotone-low"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+      "tags": [
+        "eq:18.1pp",
+        "1p+:-1.2pp",
+        "2p+:-3.9pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-044",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "Qh",
+      "9h",
+      "7d"
+    ],
+    "familyTags": [
+      "two-tone-dynamic"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:22.4pp",
+        "1p+:0.7pp",
+        "2p+:0.7pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-046",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "Ts",
+      "8s",
+      "6d"
+    ],
+    "familyTags": [
+      "middling-connected",
+      "two-tone-dynamic"
+    ],
+    "rangeAdvantage": "villain",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "caller has the clearer distribution edge (villain) while top-end concentration is close.",
+      "tags": [
+        "eq:-18.6pp",
+        "1p+:-2.6pp",
+        "2p+:-1.5pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-051",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "Kc",
+      "Jd",
+      "8s"
+    ],
+    "familyTags": [
+      "k-high-dry"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "tags": [
+        "eq:6.6pp",
+        "1p+:10.1pp",
+        "2p+:1.6pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-052",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "9c",
+      "7c",
+      "5d"
+    ],
+    "familyTags": [
+      "middling-connected",
+      "two-tone-dynamic"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+      "tags": [
+        "eq:12.3pp",
+        "1p+:-3.7pp",
+        "2p+:-2.1pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-053",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "Ah",
+      "Kd",
+      "Qc"
+    ],
+    "familyTags": [
+      "broadway-connected"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "tags": [
+        "eq:28.1pp",
+        "1p+:16.8pp",
+        "2p+:9.3pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-054",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "8s",
+      "8h",
+      "4d"
+    ],
+    "familyTags": [
+      "paired-low"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "tags": [
+        "eq:3.9pp",
+        "1p+:0.0pp",
+        "2p+:3.8pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-co-vs-bb-srp-flop-flop-055",
+    "spot": "cash9max-100-co-vs-bb-srp-flop",
+    "board": [
+      "5c",
+      "4c",
+      "2s"
+    ],
+    "familyTags": [
+      "low-connected",
+      "two-tone-dynamic"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:10.4pp",
+        "1p+:0.6pp",
+        "2p+:-1.6pp"
+      ]
+    }
+  }
+]

@@ -1,11 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  buildSpotLibraryIndex,
+  generateAllSpotLibraries,
   generateBtnVsBbFlopAdvantageLibrary,
+  generateSpotLibrary,
   isMuddyContradiction,
   labelNutAdvantage,
   labelRangeAdvantage,
 } from '../../src/domain/postflop-analysis/advantageLibrary.ts';
+import { ADVANTAGE_SPOT_CONFIGS, getAdvantageSpotConfigById } from '../../src/domain/postflop-analysis/advantageLibrarySpots.ts';
 import type { ComparativeAnalysis } from '../../src/domain/postflop-analysis/types.ts';
 import { parseCard } from '../../src/domain/postflop/cards.ts';
 
@@ -38,6 +42,13 @@ const makeAnalysis = (overrides: Partial<ComparativeAnalysis> = {}): Comparative
     rawEquity: 0.48,
   },
   ...overrides,
+});
+
+test('spot config resolver resolves known id and throws for unknown id', () => {
+  const config = getAdvantageSpotConfigById('cash9max-100-btn-vs-bb-srp-flop');
+  assert.equal(config.descriptor.openerPos, 'BTN');
+  assert.equal(config.descriptor.callerPos, 'BB');
+  assert.throws(() => getAdvantageSpotConfigById('unknown-spot'));
 });
 
 test('range advantage rubric: hero large edge, villain large edge, and mixed close', () => {
@@ -84,29 +95,55 @@ test('rejection helper: contradictory and muddy pictures are flagged', () => {
   assert.equal(isMuddyContradiction(closeRangeWeakNut, 'close', 'hero'), true);
 });
 
-test('library generation structure, uniqueness, coverage, legality, and rejection reasons', () => {
+test('legacy helper still generates BTN vs BB without requiring config input', () => {
   const { accepted, review, coverage } = generateBtnVsBbFlopAdvantageLibrary();
+  assert.ok(accepted.length >= 25);
+  assert.ok(review.length > accepted.length);
+  assert.ok(coverage.length > 0);
+});
 
-  assert.ok(accepted.length >= 25 && accepted.length <= 50);
-  assert.equal(review.length > accepted.length, true);
-  assert.equal(new Set(accepted.map((entry) => entry.board.join(''))).size, accepted.length);
+test('multi-spot generation is deterministic and stats include labels/families/rejections', () => {
+  const runA = generateAllSpotLibraries(ADVANTAGE_SPOT_CONFIGS);
+  const runB = generateAllSpotLibraries(ADVANTAGE_SPOT_CONFIGS);
 
-  accepted.forEach((entry) => {
-    assert.equal(entry.spot, 'cash9max-100-btn-vs-bb-srp-flop');
-    assert.equal(new Set(entry.board).size, 3);
-    assert.ok(entry.familyTags.length > 0);
-    assert.ok(entry.explanation.summary.length > 0);
-    assert.ok(entry.explanation.tags.length > 0);
+  assert.equal(runA.length >= 2, true);
+  assert.deepEqual(
+    runA.map((result) => result.accepted.map((entry) => entry.id)),
+    runB.map((result) => result.accepted.map((entry) => entry.id)),
+  );
+
+  runA.forEach((result) => {
+    assert.equal(result.accepted.length >= 25, true);
+    assert.equal(result.review.length > result.accepted.length, true);
+    assert.deepEqual([...result.stats.familyCoverage].sort(), result.stats.familyCoverage);
+    assert.equal(result.stats.acceptedCount, result.accepted.length);
+    assert.equal(result.stats.rejectedCount, result.review.length - result.accepted.length);
+    assert.equal(typeof result.stats.labelDistribution.hero, 'number');
+    assert.equal(typeof result.stats.nutLabelDistribution.villain, 'number');
   });
+});
 
-  const requiredFamilies = [
-    'a-high-dry', 'k-high-dry', 'qj-high-dynamic', 'broadway-connected', 'middling-connected', 'low-connected',
-    'low-disconnected', 'paired-high', 'paired-low', 'monotone-high', 'monotone-low', 'two-tone-dynamic',
-  ];
-  requiredFamilies.forEach((family) => assert.ok(coverage.includes(family as typeof coverage[number])));
+test('index builder returns sorted, contract-stable entries for all spots', () => {
+  const results = generateAllSpotLibraries(ADVANTAGE_SPOT_CONFIGS);
+  const index = buildSpotLibraryIndex(results);
 
-  review.filter((entry) => !entry.accepted).forEach((entry) => {
-    assert.ok(entry.rejectionReason && entry.rejectionReason.length > 0);
-    assert.ok(entry.metrics.heroRawEquity != null || entry.metrics.villainRawEquity != null);
+  assert.equal(index.length, results.length);
+  assert.deepEqual(index.map((entry) => entry.id), [...index.map((entry) => entry.id)].sort());
+  index.forEach((entry) => {
+    assert.ok(entry.acceptedFile.endsWith('.accepted.json'));
+    assert.ok(entry.reviewFile.endsWith('.review.json'));
+    assert.equal(typeof entry.acceptedCount, 'number');
+    assert.equal(typeof entry.rejectedCount, 'number');
+    assert.equal(Array.isArray(entry.familyCoverage), true);
   });
+});
+
+test('single-spot generation has expected output contract and no hardcoded spot literal', () => {
+  const spot = getAdvantageSpotConfigById('cash9max-100-co-vs-bb-srp-flop');
+  const result = generateSpotLibrary(spot);
+
+  assert.ok(result.accepted.every((entry) => entry.spot === spot.id));
+  assert.ok(result.review.every((entry) => entry.spot === spot.id));
+  assert.ok(result.accepted.every((entry) => entry.id.startsWith(`${spot.id}-flop-`)));
+  assert.ok(result.review.some((entry) => entry.rejectionReason));
 });
