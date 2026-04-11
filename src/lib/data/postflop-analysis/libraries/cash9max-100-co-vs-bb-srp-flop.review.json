@@ -1,0 +1,2454 @@
+{
+  "spot": {
+    "id": "cash9max-100-co-vs-bb-srp-flop",
+    "descriptor": {
+      "format": "cash9max",
+      "effectiveStackBb": 100,
+      "openerPos": "CO",
+      "callerPos": "BB",
+      "street": "flop"
+    },
+    "candidateSource": {
+      "id": "coreFlopsPlusV1",
+      "boards": [
+        [
+          "As",
+          "8d",
+          "3c"
+        ],
+        [
+          "Ah",
+          "7c",
+          "2d"
+        ],
+        [
+          "Ac",
+          "9h",
+          "4d"
+        ],
+        [
+          "Ad",
+          "6s",
+          "2h"
+        ],
+        [
+          "Ks",
+          "8d",
+          "2c"
+        ],
+        [
+          "Kh",
+          "9s",
+          "3d"
+        ],
+        [
+          "Kc",
+          "7h",
+          "2d"
+        ],
+        [
+          "Kd",
+          "Jc",
+          "4s"
+        ],
+        [
+          "Qs",
+          "Jh",
+          "8d"
+        ],
+        [
+          "Qh",
+          "Jd",
+          "9c"
+        ],
+        [
+          "Js",
+          "Td",
+          "8c"
+        ],
+        [
+          "Qs",
+          "Jh",
+          "Td"
+        ],
+        [
+          "Kh",
+          "Qd",
+          "Jc"
+        ],
+        [
+          "Qh",
+          "Td",
+          "9c"
+        ],
+        [
+          "Jh",
+          "Tc",
+          "9d"
+        ],
+        [
+          "9s",
+          "8d",
+          "7c"
+        ],
+        [
+          "Ts",
+          "9h",
+          "8d"
+        ],
+        [
+          "8h",
+          "7d",
+          "6c"
+        ],
+        [
+          "Tc",
+          "8d",
+          "7h"
+        ],
+        [
+          "6s",
+          "5d",
+          "4c"
+        ],
+        [
+          "7h",
+          "6d",
+          "5s"
+        ],
+        [
+          "6h",
+          "5c",
+          "3d"
+        ],
+        [
+          "5h",
+          "4d",
+          "3c"
+        ],
+        [
+          "7s",
+          "4d",
+          "2c"
+        ],
+        [
+          "6h",
+          "3d",
+          "2s"
+        ],
+        [
+          "8c",
+          "5d",
+          "2h"
+        ],
+        [
+          "9d",
+          "4h",
+          "2c"
+        ],
+        [
+          "As",
+          "Ad",
+          "7c"
+        ],
+        [
+          "Kh",
+          "Kd",
+          "4s"
+        ],
+        [
+          "Qh",
+          "Qs",
+          "8d"
+        ],
+        [
+          "Ts",
+          "Td",
+          "6h"
+        ],
+        [
+          "5s",
+          "5d",
+          "2c"
+        ],
+        [
+          "4h",
+          "4d",
+          "7s"
+        ],
+        [
+          "3c",
+          "3h",
+          "8d"
+        ],
+        [
+          "2s",
+          "2d",
+          "9h"
+        ],
+        [
+          "As",
+          "Js",
+          "4s"
+        ],
+        [
+          "Ks",
+          "Ts",
+          "3s"
+        ],
+        [
+          "Qs",
+          "9s",
+          "2s"
+        ],
+        [
+          "8c",
+          "6c",
+          "3c"
+        ],
+        [
+          "7d",
+          "5d",
+          "2d"
+        ],
+        [
+          "6h",
+          "4h",
+          "2h"
+        ],
+        [
+          "Ah",
+          "Jh",
+          "8d"
+        ],
+        [
+          "Kh",
+          "Th",
+          "7c"
+        ],
+        [
+          "Qh",
+          "9h",
+          "7d"
+        ],
+        [
+          "Jh",
+          "9h",
+          "6c"
+        ],
+        [
+          "Ts",
+          "8s",
+          "6d"
+        ],
+        [
+          "7s",
+          "6s",
+          "2d"
+        ],
+        [
+          "Qd",
+          "Td",
+          "7c"
+        ],
+        [
+          "Ad",
+          "Td",
+          "4c"
+        ],
+        [
+          "Ac",
+          "Qc",
+          "7d"
+        ],
+        [
+          "Kc",
+          "Jd",
+          "8s"
+        ],
+        [
+          "9c",
+          "7c",
+          "5d"
+        ],
+        [
+          "Ah",
+          "Kd",
+          "Qc"
+        ],
+        [
+          "8s",
+          "8h",
+          "4d"
+        ],
+        [
+          "5c",
+          "4c",
+          "2s"
+        ]
+      ]
+    },
+    "options": {
+      "minAccepted": 25,
+      "maxAccepted": 52
+    }
+  },
+  "stats": {
+    "acceptedCount": 30,
+    "rejectedCount": 25,
+    "labelDistribution": {
+      "hero": 46,
+      "villain": 3,
+      "close": 6
+    },
+    "nutLabelDistribution": {
+      "hero": 13,
+      "villain": 16,
+      "close": 26
+    },
+    "familyCoverage": [
+      "a-high-dry",
+      "broadway-connected",
+      "k-high-dry",
+      "low-connected",
+      "low-disconnected",
+      "middling-connected",
+      "monotone-high",
+      "monotone-low",
+      "paired-high",
+      "paired-low",
+      "qj-high-dynamic",
+      "two-tone-dynamic"
+    ],
+    "rejectionReasons": {
+      "Redundant board texture and teaching point already represented.": 17,
+      "Muddy or contradictory metric picture for a first-pass teaching board.": 4,
+      "Board did not map cleanly to a target teaching family.": 4
+    }
+  },
+  "candidates": [
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-001",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "As",
+        "8d",
+        "3c"
+      ],
+      "familyTags": [
+        "a-high-dry"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:26.6pp",
+          "1p+:12.9pp",
+          "2p+:2.8pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.6328258168086506,
+        "villainRawEquity": 0.3671741831913494,
+        "rawEquityEdgePct": 26.57,
+        "heroOnePairPlus": 57.89,
+        "villainOnePairPlus": 45.02,
+        "heroTwoPairPlus": 6.58,
+        "villainTwoPairPlus": 3.79,
+        "heroTripsPlus": 2.96,
+        "villainTripsPlus": 2.84,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-002",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Ah",
+        "7c",
+        "2d"
+      ],
+      "familyTags": [
+        "a-high-dry"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:25.1pp",
+          "1p+:14.8pp",
+          "2p+:-0.5pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.6255474354706506,
+        "villainRawEquity": 0.3744525645293494,
+        "rawEquityEdgePct": 25.11,
+        "heroOnePairPlus": 54.69,
+        "villainOnePairPlus": 39.91,
+        "heroTwoPairPlus": 4.21,
+        "villainTwoPairPlus": 4.69,
+        "heroTripsPlus": 2.91,
+        "villainTripsPlus": 2.82,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-003",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Ac",
+        "9h",
+        "4d"
+      ],
+      "familyTags": [
+        "a-high-dry"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "hero",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+        "tags": [
+          "eq:11.8pp",
+          "1p+:4.3pp",
+          "2p+:4.2pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5588396951876388,
+        "villainRawEquity": 0.44116030481236124,
+        "rawEquityEdgePct": 11.77,
+        "heroOnePairPlus": 56.72,
+        "villainOnePairPlus": 52.38,
+        "heroTwoPairPlus": 6.56,
+        "villainTwoPairPlus": 2.38,
+        "heroTripsPlus": 2.95,
+        "villainTripsPlus": 1.43,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-004",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Ad",
+        "6s",
+        "2h"
+      ],
+      "familyTags": [
+        "a-high-dry"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:24.1pp",
+          "1p+:13.6pp",
+          "2p+:-0.5pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.6203187278473842,
+        "villainRawEquity": 0.3796812721526158,
+        "rawEquityEdgePct": 24.06,
+        "heroOnePairPlus": 53.55,
+        "villainOnePairPlus": 39.91,
+        "heroTwoPairPlus": 4.19,
+        "villainTwoPairPlus": 4.69,
+        "heroTripsPlus": 2.9,
+        "villainTripsPlus": 2.82,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-005",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Ks",
+        "8d",
+        "2c"
+      ],
+      "familyTags": [
+        "k-high-dry"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:20.0pp",
+          "1p+:13.3pp",
+          "2p+:-0.2pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.600084288696194,
+        "villainRawEquity": 0.399915711303806,
+        "rawEquityEdgePct": 20.02,
+        "heroOnePairPlus": 50.32,
+        "villainOnePairPlus": 37.04,
+        "heroTwoPairPlus": 3.5,
+        "villainTwoPairPlus": 3.7,
+        "heroTripsPlus": 2.87,
+        "villainTripsPlus": 2.78,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-006",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Kh",
+        "9s",
+        "3d"
+      ],
+      "familyTags": [
+        "k-high-dry"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:9.4pp",
+          "1p+:5.0pp",
+          "2p+:1.2pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5469680297650604,
+        "villainRawEquity": 0.4530319702349396,
+        "rawEquityEdgePct": 9.39,
+        "heroOnePairPlus": 49.21,
+        "villainOnePairPlus": 44.19,
+        "heroTwoPairPlus": 3.49,
+        "villainTwoPairPlus": 2.33,
+        "heroTripsPlus": 2.86,
+        "villainTripsPlus": 1.4,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-007",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Kc",
+        "7h",
+        "2d"
+      ],
+      "familyTags": [
+        "k-high-dry"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:16.8pp",
+          "1p+:6.4pp",
+          "2p+:0.7pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5841791110535154,
+        "villainRawEquity": 0.4158208889464846,
+        "rawEquityEdgePct": 16.84,
+        "heroOnePairPlus": 43.75,
+        "villainOnePairPlus": 37.33,
+        "heroTwoPairPlus": 3.44,
+        "villainTwoPairPlus": 2.76,
+        "heroTripsPlus": 2.81,
+        "villainTripsPlus": 2.76,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-008",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Kd",
+        "Jc",
+        "4s"
+      ],
+      "familyTags": [
+        "k-high-dry"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:20.9pp",
+          "1p+:4.1pp",
+          "2p+:1.1pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.6046318251015469,
+        "villainRawEquity": 0.3953681748984531,
+        "rawEquityEdgePct": 20.93,
+        "heroOnePairPlus": 54.55,
+        "villainOnePairPlus": 50.48,
+        "heroTwoPairPlus": 5.84,
+        "villainTwoPairPlus": 4.76,
+        "heroTripsPlus": 2.92,
+        "villainTripsPlus": 1.43,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-009",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Qs",
+        "Jh",
+        "8d"
+      ],
+      "familyTags": [
+        "qj-high-dynamic",
+        "broadway-connected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+        "tags": [
+          "eq:3.4pp",
+          "1p+:-1.0pp",
+          "2p+:-2.0pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5171518845768494,
+        "villainRawEquity": 0.48284811542315065,
+        "rawEquityEdgePct": 3.43,
+        "heroOnePairPlus": 63.88,
+        "villainOnePairPlus": 64.88,
+        "heroTwoPairPlus": 8.7,
+        "villainTwoPairPlus": 10.73,
+        "heroTripsPlus": 4.35,
+        "villainTripsPlus": 7.32,
+        "heroStraightPlus": 1.34,
+        "villainStraightPlus": 5.85,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Muddy or contradictory metric picture for a first-pass teaching board."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-010",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Qh",
+        "Jd",
+        "9c"
+      ],
+      "familyTags": [
+        "qj-high-dynamic",
+        "broadway-connected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "hero",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+        "tags": [
+          "eq:9.9pp",
+          "1p+:3.1pp",
+          "2p+:4.7pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.549464734447756,
+        "villainRawEquity": 0.450535265552244,
+        "rawEquityEdgePct": 9.89,
+        "heroOnePairPlus": 68,
+        "villainOnePairPlus": 64.88,
+        "heroTwoPairPlus": 14,
+        "villainTwoPairPlus": 9.27,
+        "heroTripsPlus": 9.67,
+        "villainTripsPlus": 3.9,
+        "heroStraightPlus": 6.67,
+        "villainStraightPlus": 3.9,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-011",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Js",
+        "Td",
+        "8c"
+      ],
+      "familyTags": [
+        "qj-high-dynamic",
+        "broadway-connected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:4.1pp",
+          "1p+:-4.8pp",
+          "2p+:0.0pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5204490808481276,
+        "villainRawEquity": 0.4795509191518724,
+        "rawEquityEdgePct": 4.09,
+        "heroOnePairPlus": 65.22,
+        "villainOnePairPlus": 70,
+        "heroTwoPairPlus": 10.03,
+        "villainTwoPairPlus": 10,
+        "heroTripsPlus": 5.69,
+        "villainTripsPlus": 5.5,
+        "heroStraightPlus": 2.68,
+        "villainStraightPlus": 4,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-012",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Qs",
+        "Jh",
+        "Td"
+      ],
+      "familyTags": [
+        "qj-high-dynamic",
+        "broadway-connected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "hero",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+        "tags": [
+          "eq:15.4pp",
+          "1p+:3.4pp",
+          "2p+:4.9pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.57715581961601,
+        "villainRawEquity": 0.42284418038398996,
+        "rawEquityEdgePct": 15.43,
+        "heroOnePairPlus": 71.43,
+        "villainOnePairPlus": 68,
+        "heroTwoPairPlus": 20.41,
+        "villainTwoPairPlus": 15.5,
+        "heroTripsPlus": 11.22,
+        "villainTripsPlus": 4,
+        "heroStraightPlus": 8.16,
+        "villainStraightPlus": 4,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-013",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Kh",
+        "Qd",
+        "Jc"
+      ],
+      "familyTags": [
+        "broadway-connected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+        "tags": [
+          "eq:16.6pp",
+          "1p+:4.2pp",
+          "2p+:-4.6pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5829701838683778,
+        "villainRawEquity": 0.41702981613162216,
+        "rawEquityEdgePct": 16.59,
+        "heroOnePairPlus": 71.33,
+        "villainOnePairPlus": 67.15,
+        "heroTwoPairPlus": 19.11,
+        "villainTwoPairPlus": 23.67,
+        "heroTripsPlus": 9.9,
+        "villainTripsPlus": 13.53,
+        "heroStraightPlus": 6.83,
+        "villainStraightPlus": 13.53,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-014",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Qh",
+        "Td",
+        "9c"
+      ],
+      "familyTags": [
+        "qj-high-dynamic",
+        "broadway-connected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "hero",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+        "tags": [
+          "eq:10.7pp",
+          "1p+:3.3pp",
+          "2p+:-0.7pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5533594652327831,
+        "villainRawEquity": 0.4466405347672169,
+        "rawEquityEdgePct": 10.67,
+        "heroOnePairPlus": 68,
+        "villainOnePairPlus": 64.71,
+        "heroTwoPairPlus": 14,
+        "villainTwoPairPlus": 14.71,
+        "heroTripsPlus": 9.67,
+        "villainTripsPlus": 5.88,
+        "heroStraightPlus": 6.67,
+        "villainStraightPlus": 5.88,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-015",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Jh",
+        "Tc",
+        "9d"
+      ],
+      "familyTags": [
+        "qj-high-dynamic",
+        "broadway-connected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:11.2pp",
+          "1p+:-4.8pp",
+          "2p+:-0.6pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.556044642608556,
+        "villainRawEquity": 0.443955357391444,
+        "rawEquityEdgePct": 11.21,
+        "heroOnePairPlus": 69.33,
+        "villainOnePairPlus": 74.13,
+        "heroTwoPairPlus": 15.33,
+        "villainTwoPairPlus": 15.92,
+        "heroTripsPlus": 11,
+        "villainTripsPlus": 7.96,
+        "heroStraightPlus": 8,
+        "villainStraightPlus": 7.96,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-016",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "9s",
+        "8d",
+        "7c"
+      ],
+      "familyTags": [
+        "middling-connected"
+      ],
+      "rangeAdvantage": "close",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "Overall range interaction is close (slight equity lean to opener); top-end concentration is villain.",
+        "tags": [
+          "eq:0.5pp",
+          "1p+:1.4pp",
+          "2p+:-2.2pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5023315734372392,
+        "villainRawEquity": 0.4976684265627608,
+        "rawEquityEdgePct": 0.47,
+        "heroOnePairPlus": 48.59,
+        "villainOnePairPlus": 47.17,
+        "heroTwoPairPlus": 10.97,
+        "villainTwoPairPlus": 13.21,
+        "heroTripsPlus": 9.09,
+        "villainTripsPlus": 10.38,
+        "heroStraightPlus": 6.27,
+        "villainStraightPlus": 7.55,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-017",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Ts",
+        "9h",
+        "8d"
+      ],
+      "familyTags": [
+        "middling-connected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+        "tags": [
+          "eq:3.3pp",
+          "1p+:0.5pp",
+          "2p+:-3.2pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5165417669370266,
+        "villainRawEquity": 0.4834582330629734,
+        "rawEquityEdgePct": 3.31,
+        "heroOnePairPlus": 63.4,
+        "villainOnePairPlus": 62.93,
+        "heroTwoPairPlus": 11.44,
+        "villainTwoPairPlus": 14.63,
+        "heroTripsPlus": 9.48,
+        "villainTripsPlus": 9.27,
+        "heroStraightPlus": 6.54,
+        "villainStraightPlus": 7.8,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Muddy or contradictory metric picture for a first-pass teaching board."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-018",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "8h",
+        "7d",
+        "6c"
+      ],
+      "familyTags": [
+        "middling-connected",
+        "low-connected"
+      ],
+      "rangeAdvantage": "villain",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "caller has the clearer distribution edge (villain) while top-end concentration is villain.",
+        "tags": [
+          "eq:-4.6pp",
+          "1p+:-2.7pp",
+          "2p+:-8.7pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.47695807522691674,
+        "villainRawEquity": 0.5230419247730833,
+        "rawEquityEdgePct": -4.61,
+        "heroOnePairPlus": 37.23,
+        "villainOnePairPlus": 39.91,
+        "heroTwoPairPlus": 5.85,
+        "villainTwoPairPlus": 14.55,
+        "heroTripsPlus": 4,
+        "villainTripsPlus": 11.74,
+        "heroStraightPlus": 1.23,
+        "villainStraightPlus": 7.51,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-019",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Tc",
+        "8d",
+        "7h"
+      ],
+      "familyTags": [
+        "middling-connected"
+      ],
+      "rangeAdvantage": "close",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is close.",
+        "tags": [
+          "eq:-0.5pp",
+          "1p+:-1.4pp",
+          "2p+:-1.4pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.4977144618525923,
+        "villainRawEquity": 0.5022855381474076,
+        "rawEquityEdgePct": -0.46,
+        "heroOnePairPlus": 53.7,
+        "villainOnePairPlus": 55.12,
+        "heroTwoPairPlus": 5.47,
+        "villainTwoPairPlus": 6.83,
+        "heroTripsPlus": 4.18,
+        "villainTripsPlus": 4.88,
+        "heroStraightPlus": 1.29,
+        "villainStraightPlus": 1.95,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-020",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "6s",
+        "5d",
+        "4c"
+      ],
+      "familyTags": [
+        "low-connected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+        "tags": [
+          "eq:8.7pp",
+          "1p+:-1.5pp",
+          "2p+:-4.3pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5433610435636269,
+        "villainRawEquity": 0.4566389564363731,
+        "rawEquityEdgePct": 8.67,
+        "heroOnePairPlus": 26.63,
+        "villainOnePairPlus": 28.11,
+        "heroTwoPairPlus": 4.44,
+        "villainTwoPairPlus": 8.76,
+        "heroTripsPlus": 3.85,
+        "villainTripsPlus": 5.99,
+        "heroStraightPlus": 1.18,
+        "villainStraightPlus": 1.84,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-021",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "7h",
+        "6d",
+        "5s"
+      ],
+      "familyTags": [
+        "middling-connected",
+        "low-connected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+        "tags": [
+          "eq:3.2pp",
+          "1p+:-3.7pp",
+          "2p+:-5.6pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.515789084766213,
+        "villainRawEquity": 0.484210915233787,
+        "rawEquityEdgePct": 3.16,
+        "heroOnePairPlus": 29.34,
+        "villainOnePairPlus": 33.02,
+        "heroTwoPairPlus": 5.09,
+        "villainTwoPairPlus": 10.7,
+        "heroTripsPlus": 3.89,
+        "villainTripsPlus": 7.91,
+        "heroStraightPlus": 1.2,
+        "villainStraightPlus": 3.72,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Muddy or contradictory metric picture for a first-pass teaching board."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-022",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "6h",
+        "5c",
+        "3d"
+      ],
+      "familyTags": [
+        "low-connected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+        "tags": [
+          "eq:6.4pp",
+          "1p+:-1.2pp",
+          "2p+:-2.7pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5322219206329637,
+        "villainRawEquity": 0.4677780793670363,
+        "rawEquityEdgePct": 6.44,
+        "heroOnePairPlus": 25.44,
+        "villainOnePairPlus": 26.61,
+        "heroTwoPairPlus": 3.25,
+        "villainTwoPairPlus": 5.96,
+        "heroTripsPlus": 2.66,
+        "villainTripsPlus": 4.13,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-023",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "5h",
+        "4d",
+        "3c"
+      ],
+      "familyTags": [
+        "low-connected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+        "tags": [
+          "eq:6.0pp",
+          "1p+:0.6pp",
+          "2p+:-5.5pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5299096783211106,
+        "villainRawEquity": 0.4700903216788894,
+        "rawEquityEdgePct": 5.98,
+        "heroOnePairPlus": 26.1,
+        "villainOnePairPlus": 25.45,
+        "heroTwoPairPlus": 4.99,
+        "villainTwoPairPlus": 10.45,
+        "heroTripsPlus": 4.99,
+        "villainTripsPlus": 7.73,
+        "heroStraightPlus": 2.35,
+        "villainStraightPlus": 3.64,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-024",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "7s",
+        "4d",
+        "2c"
+      ],
+      "familyTags": [
+        "low-disconnected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:13.8pp",
+          "1p+:-0.6pp",
+          "2p+:-1.4pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5688489594485122,
+        "villainRawEquity": 0.4311510405514878,
+        "rawEquityEdgePct": 13.77,
+        "heroOnePairPlus": 26.63,
+        "villainOnePairPlus": 27.27,
+        "heroTwoPairPlus": 2.66,
+        "villainTwoPairPlus": 4.09,
+        "heroTripsPlus": 2.66,
+        "villainTripsPlus": 4.09,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-025",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "6h",
+        "3d",
+        "2s"
+      ],
+      "familyTags": [
+        "low-connected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+        "tags": [
+          "eq:14.5pp",
+          "1p+:-1.9pp",
+          "2p+:-3.2pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5727407697665391,
+        "villainRawEquity": 0.4272592302334609,
+        "rawEquityEdgePct": 14.55,
+        "heroOnePairPlus": 25.66,
+        "villainOnePairPlus": 27.6,
+        "heroTwoPairPlus": 2.65,
+        "villainTwoPairPlus": 5.88,
+        "heroTripsPlus": 2.65,
+        "villainTripsPlus": 5.88,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 1.81,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-026",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "8c",
+        "5d",
+        "2h"
+      ],
+      "familyTags": [
+        "low-disconnected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:12.2pp",
+          "1p+:3.3pp",
+          "2p+:-1.4pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5611479972947552,
+        "villainRawEquity": 0.4388520027052448,
+        "rawEquityEdgePct": 12.23,
+        "heroOnePairPlus": 33.53,
+        "villainOnePairPlus": 30.28,
+        "heroTwoPairPlus": 2.72,
+        "villainTwoPairPlus": 4.13,
+        "heroTripsPlus": 2.72,
+        "villainTripsPlus": 4.13,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-027",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "9d",
+        "4h",
+        "2c"
+      ],
+      "familyTags": [
+        "low-disconnected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:4.9pp",
+          "1p+:-2.7pp",
+          "2p+:-0.0pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5244299983578362,
+        "villainRawEquity": 0.4755700016421638,
+        "rawEquityEdgePct": 4.89,
+        "heroOnePairPlus": 31.53,
+        "villainOnePairPlus": 34.25,
+        "heroTwoPairPlus": 2.7,
+        "villainTwoPairPlus": 2.74,
+        "heroTripsPlus": 2.7,
+        "villainTripsPlus": 2.74,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-028",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "As",
+        "Ad",
+        "7c"
+      ],
+      "familyTags": [
+        "paired-high",
+        "a-high-dry"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "hero",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+        "tags": [
+          "eq:20.9pp",
+          "1p+:0.0pp",
+          "2p+:12.9pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.604510770881986,
+        "villainRawEquity": 0.395489229118014,
+        "rawEquityEdgePct": 20.9,
+        "heroOnePairPlus": 100,
+        "villainOnePairPlus": 100,
+        "heroTwoPairPlus": 50.18,
+        "villainTwoPairPlus": 37.25,
+        "heroTripsPlus": 22.42,
+        "villainTripsPlus": 13.73,
+        "heroStraightPlus": 1.78,
+        "villainStraightPlus": 1.96,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-029",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Kh",
+        "Kd",
+        "4s"
+      ],
+      "familyTags": [
+        "paired-high",
+        "k-high-dry"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "hero",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+        "tags": [
+          "eq:18.0pp",
+          "1p+:0.0pp",
+          "2p+:5.3pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5898261460765971,
+        "villainRawEquity": 0.4101738539234029,
+        "rawEquityEdgePct": 17.97,
+        "heroOnePairPlus": 100,
+        "villainOnePairPlus": 100,
+        "heroTwoPairPlus": 36.16,
+        "villainTwoPairPlus": 30.84,
+        "heroTripsPlus": 13.68,
+        "villainTripsPlus": 9.81,
+        "heroStraightPlus": 1.3,
+        "villainStraightPlus": 1.4,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-030",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Qh",
+        "Qs",
+        "8d"
+      ],
+      "familyTags": [
+        "paired-high"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "hero",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+        "tags": [
+          "eq:13.1pp",
+          "1p+:0.0pp",
+          "2p+:7.0pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5657491886152296,
+        "villainRawEquity": 0.4342508113847704,
+        "rawEquityEdgePct": 13.15,
+        "heroOnePairPlus": 100,
+        "villainOnePairPlus": 100,
+        "heroTwoPairPlus": 45.15,
+        "villainTwoPairPlus": 38.16,
+        "heroTripsPlus": 13.04,
+        "villainTripsPlus": 12.08,
+        "heroStraightPlus": 1.67,
+        "villainStraightPlus": 1.45,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-031",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Ts",
+        "Td",
+        "6h"
+      ],
+      "familyTags": [
+        "paired-high"
+      ],
+      "rangeAdvantage": "close",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is villain.",
+        "tags": [
+          "eq:-1.4pp",
+          "1p+:0.0pp",
+          "2p+:-4.9pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.4932342597045532,
+        "villainRawEquity": 0.5067657402954469,
+        "rawEquityEdgePct": -1.35,
+        "heroOnePairPlus": 100,
+        "villainOnePairPlus": 100,
+        "heroTwoPairPlus": 38.56,
+        "villainTwoPairPlus": 43.43,
+        "heroTripsPlus": 13.07,
+        "villainTripsPlus": 17.68,
+        "heroStraightPlus": 1.31,
+        "villainStraightPlus": 1.52,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-032",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "5s",
+        "5d",
+        "2c"
+      ],
+      "familyTags": [
+        "paired-low"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:5.5pp",
+          "1p+:0.0pp",
+          "2p+:2.2pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5275481279156093,
+        "villainRawEquity": 0.47245187208439066,
+        "rawEquityEdgePct": 5.51,
+        "heroOnePairPlus": 100,
+        "villainOnePairPlus": 100,
+        "heroTwoPairPlus": 22.58,
+        "villainTwoPairPlus": 20.36,
+        "heroTripsPlus": 2.35,
+        "villainTripsPlus": 5.43,
+        "heroStraightPlus": 1.17,
+        "villainStraightPlus": 1.81,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-033",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "4h",
+        "4d",
+        "7s"
+      ],
+      "familyTags": [
+        "paired-low"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:7.5pp",
+          "1p+:0.0pp",
+          "2p+:0.5pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5377309431412716,
+        "villainRawEquity": 0.46226905685872843,
+        "rawEquityEdgePct": 7.55,
+        "heroOnePairPlus": 100,
+        "villainOnePairPlus": 100,
+        "heroTwoPairPlus": 25.66,
+        "villainTwoPairPlus": 25.11,
+        "heroTripsPlus": 1.77,
+        "villainTripsPlus": 4.57,
+        "heroStraightPlus": 1.18,
+        "villainStraightPlus": 1.83,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-034",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "3c",
+        "3h",
+        "8d"
+      ],
+      "familyTags": [
+        "paired-low"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:7.8pp",
+          "1p+:0.0pp",
+          "2p+:6.1pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5388651021340704,
+        "villainRawEquity": 0.46113489786592965,
+        "rawEquityEdgePct": 7.77,
+        "heroOnePairPlus": 100,
+        "villainOnePairPlus": 100,
+        "heroTwoPairPlus": 31.53,
+        "villainTwoPairPlus": 25.45,
+        "heroTripsPlus": 1.8,
+        "villainTripsPlus": 3.64,
+        "heroStraightPlus": 1.2,
+        "villainStraightPlus": 1.82,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-035",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "2s",
+        "2d",
+        "9h"
+      ],
+      "familyTags": [
+        "paired-low"
+      ],
+      "rangeAdvantage": "close",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is close.",
+        "tags": [
+          "eq:-1.8pp",
+          "1p+:0.0pp",
+          "2p+:0.8pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.4908195215271212,
+        "villainRawEquity": 0.5091804784728788,
+        "rawEquityEdgePct": -1.84,
+        "heroOnePairPlus": 100,
+        "villainOnePairPlus": 100,
+        "heroTwoPairPlus": 30.54,
+        "villainTwoPairPlus": 29.73,
+        "heroTripsPlus": 1.8,
+        "villainTripsPlus": 1.35,
+        "heroStraightPlus": 1.2,
+        "villainStraightPlus": 0.45,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-036",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "As",
+        "Js",
+        "4s"
+      ],
+      "familyTags": [
+        "monotone-high"
+      ],
+      "rangeAdvantage": "villain",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "caller has the clearer distribution edge (villain) while top-end concentration is close.",
+        "tags": [
+          "eq:-7.2pp",
+          "1p+:9.7pp",
+          "2p+:-0.2pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.46417780880583703,
+        "villainRawEquity": 0.535822191194163,
+        "rawEquityEdgePct": -7.16,
+        "heroOnePairPlus": 71.81,
+        "villainOnePairPlus": 62.14,
+        "heroTwoPairPlus": 12.42,
+        "villainTwoPairPlus": 12.62,
+        "heroTripsPlus": 8.39,
+        "villainTripsPlus": 8.25,
+        "heroStraightPlus": 5.37,
+        "villainStraightPlus": 6.8,
+        "heroFlush": 5.37,
+        "villainFlush": 6.8
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-037",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Ks",
+        "Ts",
+        "3s"
+      ],
+      "familyTags": [
+        "monotone-high"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:14.3pp",
+          "1p+:-3.1pp",
+          "2p+:1.3pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5712913676350269,
+        "villainRawEquity": 0.42870863236497314,
+        "rawEquityEdgePct": 14.26,
+        "heroOnePairPlus": 61.04,
+        "villainOnePairPlus": 64.11,
+        "heroTwoPairPlus": 12.34,
+        "villainTwoPairPlus": 11,
+        "heroTripsPlus": 9.42,
+        "villainTripsPlus": 9.57,
+        "heroStraightPlus": 6.49,
+        "villainStraightPlus": 8.13,
+        "heroFlush": 6.49,
+        "villainFlush": 8.13
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-038",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Qs",
+        "9s",
+        "2s"
+      ],
+      "familyTags": [
+        "monotone-high"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+        "tags": [
+          "eq:22.3pp",
+          "1p+:0.6pp",
+          "2p+:-0.6pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.6113790185138658,
+        "villainRawEquity": 0.3886209814861342,
+        "rawEquityEdgePct": 22.28,
+        "heroOnePairPlus": 54.57,
+        "villainOnePairPlus": 53.95,
+        "heroTwoPairPlus": 10.09,
+        "villainTwoPairPlus": 10.7,
+        "heroTripsPlus": 9.15,
+        "villainTripsPlus": 9.3,
+        "heroStraightPlus": 6.31,
+        "villainStraightPlus": 7.91,
+        "heroFlush": 6.31,
+        "villainFlush": 7.91
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-039",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "8c",
+        "6c",
+        "3c"
+      ],
+      "familyTags": [
+        "low-disconnected",
+        "monotone-low"
+      ],
+      "rangeAdvantage": "close",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is close.",
+        "tags": [
+          "eq:-0.1pp",
+          "1p+:3.1pp",
+          "2p+:-1.5pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.49963597588614805,
+        "villainRawEquity": 0.500364024113852,
+        "rawEquityEdgePct": -0.07,
+        "heroOnePairPlus": 40.91,
+        "villainOnePairPlus": 37.79,
+        "heroTwoPairPlus": 10,
+        "villainTwoPairPlus": 11.52,
+        "heroTripsPlus": 9.09,
+        "villainTripsPlus": 10.14,
+        "heroStraightPlus": 6.36,
+        "villainStraightPlus": 5.99,
+        "heroFlush": 6.36,
+        "villainFlush": 5.99
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-040",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "7d",
+        "5d",
+        "2d"
+      ],
+      "familyTags": [
+        "low-disconnected",
+        "monotone-low"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+        "tags": [
+          "eq:15.2pp",
+          "1p+:0.5pp",
+          "2p+:-2.6pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5759028611764773,
+        "villainRawEquity": 0.42409713882352273,
+        "rawEquityEdgePct": 15.18,
+        "heroOnePairPlus": 35.01,
+        "villainOnePairPlus": 34.55,
+        "heroTwoPairPlus": 10.09,
+        "villainTwoPairPlus": 12.73,
+        "heroTripsPlus": 10.09,
+        "villainTripsPlus": 11.36,
+        "heroStraightPlus": 7.42,
+        "villainStraightPlus": 7.27,
+        "heroFlush": 7.42,
+        "villainFlush": 7.27
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-041",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "6h",
+        "4h",
+        "2h"
+      ],
+      "familyTags": [
+        "low-connected",
+        "monotone-low"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+        "tags": [
+          "eq:18.1pp",
+          "1p+:-1.2pp",
+          "2p+:-3.9pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5906713727475932,
+        "villainRawEquity": 0.4093286272524068,
+        "rawEquityEdgePct": 18.13,
+        "heroOnePairPlus": 33.63,
+        "villainOnePairPlus": 34.84,
+        "heroTwoPairPlus": 10.62,
+        "villainTwoPairPlus": 14.48,
+        "heroTripsPlus": 10.62,
+        "villainTripsPlus": 13.12,
+        "heroStraightPlus": 7.96,
+        "villainStraightPlus": 9.05,
+        "heroFlush": 7.96,
+        "villainFlush": 7.69
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-042",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Ah",
+        "Jh",
+        "8d"
+      ],
+      "familyTags": [],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "hero",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+        "tags": [
+          "eq:13.6pp",
+          "1p+:15.0pp",
+          "2p+:3.2pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5682302716753884,
+        "villainRawEquity": 0.4317697283246116,
+        "rawEquityEdgePct": 13.65,
+        "heroOnePairPlus": 73.61,
+        "villainOnePairPlus": 58.62,
+        "heroTwoPairPlus": 10.07,
+        "villainTwoPairPlus": 6.9,
+        "heroTripsPlus": 3.13,
+        "villainTripsPlus": 1.48,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Board did not map cleanly to a target teaching family."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-043",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Kh",
+        "Th",
+        "7c"
+      ],
+      "familyTags": [],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "hero",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+        "tags": [
+          "eq:12.8pp",
+          "1p+:-3.3pp",
+          "2p+:3.7pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5638098603773091,
+        "villainRawEquity": 0.43619013962269093,
+        "rawEquityEdgePct": 12.76,
+        "heroOnePairPlus": 57.89,
+        "villainOnePairPlus": 61.17,
+        "heroTwoPairPlus": 6.58,
+        "villainTwoPairPlus": 2.91,
+        "heroTripsPlus": 2.96,
+        "villainTripsPlus": 1.46,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Board did not map cleanly to a target teaching family."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-044",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Qh",
+        "9h",
+        "7d"
+      ],
+      "familyTags": [
+        "two-tone-dynamic"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:22.4pp",
+          "1p+:0.7pp",
+          "2p+:0.7pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.6121217269952431,
+        "villainRawEquity": 0.38787827300475686,
+        "rawEquityEdgePct": 22.42,
+        "heroOnePairPlus": 51.44,
+        "villainOnePairPlus": 50.71,
+        "heroTwoPairPlus": 4.47,
+        "villainTwoPairPlus": 3.79,
+        "heroTripsPlus": 2.88,
+        "villainTripsPlus": 1.42,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-045",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Jh",
+        "9h",
+        "6c"
+      ],
+      "familyTags": [
+        "two-tone-dynamic"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:18.6pp",
+          "1p+:-6.1pp",
+          "2p+:0.9pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5931498023425362,
+        "villainRawEquity": 0.4068501976574638,
+        "rawEquityEdgePct": 18.63,
+        "heroOnePairPlus": 51.59,
+        "villainOnePairPlus": 57.69,
+        "heroTwoPairPlus": 3.82,
+        "villainTwoPairPlus": 2.88,
+        "heroTripsPlus": 2.87,
+        "villainTripsPlus": 1.44,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-046",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Ts",
+        "8s",
+        "6d"
+      ],
+      "familyTags": [
+        "middling-connected",
+        "two-tone-dynamic"
+      ],
+      "rangeAdvantage": "villain",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "caller has the clearer distribution edge (villain) while top-end concentration is close.",
+        "tags": [
+          "eq:-18.6pp",
+          "1p+:-2.6pp",
+          "2p+:-1.5pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.40691451241135146,
+        "villainRawEquity": 0.5930854875886485,
+        "rawEquityEdgePct": -18.62,
+        "heroOnePairPlus": 52.72,
+        "villainOnePairPlus": 55.34,
+        "heroTwoPairPlus": 5.75,
+        "villainTwoPairPlus": 7.28,
+        "heroTripsPlus": 4.15,
+        "villainTripsPlus": 4.85,
+        "heroStraightPlus": 1.28,
+        "villainStraightPlus": 1.94,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-047",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "7s",
+        "6s",
+        "2d"
+      ],
+      "familyTags": [
+        "low-disconnected"
+      ],
+      "rangeAdvantage": "close",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "Overall range interaction is close (slight equity lean to opener); top-end concentration is villain.",
+        "tags": [
+          "eq:1.9pp",
+          "1p+:-0.2pp",
+          "2p+:-1.9pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5092951664704158,
+        "villainRawEquity": 0.49070483352958416,
+        "rawEquityEdgePct": 1.86,
+        "heroOnePairPlus": 28.57,
+        "villainOnePairPlus": 28.77,
+        "heroTwoPairPlus": 3.57,
+        "villainTwoPairPlus": 5.48,
+        "heroTripsPlus": 2.68,
+        "villainTripsPlus": 4.11,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Muddy or contradictory metric picture for a first-pass teaching board."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-048",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Qd",
+        "Td",
+        "7c"
+      ],
+      "familyTags": [
+        "two-tone-dynamic"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:7.7pp",
+          "1p+:-0.8pp",
+          "2p+:0.0pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5383526023371324,
+        "villainRawEquity": 0.46164739766286755,
+        "rawEquityEdgePct": 7.67,
+        "heroOnePairPlus": 58.03,
+        "villainOnePairPlus": 58.82,
+        "heroTwoPairPlus": 5.9,
+        "villainTwoPairPlus": 5.88,
+        "heroTripsPlus": 2.95,
+        "villainTripsPlus": 1.47,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Redundant board texture and teaching point already represented."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-049",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Ad",
+        "Td",
+        "4c"
+      ],
+      "familyTags": [],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:20.8pp",
+          "1p+:7.5pp",
+          "2p+:0.9pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.6039565871840575,
+        "villainRawEquity": 0.39604341281594246,
+        "rawEquityEdgePct": 20.79,
+        "heroOnePairPlus": 66.33,
+        "villainOnePairPlus": 58.82,
+        "heroTwoPairPlus": 6.73,
+        "villainTwoPairPlus": 5.88,
+        "heroTripsPlus": 3.03,
+        "villainTripsPlus": 1.47,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Board did not map cleanly to a target teaching family."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-050",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Ac",
+        "Qc",
+        "7d"
+      ],
+      "familyTags": [],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "hero",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+        "tags": [
+          "eq:13.9pp",
+          "1p+:12.1pp",
+          "2p+:4.4pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5693575806310973,
+        "villainRawEquity": 0.4306424193689027,
+        "rawEquityEdgePct": 13.87,
+        "heroOnePairPlus": 71.33,
+        "villainOnePairPlus": 59.22,
+        "heroTwoPairPlus": 6.83,
+        "villainTwoPairPlus": 2.43,
+        "heroTripsPlus": 3.07,
+        "villainTripsPlus": 1.46,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": false,
+      "rejectionReason": "Board did not map cleanly to a target teaching family."
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-051",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Kc",
+        "Jd",
+        "8s"
+      ],
+      "familyTags": [
+        "k-high-dry"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "hero",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+        "tags": [
+          "eq:6.6pp",
+          "1p+:10.1pp",
+          "2p+:1.6pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5327917257890215,
+        "villainRawEquity": 0.46720827421097855,
+        "rawEquityEdgePct": 6.56,
+        "heroOnePairPlus": 63.76,
+        "villainOnePairPlus": 53.62,
+        "heroTwoPairPlus": 7.38,
+        "villainTwoPairPlus": 5.8,
+        "heroTripsPlus": 3.02,
+        "villainTripsPlus": 1.45,
+        "heroStraightPlus": 0,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-052",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "9c",
+        "7c",
+        "5d"
+      ],
+      "familyTags": [
+        "middling-connected",
+        "two-tone-dynamic"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "villain",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+        "tags": [
+          "eq:12.3pp",
+          "1p+:-3.7pp",
+          "2p+:-2.1pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5617425147930288,
+        "villainRawEquity": 0.43825748520697116,
+        "rawEquityEdgePct": 12.35,
+        "heroOnePairPlus": 36.78,
+        "villainOnePairPlus": 40.47,
+        "heroTwoPairPlus": 4.86,
+        "villainTwoPairPlus": 6.98,
+        "heroTripsPlus": 3.95,
+        "villainTripsPlus": 4.65,
+        "heroStraightPlus": 1.22,
+        "villainStraightPlus": 1.86,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-053",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "Ah",
+        "Kd",
+        "Qc"
+      ],
+      "familyTags": [
+        "broadway-connected"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "hero",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+        "tags": [
+          "eq:28.1pp",
+          "1p+:16.8pp",
+          "2p+:9.3pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.6407079705417533,
+        "villainRawEquity": 0.3592920294582467,
+        "rawEquityEdgePct": 28.14,
+        "heroOnePairPlus": 85.77,
+        "villainOnePairPlus": 68.93,
+        "heroTwoPairPlus": 18.51,
+        "villainTwoPairPlus": 9.22,
+        "heroTripsPlus": 8.9,
+        "villainTripsPlus": 5.83,
+        "heroStraightPlus": 5.69,
+        "villainStraightPlus": 5.83,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-054",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "8s",
+        "8h",
+        "4d"
+      ],
+      "familyTags": [
+        "paired-low"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "hero",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+        "tags": [
+          "eq:3.9pp",
+          "1p+:0.0pp",
+          "2p+:3.8pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5197000048297373,
+        "villainRawEquity": 0.4802999951702627,
+        "rawEquityEdgePct": 3.94,
+        "heroOnePairPlus": 100,
+        "villainOnePairPlus": 100,
+        "heroTwoPairPlus": 29.41,
+        "villainTwoPairPlus": 25.58,
+        "heroTripsPlus": 8.05,
+        "villainTripsPlus": 7.44,
+        "heroStraightPlus": 1.24,
+        "villainStraightPlus": 1.86,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    },
+    {
+      "id": "cash9max-100-co-vs-bb-srp-flop-flop-055",
+      "spot": "cash9max-100-co-vs-bb-srp-flop",
+      "board": [
+        "5c",
+        "4c",
+        "2s"
+      ],
+      "familyTags": [
+        "low-connected",
+        "two-tone-dynamic"
+      ],
+      "rangeAdvantage": "hero",
+      "nutAdvantage": "close",
+      "explanation": {
+        "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+        "tags": [
+          "eq:10.4pp",
+          "1p+:0.6pp",
+          "2p+:-1.6pp"
+        ]
+      },
+      "metrics": {
+        "heroRawEquity": 0.5518054415850899,
+        "villainRawEquity": 0.44819455841491007,
+        "rawEquityEdgePct": 10.36,
+        "heroOnePairPlus": 24.93,
+        "villainOnePairPlus": 24.32,
+        "heroTwoPairPlus": 3.81,
+        "villainTwoPairPlus": 5.41,
+        "heroTripsPlus": 3.81,
+        "villainTripsPlus": 4.05,
+        "heroStraightPlus": 1.17,
+        "villainStraightPlus": 0,
+        "heroFlush": 0,
+        "villainFlush": 0
+      },
+      "accepted": true
+    }
+  ]
+}
