@@ -17,7 +17,11 @@ export function useDrillQuerySync(data: AppData, onDataChange: OnDataChange) {
   useEffect(() => {
     const q = new URLSearchParams(window.location.search);
     q.set('drill', data.settings.drillType);
-    if (data.settings.drillType !== 'postflop_hand_category' && data.settings.drillType !== 'postflop_range_nut_advantage') {
+    if (
+      data.settings.drillType !== 'postflop_hand_category'
+      && data.settings.drillType !== 'postflop_range_nut_advantage'
+      && data.settings.drillType !== 'postflop_flop_cbet'
+    ) {
       q.set('format', data.settings.drillContext.format);
       q.set('stack', String(data.settings.drillContext.effectiveStackBb));
       q.set('node', data.settings.drillContext.nodeType);
@@ -38,7 +42,11 @@ export function useDrillQuerySync(data: AppData, onDataChange: OnDataChange) {
   return {
     updateDrillType: (drillType: DrillType) => {
       onDataChange((prev) => {
-        if (drillType === 'postflop_hand_category' || drillType === 'postflop_range_nut_advantage') {
+        if (
+          drillType === 'postflop_hand_category'
+          || drillType === 'postflop_range_nut_advantage'
+          || drillType === 'postflop_flop_cbet'
+        ) {
           return {
             ...prev,
             settings: {
