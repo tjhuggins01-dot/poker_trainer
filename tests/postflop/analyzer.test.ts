@@ -10,7 +10,7 @@ import { buildAnalysisSummary } from '../../src/domain/postflop-analysis/summari
 import { validateExactHandSelection, validateFlopSelection } from '../../src/domain/postflop-analysis/flopSelection.ts';
 import { loadData } from '../../src/lib/storage.ts';
 import { analyzeHandVsRange } from '../../src/domain/postflop-analysis/analyzeHandVsRange.ts';
-import { computeHandVsHandEquity, computeHandVsRangeEquity, computeRangeVsRangeEquities } from '../../src/domain/postflop-analysis/equity.ts';
+import { computeHandVsHandEquity, computeHandVsRangeEquity, computeRangeVsRangeEquities, computeRangeVsRangeEquitiesSampled } from '../../src/domain/postflop-analysis/equity.ts';
 import { SIMPLIFIED_BOARD_PRESETS, flopMatchesPreset, generateFlopFromPreset } from '../../src/domain/postflop-analysis/simplifiedBoards.ts';
 import { buildAnalyzerSpots, parseAnalyzerSpotId } from '../../src/domain/postflop-analysis/catalog.ts';
 import type { Combo } from '../../src/domain/postflop-analysis/types.ts';
@@ -341,4 +341,25 @@ test('persistence migration sanitizes malformed analyzer fields', () => {
   assert.equal(loaded.settings.analyzer.simplifiedPresetId, null);
   assert.equal(loaded.settings.analyzer.exactHand, null);
   assert.equal(loaded.settings.analyzer.flop, null);
+});
+
+
+test('sampled range equity tracks exact direction and stays bounded', () => {
+  const flop = [c('As'), c('Kd'), c('2c')] as const;
+  const hero = filterBlockedCombos(expandRangeToCombos(['AA', 'AKs', 'AQs', 'KQs']), flop);
+  const villain = filterBlockedCombos(expandRangeToCombos(['22', 'KQo', 'KJs', 'QJs']), flop);
+
+  const exact = computeRangeVsRangeEquities(hero, villain, flop);
+  const sampled = computeRangeVsRangeEquitiesSampled(hero, villain, flop, { heroSamples: 24, villainSamples: 24, runoutSamples: 80 });
+
+  assert.ok(sampled.hero != null && sampled.villain != null);
+  assert.ok((sampled.hero ?? 0) >= 0 && (sampled.hero ?? 0) <= 1);
+  assert.ok((sampled.villain ?? 0) >= 0 && (sampled.villain ?? 0) <= 1);
+  close((sampled.hero ?? 0) + (sampled.villain ?? 0), 1, 1e-9);
+
+  assert.ok(exact.hero != null && sampled.hero != null);
+  if (exact.hero != null && sampled.hero != null) {
+    assert.ok(Math.sign(exact.hero - 0.5) === Math.sign(sampled.hero - 0.5));
+    assert.ok(Math.abs(exact.hero - sampled.hero) < 0.08);
+  }
 });

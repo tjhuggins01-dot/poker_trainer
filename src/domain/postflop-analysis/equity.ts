@@ -160,6 +160,48 @@ const equityFromScoreRows = (heroScores: number[], villainScores: number[]): Equ
 
 const equityFromCounts = ({ wins, ties, total }: EquityCounts): number => (total === 0 ? 0 : (wins + ties * 0.5) / total);
 
+
+const pickDeterministic = <T>(items: T[], cap: number): T[] => {
+  if (items.length <= cap) return items;
+  const step = items.length / cap;
+  const selected: T[] = [];
+  for (let i = 0; i < cap; i += 1) selected.push(items[Math.floor(i * step)]);
+  return selected;
+};
+
+export const computeRangeVsRangeEquitiesSampled = (
+  heroCombos: Combo[],
+  villainCombos: Combo[],
+  flop: FlopBoard,
+  options: { heroSamples?: number; villainSamples?: number; runoutSamples?: number } = {},
+): { hero: number | null; villain: number | null } => {
+  const boardIds = new Set(flop.map(cardToString));
+  const heroPrepared = prepareCombos(heroCombos).filter((combo) => !overlapsBoard(combo.ids, boardIds));
+  const villainPrepared = prepareCombos(villainCombos).filter((combo) => !overlapsBoard(combo.ids, boardIds));
+  if (!heroPrepared.length || !villainPrepared.length) return { hero: null, villain: null };
+
+  const heroSampled = pickDeterministic(heroPrepared, options.heroSamples ?? 80);
+  const villainSampled = pickDeterministic(villainPrepared, options.villainSamples ?? 80);
+  const runouts = pickDeterministic(prepareRunoutsForFlop(flop), options.runoutSamples ?? 220);
+
+  const heroScores = buildScoreTable(heroSampled, runouts, flop);
+  const villainScores = buildScoreTable(villainSampled, runouts, flop);
+
+  let totalEquity = 0;
+  let totalPairs = 0;
+
+  for (let h = 0; h < heroSampled.length; h += 1) {
+    for (let v = 0; v < villainSampled.length; v += 1) {
+      if (hasOverlap(heroSampled[h].ids, villainSampled[v].ids)) continue;
+      totalEquity += equityFromCounts(equityFromScoreRows(heroScores[h], villainScores[v]));
+      totalPairs += 1;
+    }
+  }
+
+  if (!totalPairs) return { hero: null, villain: null };
+  const hero = totalEquity / totalPairs;
+  return { hero, villain: 1 - hero };
+};
 export const computeHandVsHandEquity = (hero: HoleCards, villain: HoleCards, flop: FlopBoard): number => {
   const blocked = new Set([...hero, ...villain, ...flop].map(cardToString));
   const runouts = buildRunouts(blocked);
