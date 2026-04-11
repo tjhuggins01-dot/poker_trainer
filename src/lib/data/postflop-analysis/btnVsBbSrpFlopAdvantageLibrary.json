@@ -1,0 +1,651 @@
+[
+  {
+    "id": "btn-bb-srp-flop-001",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "As",
+      "8d",
+      "3c"
+    ],
+    "familyTags": [
+      "a-high-dry"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:11.4pp",
+        "1p+:9.9pp",
+        "2p+:2.8pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-002",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Ah",
+      "7c",
+      "2d"
+    ],
+    "familyTags": [
+      "a-high-dry"
+    ],
+    "rangeAdvantage": "close",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "Overall range interaction is close (slight equity lean to BB); top-end concentration is close.",
+      "tags": [
+        "eq:-0.8pp",
+        "1p+:10.3pp",
+        "2p+:2.8pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-005",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Ks",
+      "8d",
+      "2c"
+    ],
+    "familyTags": [
+      "k-high-dry"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:8.7pp",
+        "1p+:13.1pp",
+        "2p+:1.5pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-009",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Qs",
+      "Jh",
+      "8d"
+    ],
+    "familyTags": [
+      "qj-high-dynamic",
+      "broadway-connected"
+    ],
+    "rangeAdvantage": "villain",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "BB has the clearer distribution edge (villain) while top-end concentration is villain.",
+      "tags": [
+        "eq:-5.2pp",
+        "1p+:-5.7pp",
+        "2p+:-1.2pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-010",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Qh",
+      "Jd",
+      "9c"
+    ],
+    "familyTags": [
+      "qj-high-dynamic",
+      "broadway-connected"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "tags": [
+        "eq:9.3pp",
+        "1p+:-9.5pp",
+        "2p+:3.6pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-011",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Js",
+      "Td",
+      "8c"
+    ],
+    "familyTags": [
+      "qj-high-dynamic",
+      "broadway-connected"
+    ],
+    "rangeAdvantage": "villain",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "BB has the clearer distribution edge (villain) while top-end concentration is close.",
+      "tags": [
+        "eq:-10.8pp",
+        "1p+:-12.4pp",
+        "2p+:1.3pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-013",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Kh",
+      "Qd",
+      "Jc"
+    ],
+    "familyTags": [
+      "broadway-connected"
+    ],
+    "rangeAdvantage": "villain",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "BB has the clearer distribution edge (villain) while top-end concentration is villain.",
+      "tags": [
+        "eq:-7.7pp",
+        "1p+:-2.0pp",
+        "2p+:-10.6pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-014",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Qh",
+      "Td",
+      "9c"
+    ],
+    "familyTags": [
+      "qj-high-dynamic",
+      "broadway-connected"
+    ],
+    "rangeAdvantage": "close",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "Overall range interaction is close (slight equity lean to BB); top-end concentration is villain.",
+      "tags": [
+        "eq:-1.3pp",
+        "1p+:-11.3pp",
+        "2p+:-3.9pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-017",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Ts",
+      "9h",
+      "8d"
+    ],
+    "familyTags": [
+      "middling-connected"
+    ],
+    "rangeAdvantage": "villain",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "BB has the clearer distribution edge (villain) while top-end concentration is close.",
+      "tags": [
+        "eq:-7.6pp",
+        "1p+:-9.4pp",
+        "2p+:-0.1pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-018",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "8h",
+      "7d",
+      "6c"
+    ],
+    "familyTags": [
+      "middling-connected",
+      "low-connected"
+    ],
+    "rangeAdvantage": "close",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "Overall range interaction is close (slight equity lean to BB); top-end concentration is villain.",
+      "tags": [
+        "eq:-2.1pp",
+        "1p+:4.5pp",
+        "2p+:-0.9pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-020",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "6s",
+      "5d",
+      "4c"
+    ],
+    "familyTags": [
+      "low-connected"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:6.6pp",
+        "1p+:6.8pp",
+        "2p+:-2.1pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-021",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "7h",
+      "6d",
+      "5s"
+    ],
+    "familyTags": [
+      "middling-connected",
+      "low-connected"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is villain.",
+      "tags": [
+        "eq:8.5pp",
+        "1p+:4.0pp",
+        "2p+:-1.5pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-023",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "5h",
+      "4d",
+      "3c"
+    ],
+    "familyTags": [
+      "low-connected"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "tags": [
+        "eq:2.9pp",
+        "1p+:11.9pp",
+        "2p+:-1.4pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-024",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "7s",
+      "4d",
+      "2c"
+    ],
+    "familyTags": [
+      "low-disconnected"
+    ],
+    "rangeAdvantage": "close",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "Overall range interaction is close (slight equity lean to BB); top-end concentration is close.",
+      "tags": [
+        "eq:-0.1pp",
+        "1p+:7.7pp",
+        "2p+:-1.1pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-025",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "6h",
+      "3d",
+      "2s"
+    ],
+    "familyTags": [
+      "low-connected"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is villain.",
+      "tags": [
+        "eq:7.2pp",
+        "1p+:5.8pp",
+        "2p+:-2.1pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-026",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "8c",
+      "5d",
+      "2h"
+    ],
+    "familyTags": [
+      "low-disconnected"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:8.5pp",
+        "1p+:10.7pp",
+        "2p+:-1.6pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-028",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "As",
+      "Ad",
+      "7c"
+    ],
+    "familyTags": [
+      "paired-high",
+      "a-high-dry"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "tags": [
+        "eq:15.7pp",
+        "1p+:0.0pp",
+        "2p+:8.6pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-029",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Kh",
+      "Kd",
+      "4s"
+    ],
+    "familyTags": [
+      "paired-high",
+      "k-high-dry"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "tags": [
+        "eq:17.6pp",
+        "1p+:0.0pp",
+        "2p+:5.8pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-030",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Qh",
+      "Qs",
+      "8d"
+    ],
+    "familyTags": [
+      "paired-high"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "tags": [
+        "eq:8.6pp",
+        "1p+:0.0pp",
+        "2p+:3.8pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-031",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Ts",
+      "Td",
+      "6h"
+    ],
+    "familyTags": [
+      "paired-high"
+    ],
+    "rangeAdvantage": "villain",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "BB has the clearer distribution edge (villain) while top-end concentration is villain.",
+      "tags": [
+        "eq:-12.5pp",
+        "1p+:0.0pp",
+        "2p+:-6.9pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-032",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "5s",
+      "5d",
+      "2c"
+    ],
+    "familyTags": [
+      "paired-low"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:8.9pp",
+        "1p+:0.0pp",
+        "2p+:7.0pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-035",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "2s",
+      "2d",
+      "9h"
+    ],
+    "familyTags": [
+      "paired-low"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "tags": [
+        "eq:11.7pp",
+        "1p+:0.0pp",
+        "2p+:2.3pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-036",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "As",
+      "Js",
+      "4s"
+    ],
+    "familyTags": [
+      "monotone-high"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is villain.",
+      "tags": [
+        "eq:10.5pp",
+        "1p+:1.0pp",
+        "2p+:-2.8pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-038",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Qs",
+      "9s",
+      "2s"
+    ],
+    "familyTags": [
+      "monotone-high"
+    ],
+    "rangeAdvantage": "villain",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "BB has the clearer distribution edge (villain) while top-end concentration is villain.",
+      "tags": [
+        "eq:-8.8pp",
+        "1p+:-4.1pp",
+        "2p+:-2.5pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-039",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "8c",
+      "6c",
+      "3c"
+    ],
+    "familyTags": [
+      "low-disconnected",
+      "monotone-low"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:17.3pp",
+        "1p+:7.1pp",
+        "2p+:-1.2pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-041",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "6h",
+      "4h",
+      "2h"
+    ],
+    "familyTags": [
+      "low-connected",
+      "monotone-low"
+    ],
+    "rangeAdvantage": "villain",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "BB has the clearer distribution edge (villain) while top-end concentration is villain.",
+      "tags": [
+        "eq:-16.5pp",
+        "1p+:3.6pp",
+        "2p+:-5.7pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-044",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Qh",
+      "9h",
+      "7d"
+    ],
+    "familyTags": [
+      "two-tone-dynamic"
+    ],
+    "rangeAdvantage": "villain",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "BB has the clearer distribution edge (villain) while top-end concentration is hero.",
+      "tags": [
+        "eq:-13.3pp",
+        "1p+:-3.2pp",
+        "2p+:1.8pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-046",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Ts",
+      "8s",
+      "6d"
+    ],
+    "familyTags": [
+      "middling-connected",
+      "two-tone-dynamic"
+    ],
+    "rangeAdvantage": "close",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "Overall range interaction is close (slight equity lean to BTN); top-end concentration is close.",
+      "tags": [
+        "eq:1.1pp",
+        "1p+:-6.3pp",
+        "2p+:0.6pp"
+      ]
+    }
+  },
+  {
+    "id": "btn-bb-srp-flop-048",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Qd",
+      "Td",
+      "7c"
+    ],
+    "familyTags": [
+      "two-tone-dynamic"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "BTN has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:5.2pp",
+        "1p+:-4.5pp",
+        "2p+:-1.2pp"
+      ]
+    }
+  }
+]
