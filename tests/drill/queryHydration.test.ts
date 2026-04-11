@@ -32,3 +32,12 @@ test('query hydration picks drill-eligible hero positions when drill type change
   assert.equal(hydrated.settings.drillContext.heroPos, 'BB');
   assert.equal(hydrated.settings.drillContext.villainPos, 'SB');
 });
+
+test('query hydration supports postflop range/nut drill without overriding context keys', () => {
+  const base = createDefaultData();
+  const params = new URLSearchParams('drill=postflop_range_nut_advantage&node=facingOpen&hero=CO&villain=HJ');
+  const hydrated = hydrateDrillFromQuery(base, params);
+
+  assert.equal(hydrated.settings.drillType, 'postflop_range_nut_advantage');
+  assert.equal(hydrated.settings.drillContext.nodeType, base.settings.drillContext.nodeType);
+});

@@ -16,12 +16,16 @@ const drillLabel: Record<DrillType, string> = {
   three_bet: 'Facing 3-Bet',
   limp_branch: 'Limp Branch',
   postflop_hand_category: 'Postflop Hand Category',
+  postflop_range_nut_advantage: 'Postflop Range / Nut Advantage',
 };
 
 export function StatsPage({ data, session }: Props) {
   const topMistakes = Object.entries(data.stats.mistakes)
     .sort(([, a], [, b]) => b.count - a.count || b.lastTs - a.lastTs)
     .slice(0, 10);
+  const topRangeNutMisses = Object.entries(data.stats.postflop.rangeNutAdvantage.missedBoards)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 5);
 
   const matchupRows: MatchupRow[] = Object.entries(data.stats.byFacingMatchup)
     .map(([matchup, stats]) => ({
@@ -84,6 +88,20 @@ export function StatsPage({ data, session }: Props) {
       <p>Answered: {data.stats.postflop.handCategory.totalAnswered}</p>
       <p>Correct: {data.stats.postflop.handCategory.correct}</p>
       <p>Accuracy: {pct(data.stats.postflop.handCategory.correct, data.stats.postflop.handCategory.totalAnswered)}</p>
+
+      <h3>Postflop range / nut advantage</h3>
+      <p>Prompts: {data.stats.postflop.rangeNutAdvantage.attempts}</p>
+      <p>Fully correct: {data.stats.postflop.rangeNutAdvantage.fullyCorrect}</p>
+      <p>Range accuracy: {pct(data.stats.postflop.rangeNutAdvantage.rangeCorrect, data.stats.postflop.rangeNutAdvantage.attempts)}</p>
+      <p>Nut accuracy: {pct(data.stats.postflop.rangeNutAdvantage.nutCorrect, data.stats.postflop.rangeNutAdvantage.attempts)}</p>
+      <p>Top missed boards: {topRangeNutMisses.length}</p>
+      {topRangeNutMisses.length > 0 && (
+        <ol>
+          {topRangeNutMisses.map(([boardKey, misses]) => (
+            <li key={boardKey}>{boardKey} — {misses}</li>
+          ))}
+        </ol>
+      )}
 
       <h3>Top missed spots</h3>
       {topMistakes.length === 0 ? <p className="muted">No mistakes recorded yet.</p> : (

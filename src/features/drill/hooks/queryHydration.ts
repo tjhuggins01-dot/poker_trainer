@@ -8,9 +8,13 @@ const isDrillType = (value: string | null): value is DrillType =>
   || value === 'facing_open'
   || value === 'three_bet'
   || value === 'limp_branch'
-  || value === 'postflop_hand_category';
+  || value === 'postflop_hand_category'
+  || value === 'postflop_range_nut_advantage';
 
-export const buildContextForDrillFromData = (prev: AppData, drillType: Exclude<DrillType, 'postflop_hand_category'>): CandidateDrillContext => {
+export const buildContextForDrillFromData = (
+  prev: AppData,
+  drillType: Exclude<DrillType, 'postflop_hand_category' | 'postflop_range_nut_advantage'>,
+): CandidateDrillContext => {
   const nodeType = fromLegacyDrillType(drillType);
   const heroPos =
     nodeType === 'rfi'
@@ -52,7 +56,7 @@ export const hydrateDrillFromQuery = (prev: AppData, params: URLSearchParams): A
   if (!hasContextQuery && !queryDrill) return prev;
 
   if (isDrillType(queryDrill)) {
-    if (queryDrill === 'postflop_hand_category') {
+    if (queryDrill === 'postflop_hand_category' || queryDrill === 'postflop_range_nut_advantage') {
       return {
         ...prev,
         settings: {
@@ -75,7 +79,7 @@ export const hydrateDrillFromQuery = (prev: AppData, params: URLSearchParams): A
     };
   }
 
-  if (!hasContextQuery || prev.settings.drillType === 'postflop_hand_category') {
+  if (!hasContextQuery || prev.settings.drillType === 'postflop_hand_category' || prev.settings.drillType === 'postflop_range_nut_advantage') {
     return prev;
   }
 
