@@ -64,6 +64,7 @@ function App() {
             onDataChange={onDataChange}
             onSessionChange={onSessionChange}
             onResetSession={onResetSession}
+            onOpenAnalyzer={() => setTab('analyzer')}
           />
         )}
         {tab === 'ranges' && <RangesPage data={data} onDataChange={onDataChange} />}

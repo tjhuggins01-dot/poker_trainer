@@ -27,6 +27,7 @@ type Props = {
   onDataChange: (updater: (prev: AppData) => AppData) => void;
   onSessionChange: (updater: (prev: SessionStats) => SessionStats) => void;
   onResetSession: () => void;
+  onOpenAnalyzer: () => void;
 };
 
 export function DrillPage(props: Props) {
@@ -68,6 +69,14 @@ export function DrillPage(props: Props) {
           />
         ) : props.data.settings.drillType === 'postflop_range_nut_advantage' ? (
           <RangeNutAdvantagePage
+            data={props.data}
+            session={props.session}
+            onDataChange={props.onDataChange}
+            onSessionChange={props.onSessionChange}
+            onOpenAnalyzer={props.onOpenAnalyzer}
+          />
+        ) : (
+          <FlopCBetPage
             data={props.data}
             session={props.session}
             onDataChange={props.onDataChange}

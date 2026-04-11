@@ -32,12 +32,12 @@
     "familyTags": [
       "a-high-dry"
     ],
-    "rangeAdvantage": "close",
+    "rangeAdvantage": "hero",
     "nutAdvantage": "close",
     "explanation": {
-      "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is close.",
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
       "tags": [
-        "eq:-0.8pp",
+        "eq:9.5pp",
         "1p+:10.3pp",
         "2p+:2.8pp"
       ]
@@ -100,12 +100,12 @@
       "qj-high-dynamic",
       "broadway-connected"
     ],
-    "rangeAdvantage": "hero",
+    "rangeAdvantage": "close",
     "nutAdvantage": "hero",
     "explanation": {
-      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is hero.",
       "tags": [
-        "eq:9.3pp",
+        "eq:-0.8pp",
         "1p+:-9.5pp",
         "2p+:3.6pp"
       ]
@@ -145,12 +145,12 @@
     "familyTags": [
       "broadway-connected"
     ],
-    "rangeAdvantage": "villain",
+    "rangeAdvantage": "close",
     "nutAdvantage": "villain",
     "explanation": {
-      "summary": "caller has the clearer distribution edge (villain) while top-end concentration is villain.",
+      "summary": "Overall range interaction is close (slight equity lean to opener); top-end concentration is villain.",
       "tags": [
-        "eq:-7.7pp",
+        "eq:0.3pp",
         "1p+:-2.0pp",
         "2p+:-10.6pp"
       ]
@@ -168,12 +168,12 @@
       "qj-high-dynamic",
       "broadway-connected"
     ],
-    "rangeAdvantage": "close",
+    "rangeAdvantage": "villain",
     "nutAdvantage": "villain",
     "explanation": {
-      "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is villain.",
+      "summary": "caller has the clearer distribution edge (villain) while top-end concentration is villain.",
       "tags": [
-        "eq:-1.3pp",
+        "eq:-3.7pp",
         "1p+:-11.3pp",
         "2p+:-3.9pp"
       ]
@@ -213,12 +213,12 @@
       "middling-connected",
       "low-connected"
     ],
-    "rangeAdvantage": "close",
+    "rangeAdvantage": "hero",
     "nutAdvantage": "villain",
     "explanation": {
-      "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is villain.",
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
       "tags": [
-        "eq:-2.1pp",
+        "eq:3.8pp",
         "1p+:4.5pp",
         "2p+:-0.9pp"
       ]
@@ -302,12 +302,12 @@
     "familyTags": [
       "low-disconnected"
     ],
-    "rangeAdvantage": "close",
+    "rangeAdvantage": "hero",
     "nutAdvantage": "close",
     "explanation": {
-      "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is close.",
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
       "tags": [
-        "eq:-0.1pp",
+        "eq:5.0pp",
         "1p+:7.7pp",
         "2p+:-1.1pp"
       ]
@@ -436,12 +436,12 @@
     "familyTags": [
       "paired-high"
     ],
-    "rangeAdvantage": "villain",
+    "rangeAdvantage": "close",
     "nutAdvantage": "villain",
     "explanation": {
-      "summary": "caller has the clearer distribution edge (villain) while top-end concentration is villain.",
+      "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is villain.",
       "tags": [
-        "eq:-12.5pp",
+        "eq:-1.5pp",
         "1p+:0.0pp",
         "2p+:-6.9pp"
       ]
@@ -502,12 +502,12 @@
     "familyTags": [
       "monotone-high"
     ],
-    "rangeAdvantage": "hero",
+    "rangeAdvantage": "close",
     "nutAdvantage": "villain",
     "explanation": {
-      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+      "summary": "Overall range interaction is close (slight equity lean to opener); top-end concentration is villain.",
       "tags": [
-        "eq:10.5pp",
+        "eq:2.9pp",
         "1p+:1.0pp",
         "2p+:-2.8pp"
       ]
@@ -524,12 +524,12 @@
     "familyTags": [
       "monotone-high"
     ],
-    "rangeAdvantage": "villain",
+    "rangeAdvantage": "close",
     "nutAdvantage": "villain",
     "explanation": {
-      "summary": "caller has the clearer distribution edge (villain) while top-end concentration is villain.",
+      "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is villain.",
       "tags": [
-        "eq:-8.8pp",
+        "eq:-0.7pp",
         "1p+:-4.1pp",
         "2p+:-2.5pp"
       ]
@@ -570,12 +570,12 @@
       "low-connected",
       "monotone-low"
     ],
-    "rangeAdvantage": "villain",
+    "rangeAdvantage": "close",
     "nutAdvantage": "villain",
     "explanation": {
-      "summary": "caller has the clearer distribution edge (villain) while top-end concentration is villain.",
+      "summary": "Overall range interaction is close (slight equity lean to opener); top-end concentration is villain.",
       "tags": [
-        "eq:-16.5pp",
+        "eq:1.3pp",
         "1p+:3.6pp",
         "2p+:-5.7pp"
       ]
@@ -592,12 +592,12 @@
     "familyTags": [
       "two-tone-dynamic"
     ],
-    "rangeAdvantage": "villain",
+    "rangeAdvantage": "close",
     "nutAdvantage": "hero",
     "explanation": {
-      "summary": "caller has the clearer distribution edge (villain) while top-end concentration is hero.",
+      "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is hero.",
       "tags": [
-        "eq:-13.3pp",
+        "eq:-0.3pp",
         "1p+:-3.2pp",
         "2p+:1.8pp"
       ]
@@ -637,14 +637,127 @@
     "familyTags": [
       "two-tone-dynamic"
     ],
+    "rangeAdvantage": "close",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "Overall range interaction is close (slight equity lean to caller); top-end concentration is close.",
+      "tags": [
+        "eq:-1.1pp",
+        "1p+:-4.5pp",
+        "2p+:-1.2pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-btn-vs-bb-srp-flop-flop-049",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Kh",
+      "9h",
+      "2c"
+    ],
+    "familyTags": [],
     "rangeAdvantage": "hero",
     "nutAdvantage": "close",
     "explanation": {
       "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
       "tags": [
-        "eq:5.2pp",
-        "1p+:-4.5pp",
-        "2p+:-1.2pp"
+        "eq:3.9pp",
+        "1p+:5.1pp",
+        "2p+:1.0pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-btn-vs-bb-srp-flop-flop-050",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "Qh",
+      "Jh",
+      "Td"
+    ],
+    "familyTags": [
+      "qj-high-dynamic",
+      "broadway-connected",
+      "two-tone-dynamic"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "hero",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is hero.",
+      "tags": [
+        "eq:4.6pp",
+        "1p+:-4.6pp",
+        "2p+:0.7pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-btn-vs-bb-srp-flop-flop-051",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "6h",
+      "5h",
+      "4c"
+    ],
+    "familyTags": [
+      "low-connected",
+      "two-tone-dynamic"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "close",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is close.",
+      "tags": [
+        "eq:5.3pp",
+        "1p+:6.6pp",
+        "2p+:-2.3pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-btn-vs-bb-srp-flop-flop-052",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "9s",
+      "8s",
+      "7d"
+    ],
+    "familyTags": [
+      "middling-connected",
+      "two-tone-dynamic"
+    ],
+    "rangeAdvantage": "close",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "Overall range interaction is close (slight equity lean to opener); top-end concentration is villain.",
+      "tags": [
+        "eq:0.4pp",
+        "1p+:0.7pp",
+        "2p+:-0.9pp"
+      ]
+    }
+  },
+  {
+    "id": "cash9max-100-btn-vs-bb-srp-flop-flop-053",
+    "spot": "cash9max-100-btn-vs-bb-srp-flop",
+    "board": [
+      "As",
+      "Ks",
+      "Qs"
+    ],
+    "familyTags": [
+      "broadway-connected",
+      "monotone-high"
+    ],
+    "rangeAdvantage": "hero",
+    "nutAdvantage": "villain",
+    "explanation": {
+      "summary": "opener has the clearer distribution edge (hero) while top-end concentration is villain.",
+      "tags": [
+        "eq:4.1pp",
+        "1p+:4.6pp",
+        "2p+:-1.1pp"
       ]
     }
   }

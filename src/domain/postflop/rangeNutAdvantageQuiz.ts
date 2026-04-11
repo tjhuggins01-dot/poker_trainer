@@ -23,6 +23,10 @@ export type RangeNutQuizSpot = {
   label: string;
   description: string;
   enabled: boolean;
+  format: 'cash9max';
+  effectiveStackBb: 100;
+  openerPos: 'BTN' | 'CO';
+  callerPos: 'BB';
 };
 
 const SPOT_CATALOG: RangeNutQuizSpot[] = [
@@ -31,12 +35,20 @@ const SPOT_CATALOG: RangeNutQuizSpot[] = [
     label: 'BTN vs BB SRP (Flop)',
     description: 'Single-raised pot, in-position opener vs big blind caller.',
     enabled: true,
+    format: 'cash9max',
+    effectiveStackBb: 100,
+    openerPos: 'BTN',
+    callerPos: 'BB',
   },
   {
     id: 'cash9max-100-co-vs-bb-srp-flop',
     label: 'CO vs BB SRP (Flop)',
     description: 'Reserved for future expansion.',
     enabled: false,
+    format: 'cash9max',
+    effectiveStackBb: 100,
+    openerPos: 'CO',
+    callerPos: 'BB',
   },
 ];
 
@@ -85,4 +97,19 @@ export const evaluateRangeNutQuizSelection = (
 export const nextPromptIndex = (currentIndex: number, total: number): number => {
   if (total <= 0) return 0;
   return (currentIndex + 1) % total;
+};
+
+export const toAnalyzerSpotId = (spot: Pick<RangeNutQuizSpot, 'format' | 'effectiveStackBb' | 'openerPos' | 'callerPos'>): string =>
+  `${spot.format}:${spot.effectiveStackBb}:${spot.openerPos}:${spot.callerPos}:srp`;
+
+export const shuffleRangeNutQuizEntries = (
+  entries: RangeNutQuizEntry[],
+  random: () => number = Math.random,
+): RangeNutQuizEntry[] => {
+  const next = [...entries];
+  for (let i = next.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(random() * (i + 1));
+    [next[i], next[j]] = [next[j], next[i]];
+  }
+  return next;
 };
