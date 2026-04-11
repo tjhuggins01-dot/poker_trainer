@@ -7,6 +7,7 @@ import {
   getAcceptedFlopCBetEntriesForSpot,
   getFlopCBetEntriesForSpot,
   labelFlopCBetAction,
+  shuffleFlopCBetEntries,
   type FlopCBetEntry,
 } from '../src/domain/postflop/flopCBetTrainer.ts';
 import { getRangeNutQuizEntriesForSpot } from '../src/domain/postflop/rangeNutAdvantageQuiz.ts';
@@ -68,6 +69,16 @@ test('prompt loading includes only c-bet accepted boards for MVP spot', () => {
   assert.ok(accepted.length < all.length);
   assert.equal(accepted.every((entry) => entry.acceptedForCBet), true);
   assert.equal(accepted.every((entry) => entry.recommendedCBetAction !== null), true);
+});
+
+test('prompt order can be randomized so users cannot memorize static sequence', () => {
+  const accepted = getAcceptedFlopCBetEntriesForSpot(SPOT);
+  const originalOrder = accepted.map((entry) => entry.id);
+  const shuffledOrder = shuffleFlopCBetEntries(accepted, () => 0).map((entry) => entry.id);
+
+  assert.equal(shuffledOrder.length, originalOrder.length);
+  assert.deepEqual([...shuffledOrder].sort(), [...originalOrder].sort());
+  assert.notDeepEqual(shuffledOrder, originalOrder);
 });
 
 test('scoring marks correct vs incorrect action and retains explanation', () => {

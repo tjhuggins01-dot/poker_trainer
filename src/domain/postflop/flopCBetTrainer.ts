@@ -147,6 +147,18 @@ export const getFlopCBetEntriesForSpot = (spotId: RangeNutSpotId): FlopCBetEntry
 export const getAcceptedFlopCBetEntriesForSpot = (spotId: RangeNutSpotId): FlopCBetEntry[] =>
   getFlopCBetEntriesForSpot(spotId).filter((entry) => entry.acceptedForCBet && entry.recommendedCBetAction && entry.cBetExplanation);
 
+export const shuffleFlopCBetEntries = (
+  entries: FlopCBetEntry[],
+  rng: () => number = Math.random,
+): FlopCBetEntry[] => {
+  const shuffled = [...entries];
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(rng() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
 export type FlopCBetEvaluation = { correct: boolean };
 
 export const evaluateFlopCBetSelection = (entry: FlopCBetEntry, selectedAction: CBetAction): FlopCBetEvaluation => ({

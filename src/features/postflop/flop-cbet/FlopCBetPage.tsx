@@ -6,6 +6,7 @@ import {
   getAcceptedFlopCBetEntriesForSpot,
   getEnabledFlopCBetSpots,
   nextFlopCBetPromptIndex,
+  shuffleFlopCBetEntries,
   type CBetAction,
 } from '../../../domain/postflop/flopCBetTrainer';
 import { reduceDataOnFlopCBetAnswer, reduceSessionOnFlopCBetAnswer } from '../../../domain/postflop/flopCBetStats';
@@ -37,7 +38,10 @@ export function FlopCBetPage({ data, session, onDataChange, onSessionChange }: P
   const [revealed, setRevealed] = useState(false);
   const [questionStartTs, setQuestionStartTs] = useState(Date.now());
 
-  const entries = useMemo(() => getAcceptedFlopCBetEntriesForSpot(spotId), [spotId]);
+  const entries = useMemo(
+    () => shuffleFlopCBetEntries(getAcceptedFlopCBetEntriesForSpot(spotId)),
+    [spotId],
+  );
   const prompt = entries[promptIndex];
   const selectedSpot = getEnabledFlopCBetSpots().find((spot) => spot.id === spotId);
 
