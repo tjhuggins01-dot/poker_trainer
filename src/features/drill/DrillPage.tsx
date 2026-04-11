@@ -12,6 +12,7 @@ import {
   type SessionStats,
 } from '../../lib/types';
 import { HandCategoryPage } from '../postflop/hand-category/HandCategoryPage';
+import { RangeNutAdvantagePage } from '../postflop/range-nut/RangeNutAdvantagePage';
 import { DrillActionButtons } from './components/DrillActionButtons';
 import { DrillTypeSelector } from './components/DrillTypeSelector';
 import { PositionFocusSelector } from './components/PositionFocusSelector';
@@ -25,6 +26,7 @@ type Props = {
   onDataChange: (updater: (prev: AppData) => AppData) => void;
   onSessionChange: (updater: (prev: SessionStats) => SessionStats) => void;
   onResetSession: () => void;
+  onOpenAnalyzer: () => void;
 };
 
 export function DrillPage(props: Props) {
@@ -41,7 +43,7 @@ export function DrillPage(props: Props) {
     k.startsWith(`LIMP_ISO_${stackPrefix}`) || k.startsWith(`VS_ISO_${stackPrefix}`),
   );
 
-  if (props.data.settings.drillType === 'postflop_hand_category') {
+  if (props.data.settings.drillType === 'postflop_hand_category' || props.data.settings.drillType === 'postflop_range_nut_advantage') {
     return (
       <section>
         <h2>Drill</h2>
@@ -53,12 +55,22 @@ export function DrillPage(props: Props) {
           hasLimpBranchData={hasLimpBranchData}
           onChange={updateDrillType}
         />
-        <HandCategoryPage
-          data={props.data}
-          session={props.session}
-          onDataChange={props.onDataChange}
-          onSessionChange={props.onSessionChange}
-        />
+        {props.data.settings.drillType === 'postflop_hand_category' ? (
+          <HandCategoryPage
+            data={props.data}
+            session={props.session}
+            onDataChange={props.onDataChange}
+            onSessionChange={props.onSessionChange}
+          />
+        ) : (
+          <RangeNutAdvantagePage
+            data={props.data}
+            session={props.session}
+            onDataChange={props.onDataChange}
+            onSessionChange={props.onSessionChange}
+            onOpenAnalyzer={props.onOpenAnalyzer}
+          />
+        )}
       </section>
     );
   }
@@ -99,12 +111,19 @@ function PreflopDrillPage({
     [situationsPolicyKey, data.settings.difficulty],
   );
   const selectedFocusKey = useMemo(() => {
-    const key = data.settings.drillType === 'postflop_hand_category' ? 'rfi' : data.settings.drillType;
+    const key =
+      data.settings.drillType === 'postflop_hand_category' || data.settings.drillType === 'postflop_range_nut_advantage'
+        ? 'rfi'
+        : data.settings.drillType;
     const focus = data.settings.positionFocus[key] as string[];
     return [...focus].sort().join('|');
   }, [data.settings.drillType, data.settings.positionFocus]);
   const selectedVillainKey = useMemo(() => {
-    if (data.settings.drillType === 'rfi' || data.settings.drillType === 'postflop_hand_category') return '';
+    if (
+      data.settings.drillType === 'rfi'
+      || data.settings.drillType === 'postflop_hand_category'
+      || data.settings.drillType === 'postflop_range_nut_advantage'
+    ) return '';
     return [...data.settings.villainFocus[data.settings.drillType]].sort().join('|');
   }, [data.settings.drillType, data.settings.villainFocus]);
   const drillResetKey = `${data.settings.drillType}:${selectedFocusKey}:${selectedVillainKey}:${data.settings.difficulty}:${data.settings.drillContext.format}:${data.settings.drillContext.effectiveStackBb}:${situationsPolicyKey}`;

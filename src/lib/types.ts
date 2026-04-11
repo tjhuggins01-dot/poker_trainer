@@ -35,7 +35,13 @@ export const THREE_BET_VILLAIN_BY_HERO: Record<ThreeBetHeroPosition, Position[]>
   SB: ['BB'],
 };
 
-export type DrillType = 'rfi' | 'facing_open' | 'three_bet' | 'limp_branch' | 'postflop_hand_category';
+export type DrillType =
+  | 'rfi'
+  | 'facing_open'
+  | 'three_bet'
+  | 'limp_branch'
+  | 'postflop_hand_category'
+  | 'postflop_range_nut_advantage';
 
 export type DrillStatsMap = Record<DrillType, StatsEntry>;
 export type DrillMsMap = Record<DrillType, number>;
@@ -185,6 +191,14 @@ export type AppData = {
     promptMemory: Record<string, PromptMemoryEntry>;
     postflop: {
       handCategory: PostflopHandCategoryStats;
+      rangeNutAdvantage: {
+        attempts: number;
+        fullyCorrect: number;
+        rangeCorrect: number;
+        nutCorrect: number;
+        totalResponseMs: number;
+        missedBoards: Record<string, number>;
+      };
     };
   };
   settings: {
@@ -203,6 +217,7 @@ export type AppData = {
       three_bet: ThreeBetHeroPosition[];
       limp_branch: LimpBranchHeroPosition[];
       postflop_hand_category: [];
+      postflop_range_nut_advantage: [];
     };
     villainFocus: {
       facing_open: Position[];
@@ -243,6 +258,13 @@ export type SessionStats = {
     handCategory: {
       attempts: number;
       correct: number;
+      totalResponseMs: number;
+    };
+    rangeNutAdvantage: {
+      attempts: number;
+      fullyCorrect: number;
+      rangeCorrect: number;
+      nutCorrect: number;
       totalResponseMs: number;
     };
   };
