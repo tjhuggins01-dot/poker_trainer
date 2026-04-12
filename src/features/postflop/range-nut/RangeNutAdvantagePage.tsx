@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CardRow } from '../../../components/PlayingCard';
 import {
   evaluateRangeNutQuizSelection,
@@ -9,6 +9,7 @@ import {
   shuffleRangeNutQuizEntries,
   type AdvantageAnswer,
 } from '../../../domain/postflop/rangeNutAdvantageQuiz';
+import { pickRandomPromptIndex } from '../../../domain/postflop/quizOrdering';
 import { reduceDataOnRangeNutAnswer, reduceSessionOnRangeNutAnswer } from '../../../domain/postflop/rangeNutAdvantageStats';
 import type { AppData, SessionStats } from '../../../lib/types';
 
@@ -33,8 +34,6 @@ type Props = {
 
 export function RangeNutAdvantagePage({ data, session, onDataChange, onSessionChange, onOpenAnalyzer }: Props) {
   const [spotId] = useState(RANGE_NUT_MVP_SPOT_ID);
-  const [entries, setEntries] = useState(() => shuffleRangeNutQuizEntries(getRangeNutQuizEntriesForSpot(RANGE_NUT_MVP_SPOT_ID)));
-  const [promptIndex, setPromptIndex] = useState(0);
   const [rangeSelection, setRangeSelection] = useState<AdvantageAnswer | null>(null);
   const [nutSelection, setNutSelection] = useState<AdvantageAnswer | null>(null);
   const [revealed, setRevealed] = useState(false);
@@ -44,8 +43,17 @@ export function RangeNutAdvantagePage({ data, session, onDataChange, onSessionCh
     () => shuffleRangeNutQuizEntries(getRangeNutQuizEntriesForSpot(spotId)),
     [spotId],
   );
+  const [promptIndex, setPromptIndex] = useState(() => pickRandomPromptIndex(entries.length));
   const prompt = entries[promptIndex];
   const selectedSpot = getEnabledRangeNutQuizSpots().find((spot) => spot.id === spotId);
+
+  useEffect(() => {
+    setPromptIndex(pickRandomPromptIndex(entries.length));
+    setRangeSelection(null);
+    setNutSelection(null);
+    setRevealed(false);
+    setQuestionStartTs(Date.now());
+  }, [entries]);
 
   const canSubmit = rangeSelection !== null && nutSelection !== null && !revealed;
 

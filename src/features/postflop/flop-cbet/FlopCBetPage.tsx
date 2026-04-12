@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CardRow } from '../../../components/PlayingCard';
 import {
   evaluateFlopCBetSelection,
@@ -10,6 +10,7 @@ import {
   type CBetAction,
 } from '../../../domain/postflop/flopCBetTrainer';
 import { reduceDataOnFlopCBetAnswer, reduceSessionOnFlopCBetAnswer } from '../../../domain/postflop/flopCBetStats';
+import { pickRandomPromptIndex } from '../../../domain/postflop/quizOrdering';
 import type { AppData, SessionStats } from '../../../lib/types';
 
 const ANSWER_OPTIONS: Array<{ value: CBetAction; label: string }> = [
@@ -33,7 +34,6 @@ type Props = {
 
 export function FlopCBetPage({ data, session, onDataChange, onSessionChange }: Props) {
   const [spotId] = useState(FLOP_CBET_MVP_SPOT_ID);
-  const [promptIndex, setPromptIndex] = useState(0);
   const [selection, setSelection] = useState<CBetAction | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [questionStartTs, setQuestionStartTs] = useState(Date.now());
@@ -42,8 +42,16 @@ export function FlopCBetPage({ data, session, onDataChange, onSessionChange }: P
     () => shuffleFlopCBetEntries(getAcceptedFlopCBetEntriesForSpot(spotId)),
     [spotId],
   );
+  const [promptIndex, setPromptIndex] = useState(() => pickRandomPromptIndex(entries.length));
   const prompt = entries[promptIndex];
   const selectedSpot = getEnabledFlopCBetSpots().find((spot) => spot.id === spotId);
+
+  useEffect(() => {
+    setPromptIndex(pickRandomPromptIndex(entries.length));
+    setSelection(null);
+    setRevealed(false);
+    setQuestionStartTs(Date.now());
+  }, [entries]);
 
   const canSubmit = selection !== null && !revealed;
 

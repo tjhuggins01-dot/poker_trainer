@@ -6,3 +6,8 @@ export const shuffleQuizEntries = <T>(entries: T[], rng: () => number = Math.ran
   }
   return shuffled;
 };
+
+export const pickRandomPromptIndex = (total: number, rng: () => number = Math.random): number => {
+  if (total <= 0) return 0;
+  return Math.floor(rng() * total);
+};

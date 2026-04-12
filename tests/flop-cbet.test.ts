@@ -14,6 +14,7 @@ import { getRangeNutQuizEntriesForSpot } from '../src/domain/postflop/rangeNutAd
 import { shuffleRangeNutQuizEntries } from '../src/domain/postflop/rangeNutAdvantageQuiz.ts';
 import { reduceDataOnFlopCBetAnswer, reduceSessionOnFlopCBetAnswer } from '../src/domain/postflop/flopCBetStats.ts';
 import { createDefaultData, createDefaultSession } from '../src/domain/storage/defaultData.ts';
+import { pickRandomPromptIndex } from '../src/domain/postflop/quizOrdering.ts';
 
 const SPOT = 'cash9max-100-btn-vs-bb-srp-flop' as const;
 
@@ -89,6 +90,13 @@ test('range/nut and c-bet use the same shuffle method behavior', () => {
 
   assert.deepEqual([...rangeNutShuffled].sort(), [...rangeNutOriginal].sort());
   assert.notDeepEqual(rangeNutShuffled, rangeNutOriginal);
+});
+
+test('random prompt index helper returns bounded values and handles empty sets', () => {
+  assert.equal(pickRandomPromptIndex(0), 0);
+  assert.equal(pickRandomPromptIndex(1, () => 0.99), 0);
+  assert.equal(pickRandomPromptIndex(10, () => 0), 0);
+  assert.equal(pickRandomPromptIndex(10, () => 0.9999), 9);
 });
 
 test('scoring marks correct vs incorrect action and retains explanation', () => {
