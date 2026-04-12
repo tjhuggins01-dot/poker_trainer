@@ -13,6 +13,7 @@ import {
 } from '../../lib/types';
 import { HandCategoryPage } from '../postflop/hand-category/HandCategoryPage';
 import { FlopCBetPage } from '../postflop/flop-cbet/FlopCBetPage';
+import { FacingFlopCBetPage } from '../postflop/facing-flop-cbet/FacingFlopCBetPage';
 import { RangeNutAdvantagePage } from '../postflop/range-nut/RangeNutAdvantagePage';
 import { DrillActionButtons } from './components/DrillActionButtons';
 import { DrillTypeSelector } from './components/DrillTypeSelector';
@@ -48,6 +49,7 @@ export function DrillPage(props: Props) {
     props.data.settings.drillType === 'postflop_hand_category'
     || props.data.settings.drillType === 'postflop_range_nut_advantage'
     || props.data.settings.drillType === 'postflop_flop_cbet'
+    || props.data.settings.drillType === 'postflop_facing_flop_cbet'
   ) {
     let postflopModule = <></>;
     if (props.data.settings.drillType === 'postflop_hand_category') {
@@ -69,9 +71,18 @@ export function DrillPage(props: Props) {
           onOpenAnalyzer={props.onOpenAnalyzer}
         />
       );
-    } else {
+    } else if (props.data.settings.drillType === 'postflop_flop_cbet') {
       postflopModule = (
         <FlopCBetPage
+          data={props.data}
+          session={props.session}
+          onDataChange={props.onDataChange}
+          onSessionChange={props.onSessionChange}
+        />
+      );
+    } else {
+      postflopModule = (
+        <FacingFlopCBetPage
           data={props.data}
           session={props.session}
           onDataChange={props.onDataChange}
@@ -135,6 +146,7 @@ function PreflopDrillPage({
     const key =
       data.settings.drillType === 'postflop_hand_category' || data.settings.drillType === 'postflop_range_nut_advantage'
       || data.settings.drillType === 'postflop_flop_cbet'
+      || data.settings.drillType === 'postflop_facing_flop_cbet'
         ? 'rfi'
         : data.settings.drillType;
     const focus = data.settings.positionFocus[key] as string[];
@@ -146,6 +158,7 @@ function PreflopDrillPage({
       || data.settings.drillType === 'postflop_hand_category'
       || data.settings.drillType === 'postflop_range_nut_advantage'
       || data.settings.drillType === 'postflop_flop_cbet'
+      || data.settings.drillType === 'postflop_facing_flop_cbet'
     ) return '';
     return [...data.settings.villainFocus[data.settings.drillType]].sort().join('|');
   }, [data.settings.drillType, data.settings.villainFocus]);

@@ -42,7 +42,8 @@ export type DrillType =
   | 'limp_branch'
   | 'postflop_hand_category'
   | 'postflop_range_nut_advantage'
-  | 'postflop_flop_cbet';
+  | 'postflop_flop_cbet'
+  | 'postflop_facing_flop_cbet';
 
 export type DrillStatsMap = Record<DrillType, StatsEntry>;
 export type DrillMsMap = Record<DrillType, number>;
@@ -206,6 +207,12 @@ export type AppData = {
         totalResponseMs: number;
         missedBoards: Record<string, number>;
       };
+      facingFlopCBet: {
+        attempts: number;
+        correct: number;
+        totalResponseMs: number;
+        missedPrompts: Record<string, number>;
+      };
     };
   };
   settings: {
@@ -226,6 +233,7 @@ export type AppData = {
       postflop_hand_category: [];
       postflop_range_nut_advantage: [];
       postflop_flop_cbet: [];
+      postflop_facing_flop_cbet: [];
     };
     villainFocus: {
       facing_open: Position[];
@@ -276,6 +284,11 @@ export type SessionStats = {
       totalResponseMs: number;
     };
     flopCBet: {
+      attempts: number;
+      correct: number;
+      totalResponseMs: number;
+    };
+    facingFlopCBet: {
       attempts: number;
       correct: number;
       totalResponseMs: number;

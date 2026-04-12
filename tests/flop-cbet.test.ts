@@ -181,7 +181,7 @@ test('stats are scoped to flop c-bet drill and do not mutate range/nut stats', (
 
 test('regression: existing range/nut source entries are still readable and unchanged in size', () => {
   const entries = getRangeNutQuizEntriesForSpot(SPOT);
-  assert.equal(entries.length, 29);
+  assert.equal(entries.length, 34);
   const enriched = entries.map(extendRangeNutEntryWithCBet);
   assert.equal(enriched.length, entries.length);
 

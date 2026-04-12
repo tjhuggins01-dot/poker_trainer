@@ -21,6 +21,7 @@ export function useDrillQuerySync(data: AppData, onDataChange: OnDataChange) {
       data.settings.drillType !== 'postflop_hand_category'
       && data.settings.drillType !== 'postflop_range_nut_advantage'
       && data.settings.drillType !== 'postflop_flop_cbet'
+      && data.settings.drillType !== 'postflop_facing_flop_cbet'
     ) {
       q.set('format', data.settings.drillContext.format);
       q.set('stack', String(data.settings.drillContext.effectiveStackBb));
@@ -46,6 +47,7 @@ export function useDrillQuerySync(data: AppData, onDataChange: OnDataChange) {
           drillType === 'postflop_hand_category'
           || drillType === 'postflop_range_nut_advantage'
           || drillType === 'postflop_flop_cbet'
+          || drillType === 'postflop_facing_flop_cbet'
         ) {
           return {
             ...prev,

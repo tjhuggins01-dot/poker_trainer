@@ -41,6 +41,7 @@ export function DrillTypeSelector({
         <option value="postflop_hand_category">Postflop: Hand Category</option>
         <option value="postflop_range_nut_advantage">Postflop: Range / Nut Advantage</option>
         <option value="postflop_flop_cbet">Postflop: Flop C-Bet</option>
+        <option value="postflop_facing_flop_cbet">Postflop: Facing Flop C-Bet</option>
       </select>
     </>
   );
