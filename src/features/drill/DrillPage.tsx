@@ -66,6 +66,7 @@ export function DrillPage(props: Props) {
           session={props.session}
           onDataChange={props.onDataChange}
           onSessionChange={props.onSessionChange}
+          onOpenAnalyzer={props.onOpenAnalyzer}
         />
       );
     } else {
