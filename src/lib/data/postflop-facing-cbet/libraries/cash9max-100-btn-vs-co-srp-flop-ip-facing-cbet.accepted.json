@@ -1,0 +1,5762 @@
+[
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-a-high-dry-air-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "As",
+      "8d",
+      "3c"
+    ],
+    "heroHand": [
+      "Kd",
+      "Qh"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on a-high-dry prefers fold in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: a-high-dry",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:a-high-dry",
+        "hand:pure-air",
+        "size:small",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:a-high-dry",
+      "texture:dry-high",
+      "hand:pure-air",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-a-high-dry-air-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "As",
+      "8d",
+      "3c"
+    ],
+    "heroHand": [
+      "Kd",
+      "Qh"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on a-high-dry prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: a-high-dry",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:a-high-dry",
+        "hand:pure-air",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:a-high-dry",
+      "texture:dry-high",
+      "hand:pure-air",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-a-high-dry-overcards-bd-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "As",
+      "8d",
+      "3c"
+    ],
+    "heroHand": [
+      "Kc",
+      "Qc"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "overcards-backdoor on a-high-dry prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: overcards-backdoor",
+        "Texture: a-high-dry",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:a-high-dry",
+        "hand:overcards-backdoor",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:a-high-dry",
+      "texture:dry-high",
+      "hand:overcards-backdoor",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-a-high-dry-overcards-bd-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "As",
+      "8d",
+      "3c"
+    ],
+    "heroHand": [
+      "Kc",
+      "Qc"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "overcards-backdoor on a-high-dry prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: overcards-backdoor",
+        "Texture: a-high-dry",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:a-high-dry",
+        "hand:overcards-backdoor",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:a-high-dry",
+      "texture:dry-high",
+      "hand:overcards-backdoor",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-a-high-dry-weak-pair-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "As",
+      "8d",
+      "3c"
+    ],
+    "heroHand": [
+      "8h",
+      "7s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "middle-pair on a-high-dry prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: middle-pair",
+        "Texture: a-high-dry",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:a-high-dry",
+        "hand:middle-pair",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:a-high-dry",
+      "texture:dry-high",
+      "hand:middle-pair",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-a-high-dry-weak-pair-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "As",
+      "8d",
+      "3c"
+    ],
+    "heroHand": [
+      "8h",
+      "7s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "middle-pair on a-high-dry prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: middle-pair",
+        "Texture: a-high-dry",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:a-high-dry",
+        "hand:middle-pair",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:a-high-dry",
+      "texture:dry-high",
+      "hand:middle-pair",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-a-high-dry-strong-top-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "As",
+      "8d",
+      "3c"
+    ],
+    "heroHand": [
+      "Ad",
+      "Jc"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-good-kicker on a-high-dry prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: top-pair-good-kicker",
+        "Texture: a-high-dry",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:a-high-dry",
+        "hand:top-pair-good-kicker",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:a-high-dry",
+      "texture:dry-high",
+      "hand:top-pair-good-kicker",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-a-high-dry-strong-top-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "As",
+      "8d",
+      "3c"
+    ],
+    "heroHand": [
+      "Ad",
+      "Jc"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-good-kicker on a-high-dry prefers call in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: top-pair-good-kicker",
+        "Texture: a-high-dry",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:a-high-dry",
+        "hand:top-pair-good-kicker",
+        "size:big",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:a-high-dry",
+      "texture:dry-high",
+      "hand:top-pair-good-kicker",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-a-high-dry-strong-equity-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "As",
+      "8d",
+      "3c"
+    ],
+    "heroHand": [
+      "5s",
+      "4s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "gutshot-backdoor-flush on a-high-dry prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: gutshot-backdoor-flush",
+        "Texture: a-high-dry",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:a-high-dry",
+        "hand:gutshot-backdoor-flush",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:a-high-dry",
+      "texture:dry-high",
+      "hand:gutshot-backdoor-flush",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-a-high-dry-strong-equity-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "As",
+      "8d",
+      "3c"
+    ],
+    "heroHand": [
+      "5s",
+      "4s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "gutshot-backdoor-flush on a-high-dry prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: gutshot-backdoor-flush",
+        "Texture: a-high-dry",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:a-high-dry",
+        "hand:gutshot-backdoor-flush",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:a-high-dry",
+      "texture:dry-high",
+      "hand:gutshot-backdoor-flush",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-a-high-dry-nutted-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "As",
+      "8d",
+      "3c"
+    ],
+    "heroHand": [
+      "3h",
+      "3d"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "bottom-set on a-high-dry prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: bottom-set",
+        "Texture: a-high-dry",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:a-high-dry",
+        "hand:bottom-set",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:a-high-dry",
+      "texture:dry-high",
+      "hand:bottom-set",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-a-high-dry-nutted-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "As",
+      "8d",
+      "3c"
+    ],
+    "heroHand": [
+      "3h",
+      "3d"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "bottom-set on a-high-dry prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: bottom-set",
+        "Texture: a-high-dry",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:a-high-dry",
+        "hand:bottom-set",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:a-high-dry",
+      "texture:dry-high",
+      "hand:bottom-set",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-k-high-dry-air-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kh",
+      "7c",
+      "2d"
+    ],
+    "heroHand": [
+      "Qd",
+      "4s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on k-high-dry prefers fold in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: k-high-dry",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:k-high-dry",
+        "hand:pure-air",
+        "size:small",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:k-high-dry",
+      "texture:dry-high",
+      "hand:pure-air",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-k-high-dry-air-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kh",
+      "7c",
+      "2d"
+    ],
+    "heroHand": [
+      "Qd",
+      "4s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on k-high-dry prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: k-high-dry",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:k-high-dry",
+        "hand:pure-air",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:k-high-dry",
+      "texture:dry-high",
+      "hand:pure-air",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-k-high-dry-overcards-bd-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kh",
+      "7c",
+      "2d"
+    ],
+    "heroHand": [
+      "Qs",
+      "Js"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "overcards-backdoor on k-high-dry prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: overcards-backdoor",
+        "Texture: k-high-dry",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:k-high-dry",
+        "hand:overcards-backdoor",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:k-high-dry",
+      "texture:dry-high",
+      "hand:overcards-backdoor",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-k-high-dry-overcards-bd-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kh",
+      "7c",
+      "2d"
+    ],
+    "heroHand": [
+      "Qs",
+      "Js"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "overcards-backdoor on k-high-dry prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: overcards-backdoor",
+        "Texture: k-high-dry",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:k-high-dry",
+        "hand:overcards-backdoor",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:k-high-dry",
+      "texture:dry-high",
+      "hand:overcards-backdoor",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-k-high-dry-weak-pair-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kh",
+      "7c",
+      "2d"
+    ],
+    "heroHand": [
+      "7h",
+      "6s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "middle-pair on k-high-dry prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: middle-pair",
+        "Texture: k-high-dry",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:k-high-dry",
+        "hand:middle-pair",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:k-high-dry",
+      "texture:dry-high",
+      "hand:middle-pair",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-k-high-dry-weak-pair-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kh",
+      "7c",
+      "2d"
+    ],
+    "heroHand": [
+      "7h",
+      "6s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "middle-pair on k-high-dry prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: middle-pair",
+        "Texture: k-high-dry",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:k-high-dry",
+        "hand:middle-pair",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:k-high-dry",
+      "texture:dry-high",
+      "hand:middle-pair",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-k-high-dry-strong-top-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kh",
+      "7c",
+      "2d"
+    ],
+    "heroHand": [
+      "Kd",
+      "Jc"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-good-kicker on k-high-dry prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: top-pair-good-kicker",
+        "Texture: k-high-dry",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:k-high-dry",
+        "hand:top-pair-good-kicker",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:k-high-dry",
+      "texture:dry-high",
+      "hand:top-pair-good-kicker",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-k-high-dry-strong-top-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kh",
+      "7c",
+      "2d"
+    ],
+    "heroHand": [
+      "Kd",
+      "Jc"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-good-kicker on k-high-dry prefers call in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: top-pair-good-kicker",
+        "Texture: k-high-dry",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:k-high-dry",
+        "hand:top-pair-good-kicker",
+        "size:big",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:k-high-dry",
+      "texture:dry-high",
+      "hand:top-pair-good-kicker",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-k-high-dry-strong-equity-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kh",
+      "7c",
+      "2d"
+    ],
+    "heroHand": [
+      "Ad",
+      "Qd"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "overs-backdoor-nut-draw on k-high-dry prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: overs-backdoor-nut-draw",
+        "Texture: k-high-dry",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:k-high-dry",
+        "hand:overs-backdoor-nut-draw",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:k-high-dry",
+      "texture:dry-high",
+      "hand:overs-backdoor-nut-draw",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-k-high-dry-strong-equity-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kh",
+      "7c",
+      "2d"
+    ],
+    "heroHand": [
+      "Ad",
+      "Qd"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "overs-backdoor-nut-draw on k-high-dry prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: overs-backdoor-nut-draw",
+        "Texture: k-high-dry",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:k-high-dry",
+        "hand:overs-backdoor-nut-draw",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:k-high-dry",
+      "texture:dry-high",
+      "hand:overs-backdoor-nut-draw",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-k-high-dry-nutted-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kh",
+      "7c",
+      "2d"
+    ],
+    "heroHand": [
+      "7d",
+      "7s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "middle-set on k-high-dry prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: middle-set",
+        "Texture: k-high-dry",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:k-high-dry",
+        "hand:middle-set",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:k-high-dry",
+      "texture:dry-high",
+      "hand:middle-set",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-k-high-dry-nutted-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kh",
+      "7c",
+      "2d"
+    ],
+    "heroHand": [
+      "7d",
+      "7s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "middle-set on k-high-dry prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: middle-set",
+        "Texture: k-high-dry",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:k-high-dry",
+        "hand:middle-set",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:k-high-dry",
+      "texture:dry-high",
+      "hand:middle-set",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-qj-high-dynamic-air-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Qh",
+      "Td",
+      "8c"
+    ],
+    "heroHand": [
+      "4s",
+      "3d"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on qj-high-dynamic prefers fold in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: qj-high-dynamic",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:qj-high-dynamic",
+        "hand:pure-air",
+        "size:small",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:qj-high-dynamic",
+      "texture:dynamic-broadway",
+      "hand:pure-air",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-qj-high-dynamic-air-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Qh",
+      "Td",
+      "8c"
+    ],
+    "heroHand": [
+      "4s",
+      "3d"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on qj-high-dynamic prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: qj-high-dynamic",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:qj-high-dynamic",
+        "hand:pure-air",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:qj-high-dynamic",
+      "texture:dynamic-broadway",
+      "hand:pure-air",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-qj-high-dynamic-overcards-bd-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Qh",
+      "Td",
+      "8c"
+    ],
+    "heroHand": [
+      "As",
+      "Kc"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "double-over-gutshot on qj-high-dynamic prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: double-over-gutshot",
+        "Texture: qj-high-dynamic",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:qj-high-dynamic",
+        "hand:double-over-gutshot",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:qj-high-dynamic",
+      "texture:dynamic-broadway",
+      "hand:double-over-gutshot",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-qj-high-dynamic-overcards-bd-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Qh",
+      "Td",
+      "8c"
+    ],
+    "heroHand": [
+      "As",
+      "Kc"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "double-over-gutshot on qj-high-dynamic prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: double-over-gutshot",
+        "Texture: qj-high-dynamic",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:qj-high-dynamic",
+        "hand:double-over-gutshot",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:qj-high-dynamic",
+      "texture:dynamic-broadway",
+      "hand:double-over-gutshot",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-qj-high-dynamic-weak-pair-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Qh",
+      "Td",
+      "8c"
+    ],
+    "heroHand": [
+      "8h",
+      "7h"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "third-pair-backdoor on qj-high-dynamic prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: third-pair-backdoor",
+        "Texture: qj-high-dynamic",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:qj-high-dynamic",
+        "hand:third-pair-backdoor",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:qj-high-dynamic",
+      "texture:dynamic-broadway",
+      "hand:third-pair-backdoor",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-qj-high-dynamic-weak-pair-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Qh",
+      "Td",
+      "8c"
+    ],
+    "heroHand": [
+      "8h",
+      "7h"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "third-pair-backdoor on qj-high-dynamic prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: third-pair-backdoor",
+        "Texture: qj-high-dynamic",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:qj-high-dynamic",
+        "hand:third-pair-backdoor",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:qj-high-dynamic",
+      "texture:dynamic-broadway",
+      "hand:third-pair-backdoor",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-qj-high-dynamic-strong-top-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Qh",
+      "Td",
+      "8c"
+    ],
+    "heroHand": [
+      "Qs",
+      "Jc"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-gutter on qj-high-dynamic prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: top-pair-gutter",
+        "Texture: qj-high-dynamic",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:qj-high-dynamic",
+        "hand:top-pair-gutter",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:qj-high-dynamic",
+      "texture:dynamic-broadway",
+      "hand:top-pair-gutter",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-qj-high-dynamic-strong-top-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Qh",
+      "Td",
+      "8c"
+    ],
+    "heroHand": [
+      "Qs",
+      "Jc"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-gutter on qj-high-dynamic prefers call in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: top-pair-gutter",
+        "Texture: qj-high-dynamic",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:qj-high-dynamic",
+        "hand:top-pair-gutter",
+        "size:big",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:qj-high-dynamic",
+      "texture:dynamic-broadway",
+      "hand:top-pair-gutter",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-qj-high-dynamic-strong-equity-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Qh",
+      "Td",
+      "8c"
+    ],
+    "heroHand": [
+      "Jh",
+      "9h"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "open-ender-backdoor-flush on qj-high-dynamic prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: open-ender-backdoor-flush",
+        "Texture: qj-high-dynamic",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:qj-high-dynamic",
+        "hand:open-ender-backdoor-flush",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:qj-high-dynamic",
+      "texture:dynamic-broadway",
+      "hand:open-ender-backdoor-flush",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-qj-high-dynamic-strong-equity-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Qh",
+      "Td",
+      "8c"
+    ],
+    "heroHand": [
+      "Jh",
+      "9h"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "open-ender-backdoor-flush on qj-high-dynamic prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: open-ender-backdoor-flush",
+        "Texture: qj-high-dynamic",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:qj-high-dynamic",
+        "hand:open-ender-backdoor-flush",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:qj-high-dynamic",
+      "texture:dynamic-broadway",
+      "hand:open-ender-backdoor-flush",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-qj-high-dynamic-nutted-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Qh",
+      "Td",
+      "8c"
+    ],
+    "heroHand": [
+      "9s",
+      "7s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "made-straight on qj-high-dynamic prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: made-straight",
+        "Texture: qj-high-dynamic",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:qj-high-dynamic",
+        "hand:made-straight",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:qj-high-dynamic",
+      "texture:dynamic-broadway",
+      "hand:made-straight",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-qj-high-dynamic-nutted-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Qh",
+      "Td",
+      "8c"
+    ],
+    "heroHand": [
+      "9s",
+      "7s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "made-straight on qj-high-dynamic prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: made-straight",
+        "Texture: qj-high-dynamic",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:qj-high-dynamic",
+        "hand:made-straight",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:qj-high-dynamic",
+      "texture:dynamic-broadway",
+      "hand:made-straight",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-broadway-connected-air-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ks",
+      "Qs",
+      "Td"
+    ],
+    "heroHand": [
+      "4d",
+      "3c"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on broadway-connected prefers fold in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: broadway-connected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:broadway-connected",
+        "hand:pure-air",
+        "size:small",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:broadway-connected",
+      "texture:dynamic-broadway",
+      "hand:pure-air",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-broadway-connected-air-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ks",
+      "Qs",
+      "Td"
+    ],
+    "heroHand": [
+      "4d",
+      "3c"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on broadway-connected prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: broadway-connected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:broadway-connected",
+        "hand:pure-air",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:broadway-connected",
+      "texture:dynamic-broadway",
+      "hand:pure-air",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-broadway-connected-overcards-bd-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ks",
+      "Qs",
+      "Td"
+    ],
+    "heroHand": [
+      "Ac",
+      "9c"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "ace-high-gutshot on broadway-connected prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: ace-high-gutshot",
+        "Texture: broadway-connected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:broadway-connected",
+        "hand:ace-high-gutshot",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:broadway-connected",
+      "texture:dynamic-broadway",
+      "hand:ace-high-gutshot",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-broadway-connected-overcards-bd-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ks",
+      "Qs",
+      "Td"
+    ],
+    "heroHand": [
+      "Ac",
+      "9c"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "ace-high-gutshot on broadway-connected prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: ace-high-gutshot",
+        "Texture: broadway-connected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:broadway-connected",
+        "hand:ace-high-gutshot",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:broadway-connected",
+      "texture:dynamic-broadway",
+      "hand:ace-high-gutshot",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-broadway-connected-weak-pair-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ks",
+      "Qs",
+      "Td"
+    ],
+    "heroHand": [
+      "9h",
+      "8h"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "bottom-pair-gutter on broadway-connected prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: bottom-pair-gutter",
+        "Texture: broadway-connected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:broadway-connected",
+        "hand:bottom-pair-gutter",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:broadway-connected",
+      "texture:dynamic-broadway",
+      "hand:bottom-pair-gutter",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-broadway-connected-weak-pair-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ks",
+      "Qs",
+      "Td"
+    ],
+    "heroHand": [
+      "9h",
+      "8h"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "bottom-pair-gutter on broadway-connected prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: bottom-pair-gutter",
+        "Texture: broadway-connected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:broadway-connected",
+        "hand:bottom-pair-gutter",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:broadway-connected",
+      "texture:dynamic-broadway",
+      "hand:bottom-pair-gutter",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-broadway-connected-strong-top-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ks",
+      "Qs",
+      "Td"
+    ],
+    "heroHand": [
+      "Kd",
+      "Jc"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-open-ender on broadway-connected prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: top-pair-open-ender",
+        "Texture: broadway-connected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:broadway-connected",
+        "hand:top-pair-open-ender",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:broadway-connected",
+      "texture:dynamic-broadway",
+      "hand:top-pair-open-ender",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-broadway-connected-strong-top-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ks",
+      "Qs",
+      "Td"
+    ],
+    "heroHand": [
+      "Kd",
+      "Jc"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-open-ender on broadway-connected prefers call in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: top-pair-open-ender",
+        "Texture: broadway-connected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:broadway-connected",
+        "hand:top-pair-open-ender",
+        "size:big",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:broadway-connected",
+      "texture:dynamic-broadway",
+      "hand:top-pair-open-ender",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-broadway-connected-strong-equity-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ks",
+      "Qs",
+      "Td"
+    ],
+    "heroHand": [
+      "Jh",
+      "9h"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "open-ender-backdoor-flush on broadway-connected prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: open-ender-backdoor-flush",
+        "Texture: broadway-connected",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:broadway-connected",
+        "hand:open-ender-backdoor-flush",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:broadway-connected",
+      "texture:dynamic-broadway",
+      "hand:open-ender-backdoor-flush",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-broadway-connected-strong-equity-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ks",
+      "Qs",
+      "Td"
+    ],
+    "heroHand": [
+      "Jh",
+      "9h"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "open-ender-backdoor-flush on broadway-connected prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: open-ender-backdoor-flush",
+        "Texture: broadway-connected",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:broadway-connected",
+        "hand:open-ender-backdoor-flush",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:broadway-connected",
+      "texture:dynamic-broadway",
+      "hand:open-ender-backdoor-flush",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-broadway-connected-nutted-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ks",
+      "Qs",
+      "Td"
+    ],
+    "heroHand": [
+      "Ac",
+      "Jd"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "nut-straight on broadway-connected prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: nut-straight",
+        "Texture: broadway-connected",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:broadway-connected",
+        "hand:nut-straight",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:broadway-connected",
+      "texture:dynamic-broadway",
+      "hand:nut-straight",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-broadway-connected-nutted-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ks",
+      "Qs",
+      "Td"
+    ],
+    "heroHand": [
+      "Ac",
+      "Jd"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "nut-straight on broadway-connected prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: nut-straight",
+        "Texture: broadway-connected",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:broadway-connected",
+        "hand:nut-straight",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:broadway-connected",
+      "texture:dynamic-broadway",
+      "hand:nut-straight",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-middling-connected-air-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "9h",
+      "8d",
+      "7c"
+    ],
+    "heroHand": [
+      "As",
+      "2s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on middling-connected prefers fold in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: middling-connected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:middling-connected",
+        "hand:pure-air",
+        "size:small",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:middling-connected",
+      "texture:dynamic-connected",
+      "hand:pure-air",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-middling-connected-air-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "9h",
+      "8d",
+      "7c"
+    ],
+    "heroHand": [
+      "As",
+      "2s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on middling-connected prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: middling-connected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:middling-connected",
+        "hand:pure-air",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:middling-connected",
+      "texture:dynamic-connected",
+      "hand:pure-air",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-middling-connected-overcards-bd-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "9h",
+      "8d",
+      "7c"
+    ],
+    "heroHand": [
+      "Kc",
+      "Qc"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "overcards-gutshot on middling-connected prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: overcards-gutshot",
+        "Texture: middling-connected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:middling-connected",
+        "hand:overcards-gutshot",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:middling-connected",
+      "texture:dynamic-connected",
+      "hand:overcards-gutshot",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-middling-connected-overcards-bd-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "9h",
+      "8d",
+      "7c"
+    ],
+    "heroHand": [
+      "Kc",
+      "Qc"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "overcards-gutshot on middling-connected prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: overcards-gutshot",
+        "Texture: middling-connected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:middling-connected",
+        "hand:overcards-gutshot",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:middling-connected",
+      "texture:dynamic-connected",
+      "hand:overcards-gutshot",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-middling-connected-weak-pair-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "9h",
+      "8d",
+      "7c"
+    ],
+    "heroHand": [
+      "8s",
+      "2h"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "middle-pair on middling-connected prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: middle-pair",
+        "Texture: middling-connected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:middling-connected",
+        "hand:middle-pair",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:middling-connected",
+      "texture:dynamic-connected",
+      "hand:middle-pair",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-middling-connected-weak-pair-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "9h",
+      "8d",
+      "7c"
+    ],
+    "heroHand": [
+      "8s",
+      "2h"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "middle-pair on middling-connected prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: middle-pair",
+        "Texture: middling-connected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:middling-connected",
+        "hand:middle-pair",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:middling-connected",
+      "texture:dynamic-connected",
+      "hand:middle-pair",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-middling-connected-strong-top-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "9h",
+      "8d",
+      "7c"
+    ],
+    "heroHand": [
+      "9s",
+      "Td"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-gutter on middling-connected prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: top-pair-gutter",
+        "Texture: middling-connected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:middling-connected",
+        "hand:top-pair-gutter",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:middling-connected",
+      "texture:dynamic-connected",
+      "hand:top-pair-gutter",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-middling-connected-strong-top-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "9h",
+      "8d",
+      "7c"
+    ],
+    "heroHand": [
+      "9s",
+      "Td"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-gutter on middling-connected prefers call in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: top-pair-gutter",
+        "Texture: middling-connected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:middling-connected",
+        "hand:top-pair-gutter",
+        "size:big",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:middling-connected",
+      "texture:dynamic-connected",
+      "hand:top-pair-gutter",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-middling-connected-strong-equity-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "9h",
+      "8d",
+      "7c"
+    ],
+    "heroHand": [
+      "Jc",
+      "Tc"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "open-ender-overs on middling-connected prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: open-ender-overs",
+        "Texture: middling-connected",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:middling-connected",
+        "hand:open-ender-overs",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:middling-connected",
+      "texture:dynamic-connected",
+      "hand:open-ender-overs",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-middling-connected-strong-equity-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "9h",
+      "8d",
+      "7c"
+    ],
+    "heroHand": [
+      "Jc",
+      "Tc"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "open-ender-overs on middling-connected prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: open-ender-overs",
+        "Texture: middling-connected",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:middling-connected",
+        "hand:open-ender-overs",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:middling-connected",
+      "texture:dynamic-connected",
+      "hand:open-ender-overs",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-middling-connected-nutted-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "9h",
+      "8d",
+      "7c"
+    ],
+    "heroHand": [
+      "6s",
+      "5s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "made-straight on middling-connected prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: made-straight",
+        "Texture: middling-connected",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:middling-connected",
+        "hand:made-straight",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:middling-connected",
+      "texture:dynamic-connected",
+      "hand:made-straight",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-middling-connected-nutted-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "9h",
+      "8d",
+      "7c"
+    ],
+    "heroHand": [
+      "6s",
+      "5s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "made-straight on middling-connected prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: made-straight",
+        "Texture: middling-connected",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:middling-connected",
+        "hand:made-straight",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:middling-connected",
+      "texture:dynamic-connected",
+      "hand:made-straight",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-connected-air-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "6s",
+      "5h",
+      "4d"
+    ],
+    "heroHand": [
+      "Kc",
+      "Qd"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on low-connected prefers fold in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: low-connected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:low-connected",
+        "hand:pure-air",
+        "size:small",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:low-connected",
+      "texture:dynamic-connected",
+      "hand:pure-air",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-connected-air-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "6s",
+      "5h",
+      "4d"
+    ],
+    "heroHand": [
+      "Kc",
+      "Qd"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on low-connected prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: low-connected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:low-connected",
+        "hand:pure-air",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:low-connected",
+      "texture:dynamic-connected",
+      "hand:pure-air",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-connected-overcards-bd-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "6s",
+      "5h",
+      "4d"
+    ],
+    "heroHand": [
+      "As",
+      "7c"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "ace-high-gutshot on low-connected prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: ace-high-gutshot",
+        "Texture: low-connected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:low-connected",
+        "hand:ace-high-gutshot",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:low-connected",
+      "texture:dynamic-connected",
+      "hand:ace-high-gutshot",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-connected-overcards-bd-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "6s",
+      "5h",
+      "4d"
+    ],
+    "heroHand": [
+      "As",
+      "7c"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "ace-high-gutshot on low-connected prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: ace-high-gutshot",
+        "Texture: low-connected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:low-connected",
+        "hand:ace-high-gutshot",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:low-connected",
+      "texture:dynamic-connected",
+      "hand:ace-high-gutshot",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-connected-weak-pair-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "6s",
+      "5h",
+      "4d"
+    ],
+    "heroHand": [
+      "5c",
+      "2s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "middle-pair on low-connected prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: middle-pair",
+        "Texture: low-connected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:low-connected",
+        "hand:middle-pair",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:low-connected",
+      "texture:dynamic-connected",
+      "hand:middle-pair",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-connected-weak-pair-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "6s",
+      "5h",
+      "4d"
+    ],
+    "heroHand": [
+      "5c",
+      "2s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "middle-pair on low-connected prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: middle-pair",
+        "Texture: low-connected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:low-connected",
+        "hand:middle-pair",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:low-connected",
+      "texture:dynamic-connected",
+      "hand:middle-pair",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-connected-strong-top-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "6s",
+      "5h",
+      "4d"
+    ],
+    "heroHand": [
+      "6h",
+      "7d"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-open-ender on low-connected prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: top-pair-open-ender",
+        "Texture: low-connected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:low-connected",
+        "hand:top-pair-open-ender",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:low-connected",
+      "texture:dynamic-connected",
+      "hand:top-pair-open-ender",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-connected-strong-top-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "6s",
+      "5h",
+      "4d"
+    ],
+    "heroHand": [
+      "6h",
+      "7d"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-open-ender on low-connected prefers call in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: top-pair-open-ender",
+        "Texture: low-connected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:low-connected",
+        "hand:top-pair-open-ender",
+        "size:big",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:low-connected",
+      "texture:dynamic-connected",
+      "hand:top-pair-open-ender",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-connected-strong-equity-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "6s",
+      "5h",
+      "4d"
+    ],
+    "heroHand": [
+      "8h",
+      "7h"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "open-ender-backdoor-flush on low-connected prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: open-ender-backdoor-flush",
+        "Texture: low-connected",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:low-connected",
+        "hand:open-ender-backdoor-flush",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:low-connected",
+      "texture:dynamic-connected",
+      "hand:open-ender-backdoor-flush",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-connected-strong-equity-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "6s",
+      "5h",
+      "4d"
+    ],
+    "heroHand": [
+      "8h",
+      "7h"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "open-ender-backdoor-flush on low-connected prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: open-ender-backdoor-flush",
+        "Texture: low-connected",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:low-connected",
+        "hand:open-ender-backdoor-flush",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:low-connected",
+      "texture:dynamic-connected",
+      "hand:open-ender-backdoor-flush",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-connected-nutted-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "6s",
+      "5h",
+      "4d"
+    ],
+    "heroHand": [
+      "7c",
+      "3c"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "made-straight on low-connected prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: made-straight",
+        "Texture: low-connected",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:low-connected",
+        "hand:made-straight",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:low-connected",
+      "texture:dynamic-connected",
+      "hand:made-straight",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-connected-nutted-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "6s",
+      "5h",
+      "4d"
+    ],
+    "heroHand": [
+      "7c",
+      "3c"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "made-straight on low-connected prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: made-straight",
+        "Texture: low-connected",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:low-connected",
+        "hand:made-straight",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:low-connected",
+      "texture:dynamic-connected",
+      "hand:made-straight",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-disconnected-air-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "7d",
+      "3s",
+      "2c"
+    ],
+    "heroHand": [
+      "Kd",
+      "Qh"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on low-disconnected prefers fold in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: low-disconnected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:low-disconnected",
+        "hand:pure-air",
+        "size:small",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:low-disconnected",
+      "texture:dry-low",
+      "hand:pure-air",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-disconnected-air-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "7d",
+      "3s",
+      "2c"
+    ],
+    "heroHand": [
+      "Kd",
+      "Qh"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on low-disconnected prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: low-disconnected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:low-disconnected",
+        "hand:pure-air",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:low-disconnected",
+      "texture:dry-low",
+      "hand:pure-air",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-disconnected-overcards-bd-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "7d",
+      "3s",
+      "2c"
+    ],
+    "heroHand": [
+      "Ac",
+      "Jc"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "overcards-backdoor on low-disconnected prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: overcards-backdoor",
+        "Texture: low-disconnected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:low-disconnected",
+        "hand:overcards-backdoor",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:low-disconnected",
+      "texture:dry-low",
+      "hand:overcards-backdoor",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-disconnected-overcards-bd-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "7d",
+      "3s",
+      "2c"
+    ],
+    "heroHand": [
+      "Ac",
+      "Jc"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "overcards-backdoor on low-disconnected prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: overcards-backdoor",
+        "Texture: low-disconnected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:low-disconnected",
+        "hand:overcards-backdoor",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:low-disconnected",
+      "texture:dry-low",
+      "hand:overcards-backdoor",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-disconnected-weak-pair-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "7d",
+      "3s",
+      "2c"
+    ],
+    "heroHand": [
+      "3h",
+      "4h"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "middle-pair-gutter on low-disconnected prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: middle-pair-gutter",
+        "Texture: low-disconnected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:low-disconnected",
+        "hand:middle-pair-gutter",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:low-disconnected",
+      "texture:dry-low",
+      "hand:middle-pair-gutter",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-disconnected-weak-pair-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "7d",
+      "3s",
+      "2c"
+    ],
+    "heroHand": [
+      "3h",
+      "4h"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "middle-pair-gutter on low-disconnected prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: middle-pair-gutter",
+        "Texture: low-disconnected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:low-disconnected",
+        "hand:middle-pair-gutter",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:low-disconnected",
+      "texture:dry-low",
+      "hand:middle-pair-gutter",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-disconnected-strong-top-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "7d",
+      "3s",
+      "2c"
+    ],
+    "heroHand": [
+      "7h",
+      "8c"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair on low-disconnected prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: top-pair",
+        "Texture: low-disconnected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:low-disconnected",
+        "hand:top-pair",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:low-disconnected",
+      "texture:dry-low",
+      "hand:top-pair",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-disconnected-strong-top-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "7d",
+      "3s",
+      "2c"
+    ],
+    "heroHand": [
+      "7h",
+      "8c"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair on low-disconnected prefers call in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: top-pair",
+        "Texture: low-disconnected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:low-disconnected",
+        "hand:top-pair",
+        "size:big",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:low-disconnected",
+      "texture:dry-low",
+      "hand:top-pair",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-disconnected-strong-equity-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "7d",
+      "3s",
+      "2c"
+    ],
+    "heroHand": [
+      "5h",
+      "4h"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "open-ender-backdoor-flush on low-disconnected prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: open-ender-backdoor-flush",
+        "Texture: low-disconnected",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:low-disconnected",
+        "hand:open-ender-backdoor-flush",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:low-disconnected",
+      "texture:dry-low",
+      "hand:open-ender-backdoor-flush",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-disconnected-strong-equity-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "7d",
+      "3s",
+      "2c"
+    ],
+    "heroHand": [
+      "5h",
+      "4h"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "open-ender-backdoor-flush on low-disconnected prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: open-ender-backdoor-flush",
+        "Texture: low-disconnected",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:low-disconnected",
+        "hand:open-ender-backdoor-flush",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:low-disconnected",
+      "texture:dry-low",
+      "hand:open-ender-backdoor-flush",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-disconnected-nutted-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "7d",
+      "3s",
+      "2c"
+    ],
+    "heroHand": [
+      "7c",
+      "7s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "top-set on low-disconnected prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: top-set",
+        "Texture: low-disconnected",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:low-disconnected",
+        "hand:top-set",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:low-disconnected",
+      "texture:dry-low",
+      "hand:top-set",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-low-disconnected-nutted-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "7d",
+      "3s",
+      "2c"
+    ],
+    "heroHand": [
+      "7c",
+      "7s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "top-set on low-disconnected prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: top-set",
+        "Texture: low-disconnected",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:low-disconnected",
+        "hand:top-set",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:low-disconnected",
+      "texture:dry-low",
+      "hand:top-set",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-high-air-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kc",
+      "Kd",
+      "5s"
+    ],
+    "heroHand": [
+      "Qh",
+      "2d"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on paired-high prefers fold in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: paired-high",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:paired-high",
+        "hand:pure-air",
+        "size:small",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:paired-high",
+      "texture:paired",
+      "hand:pure-air",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-high-air-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kc",
+      "Kd",
+      "5s"
+    ],
+    "heroHand": [
+      "Qh",
+      "2d"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on paired-high prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: paired-high",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:paired-high",
+        "hand:pure-air",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:paired-high",
+      "texture:paired",
+      "hand:pure-air",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-high-overcards-bd-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kc",
+      "Kd",
+      "5s"
+    ],
+    "heroHand": [
+      "Ah",
+      "Qh"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "ace-high-backdoor on paired-high prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: ace-high-backdoor",
+        "Texture: paired-high",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:paired-high",
+        "hand:ace-high-backdoor",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:paired-high",
+      "texture:paired",
+      "hand:ace-high-backdoor",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-high-overcards-bd-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kc",
+      "Kd",
+      "5s"
+    ],
+    "heroHand": [
+      "Ah",
+      "Qh"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "ace-high-backdoor on paired-high prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: ace-high-backdoor",
+        "Texture: paired-high",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:paired-high",
+        "hand:ace-high-backdoor",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:paired-high",
+      "texture:paired",
+      "hand:ace-high-backdoor",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-high-weak-pair-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kc",
+      "Kd",
+      "5s"
+    ],
+    "heroHand": [
+      "5h",
+      "4h"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "underfull-pair on paired-high prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: underfull-pair",
+        "Texture: paired-high",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:paired-high",
+        "hand:underfull-pair",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:paired-high",
+      "texture:paired",
+      "hand:underfull-pair",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-high-weak-pair-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kc",
+      "Kd",
+      "5s"
+    ],
+    "heroHand": [
+      "5h",
+      "4h"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "underfull-pair on paired-high prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: underfull-pair",
+        "Texture: paired-high",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:paired-high",
+        "hand:underfull-pair",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:paired-high",
+      "texture:paired",
+      "hand:underfull-pair",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-high-strong-top-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kc",
+      "Kd",
+      "5s"
+    ],
+    "heroHand": [
+      "Qs",
+      "Qd"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "showdown-pocket-pair on paired-high prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: showdown-pocket-pair",
+        "Texture: paired-high",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:paired-high",
+        "hand:showdown-pocket-pair",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:paired-high",
+      "texture:paired",
+      "hand:showdown-pocket-pair",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-high-strong-top-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kc",
+      "Kd",
+      "5s"
+    ],
+    "heroHand": [
+      "Qs",
+      "Qd"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "showdown-pocket-pair on paired-high prefers call in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: showdown-pocket-pair",
+        "Texture: paired-high",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:paired-high",
+        "hand:showdown-pocket-pair",
+        "size:big",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:paired-high",
+      "texture:paired",
+      "hand:showdown-pocket-pair",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-high-strong-equity-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kc",
+      "Kd",
+      "5s"
+    ],
+    "heroHand": [
+      "Ac",
+      "5c"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "pair-backdoor-flush on paired-high prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: pair-backdoor-flush",
+        "Texture: paired-high",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:paired-high",
+        "hand:pair-backdoor-flush",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:paired-high",
+      "texture:paired",
+      "hand:pair-backdoor-flush",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-high-strong-equity-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kc",
+      "Kd",
+      "5s"
+    ],
+    "heroHand": [
+      "Ac",
+      "5c"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pair-backdoor-flush on paired-high prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: pair-backdoor-flush",
+        "Texture: paired-high",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:paired-high",
+        "hand:pair-backdoor-flush",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:paired-high",
+      "texture:paired",
+      "hand:pair-backdoor-flush",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-high-nutted-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kc",
+      "Kd",
+      "5s"
+    ],
+    "heroHand": [
+      "Kh",
+      "Jd"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "trip-kings on paired-high prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: trip-kings",
+        "Texture: paired-high",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:paired-high",
+        "hand:trip-kings",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:paired-high",
+      "texture:paired",
+      "hand:trip-kings",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-high-nutted-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Kc",
+      "Kd",
+      "5s"
+    ],
+    "heroHand": [
+      "Kh",
+      "Jd"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "trip-kings on paired-high prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: trip-kings",
+        "Texture: paired-high",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:paired-high",
+        "hand:trip-kings",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:paired-high",
+      "texture:paired",
+      "hand:trip-kings",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-low-air-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "4c",
+      "4h",
+      "9d"
+    ],
+    "heroHand": [
+      "Qs",
+      "2s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on paired-low prefers fold in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: paired-low",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:paired-low",
+        "hand:pure-air",
+        "size:small",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:paired-low",
+      "texture:paired",
+      "hand:pure-air",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-low-air-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "4c",
+      "4h",
+      "9d"
+    ],
+    "heroHand": [
+      "Qs",
+      "2s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on paired-low prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: paired-low",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:paired-low",
+        "hand:pure-air",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:paired-low",
+      "texture:paired",
+      "hand:pure-air",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-low-overcards-bd-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "4c",
+      "4h",
+      "9d"
+    ],
+    "heroHand": [
+      "Ac",
+      "Kc"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "overcards-backdoor on paired-low prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: overcards-backdoor",
+        "Texture: paired-low",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:paired-low",
+        "hand:overcards-backdoor",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:paired-low",
+      "texture:paired",
+      "hand:overcards-backdoor",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-low-overcards-bd-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "4c",
+      "4h",
+      "9d"
+    ],
+    "heroHand": [
+      "Ac",
+      "Kc"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "overcards-backdoor on paired-low prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: overcards-backdoor",
+        "Texture: paired-low",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:paired-low",
+        "hand:overcards-backdoor",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:paired-low",
+      "texture:paired",
+      "hand:overcards-backdoor",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-low-weak-pair-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "4c",
+      "4h",
+      "9d"
+    ],
+    "heroHand": [
+      "2h",
+      "2d"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "underpair on paired-low prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: underpair",
+        "Texture: paired-low",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:paired-low",
+        "hand:underpair",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:paired-low",
+      "texture:paired",
+      "hand:underpair",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-low-weak-pair-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "4c",
+      "4h",
+      "9d"
+    ],
+    "heroHand": [
+      "2h",
+      "2d"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "underpair on paired-low prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: underpair",
+        "Texture: paired-low",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:paired-low",
+        "hand:underpair",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:paired-low",
+      "texture:paired",
+      "hand:underpair",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-low-strong-top-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "4c",
+      "4h",
+      "9d"
+    ],
+    "heroHand": [
+      "9h",
+      "8s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair on paired-low prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: top-pair",
+        "Texture: paired-low",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:paired-low",
+        "hand:top-pair",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:paired-low",
+      "texture:paired",
+      "hand:top-pair",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-low-strong-top-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "4c",
+      "4h",
+      "9d"
+    ],
+    "heroHand": [
+      "9h",
+      "8s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair on paired-low prefers call in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: top-pair",
+        "Texture: paired-low",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:paired-low",
+        "hand:top-pair",
+        "size:big",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:paired-low",
+      "texture:paired",
+      "hand:top-pair",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-low-strong-equity-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "4c",
+      "4h",
+      "9d"
+    ],
+    "heroHand": [
+      "Ah",
+      "9c"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-top-kicker on paired-low prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: top-pair-top-kicker",
+        "Texture: paired-low",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:paired-low",
+        "hand:top-pair-top-kicker",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:paired-low",
+      "texture:paired",
+      "hand:top-pair-top-kicker",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-low-strong-equity-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "4c",
+      "4h",
+      "9d"
+    ],
+    "heroHand": [
+      "Ah",
+      "9c"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-top-kicker on paired-low prefers call in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: top-pair-top-kicker",
+        "Texture: paired-low",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:paired-low",
+        "hand:top-pair-top-kicker",
+        "size:big",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:paired-low",
+      "texture:paired",
+      "hand:top-pair-top-kicker",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-low-nutted-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "4c",
+      "4h",
+      "9d"
+    ],
+    "heroHand": [
+      "9c",
+      "9s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "full-house on paired-low prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: full-house",
+        "Texture: paired-low",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:paired-low",
+        "hand:full-house",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:paired-low",
+      "texture:paired",
+      "hand:full-house",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-paired-low-nutted-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "4c",
+      "4h",
+      "9d"
+    ],
+    "heroHand": [
+      "9c",
+      "9s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "full-house on paired-low prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: full-house",
+        "Texture: paired-low",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:paired-low",
+        "hand:full-house",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:paired-low",
+      "texture:paired",
+      "hand:full-house",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-high-air-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ah",
+      "Th",
+      "5h"
+    ],
+    "heroHand": [
+      "Kd",
+      "Qc"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "no-heart-air on monotone-high prefers fold in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: no-heart-air",
+        "Texture: monotone-high",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:monotone-high",
+        "hand:no-heart-air",
+        "size:small",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:monotone-high",
+      "texture:monotone",
+      "hand:no-heart-air",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-high-air-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ah",
+      "Th",
+      "5h"
+    ],
+    "heroHand": [
+      "Kd",
+      "Qc"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "no-heart-air on monotone-high prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: no-heart-air",
+        "Texture: monotone-high",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:monotone-high",
+        "hand:no-heart-air",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:monotone-high",
+      "texture:monotone",
+      "hand:no-heart-air",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-high-overcards-bd-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ah",
+      "Th",
+      "5h"
+    ],
+    "heroHand": [
+      "Ks",
+      "Qd"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "overs-no-heart on monotone-high prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: overs-no-heart",
+        "Texture: monotone-high",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:monotone-high",
+        "hand:overs-no-heart",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:monotone-high",
+      "texture:monotone",
+      "hand:overs-no-heart",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-high-overcards-bd-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ah",
+      "Th",
+      "5h"
+    ],
+    "heroHand": [
+      "Ks",
+      "Qd"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "overs-no-heart on monotone-high prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: overs-no-heart",
+        "Texture: monotone-high",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:monotone-high",
+        "hand:overs-no-heart",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:monotone-high",
+      "texture:monotone",
+      "hand:overs-no-heart",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-high-weak-pair-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ah",
+      "Th",
+      "5h"
+    ],
+    "heroHand": [
+      "5d",
+      "4s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "bottom-pair-no-heart on monotone-high prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: bottom-pair-no-heart",
+        "Texture: monotone-high",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:monotone-high",
+        "hand:bottom-pair-no-heart",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:monotone-high",
+      "texture:monotone",
+      "hand:bottom-pair-no-heart",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-high-weak-pair-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ah",
+      "Th",
+      "5h"
+    ],
+    "heroHand": [
+      "5d",
+      "4s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "bottom-pair-no-heart on monotone-high prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: bottom-pair-no-heart",
+        "Texture: monotone-high",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:monotone-high",
+        "hand:bottom-pair-no-heart",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:monotone-high",
+      "texture:monotone",
+      "hand:bottom-pair-no-heart",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-high-strong-top-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ah",
+      "Th",
+      "5h"
+    ],
+    "heroHand": [
+      "Ad",
+      "Qc"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-no-heart on monotone-high prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: top-pair-no-heart",
+        "Texture: monotone-high",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:monotone-high",
+        "hand:top-pair-no-heart",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:monotone-high",
+      "texture:monotone",
+      "hand:top-pair-no-heart",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-high-strong-top-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ah",
+      "Th",
+      "5h"
+    ],
+    "heroHand": [
+      "Ad",
+      "Qc"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-no-heart on monotone-high prefers call in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: top-pair-no-heart",
+        "Texture: monotone-high",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:monotone-high",
+        "hand:top-pair-no-heart",
+        "size:big",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:monotone-high",
+      "texture:monotone",
+      "hand:top-pair-no-heart",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-high-strong-equity-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ah",
+      "Th",
+      "5h"
+    ],
+    "heroHand": [
+      "Kh",
+      "2h"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "made-flush on monotone-high prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: made-flush",
+        "Texture: monotone-high",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:monotone-high",
+        "hand:made-flush",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:monotone-high",
+      "texture:monotone",
+      "hand:made-flush",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-high-strong-equity-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ah",
+      "Th",
+      "5h"
+    ],
+    "heroHand": [
+      "Kh",
+      "2h"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "made-flush on monotone-high prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: made-flush",
+        "Texture: monotone-high",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:monotone-high",
+        "hand:made-flush",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:monotone-high",
+      "texture:monotone",
+      "hand:made-flush",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-high-nutted-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ah",
+      "Th",
+      "5h"
+    ],
+    "heroHand": [
+      "5c",
+      "5d"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "set-on-monotone on monotone-high prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: set-on-monotone",
+        "Texture: monotone-high",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:monotone-high",
+        "hand:set-on-monotone",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:monotone-high",
+      "texture:monotone",
+      "hand:set-on-monotone",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-high-nutted-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Ah",
+      "Th",
+      "5h"
+    ],
+    "heroHand": [
+      "5c",
+      "5d"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "set-on-monotone on monotone-high prefers call in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: set-on-monotone",
+        "Texture: monotone-high",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:monotone-high",
+        "hand:set-on-monotone",
+        "size:big",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:monotone-high",
+      "texture:monotone",
+      "hand:set-on-monotone",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-low-air-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "8c",
+      "5c",
+      "2c"
+    ],
+    "heroHand": [
+      "Qh",
+      "3d"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "no-club-air on monotone-low prefers fold in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: no-club-air",
+        "Texture: monotone-low",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:monotone-low",
+        "hand:no-club-air",
+        "size:small",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:monotone-low",
+      "texture:monotone",
+      "hand:no-club-air",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-low-air-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "8c",
+      "5c",
+      "2c"
+    ],
+    "heroHand": [
+      "Qh",
+      "3d"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "no-club-air on monotone-low prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: no-club-air",
+        "Texture: monotone-low",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:monotone-low",
+        "hand:no-club-air",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:monotone-low",
+      "texture:monotone",
+      "hand:no-club-air",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-low-overcards-bd-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "8c",
+      "5c",
+      "2c"
+    ],
+    "heroHand": [
+      "Ah",
+      "Kd"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "overs-no-club on monotone-low prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: overs-no-club",
+        "Texture: monotone-low",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:monotone-low",
+        "hand:overs-no-club",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:monotone-low",
+      "texture:monotone",
+      "hand:overs-no-club",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-low-overcards-bd-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "8c",
+      "5c",
+      "2c"
+    ],
+    "heroHand": [
+      "Ah",
+      "Kd"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "overs-no-club on monotone-low prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: overs-no-club",
+        "Texture: monotone-low",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:monotone-low",
+        "hand:overs-no-club",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:monotone-low",
+      "texture:monotone",
+      "hand:overs-no-club",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-low-weak-pair-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "8c",
+      "5c",
+      "2c"
+    ],
+    "heroHand": [
+      "5d",
+      "4s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "middle-pair-no-club on monotone-low prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: middle-pair-no-club",
+        "Texture: monotone-low",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:monotone-low",
+        "hand:middle-pair-no-club",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:monotone-low",
+      "texture:monotone",
+      "hand:middle-pair-no-club",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-low-weak-pair-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "8c",
+      "5c",
+      "2c"
+    ],
+    "heroHand": [
+      "5d",
+      "4s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "middle-pair-no-club on monotone-low prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: middle-pair-no-club",
+        "Texture: monotone-low",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:monotone-low",
+        "hand:middle-pair-no-club",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:monotone-low",
+      "texture:monotone",
+      "hand:middle-pair-no-club",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-low-strong-top-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "8c",
+      "5c",
+      "2c"
+    ],
+    "heroHand": [
+      "8h",
+      "7s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-no-club on monotone-low prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: top-pair-no-club",
+        "Texture: monotone-low",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:monotone-low",
+        "hand:top-pair-no-club",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:monotone-low",
+      "texture:monotone",
+      "hand:top-pair-no-club",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-low-strong-top-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "8c",
+      "5c",
+      "2c"
+    ],
+    "heroHand": [
+      "8h",
+      "7s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-no-club on monotone-low prefers call in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: top-pair-no-club",
+        "Texture: monotone-low",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:monotone-low",
+        "hand:top-pair-no-club",
+        "size:big",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:monotone-low",
+      "texture:monotone",
+      "hand:top-pair-no-club",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-low-strong-equity-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "8c",
+      "5c",
+      "2c"
+    ],
+    "heroHand": [
+      "Ac",
+      "Kc"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "nut-flush on monotone-low prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: nut-flush",
+        "Texture: monotone-low",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:monotone-low",
+        "hand:nut-flush",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:monotone-low",
+      "texture:monotone",
+      "hand:nut-flush",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-low-strong-equity-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "8c",
+      "5c",
+      "2c"
+    ],
+    "heroHand": [
+      "Ac",
+      "Kc"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "nut-flush on monotone-low prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: nut-flush",
+        "Texture: monotone-low",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:monotone-low",
+        "hand:nut-flush",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:monotone-low",
+      "texture:monotone",
+      "hand:nut-flush",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-low-nutted-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "8c",
+      "5c",
+      "2c"
+    ],
+    "heroHand": [
+      "8d",
+      "8s"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "set-on-monotone on monotone-low prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: set-on-monotone",
+        "Texture: monotone-low",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:monotone-low",
+        "hand:set-on-monotone",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:monotone-low",
+      "texture:monotone",
+      "hand:set-on-monotone",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-monotone-low-nutted-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "8c",
+      "5c",
+      "2c"
+    ],
+    "heroHand": [
+      "8d",
+      "8s"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "set-on-monotone on monotone-low prefers call in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: set-on-monotone",
+        "Texture: monotone-low",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:monotone-low",
+        "hand:set-on-monotone",
+        "size:big",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:monotone-low",
+      "texture:monotone",
+      "hand:set-on-monotone",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-two-tone-dynamic-air-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Jd",
+      "9d",
+      "6s"
+    ],
+    "heroHand": [
+      "4c",
+      "3h"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on two-tone-dynamic prefers fold in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: two-tone-dynamic",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:two-tone-dynamic",
+        "hand:pure-air",
+        "size:small",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:two-tone-dynamic",
+      "texture:dynamic-two-tone",
+      "hand:pure-air",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-two-tone-dynamic-air-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Jd",
+      "9d",
+      "6s"
+    ],
+    "heroHand": [
+      "4c",
+      "3h"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "pure-air on two-tone-dynamic prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: pure-air",
+        "Texture: two-tone-dynamic",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:two-tone-dynamic",
+        "hand:pure-air",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:two-tone-dynamic",
+      "texture:dynamic-two-tone",
+      "hand:pure-air",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-two-tone-dynamic-overcards-bd-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Jd",
+      "9d",
+      "6s"
+    ],
+    "heroHand": [
+      "As",
+      "Qc"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "overcards-gutshot on two-tone-dynamic prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: overcards-gutshot",
+        "Texture: two-tone-dynamic",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:two-tone-dynamic",
+        "hand:overcards-gutshot",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:two-tone-dynamic",
+      "texture:dynamic-two-tone",
+      "hand:overcards-gutshot",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-two-tone-dynamic-overcards-bd-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Jd",
+      "9d",
+      "6s"
+    ],
+    "heroHand": [
+      "As",
+      "Qc"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "overcards-gutshot on two-tone-dynamic prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: overcards-gutshot",
+        "Texture: two-tone-dynamic",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:two-tone-dynamic",
+        "hand:overcards-gutshot",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:two-tone-dynamic",
+      "texture:dynamic-two-tone",
+      "hand:overcards-gutshot",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-two-tone-dynamic-weak-pair-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Jd",
+      "9d",
+      "6s"
+    ],
+    "heroHand": [
+      "6h",
+      "5c"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "bottom-pair on two-tone-dynamic prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: bottom-pair",
+        "Texture: two-tone-dynamic",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:two-tone-dynamic",
+        "hand:bottom-pair",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:two-tone-dynamic",
+      "texture:dynamic-two-tone",
+      "hand:bottom-pair",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-two-tone-dynamic-weak-pair-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Jd",
+      "9d",
+      "6s"
+    ],
+    "heroHand": [
+      "6h",
+      "5c"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "fold",
+    "explanation": {
+      "summary": "bottom-pair on two-tone-dynamic prefers fold in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: bottom-pair",
+        "Texture: two-tone-dynamic",
+        "Alternative actions are too loose in this simplified baseline."
+      ],
+      "tags": [
+        "family:two-tone-dynamic",
+        "hand:bottom-pair",
+        "size:big",
+        "response:fold"
+      ]
+    },
+    "tags": [
+      "family:two-tone-dynamic",
+      "texture:dynamic-two-tone",
+      "hand:bottom-pair",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-two-tone-dynamic-strong-top-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Jd",
+      "9d",
+      "6s"
+    ],
+    "heroHand": [
+      "Jc",
+      "Td"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-open-ender on two-tone-dynamic prefers call in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: top-pair-open-ender",
+        "Texture: two-tone-dynamic",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:two-tone-dynamic",
+        "hand:top-pair-open-ender",
+        "size:small",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:two-tone-dynamic",
+      "texture:dynamic-two-tone",
+      "hand:top-pair-open-ender",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-two-tone-dynamic-strong-top-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Jd",
+      "9d",
+      "6s"
+    ],
+    "heroHand": [
+      "Jc",
+      "Td"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "call",
+    "explanation": {
+      "summary": "top-pair-open-ender on two-tone-dynamic prefers call in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: top-pair-open-ender",
+        "Texture: two-tone-dynamic",
+        "Calling best preserves realization and avoids over-polarizing."
+      ],
+      "tags": [
+        "family:two-tone-dynamic",
+        "hand:top-pair-open-ender",
+        "size:big",
+        "response:call"
+      ]
+    },
+    "tags": [
+      "family:two-tone-dynamic",
+      "texture:dynamic-two-tone",
+      "hand:top-pair-open-ender",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-two-tone-dynamic-strong-equity-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Jd",
+      "9d",
+      "6s"
+    ],
+    "heroHand": [
+      "Qd",
+      "Td"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "combo-draw on two-tone-dynamic prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: combo-draw",
+        "Texture: two-tone-dynamic",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:two-tone-dynamic",
+        "hand:combo-draw",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:two-tone-dynamic",
+      "texture:dynamic-two-tone",
+      "hand:combo-draw",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-two-tone-dynamic-strong-equity-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Jd",
+      "9d",
+      "6s"
+    ],
+    "heroHand": [
+      "Qd",
+      "Td"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "combo-draw on two-tone-dynamic prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: combo-draw",
+        "Texture: two-tone-dynamic",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:two-tone-dynamic",
+        "hand:combo-draw",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:two-tone-dynamic",
+      "texture:dynamic-two-tone",
+      "hand:combo-draw",
+      "size:big"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-two-tone-dynamic-nutted-small",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Jd",
+      "9d",
+      "6s"
+    ],
+    "heroHand": [
+      "8c",
+      "7c"
+    ],
+    "cBetSizeBucket": "small",
+    "potSizeBb": 10,
+    "cBetSizeBb": 3.3,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "made-straight on two-tone-dynamic prefers raise in this baseline. Small sizing keeps continue thresholds wider.",
+      "bullets": [
+        "Hand class: made-straight",
+        "Texture: two-tone-dynamic",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:two-tone-dynamic",
+        "hand:made-straight",
+        "size:small",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:two-tone-dynamic",
+      "texture:dynamic-two-tone",
+      "hand:made-straight",
+      "size:small"
+    ]
+  },
+  {
+    "id": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet-two-tone-dynamic-nutted-big",
+    "drillFamily": "postflop-facing-flop-cbet",
+    "drillType": "facing-flop-cbet-hand-level",
+    "spot": "cash9max-100-btn-vs-co-srp-flop-ip-facing-cbet",
+    "spotLabel": "BTN vs CO SRP",
+    "board": [
+      "Jd",
+      "9d",
+      "6s"
+    ],
+    "heroHand": [
+      "8c",
+      "7c"
+    ],
+    "cBetSizeBucket": "big",
+    "potSizeBb": 10,
+    "cBetSizeBb": 6.6,
+    "recommendedResponse": "raise",
+    "explanation": {
+      "summary": "made-straight on two-tone-dynamic prefers raise in this baseline. Big sizing tightens thresholds and increases polarization.",
+      "bullets": [
+        "Hand class: made-straight",
+        "Texture: two-tone-dynamic",
+        "Raising cleanly captures value, denial, or fold-equity leverage."
+      ],
+      "tags": [
+        "family:two-tone-dynamic",
+        "hand:made-straight",
+        "size:big",
+        "response:raise"
+      ]
+    },
+    "tags": [
+      "family:two-tone-dynamic",
+      "texture:dynamic-two-tone",
+      "hand:made-straight",
+      "size:big"
+    ]
+  }
+]

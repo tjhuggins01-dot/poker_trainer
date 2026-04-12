@@ -18,6 +18,7 @@ const drillLabel: Record<DrillType, string> = {
   postflop_hand_category: 'Postflop Hand Category',
   postflop_range_nut_advantage: 'Postflop Range / Nut Advantage',
   postflop_flop_cbet: 'Postflop Flop C-Bet',
+  postflop_facing_flop_cbet: 'Postflop Facing Flop C-Bet',
 };
 
 export function StatsPage({ data, session }: Props) {
@@ -28,6 +29,9 @@ export function StatsPage({ data, session }: Props) {
     .sort(([, a], [, b]) => b - a)
     .slice(0, 5);
   const topFlopCBetMisses = Object.entries(data.stats.postflop.flopCBet.missedBoards)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 5);
+  const topFacingFlopCBetMisses = Object.entries(data.stats.postflop.facingFlopCBet.missedPrompts)
     .sort(([, a], [, b]) => b - a)
     .slice(0, 5);
 
@@ -116,6 +120,19 @@ export function StatsPage({ data, session }: Props) {
         <ol>
           {topFlopCBetMisses.map(([boardKey, misses]) => (
             <li key={boardKey}>{boardKey} — {misses}</li>
+          ))}
+        </ol>
+      )}
+
+      <h3>Postflop facing flop c-bet</h3>
+      <p>Prompts: {data.stats.postflop.facingFlopCBet.attempts}</p>
+      <p>Correct: {data.stats.postflop.facingFlopCBet.correct}</p>
+      <p>Accuracy: {pct(data.stats.postflop.facingFlopCBet.correct, data.stats.postflop.facingFlopCBet.attempts)}</p>
+      <p>Top missed prompts: {topFacingFlopCBetMisses.length}</p>
+      {topFacingFlopCBetMisses.length > 0 && (
+        <ol>
+          {topFacingFlopCBetMisses.map(([promptKey, misses]) => (
+            <li key={promptKey}>{promptKey} — {misses}</li>
           ))}
         </ol>
       )}

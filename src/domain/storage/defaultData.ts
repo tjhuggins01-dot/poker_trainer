@@ -41,6 +41,7 @@ export const createEmptyDrillStats = () => ({
   postflop_hand_category: { attempts: 0, correct: 0 },
   postflop_range_nut_advantage: { attempts: 0, correct: 0 },
   postflop_flop_cbet: { attempts: 0, correct: 0 },
+  postflop_facing_flop_cbet: { attempts: 0, correct: 0 },
 }) as Record<DrillType, { attempts: number; correct: number }>;
 
 export const createEmptyDrillResponseMs = () => ({
@@ -51,6 +52,7 @@ export const createEmptyDrillResponseMs = () => ({
   postflop_hand_category: 0,
   postflop_range_nut_advantage: 0,
   postflop_flop_cbet: 0,
+  postflop_facing_flop_cbet: 0,
 }) as Record<DrillType, number>;
 export const createEmptyFacingStats = () =>
   Object.fromEntries(FACING_OPEN_HERO_POSITIONS.map((p) => [p, { attempts: 0, correct: 0 }])) as Record<FacingOpenHeroPosition, { attempts: number; correct: number }>;
@@ -222,6 +224,12 @@ export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: E
           totalResponseMs: 0,
           missedBoards: {},
         },
+        facingFlopCBet: {
+          attempts: 0,
+          correct: 0,
+          totalResponseMs: 0,
+          missedPrompts: {},
+        },
       },
     },
     settings: {
@@ -242,6 +250,7 @@ export const createDefaultData = (format: DrillFormat = DEFAULT_FORMAT, stack: E
         postflop_hand_category: [],
         postflop_range_nut_advantage: [],
         postflop_flop_cbet: [],
+        postflop_facing_flop_cbet: [],
       },
       villainFocus: {
         facing_open: [],
@@ -280,5 +289,6 @@ export const createDefaultSession = (): SessionStats => ({
     handCategory: { attempts: 0, correct: 0, totalResponseMs: 0 },
     rangeNutAdvantage: { attempts: 0, fullyCorrect: 0, rangeCorrect: 0, nutCorrect: 0, totalResponseMs: 0 },
     flopCBet: { attempts: 0, correct: 0, totalResponseMs: 0 },
+    facingFlopCBet: { attempts: 0, correct: 0, totalResponseMs: 0 },
   },
 });
