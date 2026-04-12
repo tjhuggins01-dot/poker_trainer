@@ -49,61 +49,35 @@ export function DrillPage(props: Props) {
     || props.data.settings.drillType === 'postflop_range_nut_advantage'
     || props.data.settings.drillType === 'postflop_flop_cbet'
   ) {
-    const postflopModule = props.data.settings.drillType === 'postflop_hand_category'
-      ? (
+    let postflopModule = <></>;
+    if (props.data.settings.drillType === 'postflop_hand_category') {
+      postflopModule = (
         <HandCategoryPage
           data={props.data}
           session={props.session}
           onDataChange={props.onDataChange}
           onSessionChange={props.onSessionChange}
         />
-      )
-      : props.data.settings.drillType === 'postflop_range_nut_advantage'
-        ? (
-          <RangeNutAdvantagePage
-            data={props.data}
-            session={props.session}
-            onDataChange={props.onDataChange}
-            onSessionChange={props.onSessionChange}
-          />
-        )
-        : (
-          <FlopCBetPage
-            data={props.data}
-            session={props.session}
-            onDataChange={props.onDataChange}
-            onSessionChange={props.onSessionChange}
-            onOpenAnalyzer={props.onOpenAnalyzer}
-          />
-        ) : (
-          <FlopCBetPage
-            data={props.data}
-            session={props.session}
-            onDataChange={props.onDataChange}
-            onSessionChange={props.onSessionChange}
-          />
-        ) : (
-          <FlopCBetPage
-            data={props.data}
-            session={props.session}
-            onDataChange={props.onDataChange}
-            onSessionChange={props.onSessionChange}
-          />
-        ) : (
-          <FlopCBetPage
-            data={props.data}
-            session={props.session}
-            onDataChange={props.onDataChange}
-            onSessionChange={props.onSessionChange}
-          />
-        ) : (
-          <FlopCBetPage
-            data={props.data}
-            session={props.session}
-            onDataChange={props.onDataChange}
-            onSessionChange={props.onSessionChange}
-          />
-        );
+      );
+    } else if (props.data.settings.drillType === 'postflop_range_nut_advantage') {
+      postflopModule = (
+        <RangeNutAdvantagePage
+          data={props.data}
+          session={props.session}
+          onDataChange={props.onDataChange}
+          onSessionChange={props.onSessionChange}
+        />
+      );
+    } else {
+      postflopModule = (
+        <FlopCBetPage
+          data={props.data}
+          session={props.session}
+          onDataChange={props.onDataChange}
+          onSessionChange={props.onSessionChange}
+        />
+      );
+    }
 
     return (
       <section>
