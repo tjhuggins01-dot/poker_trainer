@@ -1,5 +1,6 @@
 import btnVsBbAccepted from '../../lib/data/postflop-analysis/libraries/cash9max-100-btn-vs-bb-srp-flop.accepted.json' with { type: 'json' };
 import { RANGE_NUT_MVP_SPOT_ID, type RangeNutQuizEntry, type RangeNutSpotId } from './rangeNutAdvantageQuiz';
+import { shuffleQuizEntries } from './quizOrdering';
 
 export type CBetAction = 'check' | 'bet-small' | 'bet-big';
 
@@ -150,14 +151,7 @@ export const getAcceptedFlopCBetEntriesForSpot = (spotId: RangeNutSpotId): FlopC
 export const shuffleFlopCBetEntries = (
   entries: FlopCBetEntry[],
   rng: () => number = Math.random,
-): FlopCBetEntry[] => {
-  const shuffled = [...entries];
-  for (let i = shuffled.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(rng() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-};
+): FlopCBetEntry[] => shuffleQuizEntries(entries, rng);
 
 export type FlopCBetEvaluation = { correct: boolean };
 

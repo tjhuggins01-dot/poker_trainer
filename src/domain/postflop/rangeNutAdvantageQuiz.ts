@@ -1,5 +1,6 @@
 import librariesIndex from '../../lib/data/postflop-analysis/libraries/index.json' with { type: 'json' };
 import btnVsBbAccepted from '../../lib/data/postflop-analysis/libraries/cash9max-100-btn-vs-bb-srp-flop.accepted.json' with { type: 'json' };
+import { shuffleQuizEntries } from './quizOrdering';
 
 export type AdvantageAnswer = 'hero' | 'villain' | 'close';
 
@@ -99,17 +100,7 @@ export const nextPromptIndex = (currentIndex: number, total: number): number => 
   return (currentIndex + 1) % total;
 };
 
-export const toAnalyzerSpotId = (spot: Pick<RangeNutQuizSpot, 'format' | 'effectiveStackBb' | 'openerPos' | 'callerPos'>): string =>
-  `${spot.format}:${spot.effectiveStackBb}:${spot.openerPos}:${spot.callerPos}:srp`;
-
 export const shuffleRangeNutQuizEntries = (
   entries: RangeNutQuizEntry[],
-  random: () => number = Math.random,
-): RangeNutQuizEntry[] => {
-  const next = [...entries];
-  for (let i = next.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(random() * (i + 1));
-    [next[i], next[j]] = [next[j], next[i]];
-  }
-  return next;
-};
+  rng: () => number = Math.random,
+): RangeNutQuizEntry[] => shuffleQuizEntries(entries, rng);

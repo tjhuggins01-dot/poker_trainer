@@ -11,6 +11,7 @@ import {
   type FlopCBetEntry,
 } from '../src/domain/postflop/flopCBetTrainer.ts';
 import { getRangeNutQuizEntriesForSpot } from '../src/domain/postflop/rangeNutAdvantageQuiz.ts';
+import { shuffleRangeNutQuizEntries } from '../src/domain/postflop/rangeNutAdvantageQuiz.ts';
 import { reduceDataOnFlopCBetAnswer, reduceSessionOnFlopCBetAnswer } from '../src/domain/postflop/flopCBetStats.ts';
 import { createDefaultData, createDefaultSession } from '../src/domain/storage/defaultData.ts';
 
@@ -79,6 +80,15 @@ test('prompt order can be randomized so users cannot memorize static sequence', 
   assert.equal(shuffledOrder.length, originalOrder.length);
   assert.deepEqual([...shuffledOrder].sort(), [...originalOrder].sort());
   assert.notDeepEqual(shuffledOrder, originalOrder);
+});
+
+test('range/nut and c-bet use the same shuffle method behavior', () => {
+  const rangeNut = getRangeNutQuizEntriesForSpot(SPOT);
+  const rangeNutOriginal = rangeNut.map((entry) => entry.id);
+  const rangeNutShuffled = shuffleRangeNutQuizEntries(rangeNut, () => 0).map((entry) => entry.id);
+
+  assert.deepEqual([...rangeNutShuffled].sort(), [...rangeNutOriginal].sort());
+  assert.notDeepEqual(rangeNutShuffled, rangeNutOriginal);
 });
 
 test('scoring marks correct vs incorrect action and retains explanation', () => {

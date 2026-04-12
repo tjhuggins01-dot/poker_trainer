@@ -89,6 +89,13 @@ export function DrillPage(props: Props) {
             onDataChange={props.onDataChange}
             onSessionChange={props.onSessionChange}
           />
+        ) : (
+          <FlopCBetPage
+            data={props.data}
+            session={props.session}
+            onDataChange={props.onDataChange}
+            onSessionChange={props.onSessionChange}
+          />
         )}
       </section>
     );

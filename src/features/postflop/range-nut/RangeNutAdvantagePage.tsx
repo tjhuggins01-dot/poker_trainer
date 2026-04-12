@@ -7,7 +7,6 @@ import {
   nextPromptIndex,
   RANGE_NUT_MVP_SPOT_ID,
   shuffleRangeNutQuizEntries,
-  toAnalyzerSpotId,
   type AdvantageAnswer,
 } from '../../../domain/postflop/rangeNutAdvantageQuiz';
 import { reduceDataOnRangeNutAnswer, reduceSessionOnRangeNutAnswer } from '../../../domain/postflop/rangeNutAdvantageStats';
@@ -41,6 +40,10 @@ export function RangeNutAdvantagePage({ data, session, onDataChange, onSessionCh
   const [revealed, setRevealed] = useState(false);
   const [questionStartTs, setQuestionStartTs] = useState(Date.now());
 
+  const entries = useMemo(
+    () => shuffleRangeNutQuizEntries(getRangeNutQuizEntriesForSpot(spotId)),
+    [spotId],
+  );
   const prompt = entries[promptIndex];
   const selectedSpot = getEnabledRangeNutQuizSpots().find((spot) => spot.id === spotId);
 
