@@ -27,6 +27,7 @@ type Props = {
   onDataChange: (updater: (prev: AppData) => AppData) => void;
   onSessionChange: (updater: (prev: SessionStats) => SessionStats) => void;
   onResetSession: () => void;
+  onOpenAnalyzer: () => void;
 };
 
 export function DrillPage(props: Props) {

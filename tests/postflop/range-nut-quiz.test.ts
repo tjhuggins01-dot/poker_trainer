@@ -8,8 +8,12 @@ import {
   getRangeNutQuizSpotCatalog,
   nextPromptIndex,
   RANGE_NUT_MVP_SPOT_ID,
+  shuffleRangeNutQuizEntries,
+  toAnalyzerSpotId,
 } from '../../src/domain/postflop/rangeNutAdvantageQuiz.ts';
 import { reduceDataOnRangeNutAnswer, reduceSessionOnRangeNutAnswer } from '../../src/domain/postflop/rangeNutAdvantageStats.ts';
+import { SIMPLIFIED_BOARD_PRESETS, flopMatchesPreset } from '../../src/domain/postflop-analysis/simplifiedBoards.ts';
+import { parseCard } from '../../src/domain/postflop/cards.ts';
 
 test('content loading: catalog registers MVP spot and prompt shape is valid', () => {
   const catalog = getRangeNutQuizSpotCatalog();
@@ -67,7 +71,35 @@ test('stats: range/nut quiz updates are drill-scoped and analyzer-independent', 
 });
 
 test('ui flow helpers: next prompt cycling remains stable for future spot expansion', () => {
-  assert.equal(nextPromptIndex(0, 29), 1);
-  assert.equal(nextPromptIndex(28, 29), 0);
+  const total = getRangeNutQuizEntriesForSpot(RANGE_NUT_MVP_SPOT_ID).length;
+  assert.equal(nextPromptIndex(0, total), 1);
+  assert.equal(nextPromptIndex(total - 1, total), 0);
   assert.equal(nextPromptIndex(0, 0), 0);
+});
+
+test('analyzer deep-link helper builds spot id from quiz spot metadata', () => {
+  const spot = getEnabledRangeNutQuizSpots()[0];
+  assert.equal(toAnalyzerSpotId(spot), 'cash9max:100:BTN:BB:srp');
+});
+
+test('shuffle helper randomizes prompt order while preserving prompt set', () => {
+  const entries = getRangeNutQuizEntriesForSpot(RANGE_NUT_MVP_SPOT_ID);
+  const shuffled = shuffleRangeNutQuizEntries(entries, () => 0.2);
+  assert.equal(shuffled.length, entries.length);
+  assert.deepEqual(
+    [...shuffled.map((entry) => entry.id)].sort(),
+    [...entries.map((entry) => entry.id)].sort(),
+  );
+  assert.notDeepEqual(
+    shuffled.map((entry) => entry.id),
+    entries.map((entry) => entry.id),
+  );
+});
+
+test('accepted MVP library includes at least one board for each simplified flop preset family', () => {
+  const entries = getRangeNutQuizEntriesForSpot(RANGE_NUT_MVP_SPOT_ID);
+  SIMPLIFIED_BOARD_PRESETS.forEach((preset) => {
+    const hasMatch = entries.some((entry) => flopMatchesPreset(entry.board.map(parseCard), preset));
+    assert.equal(hasMatch, true, `Missing board family coverage for preset ${preset.id}`);
+  });
 });
