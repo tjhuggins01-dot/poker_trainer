@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CardRow } from '../../../components/PlayingCard';
 import {
   evaluateRangeNutQuizSelection,
@@ -8,6 +8,8 @@ import {
   RANGE_NUT_MVP_SPOT_ID,
   shuffleRangeNutQuizEntries,
   type AdvantageAnswer,
+  type RangeNutQuizEntry,
+  type RangeNutQuizSpot,
 } from '../../../domain/postflop/rangeNutAdvantageQuiz';
 import { pickRandomPromptIndex } from '../../../domain/postflop/quizOrdering';
 import { reduceDataOnRangeNutAnswer, reduceSessionOnRangeNutAnswer } from '../../../domain/postflop/rangeNutAdvantageStats';
@@ -38,14 +40,17 @@ export function RangeNutAdvantagePage({ data, session, onDataChange, onSessionCh
   const [nutSelection, setNutSelection] = useState<AdvantageAnswer | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [questionStartTs, setQuestionStartTs] = useState(Date.now());
-
-  const entries = useMemo(
-    () => shuffleRangeNutQuizEntries(getRangeNutQuizEntriesForSpot(spotId)),
-    [spotId],
+  const [entries, setEntries] = useState<RangeNutQuizEntry[]>(() =>
+    shuffleRangeNutQuizEntries(getRangeNutQuizEntriesForSpot(spotId)),
   );
+
   const [promptIndex, setPromptIndex] = useState(() => pickRandomPromptIndex(entries.length));
   const prompt = entries[promptIndex];
   const selectedSpot = getEnabledRangeNutQuizSpots().find((spot) => spot.id === spotId);
+
+  useEffect(() => {
+    setEntries(shuffleRangeNutQuizEntries(getRangeNutQuizEntriesForSpot(spotId)));
+  }, [spotId]);
 
   useEffect(() => {
     setPromptIndex(pickRandomPromptIndex(entries.length));
@@ -188,4 +193,8 @@ export function RangeNutAdvantagePage({ data, session, onDataChange, onSessionCh
       </div>
     </>
   );
+}
+
+function toAnalyzerSpotId(spot: RangeNutQuizSpot): string {
+  return `${spot.format}:${spot.effectiveStackBb}:${spot.openerPos}:${spot.callerPos}:srp`;
 }
