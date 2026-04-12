@@ -22,6 +22,7 @@ export function PositionFocusSelector({
         prev.settings.drillType === 'postflop_hand_category'
         || prev.settings.drillType === 'postflop_range_nut_advantage'
         || prev.settings.drillType === 'postflop_flop_cbet'
+        || prev.settings.drillType === 'postflop_facing_flop_cbet'
           ? 'rfi'
           : prev.settings.drillType;
       const list = new Set(next.settings.positionFocus[keyFocus]);
@@ -43,6 +44,7 @@ export function PositionFocusSelector({
         || prev.settings.drillType === 'postflop_hand_category'
         || prev.settings.drillType === 'postflop_range_nut_advantage'
         || prev.settings.drillType === 'postflop_flop_cbet'
+        || prev.settings.drillType === 'postflop_facing_flop_cbet'
       ) return prev;
       const next = structuredClone(prev);
       const list = new Set(next.settings.villainFocus[prev.settings.drillType]);
