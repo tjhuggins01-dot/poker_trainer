@@ -70,6 +70,11 @@ const normalizeSession = (raw: unknown): SessionStats => {
       nutCorrect: typeof asRecord(rawPostflop.rangeNutAdvantage).nutCorrect === 'number' ? Number(asRecord(rawPostflop.rangeNutAdvantage).nutCorrect) : 0,
       totalResponseMs: typeof asRecord(rawPostflop.rangeNutAdvantage).totalResponseMs === 'number' ? Number(asRecord(rawPostflop.rangeNutAdvantage).totalResponseMs) : 0,
     },
+    flopCBet: {
+      attempts: typeof asRecord(rawPostflop.flopCBet).attempts === 'number' ? Number(asRecord(rawPostflop.flopCBet).attempts) : 0,
+      correct: typeof asRecord(rawPostflop.flopCBet).correct === 'number' ? Number(asRecord(rawPostflop.flopCBet).correct) : 0,
+      totalResponseMs: typeof asRecord(rawPostflop.flopCBet).totalResponseMs === 'number' ? Number(asRecord(rawPostflop.flopCBet).totalResponseMs) : 0,
+    },
   };
   RFI_POSITIONS.forEach((position) => {
     next.byRfiPosition[position] = withDefaultStatsEntry(asRecord(rawRecord.byRfiPosition)[position] ?? asRecord(rawRecord.byPosition)[position]);
@@ -136,6 +141,11 @@ const normalizeCurrentData = (raw: unknown): AppData => {
     ...(next.stats.postflop?.rangeNutAdvantage ?? {}),
     missedBoards: next.stats.postflop?.rangeNutAdvantage?.missedBoards ?? {},
   };
+  next.stats.postflop.flopCBet = {
+    ...defaults.stats.postflop.flopCBet,
+    ...(next.stats.postflop?.flopCBet ?? {}),
+    missedBoards: next.stats.postflop?.flopCBet?.missedBoards ?? {},
+  };
 
   if (typeof (next.stats.postflop.handCategory.missedByCategory as Record<string, number>).set === 'number') {
     const setMisses = (next.stats.postflop.handCategory.missedByCategory as Record<string, number>).set;
@@ -165,6 +175,7 @@ const normalizeCurrentData = (raw: unknown): AppData => {
     limp_branch: next.settings.positionFocus?.limp_branch ?? defaults.settings.positionFocus.limp_branch,
     postflop_hand_category: [],
     postflop_range_nut_advantage: [],
+    postflop_flop_cbet: [],
   };
   next.settings.villainFocus = {
     facing_open: next.settings.villainFocus?.facing_open ?? [],
@@ -229,7 +240,8 @@ const normalizeCurrentData = (raw: unknown): AppData => {
 
   const isPostflopDrill =
     next.settings.drillType === 'postflop_hand_category'
-    || next.settings.drillType === 'postflop_range_nut_advantage';
+    || next.settings.drillType === 'postflop_range_nut_advantage'
+    || next.settings.drillType === 'postflop_flop_cbet';
   const legacyDrillType: 'rfi' | 'facing_open' | 'three_bet' | 'limp_branch' = isPostflopDrill
     ? 'rfi'
     : next.settings.drillType === 'rfi' || next.settings.drillType === 'facing_open' || next.settings.drillType === 'three_bet' || next.settings.drillType === 'limp_branch'

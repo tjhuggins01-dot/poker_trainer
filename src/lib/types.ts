@@ -41,7 +41,8 @@ export type DrillType =
   | 'three_bet'
   | 'limp_branch'
   | 'postflop_hand_category'
-  | 'postflop_range_nut_advantage';
+  | 'postflop_range_nut_advantage'
+  | 'postflop_flop_cbet';
 
 export type DrillStatsMap = Record<DrillType, StatsEntry>;
 export type DrillMsMap = Record<DrillType, number>;
@@ -199,6 +200,12 @@ export type AppData = {
         totalResponseMs: number;
         missedBoards: Record<string, number>;
       };
+      flopCBet: {
+        attempts: number;
+        correct: number;
+        totalResponseMs: number;
+        missedBoards: Record<string, number>;
+      };
     };
   };
   settings: {
@@ -218,6 +225,7 @@ export type AppData = {
       limp_branch: LimpBranchHeroPosition[];
       postflop_hand_category: [];
       postflop_range_nut_advantage: [];
+      postflop_flop_cbet: [];
     };
     villainFocus: {
       facing_open: Position[];
@@ -265,6 +273,11 @@ export type SessionStats = {
       fullyCorrect: number;
       rangeCorrect: number;
       nutCorrect: number;
+      totalResponseMs: number;
+    };
+    flopCBet: {
+      attempts: number;
+      correct: number;
       totalResponseMs: number;
     };
   };

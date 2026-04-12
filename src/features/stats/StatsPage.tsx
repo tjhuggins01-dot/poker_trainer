@@ -17,6 +17,7 @@ const drillLabel: Record<DrillType, string> = {
   limp_branch: 'Limp Branch',
   postflop_hand_category: 'Postflop Hand Category',
   postflop_range_nut_advantage: 'Postflop Range / Nut Advantage',
+  postflop_flop_cbet: 'Postflop Flop C-Bet',
 };
 
 export function StatsPage({ data, session }: Props) {
@@ -24,6 +25,9 @@ export function StatsPage({ data, session }: Props) {
     .sort(([, a], [, b]) => b.count - a.count || b.lastTs - a.lastTs)
     .slice(0, 10);
   const topRangeNutMisses = Object.entries(data.stats.postflop.rangeNutAdvantage.missedBoards)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 5);
+  const topFlopCBetMisses = Object.entries(data.stats.postflop.flopCBet.missedBoards)
     .sort(([, a], [, b]) => b - a)
     .slice(0, 5);
 
@@ -98,6 +102,19 @@ export function StatsPage({ data, session }: Props) {
       {topRangeNutMisses.length > 0 && (
         <ol>
           {topRangeNutMisses.map(([boardKey, misses]) => (
+            <li key={boardKey}>{boardKey} — {misses}</li>
+          ))}
+        </ol>
+      )}
+
+      <h3>Postflop flop c-bet</h3>
+      <p>Prompts: {data.stats.postflop.flopCBet.attempts}</p>
+      <p>Correct: {data.stats.postflop.flopCBet.correct}</p>
+      <p>Accuracy: {pct(data.stats.postflop.flopCBet.correct, data.stats.postflop.flopCBet.attempts)}</p>
+      <p>Top missed boards: {topFlopCBetMisses.length}</p>
+      {topFlopCBetMisses.length > 0 && (
+        <ol>
+          {topFlopCBetMisses.map(([boardKey, misses]) => (
             <li key={boardKey}>{boardKey} — {misses}</li>
           ))}
         </ol>
