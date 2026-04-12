@@ -50,6 +50,30 @@ test('rubric maps representative boards to bet-small / bet-big / check', () => {
   assert.equal(byBoard(entries, '7s 4d 2c').recommendedCBetAction, 'check');
   assert.equal(byBoard(entries, '8h 7d 6c').recommendedCBetAction, 'check');
   assert.equal(byBoard(entries, '8c 6c 3c').recommendedCBetAction, 'check');
+  assert.equal(byBoard(entries, 'As Ks Qs').recommendedCBetAction, 'check');
+  assert.equal(byBoard(entries, '6h 5h 4c').recommendedCBetAction, 'check');
+  assert.equal(byBoard(entries, 'Qd Td 7c').recommendedCBetAction, 'bet-big');
+  assert.equal(byBoard(entries, 'Kh 9h 2c').recommendedCBetAction, 'bet-small');
+});
+
+test('accepted c-bet boards keep non-empty family tags for stable texture routing', () => {
+  const accepted = getAcceptedFlopCBetEntriesForSpot(SPOT);
+  for (const entry of accepted) {
+    assert.ok(entry.familyTags.length > 0, `Expected non-empty familyTags for ${entry.id}`);
+  }
+});
+
+test('overlap routing is stable regardless of family tag ordering', () => {
+  const entries = getFlopCBetEntriesForSpot(SPOT);
+  const broadwayMonotone = byBoard(entries, 'As Ks Qs');
+  const lowTwoTone = byBoard(entries, '6h 5h 4c');
+  const middlingTwoTone = byBoard(entries, '9s 8s 7d');
+
+  const reverseTags = (entry: FlopCBetEntry) => ({ ...entry, familyTags: [...entry.familyTags].reverse() });
+
+  assert.equal(labelFlopCBetAction(broadwayMonotone), labelFlopCBetAction(reverseTags(broadwayMonotone)));
+  assert.equal(labelFlopCBetAction(lowTwoTone), labelFlopCBetAction(reverseTags(lowTwoTone)));
+  assert.equal(labelFlopCBetAction(middlingTwoTone), labelFlopCBetAction(reverseTags(middlingTwoTone)));
 });
 
 test('ambiguous boards can be excluded from c-bet acceptance', () => {
@@ -110,6 +134,30 @@ test('scoring marks correct vs incorrect action and retains explanation', () => 
 
   assert.equal(correctEval.correct, true);
   assert.equal(incorrectEval.correct, false);
+});
+
+test('explanations include overlap-aware tension tags on combined textures', () => {
+  const entries = getAcceptedFlopCBetEntriesForSpot(SPOT);
+  const broadwayMonotone = byBoard(entries, 'As Ks Qs');
+  const lowTwoTone = byBoard(entries, '6h 5h 4c');
+  const middlingTwoTone = byBoard(entries, '9s 8s 7d');
+
+  assert.ok(broadwayMonotone.cBetExplanation?.tags.includes('overlap:broadway-monotone-high'));
+  assert.ok(lowTwoTone.cBetExplanation?.tags.includes('overlap:low-connected-two-tone'));
+  assert.ok(middlingTwoTone.cBetExplanation?.tags.includes('overlap:middling-connected-two-tone'));
+});
+
+test('accepted board set keeps teachable spread across all three c-bet actions', () => {
+  const accepted = getAcceptedFlopCBetEntriesForSpot(SPOT);
+  const actionCounts = accepted.reduce<Record<string, number>>((acc, entry) => {
+    const action = entry.recommendedCBetAction!;
+    acc[action] = (acc[action] ?? 0) + 1;
+    return acc;
+  }, {});
+
+  assert.ok(actionCounts.check > 0);
+  assert.ok(actionCounts['bet-small'] > 0);
+  assert.ok(actionCounts['bet-big'] > 0);
 });
 
 test('stats are scoped to flop c-bet drill and do not mutate range/nut stats', () => {

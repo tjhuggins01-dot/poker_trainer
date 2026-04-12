@@ -656,7 +656,9 @@
       "9h",
       "2c"
     ],
-    "familyTags": [],
+    "familyTags": [
+      "k-high-dry"
+    ],
     "rangeAdvantage": "hero",
     "nutAdvantage": "close",
     "explanation": {
