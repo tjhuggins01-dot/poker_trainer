@@ -49,26 +49,26 @@ export function DrillPage(props: Props) {
     || props.data.settings.drillType === 'postflop_range_nut_advantage'
     || props.data.settings.drillType === 'postflop_flop_cbet'
   ) {
-    return (
-      <section>
-        <h2>Drill</h2>
-        <DrillTypeSelector
-          drillType={props.data.settings.drillType}
-          hasRfiData={hasRfiData}
-          hasFacingOpenData={hasFacingOpenData}
-          hasThreeBetData={hasThreeBetData}
-          hasLimpBranchData={hasLimpBranchData}
-          onChange={updateDrillType}
+    const postflopModule = props.data.settings.drillType === 'postflop_hand_category'
+      ? (
+        <HandCategoryPage
+          data={props.data}
+          session={props.session}
+          onDataChange={props.onDataChange}
+          onSessionChange={props.onSessionChange}
         />
-        {props.data.settings.drillType === 'postflop_hand_category' ? (
-          <HandCategoryPage
+      )
+      : props.data.settings.drillType === 'postflop_range_nut_advantage'
+        ? (
+          <RangeNutAdvantagePage
             data={props.data}
             session={props.session}
             onDataChange={props.onDataChange}
             onSessionChange={props.onSessionChange}
           />
-        ) : props.data.settings.drillType === 'postflop_range_nut_advantage' ? (
-          <RangeNutAdvantagePage
+        )
+        : (
+          <FlopCBetPage
             data={props.data}
             session={props.session}
             onDataChange={props.onDataChange}
@@ -103,7 +103,20 @@ export function DrillPage(props: Props) {
             onDataChange={props.onDataChange}
             onSessionChange={props.onSessionChange}
           />
-        )}
+        );
+
+    return (
+      <section>
+        <h2>Drill</h2>
+        <DrillTypeSelector
+          drillType={props.data.settings.drillType}
+          hasRfiData={hasRfiData}
+          hasFacingOpenData={hasFacingOpenData}
+          hasThreeBetData={hasThreeBetData}
+          hasLimpBranchData={hasLimpBranchData}
+          onChange={updateDrillType}
+        />
+        {postflopModule}
       </section>
     );
   }
