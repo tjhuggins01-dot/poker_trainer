@@ -48,14 +48,42 @@ const toActionLabelTag = (action: CBetAction): string => {
   return 'strategy:check-back-baseline';
 };
 
+type OverlapTexture =
+  | 'overlap:broadway-monotone-high'
+  | 'overlap:low-connected-two-tone'
+  | 'overlap:middling-connected-two-tone';
+
+const getOverlapTexture = (tags: Set<string>): OverlapTexture | null => {
+  if (tags.has('broadway-connected') && tags.has('monotone-high')) return 'overlap:broadway-monotone-high';
+  if (tags.has('low-connected') && tags.has('two-tone-dynamic')) return 'overlap:low-connected-two-tone';
+  if (tags.has('middling-connected') && tags.has('two-tone-dynamic')) return 'overlap:middling-connected-two-tone';
+  return null;
+};
+
 export const labelFlopCBetAction = (entry: RangeNutQuizEntry): CBetAction => {
   const tags = new Set(entry.familyTags);
+  const hasBroadwayConnected = tags.has('broadway-connected');
+  const hasMonotoneHigh = tags.has('monotone-high');
+  const hasLowConnected = tags.has('low-connected');
+  const hasMiddlingConnected = tags.has('middling-connected');
+  const hasTwoToneDynamic = tags.has('two-tone-dynamic');
+
+  // Explicit overlap precedence so behavior does not rely on incidental condition ordering.
+  if (hasBroadwayConnected && hasMonotoneHigh) {
+    return entry.nutAdvantage === 'villain' || entry.rangeAdvantage === 'villain' ? 'check' : 'bet-big';
+  }
+
+  if (hasLowConnected && hasTwoToneDynamic) return 'check';
+
+  if (hasMiddlingConnected && hasTwoToneDynamic) {
+    return entry.rangeAdvantage === 'hero' && entry.nutAdvantage !== 'villain' ? 'bet-big' : 'check';
+  }
 
   if (tags.has('a-high-dry') || tags.has('k-high-dry')) return 'bet-small';
   if (tags.has('paired-high') && entry.rangeAdvantage === 'hero') return 'bet-small';
 
-  if (tags.has('broadway-connected') || tags.has('qj-high-dynamic') || tags.has('two-tone-dynamic') || tags.has('middling-connected')) {
-    if (entry.nutAdvantage === 'villain' && (tags.has('middling-connected') || tags.has('low-connected'))) {
+  if (hasBroadwayConnected || tags.has('qj-high-dynamic') || hasTwoToneDynamic || hasMiddlingConnected) {
+    if (entry.nutAdvantage === 'villain' && (hasMiddlingConnected || hasLowConnected)) {
       return 'check';
     }
     return entry.rangeAdvantage === 'villain' ? 'check' : 'bet-big';
@@ -67,7 +95,7 @@ export const labelFlopCBetAction = (entry: RangeNutQuizEntry): CBetAction => {
     return entry.rangeAdvantage === 'hero' && entry.nutAdvantage !== 'villain' ? 'bet-big' : 'check';
   }
 
-  if (tags.has('low-connected') || tags.has('low-disconnected') || tags.has('paired-low')) return 'check';
+  if (hasLowConnected || tags.has('low-disconnected') || tags.has('paired-low')) return 'check';
 
   return entry.rangeAdvantage === 'hero' ? 'bet-small' : 'check';
 };
@@ -85,17 +113,25 @@ const buildAdvantageTag = (entry: RangeNutQuizEntry): string => {
 export const buildCBetExplanation = (entry: RangeNutQuizEntry, action: CBetAction): { summary: string; tags: string[] } => {
   const textureTag = entry.familyTags[0] ? `texture:${entry.familyTags[0]}` : 'texture:mixed';
   const advantageTag = buildAdvantageTag(entry);
+  const tags = new Set(entry.familyTags);
+  const overlapTag = getOverlapTexture(tags);
+
+  const tension = entry.nutAdvantage === 'villain'
+    ? 'nut-pressure'
+    : entry.rangeAdvantage === 'hero'
+      ? 'range edge'
+      : 'volatility';
   if (action === 'bet-small') {
     return {
-      summary: 'BTN retains enough broad range coverage on this texture to simplify toward a high-frequency small c-bet.',
-      tags: [textureTag, advantageTag, 'range:btn-broad-edge', toActionLabelTag(action)],
+      summary: `BTN keeps the ${tension} under control here, so the simplified baseline is a frequent small c-bet.`,
+      tags: [textureTag, advantageTag, 'range:btn-broad-edge', ...(overlapTag ? [overlapTag] : []), toActionLabelTag(action)],
     };
   }
 
   if (action === 'bet-big') {
     return {
-      summary: 'This board is dynamic enough that BTN’s clean baseline is a more polarized big-bet strategy instead of broad small betting.',
-      tags: [textureTag, advantageTag, 'polarization:preferred', toActionLabelTag(action)],
+      summary: `The texture leans into ${tension}, so BTN simplifies by using a more polarized big-bet baseline.`,
+      tags: [textureTag, advantageTag, 'polarization:preferred', ...(overlapTag ? [overlapTag] : []), toActionLabelTag(action)],
     };
   }
 
@@ -103,8 +139,8 @@ export const buildCBetExplanation = (entry: RangeNutQuizEntry, action: CBetActio
     ? 'bb:strong-interaction'
     : 'bb:defends-wide-enough';
   return {
-    summary: 'BB interacts strongly enough here that checking back is the most stable simplified baseline for BTN.',
-    tags: [textureTag, advantageTag, bbPressureTag, toActionLabelTag(action)],
+    summary: `BB’s interaction plus ${tension} makes check-back the most stable one-action baseline on this board.`,
+    tags: [textureTag, advantageTag, bbPressureTag, ...(overlapTag ? [overlapTag] : []), toActionLabelTag(action)],
   };
 };
 
